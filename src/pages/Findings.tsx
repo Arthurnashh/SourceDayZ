@@ -1,16 +1,18 @@
 import { useMemo, useState } from "react";
 import { getAchados, useAsync } from "../lib/data";
 import { Badge, ErrorBox, Loading, SearchInput } from "../components/ui";
+import { useDocsT } from "../content/docs-i18n";
 
 type Filtro = "todos" | "A" | "H" | "G";
 
-const LABEL: Record<string, string> = {
-  A: "Arquitetura / bug concreto",
-  H: "Hipótese / risco a confirmar",
-  G: "Ganho visual (DX11)"
+const LABEL_KEY: Record<string, string> = {
+  A: "findings.type.A",
+  H: "findings.type.H",
+  G: "findings.type.G"
 };
 
 export function Findings() {
+  const { t } = useDocsT();
   const { data, error, loading } = useAsync(getAchados);
   const [filtro, setFiltro] = useState<Filtro>("todos");
   const [q, setQ] = useState("");
@@ -38,25 +40,22 @@ export function Findings() {
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">catálogo de problemas</span>
-          <h1>Achados</h1>
-          <p>
-            {counts.A} achados de arquitetura, {counts.H} hipóteses/riscos e {counts.G} ganhos visuais
-            mapeados durante a leitura — todos com local e evidência.
-          </p>
+          <span className="kicker">{t("findings.kicker")}</span>
+          <h1>{t("findings.title")}</h1>
+          <p>{t("findings.lead", { a: counts.A, h: counts.H, g: counts.G })}</p>
         </div>
       </div>
 
       <div className="toolbar">
-        <SearchInput value={q} onChange={setQ} placeholder="Buscar por ID, problema, arquivo..." />
+        <SearchInput value={q} onChange={setQ} placeholder={t("findings.search")} />
         <div className="segmented">
           {(["todos", "A", "H", "G"] as Filtro[]).map((f) => (
             <button key={f} className={filtro === f ? "on" : ""} onClick={() => setFiltro(f)}>
-              {f === "todos" ? "todos" : f}
+              {f === "todos" ? t("common.all") : f}
             </button>
           ))}
         </div>
-        <span className="count">{items.length} resultado(s)</span>
+        <span className="count">{t("common.results", { n: items.length })}</span>
       </div>
 
       <div className="finding-grid">
@@ -64,7 +63,7 @@ export function Findings() {
           <article className={`finding ${a.id[0].toLowerCase()}`} key={a.id}>
             <header>
               <Badge tone={a.id.startsWith("A") ? "violet" : a.id.startsWith("H") ? "amber" : "blue"}>{a.id}</Badge>
-              <span className="finding-type">{LABEL[a.id[0]]}</span>
+              <span className="finding-type">{t(LABEL_KEY[a.id[0]])}</span>
             </header>
             <h3>{a.resumo}</h3>
             <dl>
@@ -78,7 +77,7 @@ export function Findings() {
             {a.texto && <p className="finding-extra">{a.texto}</p>}
           </article>
         ))}
-        {!items.length && <div className="empty">Nenhum achado para os filtros atuais.</div>}
+        {!items.length && <div className="empty">{t("findings.empty")}</div>}
       </div>
     </div>
   );

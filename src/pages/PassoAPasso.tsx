@@ -1,28 +1,27 @@
-import passoMd from "../content/passo-a-passo.md?raw";
 import { Md } from "../components/Md";
 import { Stat } from "../components/ui";
+import { useDocsT } from "../content/docs-i18n";
+import { useMd } from "../lib/content";
 
 export function PassoAPasso() {
+  const { t } = useDocsT();
+  const passoMd = useMd("passo-a-passo");
+
   return (
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">animações · passo a passo técnico</span>
-          <h1>Como o 1.30 entrou no 0.45</h1>
-          <p>
-            O porte completo, na ordem em que aconteceu: extração do PBO, leitura dos dois
-            formatos de RTM, mapeamento dos nomes, validação, trim de ossos, staging,
-            empacotamento e teste. Com o código real, os hexdumps de antes e depois e os
-            números de cada etapa.
-          </p>
+          <span className="kicker">{t("walkthrough.kicker")}</span>
+          <h1>{t("walkthrough.title")}</h1>
+          <p>{t("walkthrough.lead")}</p>
         </div>
       </div>
 
       <section className="stats-grid">
-        <Stat label="Passos" value="12" hint="do baseline ao teste em jogo" tone="blue" />
-        <Stat label="RTMs no acervo" value="7.415" hint="DayZ 1.30 · origem do porte" tone="violet" />
-        <Stat label="Arquivos trocados" value="1.526" hint="do manifesto de 1.527 registros" tone="lime" />
-        <Stat label="Trim de ossos" value="−23,45%" hint="1.425,9 → 1.091,5 MB" tone="amber" />
+        <Stat label={t("walkthrough.stat.steps")} value="12" hint={t("walkthrough.stat.stepsHint")} tone="blue" />
+        <Stat label={t("walkthrough.stat.rtms")} value="7.415" hint={t("walkthrough.stat.rtmsHint")} tone="violet" />
+        <Stat label={t("walkthrough.stat.files")} value="1.526" hint={t("walkthrough.stat.filesHint")} tone="lime" />
+        <Stat label={t("walkthrough.stat.trim")} value="−23,45%" hint={t("walkthrough.stat.trimHint")} tone="amber" />
       </section>
 
       <section className="panel article">

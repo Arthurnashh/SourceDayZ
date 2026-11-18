@@ -1,23 +1,19 @@
 import { useState } from "react";
-import pendenciasMd from "../content/pendencias.md?raw";
-import animacoesMd from "../content/animacoes.md?raw";
-import buildsMd from "../content/builds.md?raw";
 import { Md } from "../components/Md";
 import { Stat } from "../components/ui";
 import { WorkBoard } from "../components/WorkBoard";
 import { useWorkStore } from "../lib/work";
 import { PendenciasFps } from "./PendenciasFps";
+import { useDocsT } from "../content/docs-i18n";
+import { useMd } from "../lib/content";
 
 type Aba = "fps" | "pendencias" | "animacoes" | "builds";
 
-const TABS: { key: Aba; label: string; sub: string }[] = [
-  { key: "fps", label: "Resolver Drop de FPS", sub: "prioridade alta" },
-  { key: "pendencias", label: "Tarefas", sub: "quadro editável · concluir e excluir" },
-  { key: "animacoes", label: "Animações", sub: "dossiê 1.30 → 0.45" },
-  { key: "builds", label: "Builds E1–E7", sub: "histórico e testes" },
-];
-
 export function Pendencias() {
+  const { t } = useDocsT();
+  const pendenciasMd = useMd("pendencias");
+  const animacoesMd = useMd("animacoes");
+  const buildsMd = useMd("builds");
   const [aba, setAba] = useState<Aba>("fps");
   const store = useWorkStore();
   const openBugs =
@@ -29,51 +25,41 @@ export function Pendencias() {
       (item) => item.kind === "tarefa" && item.status !== "concluido"
     ).length ?? 0;
 
+  const TABS: { key: Aba; label: string; sub: string }[] = [
+    { key: "fps", label: t("pending.tab.fps"), sub: t("pending.tab.fpsSub") },
+    { key: "pendencias", label: t("pending.tab.tasks"), sub: t("pending.tab.tasksSub") },
+    { key: "animacoes", label: t("pending.tab.animations"), sub: t("pending.tab.animationsSub") },
+    { key: "builds", label: t("pending.tab.builds"), sub: t("pending.tab.buildsSub") },
+  ];
+
   return (
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">estado do projeto · 18 de novembro de 2026</span>
-          <h1>Pendências</h1>
-          <p>
-            O retrato do que está aberto: animações do DayZ 1.30 dentro do cliente 0.45, menus,
-            FPS e a infraestrutura de builds. A aba <strong>Tarefas</strong> é um quadro editável:
-            dá para criar, editar, marcar como em andamento e concluir. Ao concluir, o desfecho
-            exige o que era, como foi resolvido, o que foi usado e quantas tentativas foram
-            feitas. A aba <strong>Resolver Drop de FPS</strong> continua separada e concentra o
-            teste do candidato F, as prints, a correção F2 e todos os diffs de código.
-          </p>
+          <span className="kicker">{t("pending.kicker")}</span>
+          <h1>{t("pending.title")}</h1>
+          <p>{t("pending.lead")}</p>
         </div>
       </div>
 
       <section className="stats-grid">
-        <Stat label="Animações em 1.30" value="1.390" hint="de 2.028 · 68,5% da base" tone="lime" />
-        <Stat label="Build em jogo" value="E6" hint="875,8 MiB · sem erro novo" tone="blue" />
-        <Stat
-          label="Bugs abertos"
-          value={String(openBugs)}
-          hint="registro de bugs · corrigir ou reabrir"
-          tone="amber"
-        />
-        <Stat
-          label="Tarefas abertas"
-          value={String(openTasks)}
-          hint="quadro editável · em andamento incluso"
-          tone="amber"
-        />
-        <Stat label="Prioridade alta" value="FPS" hint="F2 parcial · grama/sombra falham" tone="amber" />
-        <Stat label="Baseline do RPT" value="12 / 23" hint="not found / Bad move" tone="violet" />
+        <Stat label={t("pending.stat.animations")} value="1.390" hint={t("pending.stat.animationsHint")} tone="lime" />
+        <Stat label={t("pending.stat.build")} value="E6" hint={t("pending.stat.buildHint")} tone="blue" />
+        <Stat label={t("pending.stat.bugs")} value={String(openBugs)} hint={t("pending.stat.bugsHint")} tone="amber" />
+        <Stat label={t("pending.stat.tasks")} value={String(openTasks)} hint={t("pending.stat.tasksHint")} tone="amber" />
+        <Stat label={t("pending.stat.priority")} value="FPS" hint={t("pending.stat.priorityHint")} tone="amber" />
+        <Stat label={t("pending.stat.baseline")} value="12 / 23" hint={t("pending.stat.baselineHint")} tone="violet" />
       </section>
 
       <div className="tabs">
-        {TABS.map((t) => (
+        {TABS.map((tab) => (
           <button
-            key={t.key}
-            className={`tab ${aba === t.key ? "on" : ""}`}
-            onClick={() => setAba(t.key)}
+            key={tab.key}
+            className={`tab ${aba === tab.key ? "on" : ""}`}
+            onClick={() => setAba(tab.key)}
           >
-            <strong>{t.label}</strong>
-            <small>{t.sub}</small>
+            <strong>{tab.label}</strong>
+            <small>{tab.sub}</small>
           </button>
         ))}
       </div>
@@ -89,11 +75,11 @@ export function Pendencias() {
           <WorkBoard
             kind="tarefa"
             store={store}
-            title="Tarefas do projeto"
-            intro="Crie tarefas, mova para em andamento, bloqueie ou conclua. Ao concluir, o desfecho pede o que foi feito, como, o que foi usado e quantas tentativas foram necessárias."
+            title={t("pending.tasksTitle")}
+            intro={t("pending.tasksIntro")}
           />
           <details className="panel article wb-archive">
-            <summary>Panorama detalhado do que falta</summary>
+            <summary>{t("pending.details")}</summary>
             <div className="wb-archive-body">
               <Md text={pendenciasMd} />
             </div>

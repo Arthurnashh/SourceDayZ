@@ -1,8 +1,10 @@
 import { getAchados, getFuncoes, getMeta, getPatches, fmt, useAsync } from "../lib/data";
 import { navigate } from "../lib/router";
 import { Bars, Badge, Loading, ErrorBox, SectionTitle, Stat } from "../components/ui";
+import { useDocsT } from "../content/docs-i18n";
 
 export function Overview() {
+  const { t } = useDocsT();
   const meta = useAsync(getMeta);
   const funcs = useAsync(getFuncoes);
   const achados = useAsync(getAchados);
@@ -23,51 +25,47 @@ export function Overview() {
       <section className="hero">
         <div className="hero-glow" />
         <div className="hero-body">
-          <Badge tone="accent">código-fonte original · patches compilados</Badge>
-          <h1>Toda a source do DayZ,<br />função por função.</h1>
-          <p>
-            O projeto real da Bohemia Interactive em <code>SOURCE DEFINITIVA</code>: cada
-            função lida, cada comentário traduzido — e as correções já feitas na árvore,
-            compiladas em v141: colisão de zumbi, inclinação ao correr, inventário e menu.
-          </p>
+          <Badge tone="accent">{t("overview.kicker")}</Badge>
+          <h1>{t("overview.title1")}<br />{t("overview.title2")}</h1>
+          <p>{t("overview.lead")}</p>
           <div className="hero-actions">
-            <button className="btn primary" onClick={() => navigate("funcoes")}>Explorar funções →</button>
-            <button className="btn" onClick={() => navigate("fonte/mudancas")}>Mudanças na source</button>
-            <button className="btn ghost" onClick={() => navigate("diagrama")}>Diagrama &amp; motor</button>
-            <button className="btn ghost" onClick={() => navigate("bugs")}>Bugs &amp; FPS</button>
-            <button className="btn ghost" onClick={() => navigate("atualizacoes")}>Atualizações</button>
-            <button className="btn ghost" onClick={() => navigate("pendencias")}>Pendências</button>
+            <button className="btn primary" onClick={() => navigate("funcoes")}>{t("overview.explore")}</button>
+            <button className="btn" onClick={() => navigate("fonte/mudancas")}>{t("overview.changes")}</button>
+            <button className="btn ghost" onClick={() => navigate("diagrama")}>{t("overview.diagram")}</button>
+            <button className="btn ghost" onClick={() => navigate("bugs")}>{t("overview.bugs")}</button>
+            <button className="btn ghost" onClick={() => navigate("atualizacoes")}>{t("overview.updates")}</button>
+            <button className="btn ghost" onClick={() => navigate("pendencias")}>{t("overview.pending")}</button>
           </div>
         </div>
         <div className="hero-side">
           <div className="ring" style={{ ["--p" as string]: `${pct}%` }}>
             <div className="ring-inner">
               <strong>{pct}%</strong>
-              <span>funções completas</span>
+              <span>{t("overview.completeFunctions")}</span>
             </div>
           </div>
-          <small>{m.completas} de {m.funcoes} entradas fechadas</small>
+          <small>{t("overview.closedEntries", { done: m.completas, total: m.funcoes })}</small>
         </div>
       </section>
 
       <section className="stats-grid">
-        <Stat label="Funções estudadas" value={fmt(m.funcoes)} hint={`${m.completas} completas · ${m.parciais} parciais`} tone="lime" />
-        <Stat label="Comentários anotados" value={fmt(m.comentarios)} hint={`${fmt(m.arquivosComentados)} arquivos`} />
-        <Stat label="Patches históricos" value={fmt(m.patches)} hint="tags \patch do repositório" tone="blue" />
-        <Stat label="Pendências & hacks" value={fmt(m.alertas)} hint="DX11 TODO + HACK" tone="amber" />
-        <Stat label="Achados" value={fmt(m.achados)} hint="A · H · G" tone="violet" />
-        <Stat label="Ferramentas" value={fmt(m.ferramentas)} hint="pipeline em Python" />
+        <Stat label={t("overview.stat.functions")} value={fmt(m.funcoes)} hint={t("overview.stat.functionsHint", { done: m.completas, partial: m.parciais })} tone="lime" />
+        <Stat label={t("overview.stat.comments")} value={fmt(m.comentarios)} hint={t("overview.stat.commentsHint", { n: fmt(m.arquivosComentados) })} />
+        <Stat label={t("overview.stat.patches")} value={fmt(m.patches)} hint={t("overview.stat.patchesHint")} tone="blue" />
+        <Stat label={t("overview.stat.pending")} value={fmt(m.alertas)} hint={t("overview.stat.pendingHint")} tone="amber" />
+        <Stat label={t("overview.stat.findings")} value={fmt(m.achados)} hint={t("overview.stat.findingsHint")} tone="violet" />
+        <Stat label={t("overview.stat.tools")} value={fmt(m.ferramentas)} hint={t("overview.stat.toolsHint")} />
       </section>
 
       <div className="grid two">
         <section className="panel">
-          <SectionTitle kicker="corpus" title="Linguagens na source" />
+          <SectionTitle kicker="corpus" title={t("overview.languages")} />
           <Bars
             items={m.porLinguagem.map((l) => ({ label: l.nome, value: l.valor }))}
           />
         </section>
         <section className="panel">
-          <SectionTitle kicker="concentração" title="Arquivos mais comentados" />
+          <SectionTitle kicker="top" title={t("overview.topFiles")} />
           <Bars
             mono
             items={m.topFiles.slice(0, 9).map((f) => ({
@@ -81,9 +79,9 @@ export function Overview() {
       <div className="grid two">
         <section className="panel">
           <SectionTitle
-            kicker="portabilidade"
-            title="Achados recentes"
-            right={<button className="link" onClick={() => navigate("achados")}>ver todos →</button>}
+            kicker="portability"
+            title={t("overview.recentFindings")}
+            right={<button className="link" onClick={() => navigate("achados")}>{t("common.viewAll")}</button>}
           />
           <ul className="finding-list">
             {[...recentesA, ...recentesH].map((a) => (
@@ -96,9 +94,9 @@ export function Overview() {
         </section>
         <section className="panel">
           <SectionTitle
-            kicker="histórico"
-            title="Patches recentes"
-            right={<button className="link" onClick={() => navigate("patches")}>ver todos →</button>}
+            kicker="history"
+            title={t("overview.recentPatches")}
+            right={<button className="link" onClick={() => navigate("patches")}>{t("common.viewAll")}</button>}
           />
           <ul className="patch-mini">
             {ultimos.map((p) => (
@@ -115,32 +113,32 @@ export function Overview() {
       </div>
 
       <section className="panel">
-        <SectionTitle kicker="leitura" title="Por onde começar" />
+        <SectionTitle kicker="reading" title={t("overview.whereToStart")} />
         <div className="quick">
           <button className="quick-card" onClick={() => navigate("funcoes/F-170")}>
-            <span>Função em destaque</span>
+            <span>{t("overview.quick.function")}</span>
             <strong>F-170 · DoSelectPixelShader</strong>
-            <p>Seleção de pixel shader por material, spec e luzes no backend DX9.</p>
+            <p>{t("overview.quick.functionDesc")}</p>
           </button>
           <button className="quick-card" onClick={() => navigate("comentarios")}>
-            <span>Comentários</span>
-            <strong>180.545 anotados</strong>
-            <p>Original em inglês, tradução PT-BR, código ancorado e função de contexto.</p>
+            <span>{t("overview.quick.comments")}</span>
+            <strong>{t("overview.quick.commentsTitle")}</strong>
+            <p>{t("overview.quick.commentsDesc")}</p>
           </button>
           <button className="quick-card" onClick={() => navigate("bugs")}>
-            <span>Performance</span>
-            <strong>FPS perto de cidades</strong>
-            <p>Dossiê com 6 elos causais, evidência de linha e correções por custo/benefício.</p>
+            <span>{t("overview.quick.performance")}</span>
+            <strong>{t("overview.quick.performanceTitle")}</strong>
+            <p>{t("overview.quick.performanceDesc")}</p>
           </button>
           <button className="quick-card" onClick={() => navigate("linguagens")}>
-            <span>Script</span>
-            <strong>SQF &amp; Enforce</strong>
-            <p>Sintaxe completa das duas linguagens, operadores, VM e armadilhas.</p>
+            <span>{t("overview.quick.script")}</span>
+            <strong>{t("overview.quick.scriptTitle")}</strong>
+            <p>{t("overview.quick.scriptDesc")}</p>
           </button>
           <button className="quick-card" onClick={() => navigate("fonte/mudancas")}>
-            <span>Projeto</span>
-            <strong>Mudanças &amp; PBOs</strong>
-            <p>Patches com arquivo:linha, toolchain v141 e o formato binário dos PBOs.</p>
+            <span>{t("overview.quick.project")}</span>
+            <strong>{t("overview.quick.projectTitle")}</strong>
+            <p>{t("overview.quick.projectDesc")}</p>
           </button>
         </div>
       </section>

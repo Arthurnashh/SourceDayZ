@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { getGlossario, useAsync, fmt } from "../lib/data";
 import { ErrorBox, Loading, SearchInput, Stat } from "../components/ui";
+import { useDocsT } from "../content/docs-i18n";
 
 const PAGE = 120;
 const LETRAS = ["todas", ..."abcdefghijklmnopqrstuvwxyz".split(""), "#"];
 
 export function Dicionario() {
+  const { t, locale } = useDocsT();
   const { data, error, loading } = useAsync(getGlossario);
   const [q, setQ] = useState("");
   const [letra, setLetra] = useState("todas");
@@ -35,36 +37,33 @@ export function Dicionario() {
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">glossário EN → PT-BR</span>
-          <h1>Dicionário</h1>
-          <p>
-            O glossário determinístico usado pelo anotador de comentários:{" "}
-            {fmt(data.total)} entradas. Identificadores técnicos, CamelCase, caminhos e trechos
-            entre crases são preservados — só o inglês técnico é traduzido.
-          </p>
+          <span className="kicker">{t("dict.kicker")}</span>
+          <h1>{t("dict.title")}</h1>
+          <p>{t("dict.lead", { n: fmt(data.total) })}</p>
+          {locale !== "pt" && <p className="corpus-inline">{t("dict.note")}</p>}
         </div>
       </div>
 
       <div className="stats-grid three">
-        <Stat label="Entradas" value={fmt(data.total)} hint="frases + termos" tone="lime" />
-        <Stat label="Frases" value={fmt(data.frases)} hint="expressões multi-palavra" />
-        <Stat label="Termos" value={fmt(data.palavras)} hint="palavra única" tone="blue" />
+        <Stat label={t("dict.entries")} value={fmt(data.total)} hint={t("dict.entriesHint")} tone="lime" />
+        <Stat label={t("dict.phrases")} value={fmt(data.frases)} hint={t("dict.phrasesHint")} />
+        <Stat label={t("dict.terms")} value={fmt(data.palavras)} hint={t("dict.termsHint")} tone="blue" />
       </div>
 
       <div className="toolbar">
-        <SearchInput value={q} onChange={(v) => { setQ(v); setLimite(PAGE); }} placeholder="Buscar em inglês ou português..." />
+        <SearchInput value={q} onChange={(v) => { setQ(v); setLimite(PAGE); }} placeholder={t("dict.search")} />
         <select value={tipo} onChange={(e) => { setTipo(e.target.value); setLimite(PAGE); }}>
-          <option value="todos">todos os tipos</option>
-          <option value="frase">frases</option>
-          <option value="termo">termos</option>
+          <option value="todos">{t("dict.type.all")}</option>
+          <option value="frase">{t("dict.type.phrase")}</option>
+          <option value="termo">{t("dict.type.term")}</option>
         </select>
-        <span className="count">{fmt(filtrados.length)} entrada(s)</span>
+        <span className="count">{t("common.results", { n: fmt(filtrados.length) })}</span>
       </div>
 
       <div className="letters">
         {LETRAS.map((l) => (
           <button key={l} className={letra === l ? "on" : ""} onClick={() => { setLetra(l); setLimite(PAGE); }}>
-            {l === "todas" ? "todas" : l}
+            {l === "todas" ? t("common.all") : l}
           </button>
         ))}
       </div>
@@ -75,16 +74,18 @@ export function Dicionario() {
             <code className="dict-en">{it.en}</code>
             <span className="dict-arrow">→</span>
             <span className="dict-pt">{it.pt}</span>
-            <span className={`dict-tipo ${it.tipo}`}>{it.tipo}</span>
+            <span className={`dict-tipo ${it.tipo}`}>
+              {it.tipo === "frase" ? t("dict.type.phrase") : t("dict.type.term")}
+            </span>
           </div>
         ))}
-        {!filtrados.length && <div className="empty">Nenhuma entrada para os filtros atuais.</div>}
+        {!filtrados.length && <div className="empty">{t("dict.empty")}</div>}
       </div>
 
       {filtrados.length > limite && (
         <div className="pager">
           <button onClick={() => setLimite((v) => v + PAGE)}>
-            carregar mais ({fmt(filtrados.length - limite)} restantes)
+            {t("common.loadMore", { n: fmt(filtrados.length - limite) })}
           </button>
         </div>
       )}

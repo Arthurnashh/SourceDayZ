@@ -3,10 +3,12 @@ import { getAlertas, getPatches, useAsync } from "../lib/data";
 import { Badge, ErrorBox, Loading, SearchInput, SectionTitle } from "../components/ui";
 import { GithubFeed } from "../components/GithubFeed";
 import { GITHUB_URL } from "../lib/github";
+import { useDocsT } from "../content/docs-i18n";
 
 type Tab = "patches" | "dx11" | "hacks";
 
 export function Updates() {
+  const { t } = useDocsT();
   const patches = useAsync(getPatches);
   const alertas = useAsync(getAlertas);
   const [tab, setTab] = useState<Tab>("patches");
@@ -40,27 +42,25 @@ export function Updates() {
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">histórico &amp; dívida técnica · sincronizado do GitHub</span>
-          <h1>Patches</h1>
+          <span className="kicker">{t("patches.kicker")}</span>
+          <h1>{t("patches.title")}</h1>
           <p>
-            Tags <code>\patch</code> do repositório e os marcadores de portabilidade deixados no
-            código. O histórico abaixo descreve a build local; o feed no fim da página lê os
-            commits e as releases diretamente de{" "}
+            {t("patches.lead1")} <code>\patch</code> {t("patches.lead2")}{" "}
             <a href={GITHUB_URL} target="_blank" rel="noreferrer noopener">
               <code>Personed/Game</code>
             </a>
-            , para que patch publicado no repositório apareça aqui sem edição manual.
+            {t("patches.lead3")}
           </p>
         </div>
       </div>
 
       <div className="toolbar">
         <div className="segmented">
-          <button className={tab === "patches" ? "on" : ""} onClick={() => setTab("patches")}>Patches ({patches.data?.length ?? 0})</button>
-          <button className={tab === "dx11" ? "on" : ""} onClick={() => setTab("dx11")}>DX11 TODO ({dx11.length})</button>
-          <button className={tab === "hacks" ? "on" : ""} onClick={() => setTab("hacks")}>HACKs ({hacks.length})</button>
+          <button className={tab === "patches" ? "on" : ""} onClick={() => setTab("patches")}>{t("patches.tab.patches", { n: patches.data?.length ?? 0 })}</button>
+          <button className={tab === "dx11" ? "on" : ""} onClick={() => setTab("dx11")}>{t("patches.tab.dx11", { n: dx11.length })}</button>
+          <button className={tab === "hacks" ? "on" : ""} onClick={() => setTab("hacks")}>{t("patches.tab.hacks", { n: hacks.length })}</button>
         </div>
-        <SearchInput value={q} onChange={setQ} placeholder="Buscar no histórico..." />
+        <SearchInput value={q} onChange={setQ} placeholder={t("patches.search")} />
       </div>
 
       {tab === "patches" && (
@@ -80,20 +80,20 @@ export function Updates() {
                   <div className="patch-body">
                     <p>{p.texto}</p>
                     <small>
-                      por <b>{p.autor}</b> · <code>{p.arquivo}:{p.linha}</code>
+                      {t("patches.by")} <b>{p.autor}</b> · <code>{p.arquivo}:{p.linha}</code>
                     </small>
                   </div>
                 </article>
               </div>
             );
           })}
-          {!patchList.length && <div className="empty">Nenhum patch encontrado.</div>}
+          {!patchList.length && <div className="empty">{t("patches.empty")}</div>}
         </div>
       )}
 
       {tab === "dx11" && (
         <section className="panel">
-          <SectionTitle kicker="porte" title="Pendências declaradas no backend DX11" />
+          <SectionTitle kicker="port" title={t("patches.dx11Title")} />
           <ul className="alert-list">
             {dx11.map((a) => (
               <li key={`${a.file}:${a.line}`}>
@@ -108,7 +108,7 @@ export function Updates() {
 
       {tab === "hacks" && (
         <section className="panel">
-          <SectionTitle kicker="dívida" title="Hacks e soluções temporárias" />
+          <SectionTitle kicker="debt" title={t("patches.hacksTitle")} />
           <ul className="alert-list">
             {hacks.map((a) => (
               <li key={`${a.file}:${a.line}`}>

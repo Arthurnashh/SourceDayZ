@@ -1,21 +1,12 @@
 import { useMemo, useState } from "react";
-import estruturaMd from "../content/estrutura.md?raw";
-import compilacaoMd from "../content/compilacao.md?raw";
-import pboMd from "../content/pbo.md?raw";
-import mudancasMd from "../content/mudancas.md?raw";
 import { fmt, getSource, useAsync } from "../lib/data";
 import { ErrorBox, Loading, SearchInput, Stat } from "../components/ui";
 import { Md } from "../components/Md";
 import { navigate, useRoute } from "../lib/router";
+import { useDocsT } from "../content/docs-i18n";
+import { useMd } from "../lib/content";
 
 type Aba = "estrutura" | "compilacao" | "pbo" | "mudancas";
-
-const TABS: { key: Aba; label: string; sub: string }[] = [
-  { key: "estrutura", label: "Estrutura", sub: "árvore real medida" },
-  { key: "mudancas", label: "Mudanças", sub: "patches compilados" },
-  { key: "compilacao", label: "Compilação", sub: "v141 · MSBuild 15" },
-  { key: "pbo", label: "PBOs", sub: "formato, bits e ferramentas" },
-];
 
 const VALIDAS: Aba[] = ["estrutura", "compilacao", "pbo", "mudancas"];
 
@@ -27,8 +18,13 @@ function bytes(n: number): string {
 }
 
 export function Fonte() {
+  const { t } = useDocsT();
   const { data, error, loading } = useAsync(getSource);
   const route = useRoute();
+  const estruturaMd = useMd("estrutura");
+  const compilacaoMd = useMd("compilacao");
+  const pboMd = useMd("pbo");
+  const mudancasMd = useMd("mudancas");
   const inicial = route.parts[1] as Aba | undefined;
   const [aba, setAba] = useState<Aba>(
     inicial && VALIDAS.includes(inicial) ? inicial : "estrutura"
@@ -40,6 +36,13 @@ export function Fonte() {
     setAba(a);
     navigate(a === "estrutura" ? "fonte" : `fonte/${a}`);
   };
+
+  const TABS: { key: Aba; label: string; sub: string }[] = [
+    { key: "estrutura", label: t("source.tab.estrutura"), sub: t("source.tab.estruturaSub") },
+    { key: "mudancas", label: t("source.tab.mudancas"), sub: t("source.tab.mudancasSub") },
+    { key: "compilacao", label: t("source.tab.compilacao"), sub: t("source.tab.compilacaoSub") },
+    { key: "pbo", label: t("source.tab.pbo"), sub: t("source.tab.pboSub") },
+  ];
 
   const dirs = useMemo(() => {
     const lista = data?.dirs ?? [];
@@ -63,29 +66,31 @@ export function Fonte() {
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">código-fonte original · patches compilados e testados</span>
-          <h1>Código-fonte</h1>
+          <span className="kicker">{t("source.kicker")}</span>
+          <h1>{t("source.title")}</h1>
           <p>
-            A árvore real do projeto da Bohemia Interactive: {fmt(data.total.pastas)} pastas e{" "}
-            {fmt(data.total.arquivos)} arquivos ({bytes(data.total.bytes)}) medidos nesta máquina.
-            O código está em <code>{data.raiz}</code> — e esta árvore já foi modificada e
-            recompilada: colisão de zumbi, inclinação ao correr, inventário e menu.
+            {t("source.lead", {
+              folders: fmt(data.total.pastas),
+              files: fmt(data.total.arquivos),
+              size: bytes(data.total.bytes),
+              root: data.raiz,
+            })}
           </p>
         </div>
-        <button className="btn primary" onClick={() => navigate("fonte/mudancas")}>Ver mudanças →</button>
+        <button className="btn primary" onClick={() => navigate("fonte/mudancas")}>{t("source.viewChanges")}</button>
       </div>
 
       <div className="src-path">
-        <span>raiz do projeto</span>
+        <span>{t("source.root")}</span>
         <code>{data.raiz}</code>
-        <small>medido em {data.medido_em}</small>
+        <small>{t("source.measuredOn", { date: data.medido_em })}</small>
       </div>
 
       <div className="tabs">
-        {TABS.map((t) => (
-          <button key={t.key} className={`tab ${aba === t.key ? "on" : ""}`} onClick={() => escolher(t.key)}>
-            <strong>{t.label}</strong>
-            <small>{t.sub}</small>
+        {TABS.map((tab) => (
+          <button key={tab.key} className={`tab ${aba === tab.key ? "on" : ""}`} onClick={() => escolher(tab.key)}>
+            <strong>{tab.label}</strong>
+            <small>{tab.sub}</small>
           </button>
         ))}
       </div>
@@ -93,14 +98,14 @@ export function Fonte() {
       {aba === "estrutura" ? (
         <>
           <div className="stats-grid three">
-            <Stat label="Arquivos de código" value={fmt(data.total.arquivos)} hint="sem build/ e dist/" tone="lime" />
-            <Stat label="Tamanho medido" value={bytes(data.total.bytes)} hint="arquivo por arquivo" />
-            <Stat label="Pastas de 1º nível" value={fmt(data.total.pastas)} hint="mais as geradas" tone="blue" />
+            <Stat label={t("source.stats.files")} value={fmt(data.total.arquivos)} hint={t("source.stats.filesHint")} tone="lime" />
+            <Stat label={t("source.stats.size")} value={bytes(data.total.bytes)} hint={t("source.stats.sizeHint")} />
+            <Stat label={t("source.stats.folders")} value={fmt(data.total.pastas)} hint={t("source.stats.foldersHint")} tone="blue" />
           </div>
 
           <div className="toolbar">
-            <SearchInput value={q} onChange={setQ} placeholder="Filtrar pasta, nota ou subpasta..." />
-            <span className="count">{dirs.length} pasta(s)</span>
+            <SearchInput value={q} onChange={setQ} placeholder={t("source.filter")} />
+            <span className="count">{t("source.folders", { n: dirs.length })}</span>
           </div>
 
           <div className="src-list">
@@ -113,7 +118,7 @@ export function Fonte() {
                     <span className={`src-caret ${on ? "open" : ""}`}>▸</span>
                     <code className="src-name">{d.nome}/</code>
                     <span className="src-nota">{d.nota}</span>
-                    <span className="src-files">{fmt(d.arquivos)} arq.</span>
+                    <span className="src-files">{t("source.filesShort", { n: fmt(d.arquivos) })}</span>
                     <span className="src-size">{bytes(d.bytes)}</span>
                   </button>
                   <div className="src-bar">
@@ -124,13 +129,13 @@ export function Fonte() {
                       {d.filhos.map((f) => (
                         <div className="src-child" key={f.nome}>
                           <code>{f.nome}/</code>
-                          <span>{fmt(f.arquivos)} arq.</span>
+                          <span>{t("source.filesShort", { n: fmt(f.arquivos) })}</span>
                           <strong>{bytes(f.bytes)}</strong>
                         </div>
                       ))}
                       {d.filhos_total > d.filhos.length && (
                         <small className="src-more">
-                          +{d.filhos_total - d.filhos.length} subpastas não exibidas
+                          {t("source.moreFolders", { n: d.filhos_total - d.filhos.length })}
                         </small>
                       )}
                     </div>
@@ -138,16 +143,16 @@ export function Fonte() {
                 </div>
               );
             })}
-            {!dirs.length && <div className="empty">Nenhuma pasta para o filtro atual.</div>}
+            {!dirs.length && <div className="empty">{t("source.noFolders")}</div>}
           </div>
 
           <section className="panel src-generated">
-            <h3>Pastas geradas (não são código)</h3>
+            <h3>{t("source.generated")}</h3>
             <div className="src-gen-row">
               {data.geradas.map((g) => (
                 <div key={g.nome}>
                   <code>{g.nome}/</code>
-                  <span>{fmt(g.arquivos)} arquivos</span>
+                  <span>{t("source.filesShort", { n: fmt(g.arquivos) })}</span>
                   <strong>{bytes(g.bytes)}</strong>
                 </div>
               ))}

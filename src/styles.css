@@ -1366,3 +1366,30 @@ select {
   .gh-sync { margin-left: 0; }
   .gh-commit-body strong { white-space: normal; }
 }
+
+/* ---------------------------------------------------------- idioma dos docs */
+.sidebar-lang { margin-top: 8px; }
+.sidebar-lang .lang-switch { width: 100%; justify-content: space-between; }
+.top-right .lang-switch { margin-right: 2px; }
+
+.corpus-banner {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 9px 30px;
+  border-bottom: 1px solid rgba(255, 193, 77, 0.18);
+  background: rgba(255, 193, 77, 0.05);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.corpus-dot {
+  flex: 0 0 auto; width: 6px; height: 6px; margin-top: 5px;
+  border-radius: 50%; background: #ffc14d; box-shadow: 0 0 10px #ffc14d;
+}
+.corpus-inline {
+  margin-top: 8px; color: #ffc14d; font-family: var(--mono); font-size: 11px; line-height: 1.5;
+}
+.chip.amber { color: #ffc14d; border-color: rgba(255, 193, 77, 0.35); background: rgba(255, 193, 77, 0.08); }
+@media (max-width: 720px) {
+  .corpus-banner { padding: 9px 16px; }
+}

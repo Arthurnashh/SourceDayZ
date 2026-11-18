@@ -2,11 +2,10 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { BoardTools } from "./BoardTools";
 import { Modal } from "./Modal";
 import { Loading, SearchInput } from "./ui";
+import { useWorkT } from "../content/work-i18n";
 import {
   fmtDate,
   nextId,
-  PRIORITY_LABEL,
-  statusLabel,
   type Priority,
   type Resolution,
   type WorkItem,
@@ -24,11 +23,11 @@ const PRIORITY_RANK: Record<Priority, number> = {
 };
 const PRIORITIES: Priority[] = ["critica", "alta", "media", "baixa"];
 
-function columnLabel(kind: WorkKind, status: WorkStatus): string {
-  if (kind === "tarefa") {
-    return { aberto: "Abertas", andamento: "Em andamento", bloqueado: "Bloqueadas", concluido: "Concluídas" }[status];
-  }
-  return { aberto: "Abertos", andamento: "Em andamento", bloqueado: "Bloqueados", concluido: "Corrigidos" }[status];
+function columnLabel(kind: WorkKind, status: WorkStatus, t: (key: string) => string): string {
+  if (status === "andamento") return t("statusAndamento");
+  if (status === "bloqueado") return kind === "tarefa" ? t("colBlockedTask") : t("statusBloqueado");
+  if (status === "concluido") return kind === "tarefa" ? t("colTaskDone") : t("colBugDone");
+  return kind === "tarefa" ? t("colTaskOpen") : t("colBugOpen");
 }
 
 function newItem(kind: WorkKind, items: WorkItem[], areas: string[]): WorkItem {
@@ -68,6 +67,8 @@ interface WorkBoardProps {
 }
 
 export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
+  const { t } = useWorkT();
+  const prio = (value: Priority) => t(`prio${value.charAt(0).toUpperCase()}${value.slice(1)}`);
   const [q, setQ] = useState("");
   const [priority, setPriority] = useState<"todas" | Priority>("todas");
   const [area, setArea] = useState("todas");
@@ -161,9 +162,7 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
 
   const deleteItem = (item: WorkItem) => {
     if (
-      window.confirm(
-        `Excluir ${item.id} — “${item.titulo}”? Essa ação remove o item deste navegador.`
-      )
+      window.confirm(t("confirmDelete", { id: item.id, title: item.titulo }))
     ) {
       store.deleteItem(item.id);
     }
@@ -180,7 +179,7 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
   };
 
   if (store.loading && !store.state) {
-    return <Loading label="Carregando o quadro..." />;
+    return <Loading label={t("loading")} />;
   }
 
   return (
@@ -188,7 +187,7 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
       <div className="wb-top">
         <div className="wb-title">
           <span className="kicker">
-            {kind === "tarefa" ? "quadro de tarefas" : "registro de bugs"}
+            {kind === "tarefa" ? t("kickerTask") : t("kickerBug")}
           </span>
           <h2>{title}</h2>
           <p>{intro}</p>
@@ -198,40 +197,39 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
 
       {store.error && (
         <div className="errorbox">
-          A base do quadro não carregou: {store.error}. Você ainda pode criar itens locais e
-          exportar.
+          {t("errorBase", { error: store.error })}
         </div>
       )}
 
       <div className="wb-stats">
-        <StatBox label="Total" value={stats.total} tone="neutral" />
-        <StatBox label="Em andamento" value={stats.andamento} tone="blue" />
-        <StatBox label={kind === "tarefa" ? "Abertas" : "Abertos"} value={stats.abertos} tone="amber" />
+        <StatBox label={t("statTotal")} value={stats.total} tone="neutral" />
+        <StatBox label={t("statProgress")} value={stats.andamento} tone="blue" />
+        <StatBox label={kind === "tarefa" ? t("statOpenTask") : t("statOpenBug")} value={stats.abertos} tone="amber" />
         <StatBox
-          label={kind === "tarefa" ? "Concluídas" : "Corrigidos"}
+          label={kind === "tarefa" ? t("statDoneTask") : t("statDoneBug")}
           value={stats.concluidos}
           tone="lime"
         />
-        <StatBox label="Bloqueados" value={stats.bloqueados} tone="violet" />
-        <StatBox label="Tentativas registradas" value={stats.tentativas} tone="neutral" />
+        <StatBox label={t("statBlocked")} value={stats.bloqueados} tone="violet" />
+        <StatBox label={t("statAttempts")} value={stats.tentativas} tone="neutral" />
       </div>
 
       <div className="wb-toolbar">
         <SearchInput
           value={q}
           onChange={setQ}
-          placeholder={kind === "tarefa" ? "Buscar tarefa, área, etiqueta..." : "Buscar bug, sintoma, arquivo..."}
+          placeholder={kind === "tarefa" ? t("searchTask") : t("searchBug")}
         />
         <select value={priority} onChange={(event) => setPriority(event.target.value as "todas" | Priority)}>
-          <option value="todas">toda prioridade</option>
+          <option value="todas">{t("priorityAll")}</option>
           {PRIORITIES.map((value) => (
             <option value={value} key={value}>
-              {PRIORITY_LABEL[value]}
+              {prio(value)}
             </option>
           ))}
         </select>
         <select value={area} onChange={(event) => setArea(event.target.value)}>
-          <option value="todas">toda área</option>
+          <option value="todas">{t("areaAll")}</option>
           {areas.map((value) => (
             <option value={value} key={value}>
               {value}
@@ -243,21 +241,21 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
             value={severity}
             onChange={(event) => setSeverity(event.target.value as "todas" | Priority)}
           >
-            <option value="todas">toda severidade</option>
+            <option value="todas">{t("severityAll")}</option>
             {PRIORITIES.map((value) => (
               <option value={value} key={value}>
-                {PRIORITY_LABEL[value]}
+                {prio(value)}
               </option>
             ))}
           </select>
         )}
-        <span className="count">{filtered.length} de {items.length}</span>
+        <span className="count">{t("count", { n: filtered.length, total: items.length })}</span>
         {editMode && (
           <button
             className="wb-btn primary wb-add"
             onClick={() => setFormItem(newItem(kind, items, areas))}
           >
-            + {kind === "tarefa" ? "Nova tarefa" : "Novo bug"}
+            + {kind === "tarefa" ? t("newTask") : t("newBug")}
           </button>
         )}
       </div>
@@ -267,7 +265,7 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
           <section className={`wb-col ${status}`} key={status}>
             <header className="wb-col-head">
               <span className={`wb-dot ${status}`} />
-              <strong>{columnLabel(kind, status)}</strong>
+              <strong>{columnLabel(kind, status, t)}</strong>
               <small>{grouped[status].length}</small>
             </header>
             <div className="wb-col-body">
@@ -289,8 +287,8 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
               {grouped[status].length === 0 && (
                 <div className="wb-col-empty">
                   {q || priority !== "todas" || area !== "todas" || severity !== "todas"
-                    ? "Nenhum item com os filtros atuais."
-                    : "Nada aqui."}
+                    ? t("emptyFiltered")
+                    : t("empty")}
                 </div>
               )}
             </div>
@@ -300,11 +298,15 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
 
       {formItem && (
         <Modal
-          title={items.some((item) => item.id === formItem.id) ? `Editar ${formItem.id}` : `Novo ${kind}`}
+          title={
+            items.some((item) => item.id === formItem.id)
+              ? t("modalEdit", { id: formItem.id })
+              : t("modalNew", { kind: kind === "tarefa" ? t("newTask") : t("newBug") })
+          }
           subtitle={
             kind === "tarefa"
-              ? "Descreva o trabalho, a área e o próximo passo."
-              : "Descreva o sintoma, onde acontece e como reproduzir."
+              ? t("subtitleTask")
+              : t("subtitleBug")
           }
           onClose={() => setFormItem(null)}
         >
@@ -323,7 +325,7 @@ export function WorkBoard({ kind, store, title, intro }: WorkBoardProps) {
 
       {resolutionItem && (
         <Modal
-          title={kind === "tarefa" ? "Concluir tarefa" : "Marcar bug como corrigido"}
+          title={kind === "tarefa" ? t("resolveTask") : t("resolveBug")}
           subtitle={`${resolutionItem.id} — ${resolutionItem.titulo}`}
           onClose={() => setResolutionItem(null)}
           wide
@@ -376,15 +378,25 @@ function Card({
   onDelete: () => void;
   onQuickStatus: (status: WorkStatus) => void;
 }) {
+  const { t, locale } = useWorkT();
+  const prio = (value: Priority) => t(`prio${value.charAt(0).toUpperCase()}${value.slice(1)}`);
+  const status = t(
+    item.status === "aberto"
+      ? "statusAberto"
+      : item.status === "andamento"
+        ? "statusAndamento"
+        : item.status === "bloqueado"
+          ? "statusBloqueado"
+          : "statusConcluido"
+  );
   const resolution = item.desfecho;
-  const status = statusLabel(item.kind, item.status);
   return (
     <article className={`wb-card ${item.status} p-${item.prioridade}`}>
       <header className="wb-card-head">
         <span className="wb-id">{item.id}</span>
-        <span className={`wb-prio ${item.prioridade}`}>{PRIORITY_LABEL[item.prioridade]}</span>
+        <span className={`wb-prio ${item.prioridade}`}>{prio(item.prioridade)}</span>
         {item.kind === "bug" && item.severidade && (
-          <span className={`wb-sev ${item.severidade}`}>{PRIORITY_LABEL[item.severidade]}</span>
+          <span className={`wb-sev ${item.severidade}`}>{prio(item.severidade)}</span>
         )}
         <span className="wb-area">{item.area}</span>
       </header>
@@ -393,14 +405,14 @@ function Card({
       {item.local && <code className="wb-local">{item.local}</code>}
       {item.passos && (
         <details className="wb-steps">
-          <summary>Como reproduzir</summary>
+          <summary>{t("reproduce")}</summary>
           <p>{item.passos}</p>
         </details>
       )}
       <div className="wb-meta">
         <span className={`wb-status ${item.status}`}>{status}</span>
         {item.responsavel && <span>@{item.responsavel}</span>}
-        <span>atualizado {fmtDate(item.atualizadoEm)}</span>
+        <span>{t("updated", { date: fmtDate(item.atualizadoEm, false, locale) })}</span>
       </div>
       {item.etiquetas.length > 0 && (
         <div className="wb-tags">
@@ -412,39 +424,39 @@ function Card({
       {resolution && item.status === "concluido" && (
         <div className="wb-resolution">
           <button className="wb-resolution-toggle" onClick={onToggle} aria-expanded={expanded}>
-            <span>Desfecho registrado</span>
-            <small>{resolution.tentativas} tentativa(s)</small>
+            <span>{t("outcome")}</span>
+            <small>{t("attemptsShort", { n: resolution.tentativas })}</small>
             <b>{expanded ? "−" : "+"}</b>
           </button>
           {expanded && (
             <dl>
               <div>
-                <dt>{item.kind === "bug" ? "O que era" : "O que foi feito"}</dt>
+                <dt>{item.kind === "bug" ? t("whatWas") : t("whatDone")}</dt>
                 <dd>{resolution.oQueEra}</dd>
               </div>
               <div>
-                <dt>{item.kind === "bug" ? "Como corrigiu" : "Como concluiu"}</dt>
+                <dt>{item.kind === "bug" ? t("howFixed") : t("howDone")}</dt>
                 <dd>{resolution.comoCorrigiu}</dd>
               </div>
               <div>
-                <dt>O que usou</dt>
+                <dt>{t("whatUsed")}</dt>
                 <dd>{resolution.oQueUsou}</dd>
               </div>
               <div>
-                <dt>Tentativas</dt>
+                <dt>{t("fieldAttempts")}</dt>
                 <dd>{resolution.tentativas}</dd>
               </div>
               {resolution.commit && (
                 <div>
-                  <dt>Commit / PR</dt>
+                  <dt>{t("commit")}</dt>
                   <dd>
                     <code>{resolution.commit}</code>
                   </dd>
                 </div>
               )}
               <div>
-                <dt>Resolvido em</dt>
-                <dd>{fmtDate(resolution.resolvidoEm, true)}</dd>
+                <dt>{t("resolvedAt")}</dt>
+                <dd>{fmtDate(resolution.resolvidoEm, true, locale)}</dd>
               </div>
             </dl>
           )}
@@ -454,34 +466,34 @@ function Card({
         <div className="wb-actions">
           {item.status !== "concluido" && (
             <button className="wb-mini primary" onClick={onResolve}>
-              {item.kind === "tarefa" ? "Concluir" : "Corrigir"}
+              {item.kind === "tarefa" ? t("actionComplete") : t("actionFix")}
             </button>
           )}
           {item.status === "aberto" && (
             <button className="wb-mini" onClick={() => onQuickStatus("andamento")}>
-              Iniciar
+              {t("actionStart")}
             </button>
           )}
           {item.status === "andamento" && (
             <button className="wb-mini" onClick={() => onQuickStatus("bloqueado")}>
-              Bloquear
+              {t("actionBlock")}
             </button>
           )}
           {item.status === "bloqueado" && (
             <button className="wb-mini" onClick={() => onQuickStatus("andamento")}>
-              Retomar
+              {t("actionResume")}
             </button>
           )}
           {item.status === "concluido" && (
             <button className="wb-mini" onClick={() => onQuickStatus("andamento")}>
-              Reabrir
+              {t("actionReopen")}
             </button>
           )}
           <button className="wb-mini" onClick={onEdit}>
-            Editar
+            {t("actionEdit")}
           </button>
           <button className="wb-mini danger" onClick={onDelete}>
-            Excluir
+            {t("actionDelete")}
           </button>
         </div>
       )}
@@ -502,6 +514,10 @@ function ItemForm({
   onCancel: () => void;
   onSave: (item: WorkItem) => void;
 }) {
+  const { t } = useWorkT();
+  const prio = (value: Priority) => t(`prio${value.charAt(0).toUpperCase()}${value.slice(1)}`);
+  const statusOpt = (value: WorkStatus) =>
+    t(value === "aberto" ? "statusAberto" : value === "andamento" ? "statusAndamento" : value === "bloqueado" ? "statusBloqueado" : "statusConcluido");
   const [draft, setDraft] = useState<WorkItem>({ ...item });
   const [tags, setTags] = useState(item.etiquetas.join(", "));
   const [error, setError] = useState<string | null>(null);
@@ -510,11 +526,11 @@ function ItemForm({
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!draft.titulo.trim()) {
-      setError("Informe um título.");
+      setError(t("errTitle"));
       return;
     }
     if (!draft.descricao.trim()) {
-      setError("Descreva o item para que outra pessoa consiga entender.");
+      setError(t("errDesc"));
       return;
     }
     onSave({
@@ -536,35 +552,35 @@ function ItemForm({
   return (
     <form className="wb-form" onSubmit={submit}>
       <div className="wb-field">
-        <label htmlFor="wb-title">Título *</label>
+        <label htmlFor="wb-title">{t("formTitle")}</label>
         <input
           id="wb-title"
           value={draft.titulo}
           autoFocus
           onChange={(event) => setDraft({ ...draft, titulo: event.target.value })}
-          placeholder={kind === "tarefa" ? "O que precisa ser feito?" : "Qual é o sintoma?"}
+          placeholder={kind === "tarefa" ? t("phTitleTask") : t("phTitleBug")}
         />
       </div>
 
       <div className="wb-field">
-        <label htmlFor="wb-desc">Descrição *</label>
+        <label htmlFor="wb-desc">{t("formDesc")}</label>
         <textarea
           id="wb-desc"
           value={draft.descricao}
           onChange={(event) => setDraft({ ...draft, descricao: event.target.value })}
-          placeholder="Contexto, impacto e o que já se sabe."
+          placeholder={t("phDesc")}
         />
       </div>
 
       <div className="wb-grid2">
         <div className="wb-field">
-          <label htmlFor="wb-area">Área</label>
+          <label htmlFor="wb-area">{t("formArea")}</label>
           <input
             id="wb-area"
             list={listId}
             value={draft.area}
             onChange={(event) => setDraft({ ...draft, area: event.target.value })}
-            placeholder="Animações, UI, Mapa..."
+            placeholder={t("phArea")}
           />
           <datalist id={listId}>
             {areas.map((value) => (
@@ -573,19 +589,19 @@ function ItemForm({
           </datalist>
         </div>
         <div className="wb-field">
-          <label htmlFor="wb-owner">Responsável</label>
+          <label htmlFor="wb-owner">{t("formOwner")}</label>
           <input
             id="wb-owner"
             value={draft.responsavel ?? ""}
             onChange={(event) => setDraft({ ...draft, responsavel: event.target.value })}
-            placeholder="quem está tocando"
+            placeholder={t("phOwner")}
           />
         </div>
       </div>
 
       <div className="wb-grid2">
         <div className="wb-field">
-          <label htmlFor="wb-priority">Prioridade</label>
+          <label htmlFor="wb-priority">{t("formPriority")}</label>
           <select
             id="wb-priority"
             value={draft.prioridade}
@@ -595,16 +611,16 @@ function ItemForm({
           >
             {PRIORITIES.map((value) => (
               <option value={value} key={value}>
-                {PRIORITY_LABEL[value]}
+                {prio(value)}
               </option>
             ))}
           </select>
         </div>
         <div className="wb-field">
-          <label>Status</label>
+          <label>{t("formStatus")}</label>
           {draft.status === "concluido" ? (
             <div className="wb-readonly">
-              Concluído — use “Reabrir” no card para voltar ao quadro.
+              {t("statusDone")}
             </div>
           ) : (
             <select
@@ -613,9 +629,9 @@ function ItemForm({
                 setDraft({ ...draft, status: event.target.value as WorkStatus })
               }
             >
-              <option value="aberto">{statusLabel(kind, "aberto")}</option>
-              <option value="andamento">{statusLabel(kind, "andamento")}</option>
-              <option value="bloqueado">{statusLabel(kind, "bloqueado")}</option>
+              <option value="aberto">{statusOpt("aberto")}</option>
+              <option value="andamento">{statusOpt("andamento")}</option>
+              <option value="bloqueado">{statusOpt("bloqueado")}</option>
             </select>
           )}
         </div>
@@ -625,7 +641,7 @@ function ItemForm({
         <>
           <div className="wb-grid2">
             <div className="wb-field">
-              <label htmlFor="wb-severity">Severidade</label>
+              <label htmlFor="wb-severity">{t("formSeverity")}</label>
               <select
                 id="wb-severity"
                 value={draft.severidade ?? "media"}
@@ -635,52 +651,52 @@ function ItemForm({
               >
                 {PRIORITIES.map((value) => (
                   <option value={value} key={value}>
-                    {PRIORITY_LABEL[value]}
+                    {prio(value)}
                   </option>
                 ))}
               </select>
             </div>
             <div className="wb-field">
-              <label htmlFor="wb-local">Onde acontece</label>
+              <label htmlFor="wb-local">{t("formWhere")}</label>
               <input
                 id="wb-local"
                 value={draft.local ?? ""}
                 onChange={(event) => setDraft({ ...draft, local: event.target.value })}
-                placeholder="arquivo, RTM, PBO, tela..."
+                placeholder="file, RTM, PBO, screen..."
               />
             </div>
           </div>
           <div className="wb-field">
-            <label htmlFor="wb-steps">Como reproduzir</label>
+            <label htmlFor="wb-steps">{t("formSteps")}</label>
             <textarea
               id="wb-steps"
               value={draft.passos ?? ""}
               onChange={(event) => setDraft({ ...draft, passos: event.target.value })}
-              placeholder="Passos, item equipado e ação executada."
+              placeholder={t("phSteps")}
             />
           </div>
         </>
       )}
 
       <div className="wb-field">
-        <label htmlFor="wb-tags">Etiquetas</label>
+        <label htmlFor="wb-tags">{t("formTags")}</label>
         <input
           id="wb-tags"
           value={tags}
           onChange={(event) => setTags(event.target.value)}
-          placeholder="separadas por vírgula"
+          placeholder={t("phTags")}
         />
-        <span className="wb-hint">Ex.: E7, lanterna, ui.pbo, prioridade alta.</span>
+        <span className="wb-hint">{t("formTagsHint")}</span>
       </div>
 
       {error && <div className="wb-form-error">{error}</div>}
 
       <div className="wb-actions-row">
         <button type="button" className="wb-btn ghost" onClick={onCancel}>
-          Cancelar
+          {t("formCancel")}
         </button>
         <button type="submit" className="wb-btn primary">
-          Salvar
+          {t("formSave")}
         </button>
       </div>
     </form>
@@ -698,6 +714,7 @@ function ResolutionForm({
   onCancel: () => void;
   onSave: (resolution: Resolution) => void;
 }) {
+  const t = useWorkT().t;
   const [oQueEra, setOQueEra] = useState(item.desfecho?.oQueEra ?? "");
   const [comoCorrigiu, setComoCorrigiu] = useState(item.desfecho?.comoCorrigiu ?? "");
   const [oQueUsou, setOQueUsou] = useState(item.desfecho?.oQueUsou ?? "");
@@ -708,7 +725,7 @@ function ResolutionForm({
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!oQueEra.trim() || !comoCorrigiu.trim() || !oQueUsou.trim()) {
-      setError("Preencha o que era, como corrigiu e o que foi usado.");
+      setError(t("resError"));
       return;
     }
     const attempts = Math.max(1, Math.round(Number(tentativas) || 1));
@@ -722,22 +739,17 @@ function ResolutionForm({
     });
   };
 
-  const blameLabel = kind === "bug" ? "O que era (sintoma e causa)" : "O que foi feito";
-  const fixLabel = kind === "bug" ? "Como foi corrigido" : "Como foi concluído";
-  const usedLabel = kind === "bug" ? "O que foi usado para corrigir" : "O que foi usado para concluir";
+  const blameLabel = kind === "bug" ? t("blameBug") : t("blameTask");
+  const fixLabel = kind === "bug" ? t("fixBug") : t("fixTask");
+  const usedLabel = kind === "bug" ? t("usedBug") : t("usedTask");
 
   return (
     <form className="wb-form" onSubmit={submit}>
       <div className="wb-resolution-intro">
         <strong>
-          {kind === "bug"
-            ? "Todo bug corrigido precisa de um desfecho completo."
-            : "Toda tarefa concluída precisa de um desfecho completo."}
+          {kind === "bug" ? t("resIntroBug") : t("resIntroTask")}
         </strong>
-        <p>
-          Explique o suficiente para outra pessoa entender o problema e repetir a solução. Esse
-          texto fica visível no card e no histórico do projeto.
-        </p>
+        <p>{t("resIntroText")}</p>
       </div>
 
       <div className="wb-field">
@@ -747,11 +759,7 @@ function ResolutionForm({
           value={oQueEra}
           autoFocus
           onChange={(event) => setOQueEra(event.target.value)}
-          placeholder={
-            kind === "bug"
-              ? "O que o jogador via, qual era a causa medida e onde ela estava."
-              : "Qual era o problema ou a pendência e o que precisava ser entregue."
-          }
+          placeholder={kind === "bug" ? t("phBlameBug") : t("phBlameTask")}
         />
       </div>
 
@@ -761,7 +769,7 @@ function ResolutionForm({
           id="wb-resolution-how"
           value={comoCorrigiu}
           onChange={(event) => setComoCorrigiu(event.target.value)}
-          placeholder="A mudança feita, com arquivo, função ou pacote quando possível."
+          placeholder={t("phFix")}
         />
       </div>
 
@@ -771,13 +779,13 @@ function ResolutionForm({
           id="wb-resolution-used"
           value={oQueUsou}
           onChange={(event) => setOQueUsou(event.target.value)}
-          placeholder="Ferramentas, logs, hashes, builds, restore points, commits e testes."
+          placeholder={t("phUsed")}
         />
       </div>
 
       <div className="wb-grid2">
         <div className="wb-field">
-          <label htmlFor="wb-attempts">Tentativas antes de resolver *</label>
+          <label htmlFor="wb-attempts">{t("attemptsLabel")}</label>
           <input
             id="wb-attempts"
             type="number"
@@ -786,15 +794,15 @@ function ResolutionForm({
             value={tentativas}
             onChange={(event) => setTentativas(event.target.value)}
           />
-          <span className="wb-hint">Conte também as tentativas que falharam.</span>
+          <span className="wb-hint">{t("attemptsHint")}</span>
         </div>
         <div className="wb-field">
-          <label htmlFor="wb-commit">Commit / PR (opcional)</label>
+          <label htmlFor="wb-commit">{t("commitLabel")}</label>
           <input
             id="wb-commit"
             value={commit}
             onChange={(event) => setCommit(event.target.value)}
-            placeholder="SHA, URL do commit ou número do PR"
+            placeholder={t("commitPh")}
           />
         </div>
       </div>
@@ -803,10 +811,10 @@ function ResolutionForm({
 
       <div className="wb-actions-row">
         <button type="button" className="wb-btn ghost" onClick={onCancel}>
-          Cancelar
+          {t("formCancel")}
         </button>
         <button type="submit" className="wb-btn primary">
-          {kind === "bug" ? "Salvar e marcar como corrigido" : "Salvar e concluir"}
+          {kind === "bug" ? t("saveFix") : t("saveDone")}
         </button>
       </div>
     </form>

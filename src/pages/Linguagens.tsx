@@ -1,18 +1,17 @@
 import { useState } from "react";
-import sqfMd from "../content/sqf.md?raw";
-import enforceMd from "../content/enforce.md?raw";
 import { Md } from "../components/Md";
 import { navigate, useRoute } from "../lib/router";
+import { useDocsT } from "../content/docs-i18n";
+import { useMd } from "../lib/content";
 
 type Tab = "sqf" | "enforce" | "config" | "cpp";
 
-const TABS: { key: Tab; label: string; sub: string }[] = [
-  { key: "sqf", label: "SQF / SQS", sub: "1.340 comandos · script legado" },
-  { key: "enforce", label: "Enforce", sub: "Enfusion · script moderno" },
-  { key: "config", label: "Config", sub: "ParamFile / Cfg*" },
-  { key: "cpp", label: "C++ da BI", sub: "padrões de 1,4 M linhas" },
+const TABS: { key: Tab }[] = [
+  { key: "sqf" },
+  { key: "enforce" },
+  { key: "config" },
+  { key: "cpp" },
 ];
-
 const CONFIG_MD = `
 ## Config (ParamFile)
 
@@ -110,38 +109,52 @@ resolver isso **primeiro**.
 `;
 
 export function Linguagens() {
+  const { t } = useDocsT();
+  const sqfMd = useMd("sqf");
+  const enforceMd = useMd("enforce");
   const route = useRoute();
   const inicial = route.parts[1] as Tab | undefined;
   const [tab, setTab] = useState<Tab>(
     inicial && ["sqf", "enforce", "config", "cpp"].includes(inicial) ? inicial : "sqf"
   );
 
-  const escolher = (t: Tab) => {
-    setTab(t);
-    navigate(`linguagens/${t}`);
+  const label = (key: Tab) => ({
+    label: key === "cpp" ? t("languages.tab.cpp") : key === "sqf" ? "SQF / SQS" : key === "enforce" ? "Enforce" : "Config",
+    sub:
+      key === "sqf"
+        ? t("languages.tab.sqfSub")
+        : key === "enforce"
+          ? t("languages.tab.enforceSub")
+          : key === "cpp"
+            ? t("languages.tab.cppSub")
+            : "ParamFile / Cfg*",
+  });
+
+  const escolher = (next: Tab) => {
+    setTab(next);
+    navigate(`linguagens/${next}`);
   };
 
   return (
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">as linguagens da source</span>
-          <h1>Linguagens</h1>
-          <p>
-            A source não é monolíngue: convivem C++ de 2010, Enforce (script moderno),
-            SQF/SQS (legado), ParamFile (config) e HLSL. Referência de sintaxe das duas
-            linguagens de script, com evidência no compilador e na VM.
-          </p>
+          <span className="kicker">{t("languages.kicker")}</span>
+          <h1>{t("languages.title")}</h1>
+          <p>{t("languages.lead")}</p>
         </div>
       </div>
 
       <div className="tabs">
-        {TABS.map((t) => (
-          <button key={t.key} className={`tab ${tab === t.key ? "on" : ""}`} onClick={() => escolher(t.key)}>
-            <strong>{t.label}</strong>
-            <small>{t.sub}</small>
-          </button>
-        ))}
+        {TABS.map((item) => {
+          const copy = label(item.key);
+          return (
+            <button key={item.key} className={`tab ${tab === item.key ? "on" : ""}`} onClick={() => escolher(item.key)}>
+              <strong>{copy.label}</strong>
+              <small>{copy.sub}</small>
+            </button>
+          );
+        })}
       </div>
 
       <section className="panel article">

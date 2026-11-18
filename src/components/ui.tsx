@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useDocsT } from "../content/docs-i18n";
 
 export function Badge({ children, tone = "neutral" }: { children: ReactNode; tone?: string }) {
   return <span className={`badge ${tone}`}>{children}</span>;
@@ -46,6 +47,7 @@ export function Bars({
 export function SearchInput({
   value, onChange, placeholder
 }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
+  const { t } = useDocsT();
   return (
     <div className="search">
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
@@ -55,27 +57,29 @@ export function SearchInput({
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder ?? "Buscar..."}
+        placeholder={placeholder ?? t("common.search")}
         spellCheck={false}
       />
       {value && (
-        <button className="clear" onClick={() => onChange("")} aria-label="Limpar">×</button>
+        <button className="clear" onClick={() => onChange("")} aria-label={t("common.clear")}>×</button>
       )}
     </div>
   );
 }
 
-export function Loading({ label = "Carregando dados..." }: { label?: string }) {
+export function Loading({ label }: { label?: string }) {
+  const { t } = useDocsT();
   return (
     <div className="loading">
       <span className="spinner" />
-      {label}
+      {label ?? t("common.loadingData")}
     </div>
   );
 }
 
 export function ErrorBox({ message }: { message: string }) {
-  return <div className="errorbox">Falha: {message}</div>;
+  const { t } = useDocsT();
+  return <div className="errorbox">{t("common.error")}: {message}</div>;
 }
 
 export function SectionTitle({ kicker, title, right }: { kicker?: string; title: string; right?: ReactNode }) {
@@ -91,13 +95,14 @@ export function SectionTitle({ kicker, title, right }: { kicker?: string; title:
 }
 
 export function CopyButton({ text }: { text: string }) {
+  const { t } = useDocsT();
   return (
     <button
       className="copy"
       onClick={() => navigator.clipboard?.writeText(text)}
-      title="Copiar comando"
+      title={t("common.copyCommand")}
     >
-      copiar
+      {t("common.copy")}
     </button>
   );
 }

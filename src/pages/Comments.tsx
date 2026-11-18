@@ -2,10 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { getComentarios, getComentariosIndex, useAsync, fmt } from "../lib/data";
 import type { Comentario } from "../types";
 import { Badge, ErrorBox, Loading, SearchInput, toneForKind } from "../components/ui";
+import { useDocsT } from "../content/docs-i18n";
 
 const PAGE = 30;
 
 export function Comments() {
+  const { t, locale } = useDocsT();
   const index = useAsync(getComentariosIndex);
   const [grupoSlug, setGrupoSlug] = useState("");
   const [grupoBusca, setGrupoBusca] = useState("");
@@ -68,7 +70,7 @@ export function Comments() {
   if (index.loading) return <Loading />;
   if (index.error) return <ErrorBox message={index.error} />;
   if (!index.data) return null;
-  if (!grupoAtual) return <Loading label="Selecionando grupo..." />;
+  if (!grupoAtual) return <Loading label={t("comments.loadingGroup")} />;
 
   const pageRows = filtered.slice(page * PAGE, page * PAGE + PAGE);
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE));
@@ -80,18 +82,16 @@ export function Comments() {
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">corpus anotado</span>
-          <h1>Comentários</h1>
-          <p>
-            {fmt(index.data.total)} comentários em {index.data.grupos.length} grupos.
-            Original, tradução, código ancorado e função de contexto. Carregamento sob demanda.
-          </p>
+          <span className="kicker">{t("comments.kicker")}</span>
+          <h1>{t("comments.title")}</h1>
+          <p>{t("comments.lead", { total: fmt(index.data.total), groups: index.data.grupos.length })}</p>
+          {locale === "ru" && <p className="corpus-inline">{t("comments.russianNote")}</p>}
         </div>
       </div>
 
       <div className="comment-layout">
         <aside className="group-pane">
-          <SearchInput value={grupoBusca} onChange={setGrupoBusca} placeholder="Filtrar grupos..." />
+          <SearchInput value={grupoBusca} onChange={setGrupoBusca} placeholder={t("comments.filterGroups")} />
           <div className="group-list">
             {gruposFiltrados.map((g) => (
               <button
@@ -108,22 +108,22 @@ export function Comments() {
 
         <section className="comment-main">
           <div className="toolbar">
-            <SearchInput value={q} onChange={(v) => { setQ(v); setPage(0); }} placeholder="Buscar no grupo (texto, arquivo, função)..." />
+            <SearchInput value={q} onChange={(v) => { setQ(v); setPage(0); }} placeholder={t("comments.search")} />
             <select value={kind} onChange={(e) => { setKind(e.target.value); setPage(0); }}>
               {kinds.map((k) => <option key={k} value={k}>{k}</option>)}
             </select>
             <label className="toggle">
               <input type="checkbox" checked={comCodigo} onChange={(e) => setComCodigo(e.target.checked)} />
-              código
+              {t("common.code")}
             </label>
           </div>
 
           <div className="comment-meta">
             <strong>{grupoAtual.grupo}</strong>
-            <span>{fmt(grupoAtual.total)} comentários · {filtered.length} filtrados</span>
+            <span>{t("comments.summary", { total: fmt(grupoAtual.total), filtered: filtered.length })}</span>
           </div>
 
-          {loading && <Loading label="Carregando grupo..." />}
+          {loading && <Loading label={t("comments.loadingGroup")} />}
           {error && <ErrorBox message={error} />}
 
           <div className="comment-list">
@@ -136,13 +136,13 @@ export function Comments() {
                   </div>
                   <div className="comment-badges">
                     <Badge tone={toneForKind(r.kind)}>{r.kind}</Badge>
-                    {r.status === "curado" && <Badge tone="lime">curado</Badge>}
+                    {r.status === "curado" && <Badge tone="lime">{t("common.curated")}</Badge>}
                   </div>
                 </header>
                 <div className="comment-body">
                   <p className="original">{r.original}</p>
-                  <p className="pt">{r.pt}</p>
-                  {r.qual && <p className="qual"><strong>O que faz:</strong> {r.qual}</p>}
+                  {locale === "pt" && <p className="pt">{r.pt}</p>}
+                  {r.qual && <p className="qual"><strong>{t("comments.whatItDoes")}</strong> {r.qual}</p>}
                   {comCodigo && r.code && (
                     <pre className="code-block">{r.code.split(" | ").join("\n")}</pre>
                   )}
@@ -151,13 +151,13 @@ export function Comments() {
             ))}
           </div>
 
-          {!loading && !pageRows.length && <div className="empty">Nenhum comentário para os filtros atuais.</div>}
+          {!loading && !pageRows.length && <div className="empty">{t("comments.empty")}</div>}
 
           {pages > 1 && (
             <div className="pager">
-              <button disabled={page === 0} onClick={() => setPage((p) => Math.max(0, p - 1))}>← anterior</button>
-              <span>página {page + 1} de {pages}</span>
-              <button disabled={page >= pages - 1} onClick={() => setPage((p) => Math.min(pages - 1, p + 1))}>próxima →</button>
+              <button disabled={page === 0} onClick={() => setPage((p) => Math.max(0, p - 1))}>{t("common.previous")}</button>
+              <span>{t("common.pageOf", { page: page + 1, pages })}</span>
+              <button disabled={page >= pages - 1} onClick={() => setPage((p) => Math.min(pages - 1, p + 1))}>{t("common.next")}</button>
             </div>
           )}
         </section>

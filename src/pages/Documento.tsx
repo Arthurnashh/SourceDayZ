@@ -3,14 +3,18 @@ import { getDoc, useAsync } from "../lib/data";
 import type { DocSecao } from "../types";
 import { ErrorBox, Loading, SearchInput } from "../components/ui";
 import { Md } from "../components/Md";
+import { useDocsT } from "../content/docs-i18n";
+import { docsTitle } from "../content/docs-titles";
 
 export function Documento() {
+  const { t, locale } = useDocsT();
   const { data, error, loading } = useAsync(getDoc);
   const [sel, setSel] = useState(0);
   const [q, setQ] = useState("");
   const [abertos, setAbertos] = useState<Set<number>>(() => new Set([0]));
 
   const secoes = data?.secoes ?? [];
+  const titulo = (s: DocSecao) => docsTitle(locale, s.titulo);
 
   const ancestrais = useMemo(() => {
     if (!secoes.length) return [];
@@ -30,9 +34,11 @@ export function Documento() {
     if (!needle) return [];
     return secoes
       .map((s, i) => ({ s, i }))
-      .filter(({ s }) => (s.titulo + " " + s.md).toLowerCase().includes(needle))
+      .filter(({ s }) =>
+        (docsTitle(locale, s.titulo) + " " + s.titulo + " " + s.md).toLowerCase().includes(needle)
+      )
       .slice(0, 60);
-  }, [secoes, q]);
+  }, [secoes, q, locale]);
 
   if (loading) return <Loading />;
   if (error) return <ErrorBox message={error} />;
@@ -73,7 +79,7 @@ export function Documento() {
         <button
           className={`doc-link d${Math.min(depth, 3)} ${sel === i ? "on" : ""}`}
           onClick={() => abrir(i)}
-          title={s.titulo}
+          title={titulo(s)}
         >
           {temFilhos ? (
             <span
@@ -85,7 +91,7 @@ export function Documento() {
           ) : (
             <span className="doc-caret ghost" />
           )}
-          <span className="doc-label">{s.titulo}</span>
+          <span className="doc-label">{titulo(s)}</span>
           <small>{s.linhas}</small>
         </button>
         {aberto && temFilhos && s.filhos.map((f) => renderTree(f, depth + 1))}
@@ -97,28 +103,30 @@ export function Documento() {
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">documento-mestre</span>
-          <h1>Documento</h1>
+          <span className="kicker">{t("doc.kicker")}</span>
+          <h1>{t("doc.title")}</h1>
           <p>
-            O <code>1.md</code> inteiro, fatiado em {data.secoes.length} seções navegáveis:
-            {" "}{data.linhas.toLocaleString("pt-BR")} linhas, {(data.bytes / 1024).toFixed(0)} KB
-            de estudo da source — método, linguagens, funções, DX11 e motor.
+            {t("doc.lead", {
+              sections: data.secoes.length,
+              lines: data.linhas.toLocaleString(locale === "pt" ? "pt-BR" : locale),
+              kb: Math.round(data.bytes / 1024),
+            })}
           </p>
         </div>
       </div>
 
       <div className="doc-layout">
         <aside className="doc-pane">
-          <SearchInput value={q} onChange={setQ} placeholder="Buscar no documento..." />
+          <SearchInput value={q} onChange={setQ} placeholder={t("doc.search")} />
           {q ? (
             <div className="doc-results">
               {resultados.map(({ s, i }) => (
                 <button key={i} className="doc-result" onClick={() => { abrir(i); setQ(""); }}>
-                  <small>nível {s.nivel} · linha {s.linha}</small>
-                  <span>{s.titulo}</span>
+                  <small>{t("doc.resultMeta", { level: s.nivel, line: s.linha })}</small>
+                  <span>{titulo(s)}</span>
                 </button>
               ))}
-              {!resultados.length && <div className="empty">Nada encontrado.</div>}
+              {!resultados.length && <div className="empty">{t("doc.nothing")}</div>}
             </div>
           ) : (
             <nav className="doc-tree">
@@ -131,25 +139,30 @@ export function Documento() {
           {ancestrais.length > 0 && (
             <div className="doc-breadcrumb">
               {ancestrais.map((a) => (
-                <button key={a} onClick={() => abrir(a)}>{secoes[a].titulo}</button>
+                <button key={a} onClick={() => abrir(a)}>{titulo(secoes[a])}</button>
               ))}
             </div>
           )}
           <div className="doc-meta">
-            <span className="chip">linha {atual.linha}</span>
-            <span className="chip">{atual.linhas} linhas de texto</span>
-            <span className="chip">nível {atual.nivel}</span>
+            <span className="chip">{t("doc.lineChip", { n: atual.linha })}</span>
+            <span className="chip">{t("doc.linesChip", { n: atual.linhas })}</span>
+            <span className="chip">{t("doc.levelChip", { n: atual.nivel })}</span>
+            {locale !== "pt" && (
+              <span className="chip amber" title={t("docs.corpusNote")}>
+                {t("docs.corpusNoteShort")}
+              </span>
+            )}
           </div>
-          <h2 className="doc-title">{atual.titulo}</h2>
+          <h2 className="doc-title">{titulo(atual)}</h2>
           <Md text={atual.md} />
 
           {atual.filhos.length > 0 && (
             <div className="doc-children">
-              <h4>Subseções ({atual.filhos.length})</h4>
+              <h4>{t("doc.subsections", { n: atual.filhos.length })}</h4>
               <div className="doc-chips">
                 {atual.filhos.map((f) => (
                   <button key={f} onClick={() => abrir(f)}>
-                    {secoes[f].titulo}
+                    {titulo(secoes[f])}
                     <small>{secoes[f].linhas}</small>
                   </button>
                 ))}
@@ -158,8 +171,8 @@ export function Documento() {
           )}
 
           <div className="doc-nav">
-            <button disabled={sel <= 0} onClick={() => abrir(Math.max(0, sel - 1))}>← anterior</button>
-            <button disabled={sel >= secoes.length - 1} onClick={() => abrir(Math.min(secoes.length - 1, sel + 1))}>próxima →</button>
+            <button disabled={sel <= 0} onClick={() => abrir(Math.max(0, sel - 1))}>{t("common.previous")}</button>
+            <button disabled={sel >= secoes.length - 1} onClick={() => abrir(Math.min(secoes.length - 1, sel + 1))}>{t("common.next")}</button>
           </div>
         </article>
       </div>

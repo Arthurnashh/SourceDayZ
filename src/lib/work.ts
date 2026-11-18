@@ -112,10 +112,12 @@ export function statusLabel(kind: WorkKind, status: WorkStatus): string {
   return kind === "tarefa" ? STATUS_LABEL_TASK[status] : STATUS_LABEL[status];
 }
 
-export function fmtDate(value: string, withTime = false): string {
+export function fmtDate(value: string, withTime = false, locale = "pt-BR"): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString("pt-BR", {
+  const tag =
+    locale === "pt" ? "pt-BR" : locale === "ru" ? "ru-RU" : locale === "en" ? "en-GB" : locale;
+  return date.toLocaleDateString(tag, {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",

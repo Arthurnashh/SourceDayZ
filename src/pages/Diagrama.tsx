@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDocsT } from "../content/docs-i18n";
+import { LAYER_TEXT, NODE_TEXT, pick } from "../content/diagram-i18n";
 
 interface Node {
   id: string;
@@ -13,7 +15,7 @@ interface Node {
   evidencia: string;
 }
 
-const NODES: Node[] = [
+const NODES_BASE: Node[] = [
   {
     id: "winmain", x: 20, y: 40, w: 180, h: 62, titulo: "WinMain", sub: "main.cpp",
     grupo: "entrada",
@@ -117,38 +119,48 @@ const CORES: Record<Node["grupo"], string> = {
   saida: "#f2b544",
 };
 
-const CAMADAS = [
-  { nome: "Gameplay / Script", desc: "Enforce VM + SQF, missões, ações e UI de jogo", cor: "#5ec8f5", ev: "Enfusion/src/script · lib/scripts.cpp" },
-  { nome: "IA / Física", desc: "invasores, infectados, veículos e Bullet 2.76", cor: "#b08cff", ev: "zombie.cpp · Bullet 2.76" },
-  { nome: "Terreno / Streaming", desc: "landscape, clutter, bancos de arquivo e texturas", cor: "#b9f24d", ev: "landClutter.cpp · networkClient.cpp" },
-  { nome: "Cena / Visibilidade", desc: "PrepareDraw, SortObject e instancing de 512", cor: "#f2b544", ev: "world.cpp:7926 · scene.cpp:6108" },
-  { nome: "Render / Backends", desc: "Object::Draw, EngineDD9 e Dx11EngineCore", cor: "#ff6f6f", ev: "object.cpp:1968 · lib/d3d9 · lib/d3d11" },
-  { nome: "GPU", desc: "estado, shader, draw call e present", cor: "#8ba69c", ev: "Dx11Device.cpp · PIX / RenderDoc" },
+const CAMADAS_BASE = [
+  { base: "Gameplay / Script", desc: "Enforce VM + SQF, missões, ações e UI de jogo", cor: "#5ec8f5", ev: "Enfusion/src/script · lib/scripts.cpp" },
+  { base: "IA / Física", desc: "invasores, infectados, veículos e Bullet 2.76", cor: "#b08cff", ev: "zombie.cpp · Bullet 2.76" },
+  { base: "Terreno / Streaming", desc: "landscape, clutter, bancos de arquivo e texturas", cor: "#b9f24d", ev: "landClutter.cpp · networkClient.cpp" },
+  { base: "Cena / Visibilidade", desc: "PrepareDraw, SortObject e instancing de 512", cor: "#f2b544", ev: "world.cpp:7926 · scene.cpp:6108" },
+  { base: "Render / Backends", desc: "Object::Draw, EngineDD9 e Dx11EngineCore", cor: "#ff6f6f", ev: "object.cpp:1968 · lib/d3d9 · lib/d3d11" },
+  { base: "GPU", desc: "estado, shader, draw call e present", cor: "#8ba69c", ev: "Dx11Device.cpp · PIX / RenderDoc" },
 ];
 
 export function Diagrama() {
-  const [sel, setSel] = useState<Node>(NODES.find((n) => n.id === "sim")!);
+  const { t, locale } = useDocsT();
+  const [selId, setSelId] = useState("sim");
   const [camada, setCamada] = useState(0);
   const [girar, setGirar] = useState(false);
 
+  const NODES = NODES_BASE.map((n) => ({
+    ...n,
+    sub: pick(NODE_TEXT[n.id].sub, locale),
+    detalhe: pick(NODE_TEXT[n.id].detalhe, locale),
+  }));
+  const CAMADAS = CAMADAS_BASE.map((c) => ({
+    ...c,
+    nome: pick(LAYER_TEXT[c.base].nome, locale),
+    desc: pick(LAYER_TEXT[c.base].desc, locale),
+  }));
+  const sel = NODES.find((n) => n.id === selId) ?? NODES[0];
+  const setSel = (n: Node) => setSelId(n.id);
   const byId = (id: string) => NODES.find((n) => n.id === id)!;
 
   return (
     <div className="page">
       <div className="page-head">
         <div>
-          <span className="kicker">mapa interativo</span>
-          <h1>Diagrama do motor</h1>
-          <p>
-            Do <code>WinMain</code> ao <code>Present</code>: clique em qualquer caixa para ver
-            o que ela faz e onde está no código. Abaixo, a pilha de camadas em 3D.
-          </p>
+          <span className="kicker">{t("diagram.kicker")}</span>
+          <h1>{t("diagram.title")}</h1>
+          <p>{t("diagram.lead")}</p>
         </div>
       </div>
 
       <section className="panel diagram-panel">
         <div className="diagram-wrap">
-          <svg viewBox="0 0 880 560" className="engine-svg" role="img" aria-label="Fluxo do motor do DayZ">
+          <svg viewBox="0 0 880 560" className="engine-svg" role="img" aria-label={t("diagram.aria")}>
             <defs>
               <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#2b4339" />
@@ -201,9 +213,9 @@ export function Diagrama() {
               );
             })}
 
-            <text x="20" y="24" className="col-label">ENTRADA</text>
-            <text x="250" y="24" className="col-label">FRAME</text>
-            <text x="700" y="24" className="col-label">SAÍDA</text>
+            <text x="20" y="24" className="col-label">{t("diagram.input")}</text>
+            <text x="250" y="24" className="col-label">{t("diagram.frame")}</text>
+            <text x="700" y="24" className="col-label">{t("diagram.output")}</text>
           </svg>
         </div>
 
@@ -213,10 +225,10 @@ export function Diagrama() {
           <p>{sel.detalhe}</p>
           <code>{sel.evidencia}</code>
           <div className="diagram-legend">
-            <span><i className="lg entrada" /> entrada</span>
-            <span><i className="lg frame" /> frame</span>
-            <span><i className="lg desenho" /> desenho</span>
-            <span><i className="lg saida" /> saída</span>
+            <span><i className="lg entrada" /> {t("diagram.legend.input")}</span>
+            <span><i className="lg frame" /> {t("diagram.legend.frame")}</span>
+            <span><i className="lg desenho" /> {t("diagram.legend.draw")}</span>
+            <span><i className="lg saida" /> {t("diagram.legend.output")}</span>
           </div>
         </aside>
       </section>
@@ -224,11 +236,11 @@ export function Diagrama() {
       <section className="panel stack-panel">
         <div className="stack-head">
           <div>
-            <span className="kicker">profundidade</span>
-            <h2>Camadas do motor</h2>
+            <span className="kicker">3D</span>
+            <h2>{t("diagram.layers")}</h2>
           </div>
           <button className="btn" onClick={() => setGirar((v) => !v)}>
-            {girar ? "pausar rotação" : "girar"}
+            {girar ? t("diagram.pause") : t("diagram.rotate")}
           </button>
         </div>
 
@@ -255,7 +267,7 @@ export function Diagrama() {
 
           <div className="stack-info">
             <span className="chip" style={{ color: CAMADAS[camada].cor, borderColor: CAMADAS[camada].cor }}>
-              camada {camada + 1} de {CAMADAS.length}
+              {t("diagram.layerOf", { n: camada + 1, total: CAMADAS.length })}
             </span>
             <h3>{CAMADAS[camada].nome}</h3>
             <p>{CAMADAS[camada].desc}</p>
