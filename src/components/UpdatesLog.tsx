@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { Modal } from "./Modal";
 import {
   GITHUB_UPDATES_PATH,
@@ -9,13 +9,71 @@ import {
 import {
   downloadJSON,
   fmtDate,
-  UPDATE_KIND_LABEL,
   type UpdateEntry,
   type UpdateKind,
   type WorkStore,
 } from "../lib/work";
+import { useWorkT } from "../content/work-i18n";
+import type { Locale } from "../lib/i18n";
 
 const TIPOS: UpdateKind[] = ["patch", "implementacao", "build", "anuncio"];
+
+function kindKey(kind: UpdateKind): string {
+  if (kind === "patch") return "kindPatch";
+  if (kind === "implementacao") return "kindImplementation";
+  if (kind === "build") return "kindBuild";
+  return "kindAnnouncement";
+}
+
+const BANNER: Record<Locale, ReactNode> = {
+  pt: (
+    <>
+      <strong>Edição local ativa.</strong> As entradas ficam neste navegador até você publicar o
+      manifesto no GitHub. Use o bloco <em>Publicar no GitHub</em> abaixo ou exporte o JSON e
+      commite em <code>{GITHUB_UPDATES_PATH}</code>.
+    </>
+  ),
+  en: (
+    <>
+      <strong>Local editing active.</strong> Entries stay in this browser until you publish the
+      manifest to GitHub. Use the <em>Publish to GitHub</em> block below or export the JSON and
+      commit it to <code>{GITHUB_UPDATES_PATH}</code>.
+    </>
+  ),
+  ru: (
+    <>
+      <strong>Локальное редактирование активно.</strong> Записи остаются в этом браузере, пока вы
+      не опубликуете манифест в GitHub. Используйте блок <em>Опубликовать в GitHub</em> ниже или
+      экспортируйте JSON и закоммитьте в <code>{GITHUB_UPDATES_PATH}</code>.
+    </>
+  ),
+};
+
+const PUBLISH_HELP: Record<Locale, ReactNode> = {
+  pt: (
+    <>
+      O token fica nesta aba do navegador (sessionStorage) e só é enviado para{" "}
+      <code>api.github.com</code>. Use um token fine-grained com{" "}
+      <strong>Contents: Read and write</strong> apenas no repositório{" "}
+      <code>Personed/Game</code>.
+    </>
+  ),
+  en: (
+    <>
+      The token stays in this browser tab (sessionStorage) and is sent only to{" "}
+      <code>api.github.com</code>. Use a fine-grained token with{" "}
+      <strong>Contents: Read and write</strong> only on the <code>Personed/Game</code> repository.
+    </>
+  ),
+  ru: (
+    <>
+      Токен хранится в этой вкладке браузера (sessionStorage) и отправляется только на{" "}
+      <code>api.github.com</code>. Используйте fine-grained токен с{" "}
+      <strong>Contents: Read and write</strong> только для репозитория{" "}
+      <code>Personed/Game</code>.
+    </>
+  ),
+};
 
 function toLocalInput(iso: string): string {
   const date = new Date(iso);
@@ -45,6 +103,7 @@ function newUpdate(): UpdateEntry {
 }
 
 export function UpdatesLog({ store }: { store: WorkStore }) {
+  const { t, locale } = useWorkT();
   const [editMode, setEditMode] = useState(false);
   const [draft, setDraft] = useState<UpdateEntry | null>(null);
   const [token, setToken] = useState(readGithubToken);
@@ -69,7 +128,7 @@ export function UpdatesLog({ store }: { store: WorkStore }) {
   const publish = async () => {
     if (!store.state) return;
     if (!token.trim()) {
-      setError("Informe um token do GitHub com permissão Contents: Read and write.");
+      setError(t("toolsErrorToken"));
       return;
     }
     setBusy(true);
@@ -85,12 +144,12 @@ export function UpdatesLog({ store }: { store: WorkStore }) {
         token,
         path: GITHUB_UPDATES_PATH,
         content,
-        message: "docs(site): publica atualizações curadas",
+        message: t("toolsUpdatesCommit"),
       });
       setNotice(
         result.commitUrl
-          ? `Manifesto publicado no GitHub. Commit: ${result.commitUrl}`
-          : "Manifesto publicado no GitHub."
+          ? `${t("toolsUpdatesPublished")} ${result.commitUrl}`
+          : t("toolsUpdatesPublished")
       );
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : String(err));
@@ -100,7 +159,7 @@ export function UpdatesLog({ store }: { store: WorkStore }) {
   };
 
   const remove = (entry: UpdateEntry) => {
-    if (window.confirm(`Excluir a atualização “${entry.titulo}”?`)) {
+    if (window.confirm(t("updatesRemoveConfirm", { title: entry.titulo }))) {
       store.deleteUpdate(entry.id);
     }
   };
@@ -109,39 +168,29 @@ export function UpdatesLog({ store }: { store: WorkStore }) {
     <section className="wb updates-log">
       <div className="wb-top">
         <div className="wb-title">
-          <span className="kicker">registro curado · publicado pelo GitHub</span>
-          <h2>Atualizações do projeto</h2>
-          <p>
-            Este é o changelog mantido à mão. Quem tem a source adiciona aqui e publica o arquivo{" "}
-            <code>{GITHUB_UPDATES_PATH}</code> no repositório; o site reconhece o manifesto e os
-            commits automaticamente na aba <strong>Feed do GitHub</strong>.
-          </p>
+          <span className="kicker">{t("updatesKicker")}</span>
+          <h2>{t("updatesTitle")}</h2>
+          <p>{t("updatesLead", { path: GITHUB_UPDATES_PATH })}</p>
         </div>
         <div className="wb-tools">
           <button
             className={`wb-btn ${editMode ? "on" : ""}`}
             onClick={() => setEditMode(!editMode)}
           >
-            {editMode ? "Edição ativa" : "Ativar edição"}
+            {editMode ? t("toolsEditOn") : t("toolsEditOff")}
           </button>
           {editMode && (
             <button className="wb-btn primary" onClick={() => setDraft(newUpdate())}>
-              + Nova atualização
+              {t("updatesNew")}
             </button>
           )}
           <button className="wb-btn" onClick={exportAll} disabled={!store.state}>
-            Exportar updates
+            {t("updatesExport")}
           </button>
         </div>
       </div>
 
-      {editMode && (
-        <div className="wb-banner">
-          <strong>Edição local ativa.</strong> As entradas ficam neste navegador até você publicar o
-          manifesto no GitHub. Use o bloco <em>Publicar no GitHub</em> abaixo ou exporte o JSON e
-          commite em <code>{GITHUB_UPDATES_PATH}</code>.
-        </div>
-      )}
+      {editMode && <div className="wb-banner">{BANNER[locale]}</div>}
 
       {(notice || error) && (
         <div className={`wb-notice ${error ? "bad" : "good"}`}>{error ?? notice}</div>
@@ -151,9 +200,9 @@ export function UpdatesLog({ store }: { store: WorkStore }) {
         {updates.map((entry) => (
           <article className={`update-entry ${entry.tipo}`} key={entry.id}>
             <header>
-              <span className={`gh-type ${entry.tipo}`}>{UPDATE_KIND_LABEL[entry.tipo]}</span>
+              <span className={`gh-type ${entry.tipo}`}>{t(kindKey(entry.tipo))}</span>
               {entry.versao && <code>{entry.versao}</code>}
-              <time dateTime={entry.data}>{fmtDate(entry.data, true)}</time>
+              <time dateTime={entry.data}>{fmtDate(entry.data, true, locale)}</time>
               <span className={`update-origin ${entry.origem}`}>
                 {entry.origem === "github" ? "GitHub" : "manual"}
               </span>
@@ -162,43 +211,34 @@ export function UpdatesLog({ store }: { store: WorkStore }) {
             <p className="update-summary">{entry.resumo}</p>
             {entry.detalhes && <p className="update-details">{entry.detalhes}</p>}
             <footer>
-              {entry.autor && <span>por {entry.autor}</span>}
+              {entry.autor && <span>{t("updatesBy", { author: entry.autor })}</span>}
               {entry.url && (
                 <a href={entry.url} target="_blank" rel="noreferrer noopener">
-                  referência ↗
+                  {t("updatesReference")}
                 </a>
               )}
               {editMode && (
                 <div className="wb-actions">
                   <button className="wb-mini" onClick={() => setDraft({ ...entry })}>
-                    Editar
+                    {t("actionEdit")}
                   </button>
                   <button className="wb-mini danger" onClick={() => remove(entry)}>
-                    Excluir
+                    {t("actionDelete")}
                   </button>
                 </div>
               )}
             </footer>
           </article>
         ))}
-        {updates.length === 0 && (
-          <div className="empty">
-            Nenhuma atualização curada ainda. Ative a edição e adicione a primeira.
-          </div>
-        )}
+        {updates.length === 0 && <div className="empty">{t("updatesEmpty")}</div>}
       </div>
 
       <details className="wb-publish">
-        <summary>Publicar no GitHub</summary>
+        <summary>{t("updatesPublish")}</summary>
         <div className="wb-publish-body">
-          <p>
-            O token fica nesta aba do navegador (sessionStorage) e só é enviado para{" "}
-            <code>api.github.com</code>. Use um token fine-grained com{" "}
-            <strong>Contents: Read and write</strong> apenas no repositório{" "}
-            <code>Personed/Game</code>.
-          </p>
+          <p>{PUBLISH_HELP[locale]}</p>
           <div className="wb-field">
-            <label htmlFor="updates-token">Token do GitHub</label>
+            <label htmlFor="updates-token">{t("toolsTokenLabel")}</label>
             <input
               id="updates-token"
               type="password"
@@ -214,7 +254,7 @@ export function UpdatesLog({ store }: { store: WorkStore }) {
           </div>
           <div className="wb-publish-actions">
             <button className="wb-btn primary" onClick={() => void publish()} disabled={busy}>
-              {busy ? "Publicando..." : `Publicar ${GITHUB_UPDATES_PATH}`}
+              {busy ? t("toolsPublishing") : t("toolsPublishUpdates", { path: GITHUB_UPDATES_PATH })}
             </button>
           </div>
         </div>
@@ -222,8 +262,12 @@ export function UpdatesLog({ store }: { store: WorkStore }) {
 
       {draft && (
         <Modal
-          title={updates.some((entry) => entry.id === draft.id) ? "Editar atualização" : "Nova atualização"}
-          subtitle="O que mudou, quando e em qual versão."
+          title={
+            updates.some((entry) => entry.id === draft.id)
+              ? t("updatesModalEdit")
+              : t("updatesModalNew")
+          }
+          subtitle={t("updatesModalSubtitle")}
           onClose={() => setDraft(null)}
           wide
         >
@@ -254,6 +298,7 @@ function UpdateForm({
   onCancel: () => void;
   onSave: (entry: UpdateEntry) => void;
 }) {
+  const { t } = useWorkT();
   const [draft, setDraft] = useState<UpdateEntry>({ ...entry });
   const [when, setWhen] = useState(toLocalInput(entry.data));
   const [error, setError] = useState<string | null>(null);
@@ -261,11 +306,11 @@ function UpdateForm({
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!draft.titulo.trim()) {
-      setError("Informe o título da atualização.");
+      setError(t("updatesErrTitle"));
       return;
     }
     if (!draft.resumo.trim()) {
-      setError("Escreva um resumo do que mudou.");
+      setError(t("updatesErrSummary"));
       return;
     }
     onSave({
@@ -284,39 +329,39 @@ function UpdateForm({
   return (
     <form className="wb-form" onSubmit={submit}>
       <div className="wb-field">
-        <label htmlFor="up-title">Título *</label>
+        <label htmlFor="up-title">{t("updatesFormTitle")}</label>
         <input
           id="up-title"
           value={draft.titulo}
           autoFocus
           onChange={(event) => setDraft({ ...draft, titulo: event.target.value })}
-          placeholder="Patch V38, build E7, nova frente..."
+          placeholder={t("updatesFormTitlePh")}
         />
       </div>
 
       <div className="wb-field">
-        <label htmlFor="up-summary">Resumo *</label>
+        <label htmlFor="up-summary">{t("updatesFormSummary")}</label>
         <textarea
           id="up-summary"
           value={draft.resumo}
           onChange={(event) => setDraft({ ...draft, resumo: event.target.value })}
-          placeholder="O que mudou e qual é o impacto para quem joga."
+          placeholder={t("updatesFormSummaryPh")}
         />
       </div>
 
       <div className="wb-field">
-        <label htmlFor="up-details">Detalhes</label>
+        <label htmlFor="up-details">{t("updatesFormDetails")}</label>
         <textarea
           id="up-details"
           value={draft.detalhes ?? ""}
           onChange={(event) => setDraft({ ...draft, detalhes: event.target.value })}
-          placeholder="Arquivos, hashes, testes, pendências."
+          placeholder={t("updatesFormDetailsPh")}
         />
       </div>
 
       <div className="wb-grid2">
         <div className="wb-field">
-          <label htmlFor="up-type">Tipo</label>
+          <label htmlFor="up-type">{t("updatesFormType")}</label>
           <select
             id="up-type"
             value={draft.tipo}
@@ -324,13 +369,13 @@ function UpdateForm({
           >
             {TIPOS.map((tipo) => (
               <option value={tipo} key={tipo}>
-                {UPDATE_KIND_LABEL[tipo]}
+                {t(kindKey(tipo))}
               </option>
             ))}
           </select>
         </div>
         <div className="wb-field">
-          <label htmlFor="up-when">Data</label>
+          <label htmlFor="up-when">{t("updatesFormDate")}</label>
           <input
             id="up-when"
             type="datetime-local"
@@ -342,7 +387,7 @@ function UpdateForm({
 
       <div className="wb-grid2">
         <div className="wb-field">
-          <label htmlFor="up-version">Versão / build</label>
+          <label htmlFor="up-version">{t("updatesFormVersion")}</label>
           <input
             id="up-version"
             value={draft.versao ?? ""}
@@ -351,18 +396,18 @@ function UpdateForm({
           />
         </div>
         <div className="wb-field">
-          <label htmlFor="up-author">Autor</label>
+          <label htmlFor="up-author">{t("updatesFormAuthor")}</label>
           <input
             id="up-author"
             value={draft.autor ?? ""}
             onChange={(event) => setDraft({ ...draft, autor: event.target.value })}
-            placeholder="quem publicou"
+            placeholder={t("updatesFormAuthorPh")}
           />
         </div>
       </div>
 
       <div className="wb-field">
-        <label htmlFor="up-url">Link de referência</label>
+        <label htmlFor="up-url">{t("updatesFormUrl")}</label>
         <input
           id="up-url"
           value={draft.url ?? ""}
@@ -375,10 +420,10 @@ function UpdateForm({
 
       <div className="wb-actions-row">
         <button type="button" className="wb-btn ghost" onClick={onCancel}>
-          Cancelar
+          {t("formCancel")}
         </button>
         <button type="submit" className="wb-btn primary">
-          Salvar atualização
+          {t("updatesSave")}
         </button>
       </div>
     </form>

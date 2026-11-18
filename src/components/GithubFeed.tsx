@@ -4,10 +4,19 @@ import {
   GITHUB_URL,
   type GithubFeedData,
 } from "../lib/github";
-import { fmtDate, UPDATE_KIND_LABEL } from "../lib/work";
+import { fmtDate } from "../lib/work";
 import { Loading } from "./ui";
+import { useWorkT } from "../content/work-i18n";
+
+function kindKey(kind: string): string {
+  if (kind === "patch") return "kindPatch";
+  if (kind === "implementacao") return "kindImplementation";
+  if (kind === "build") return "kindBuild";
+  return "kindAnnouncement";
+}
 
 export function GithubFeed({ compact = false }: { compact?: boolean }) {
+  const { t, locale } = useWorkT();
   const [feed, setFeed] = useState<GithubFeedData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +35,7 @@ export function GithubFeed({ compact = false }: { compact?: boolean }) {
 
   useEffect(() => {
     void load();
-    // O feed é carregado uma vez por montagem; o botão Atualizar força a releitura.
+    // The feed is loaded once per mount; the Refresh button forces a re-read.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -38,19 +47,16 @@ export function GithubFeed({ compact = false }: { compact?: boolean }) {
     <section className={`gh ${compact ? "compact" : ""}`}>
       <div className="gh-head">
         <div className="gh-head-main">
-          <span className="kicker">fonte oficial · github</span>
+          <span className="kicker">{t("feedKicker")}</span>
           <h2>Personed/Game</h2>
-          <p>
-            Patches e atualizações são reconhecidos direto do repositório. Commits, releases e o
-            manifesto <code>site-data/updates.json</code> aparecem aqui sem edição manual.
-          </p>
+          <p>{t("feedLead", { path: "site-data/updates.json" })}</p>
         </div>
         <div className="gh-head-actions">
           <a className="wb-btn ghost" href={GITHUB_URL} target="_blank" rel="noreferrer noopener">
-            Abrir no GitHub ↗
+            {t("feedOpen")}
           </a>
           <button className="wb-btn" onClick={() => void load(true)} disabled={loading}>
-            {loading ? "Lendo..." : "Atualizar"}
+            {loading ? t("feedLoading") : t("feedRefresh")}
           </button>
         </div>
       </div>
@@ -59,25 +65,25 @@ export function GithubFeed({ compact = false }: { compact?: boolean }) {
         <div className="gh-repo-line">
           <span className="gh-repo-dot" />
           <strong>{feed.repo.fullName}</strong>
-          <span>branch {feed.repo.defaultBranch}</span>
+          <span>{t("feedBranch", { branch: feed.repo.defaultBranch })}</span>
           {feed.repo.language && <span>{feed.repo.language}</span>}
-          <span>último push {fmtDate(feed.repo.pushedAt, true)}</span>
-          <span>{feed.repo.stars} estrela(s)</span>
-          <span className="gh-sync">sincronizado {fmtDate(feed.fetchedAt, true)}</span>
+          <span>{t("feedLastPush", { date: fmtDate(feed.repo.pushedAt, true, locale) })}</span>
+          <span>{t("feedStars", { n: feed.repo.stars })}</span>
+          <span className="gh-sync">{t("feedSynced", { date: fmtDate(feed.fetchedAt, true, locale) })}</span>
         </div>
       )}
 
       {error && (
         <div className="errorbox">
-          Não foi possível ler o GitHub: {error}{" "}
+          {t("feedError", { error })}{" "}
           <a href={GITHUB_URL} target="_blank" rel="noreferrer noopener">
-            abrir o repositório
+            {t("feedOpenRepo")}
           </a>
           .
         </div>
       )}
 
-      {loading && !feed && <Loading label="Lendo commits e releases do GitHub..." />}
+      {loading && !feed && <Loading label={t("feedLoadingLabel")} />}
 
       {feed && (
         <div className="gh-grid">
@@ -85,22 +91,22 @@ export function GithubFeed({ compact = false }: { compact?: boolean }) {
             {manifest.length > 0 && (
               <div className="gh-block">
                 <div className="gh-block-head">
-                  <span className="gh-block-title">Atualizações publicadas no repositório</span>
+                  <span className="gh-block-title">{t("feedManifestTitle")}</span>
                   <span className="gh-count">{manifest.length}</span>
                 </div>
                 <div className="gh-updates">
                   {manifest.map((entry) => (
                     <article className="gh-update" key={entry.id}>
                       <header>
-                        <span className={`gh-type ${entry.tipo}`}>{UPDATE_KIND_LABEL[entry.tipo]}</span>
+                        <span className={`gh-type ${entry.tipo}`}>{t(kindKey(entry.tipo))}</span>
                         {entry.versao && <code>{entry.versao}</code>}
-                        <time dateTime={entry.data}>{fmtDate(entry.data)}</time>
+                        <time dateTime={entry.data}>{fmtDate(entry.data, false, locale)}</time>
                       </header>
                       <h3>{entry.titulo}</h3>
                       <p>{entry.resumo}</p>
                       {entry.url && (
                         <a href={entry.url} target="_blank" rel="noreferrer noopener">
-                          ver referência ↗
+                          {t("updatesReference")}
                         </a>
                       )}
                     </article>
@@ -112,35 +118,33 @@ export function GithubFeed({ compact = false }: { compact?: boolean }) {
             {manifest.length === 0 && (
               <div className="gh-block">
                 <div className="gh-block-head">
-                  <span className="gh-block-title">Atualizações publicadas no repositório</span>
+                  <span className="gh-block-title">{t("feedManifestTitle")}</span>
                   <span className="gh-count">0</span>
                 </div>
-                <div className="empty">
-                  O repositório ainda não tem <code>site-data/updates.json</code>. O feed já mostra
-                  commits e releases; para publicar o changelog curado, use{" "}
-                  <strong>Atualizações → Atualizações manuais</strong>.
-                </div>
+                <div className="empty">{t("feedManifestEmpty", { path: "site-data/updates.json" })}</div>
               </div>
             )}
 
             {releases.length > 0 && (
               <div className="gh-block">
                 <div className="gh-block-head">
-                  <span className="gh-block-title">Releases</span>
+                  <span className="gh-block-title">{t("feedReleases")}</span>
                   <span className="gh-count">{releases.length}</span>
                 </div>
                 <div className="gh-updates">
                   {releases.map((release) => (
                     <article className="gh-update" key={release.id}>
                       <header>
-                        <span className="gh-type build">Release</span>
+                        <span className="gh-type build">{t("feedReleases")}</span>
                         <code>{release.tag}</code>
-                        <time dateTime={release.publishedAt}>{fmtDate(release.publishedAt)}</time>
+                        <time dateTime={release.publishedAt}>
+                          {fmtDate(release.publishedAt, false, locale)}
+                        </time>
                       </header>
                       <h3>{release.name}</h3>
                       {release.body && <p>{release.body.slice(0, 240)}</p>}
                       <a href={release.url} target="_blank" rel="noreferrer noopener">
-                        abrir release ↗
+                        {t("feedOpenRelease")}
                       </a>
                     </article>
                   ))}
@@ -150,11 +154,11 @@ export function GithubFeed({ compact = false }: { compact?: boolean }) {
 
             <div className="gh-block">
               <div className="gh-block-head">
-                <span className="gh-block-title">Commits recentes</span>
+                <span className="gh-block-title">{t("feedRecentCommits")}</span>
                 <span className="gh-count">{commits.length}</span>
               </div>
               {commits.length === 0 ? (
-                <div className="empty">Nenhum commit retornado pela API.</div>
+                <div className="empty">{t("feedNoCommits")}</div>
               ) : (
                 <div className="gh-commits">
                   {commits.map((commit) => (
@@ -169,7 +173,7 @@ export function GithubFeed({ compact = false }: { compact?: boolean }) {
                       <span className="gh-commit-body">
                         <strong>{commit.message}</strong>
                         <small>
-                          {commit.author} · {fmtDate(commit.date, true)}
+                          {commit.author} · {fmtDate(commit.date, true, locale)}
                         </small>
                       </span>
                       <span className="gh-arrow">↗</span>
@@ -182,46 +186,47 @@ export function GithubFeed({ compact = false }: { compact?: boolean }) {
 
           <aside className="gh-side">
             <div className="gh-side-card">
-              <span className="kicker">reconhecimento automático</span>
-              <h3>O que entra no feed</h3>
+              <span className="kicker">{t("feedSideKicker")}</span>
+              <h3>{t("feedSideTitle")}</h3>
               <ul>
                 <li>
-                  <strong>Commits</strong> da branch <code>{feed.repo.defaultBranch}</code>
+                  <strong>{t("feedCommitsLabel")}</strong>{" "}
+                  {t("feedSideCommits", { branch: feed.repo.defaultBranch })}
                 </li>
                 <li>
-                  <strong>Releases</strong> publicadas no repositório
+                  <strong>{t("feedReleases")}</strong> {t("feedSideReleases")}
                 </li>
                 <li>
-                  <strong>Manifesto</strong> <code>site-data/updates.json</code> para entradas
-                  curadas
+                  <strong>{t("feedManifestLabel")}</strong>{" "}
+                  {t("feedSideManifest", { path: "site-data/updates.json" })}
                 </li>
               </ul>
             </div>
             <div className="gh-side-card">
-              <span className="kicker">repositório</span>
+              <span className="kicker">{t("feedRepoKicker")}</span>
               <dl>
                 <div>
-                  <dt>Owner</dt>
+                  <dt>{t("feedOwner")}</dt>
                   <dd>{feed.repo.fullName.split("/")[0]}</dd>
                 </div>
                 <div>
-                  <dt>Branch</dt>
+                  <dt>{t("feedBranchLabel")}</dt>
                   <dd>{feed.repo.defaultBranch}</dd>
                 </div>
                 <div>
-                  <dt>Issues abertas</dt>
+                  <dt>{t("feedOpenIssues")}</dt>
                   <dd>{feed.repo.openIssues}</dd>
                 </div>
                 <div>
-                  <dt>Último push</dt>
-                  <dd>{fmtDate(feed.repo.pushedAt, true)}</dd>
+                  <dt>{t("feedLastPushLabel")}</dt>
+                  <dd>{fmtDate(feed.repo.pushedAt, true, locale)}</dd>
                 </div>
               </dl>
             </div>
             {feed.rate.remaining !== null && (
               <div className={`gh-rate ${feed.rate.remaining <= 5 ? "low" : ""}`}>
-                API do GitHub: {feed.rate.remaining} requisição(ões) restante(s) nesta hora.
-                {feed.rate.reset && <> Renova {fmtDate(feed.rate.reset, true)}.</>}
+                {t("feedRate", { n: feed.rate.remaining })}
+                {feed.rate.reset && <> {t("feedRateReset", { date: fmtDate(feed.rate.reset, true, locale) })}</>}
               </div>
             )}
           </aside>

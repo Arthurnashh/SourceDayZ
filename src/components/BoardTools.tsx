@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import {
   fetchGithubBoard,
   GITHUB_BOARD_PATH,
@@ -8,6 +8,8 @@ import {
   saveGithubToken,
 } from "../lib/github";
 import type { WorkStore } from "../lib/work";
+import { useWorkT } from "../content/work-i18n";
+import type { Locale } from "../lib/i18n";
 
 interface BoardToolsProps {
   store: WorkStore;
@@ -17,7 +19,87 @@ interface BoardToolsProps {
 
 type Notice = { text: string; url?: string } | null;
 
+const RICH: Record<"boardBanner" | "tokenHelp" | "footerHint", Record<Locale, ReactNode>> = {
+  boardBanner: {
+    pt: (
+      <>
+        <strong>Edição local ativa.</strong> As mudanças ficam neste navegador. Para compartilhar,
+        exporte o <code>board.json</code> e commite em <code>site-data/board.json</code> (ou em{" "}
+        <code>public/data/board.json</code> para virar a base do site), ou use a publicação pelo
+        GitHub abaixo.
+      </>
+    ),
+    en: (
+      <>
+        <strong>Local editing active.</strong> Changes stay in this browser. To share, export{" "}
+        <code>board.json</code> and commit it to <code>site-data/board.json</code> (or to{" "}
+        <code>public/data/board.json</code> to become the site base), or use the GitHub publishing
+        below.
+      </>
+    ),
+    ru: (
+      <>
+        <strong>Локальное редактирование активно.</strong> Изменения остаются в этом браузере.
+        Чтобы поделиться, экспортируйте <code>board.json</code> и закоммитьте в{" "}
+        <code>site-data/board.json</code> (или в <code>public/data/board.json</code>, чтобы он стал
+        базой сайта), или используйте публикацию через GitHub ниже.
+      </>
+    ),
+  },
+  tokenHelp: {
+    pt: (
+      <>
+        O token fica apenas nesta aba do navegador (sessionStorage) e é enviado somente para{" "}
+        <code>api.github.com</code>. Use um token fine-grained com{" "}
+        <strong>Contents: Read and write</strong> no repositório <code>Personed/Game</code>. Nunca
+        use um token clássico com acesso total.
+      </>
+    ),
+    en: (
+      <>
+        The token stays only in this browser tab (sessionStorage) and is sent only to{" "}
+        <code>api.github.com</code>. Use a fine-grained token with{" "}
+        <strong>Contents: Read and write</strong> on the <code>Personed/Game</code> repository.
+        Never use a classic token with full access.
+      </>
+    ),
+    ru: (
+      <>
+        Токен хранится только в этой вкладке браузера (sessionStorage) и отправляется только на{" "}
+        <code>api.github.com</code>. Используйте fine-grained токен с{" "}
+        <strong>Contents: Read and write</strong> для репозитория <code>Personed/Game</code>.
+        Никогда не используйте классический токен с полным доступом.
+      </>
+    ),
+  },
+  footerHint: {
+    pt: (
+      <>
+        O site lê <code>site-data/updates.json</code> automaticamente na aba GitHub. O{" "}
+        <code>site-data/board.json</code> vira a base compartilhada quando alguém usa “Puxar board
+        do GitHub” ou quando o arquivo é copiado para <code>public/data/board.json</code>.
+      </>
+    ),
+    en: (
+      <>
+        The site reads <code>site-data/updates.json</code> automatically in the GitHub tab.{" "}
+        <code>site-data/board.json</code> becomes the shared base when someone uses “Pull board from
+        GitHub” or when the file is copied to <code>public/data/board.json</code>.
+      </>
+    ),
+    ru: (
+      <>
+        Сайт автоматически читает <code>site-data/updates.json</code> на вкладке GitHub.{" "}
+        <code>site-data/board.json</code> становится общей базой, когда кто-то использует
+        «Загрузить доску из GitHub» или когда файл копируется в{" "}
+        <code>public/data/board.json</code>.
+      </>
+    ),
+  },
+};
+
 export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
+  const { t, locale } = useWorkT();
   const fileRef = useRef<HTMLInputElement>(null);
   const [token, setToken] = useState(readGithubToken);
   const [busy, setBusy] = useState<"board" | "updates" | "pull" | null>(null);
@@ -34,15 +116,11 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
     setNotice(null);
     try {
       const raw = JSON.parse(await file.text()) as unknown;
-      if (
-        !window.confirm(
-          "Importar este arquivo e substituir o quadro atual deste navegador? Exporte uma cópia antes se precisar."
-        )
-      ) {
+      if (!window.confirm(t("toolsConfirmImport"))) {
         return;
       }
       store.importBoard(raw);
-      setNotice({ text: "Arquivo importado. O quadro deste navegador foi substituído." });
+      setNotice({ text: t("toolsImported") });
     } catch (err: unknown) {
       fail(err);
     } finally {
@@ -51,18 +129,14 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
   };
 
   const reset = async () => {
-    if (
-      !window.confirm(
-        "Restaurar o quadro base do site? Tarefas, bugs e atualizações adicionados neste navegador serão descartados."
-      )
-    ) {
+    if (!window.confirm(t("toolsConfirmReset"))) {
       return;
     }
     setError(null);
     setNotice(null);
     try {
       await store.reset();
-      setNotice({ text: "Quadro restaurado a partir de data/board.json." });
+      setNotice({ text: t("toolsResetDone") });
     } catch (err: unknown) {
       fail(err);
     }
@@ -71,7 +145,7 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
   const publishBoard = async () => {
     if (!store.state) return;
     if (!token.trim()) {
-      setError("Informe um token do GitHub com permissão Contents: Read and write.");
+      setError(t("toolsErrorToken"));
       return;
     }
     setBusy("board");
@@ -82,10 +156,10 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
         token,
         path: GITHUB_BOARD_PATH,
         content: JSON.stringify(store.state, null, 2),
-        message: "chore(site): atualiza quadro de tarefas e bugs",
+        message: t("toolsBoardCommit"),
       });
       setNotice({
-        text: "Board publicado no GitHub.",
+        text: t("toolsBoardPublished"),
         url: result.commitUrl || undefined,
       });
     } catch (err: unknown) {
@@ -98,7 +172,7 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
   const publishUpdates = async () => {
     if (!store.state) return;
     if (!token.trim()) {
-      setError("Informe um token do GitHub com permissão Contents: Read and write.");
+      setError(t("toolsErrorToken"));
       return;
     }
     setBusy("updates");
@@ -118,10 +192,10 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
         token,
         path: GITHUB_UPDATES_PATH,
         content,
-        message: "docs(site): publica atualizações curadas",
+        message: t("toolsUpdatesCommit"),
       });
       setNotice({
-        text: "Manifesto de atualizações publicado no GitHub.",
+        text: t("toolsUpdatesPublished"),
         url: result.commitUrl || undefined,
       });
     } catch (err: unknown) {
@@ -138,19 +212,13 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
     try {
       const board = await fetchGithubBoard();
       if (!board) {
-        throw new Error(
-          `O repositório ainda não tem ${GITHUB_BOARD_PATH}. Publique o board primeiro.`
-        );
+        throw new Error(t("toolsBoardMissing", { path: GITHUB_BOARD_PATH }));
       }
-      if (
-        !window.confirm(
-          "Substituir o quadro deste navegador pelo board publicado no GitHub? As alterações locais não publicadas serão perdidas."
-        )
-      ) {
+      if (!window.confirm(t("toolsConfirmPull"))) {
         return;
       }
       store.replaceBoard(board);
-      setNotice({ text: "Board sincronizado a partir do GitHub." });
+      setNotice({ text: t("toolsPulled") });
     } catch (err: unknown) {
       fail(err);
     } finally {
@@ -164,21 +232,21 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
         <button
           className={`wb-btn ${editMode ? "on" : ""}`}
           onClick={() => onEditMode(!editMode)}
-          title="Libera os botões de adicionar, editar, concluir e excluir"
+          title={t("toolsTitleToggleEdit")}
         >
-          {editMode ? "Edição ativa" : "Ativar edição"}
+          {editMode ? t("toolsEditOn") : t("toolsEditOff")}
         </button>
         <button className="wb-btn" onClick={() => fileRef.current?.click()}>
-          Importar
+          {t("toolsImport")}
         </button>
         <button className="wb-btn" onClick={store.exportBoard} disabled={!store.state}>
-          Exportar board
+          {t("toolsExportBoard")}
         </button>
         <button className="wb-btn" onClick={store.exportUpdates} disabled={!store.state}>
-          Exportar updates
+          {t("toolsExportUpdates")}
         </button>
         <button className="wb-btn ghost" onClick={() => void reset()}>
-          Restaurar base
+          {t("toolsResetBase")}
         </button>
         <input
           ref={fileRef}
@@ -192,14 +260,7 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
         />
       </div>
 
-      {editMode && (
-        <div className="wb-banner">
-          <strong>Edição local ativa.</strong> As mudanças ficam neste navegador. Para compartilhar,
-          exporte o <code>board.json</code> e commite em <code>site-data/board.json</code> (ou em{" "}
-          <code>public/data/board.json</code> para virar a base do site), ou use a publicação pelo
-          GitHub abaixo.
-        </div>
-      )}
+      {editMode && <div className="wb-banner">{RICH.boardBanner[locale]}</div>}
 
       {(notice || error) && (
         <div className={`wb-notice ${error ? "bad" : "good"}`}>
@@ -208,7 +269,7 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
             <>
               {" "}
               <a href={notice.url} target="_blank" rel="noreferrer noopener">
-                ver commit ↗
+                {t("toolsViewCommit")}
               </a>
             </>
           )}
@@ -216,16 +277,11 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
       )}
 
       <details className="wb-publish">
-        <summary>Publicação avançada · GitHub</summary>
+        <summary>{t("toolsPublishAdvanced")}</summary>
         <div className="wb-publish-body">
-          <p>
-            O token fica apenas nesta aba do navegador (sessionStorage) e é enviado somente para{" "}
-            <code>api.github.com</code>. Use um token fine-grained com{" "}
-            <strong>Contents: Read and write</strong> no repositório{" "}
-            <code>Personed/Game</code>. Nunca use um token clássico com acesso total.
-          </p>
+          <p>{RICH.tokenHelp[locale]}</p>
           <div className="wb-field">
-            <label htmlFor="wb-gh-token">Token do GitHub</label>
+            <label htmlFor="wb-gh-token">{t("toolsTokenLabel")}</label>
             <input
               id="wb-gh-token"
               type="password"
@@ -238,26 +294,20 @@ export function BoardTools({ store, editMode, onEditMode }: BoardToolsProps) {
                 saveGithubToken(event.target.value);
               }}
             />
-            <span className="wb-hint">
-              Sem token, use Exportar board e commite o arquivo manualmente.
-            </span>
+            <span className="wb-hint">{t("toolsTokenHint")}</span>
           </div>
           <div className="wb-publish-actions">
             <button className="wb-btn primary" onClick={() => void publishBoard()} disabled={busy !== null}>
-              {busy === "board" ? "Publicando..." : `Publicar ${GITHUB_BOARD_PATH}`}
+              {busy === "board" ? t("toolsPublishing") : t("toolsPublishBoard", { path: GITHUB_BOARD_PATH })}
             </button>
             <button className="wb-btn" onClick={() => void publishUpdates()} disabled={busy !== null}>
-              {busy === "updates" ? "Publicando..." : `Publicar ${GITHUB_UPDATES_PATH}`}
+              {busy === "updates" ? t("toolsPublishing") : t("toolsPublishUpdates", { path: GITHUB_UPDATES_PATH })}
             </button>
             <button className="wb-btn ghost" onClick={() => void pullBoard()} disabled={busy !== null}>
-              {busy === "pull" ? "Puxando..." : "Puxar board do GitHub"}
+              {busy === "pull" ? t("toolsPulling") : t("toolsPullBoard")}
             </button>
           </div>
-          <p className="wb-hint">
-            O site lê <code>site-data/updates.json</code> automaticamente na aba GitHub. O{" "}
-            <code>site-data/board.json</code> vira a base compartilhada quando alguém usa “Puxar
-            board do GitHub” ou quando o arquivo é copiado para <code>public/data/board.json</code>.
-          </p>
+          <p className="wb-hint">{RICH.footerHint[locale]}</p>
         </div>
       </details>
     </div>
