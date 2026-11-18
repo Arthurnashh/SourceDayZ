@@ -30,6 +30,7 @@ create table if not exists public.app_settings (
   id smallint primary key default 1 check (id = 1),
   dev_mode boolean not null default false,
   allowed_origins text[] not null default array[
+    'https://sourcedayz.vercel.app',
     'http://127.0.0.1:5173',
     'http://localhost:5173',
     'http://127.0.0.1:4173',
@@ -41,6 +42,7 @@ create table if not exists public.app_settings (
 -- Projetos criados antes do Steam OpenID recebem a coluna sem perder dados.
 alter table public.app_settings
   add column if not exists allowed_origins text[] not null default array[
+    'https://sourcedayz.vercel.app',
     'http://127.0.0.1:5173',
     'http://localhost:5173',
     'http://127.0.0.1:4173',

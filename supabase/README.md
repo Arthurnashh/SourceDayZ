@@ -14,6 +14,7 @@ O projeto real já foi criado e configurado nesta máquina:
 | Projeto | `Arthurnashh's Project` (`yquuabmgebitshhcqtku`) |
 | Região | `us-east-2` |
 | URL | `https://yquuabmgebitshhcqtku.supabase.co` |
+| Site | `https://sourcedayz.vercel.app` (projeto `sourcedayz`, deploy automático pela branch `main`) |
 | Schema | aplicado em 18/11/2026 (tabelas, funções, RLS, painel admin e bucket `avatars`) |
 | Chaves | `site/.env.local` já gravado com URL + publishable key |
 | Auth | **Confirm email desligado** para testes; Site URL `http://127.0.0.1:5173` |
@@ -336,13 +337,21 @@ lá, trate a source como material interno da equipe, não como segredo.
 
 ## Publicar na Vercel
 
-O `site/vercel.json` já define o build:
+**Publicado em 18/11/2026:** <https://sourcedayz.vercel.app>
+
+O projeto `sourcedayz` está conectado ao repositório
+<https://github.com/Arthurnashh/SourceDayZ> e publica automaticamente a cada
+push na branch `main`. As variáveis `VITE_SUPABASE_URL` e
+`VITE_SUPABASE_ANON_KEY` já estão configuradas em Production, Preview e
+Development.
+
+O `site/vercel.json` define o build:
 
 - Framework: **Vite**
 - Build: `npm run build`
 - Saída: `dist`
 
-Passos:
+Para recriar em outra conta/projeto:
 
 1. Envie a pasta `site` para um repositório Git (o projeto local não é um repositório).
 2. Na Vercel, importe o repositório e confirme as configurações acima.
