@@ -1,0 +1,127 @@
+[
+ {
+  "nome": "annotate_comments.py",
+  "descricao": "Переводит, привязывает к коду и группирует комментарии; создаёт .md по группам.",
+  "linhas": 443
+ },
+ {
+  "nome": "build_docs_data.py",
+  "descricao": "Разбивает 1.md на doc.json и создаёт glossario.json и категоризированный bugs.json.",
+  "linhas": 219
+ },
+ {
+  "nome": "build_site_data.py",
+  "descricao": "Создаёт статический набор данных для этого сайта.",
+  "linhas": 415
+ },
+ {
+  "nome": "check_comments.py",
+  "descricao": "Сверяет строки индекса с реальными исходниками.",
+  "linhas": 72
+ },
+ {
+  "nome": "check_curacao.py",
+  "descricao": "",
+  "linhas": 45
+ },
+ {
+  "nome": "check_doc.py",
+  "descricao": "Проверяет 1.md (байты, строки, количество F/A/H/G, BOM).",
+  "linhas": 17
+ },
+ {
+  "nome": "count_entries.py",
+  "descricao": "",
+  "linhas": 14
+ },
+ {
+  "nome": "curacao.py",
+  "descricao": "Ручная курация: перевод + что делает код, по файлу:строке.",
+  "linhas": 630
+ },
+ {
+  "nome": "dump_alvo.py",
+  "descricao": "",
+  "linhas": 31
+ },
+ {
+  "nome": "dump_code.py",
+  "descricao": "",
+  "linhas": 43
+ },
+ {
+  "nome": "dump_comments.py",
+  "descricao": "Выгружает комментарии из файла для проверки.",
+  "linhas": 152
+ },
+ {
+  "nome": "dump_exact.py",
+  "descricao": "",
+  "linhas": 23
+ },
+ {
+  "nome": "dump_exact2.py",
+  "descricao": "",
+  "linhas": 7
+ },
+ {
+  "nome": "dump_keys.py",
+  "descricao": "",
+  "linhas": 46
+ },
+ {
+  "nome": "dump_near.py",
+  "descricao": "",
+  "linhas": 22
+ },
+ {
+  "nome": "find_refs.py",
+  "descricao": "",
+  "linhas": 10
+ },
+ {
+  "nome": "gloss_gap.py",
+  "descricao": "Измеряет слова корпуса, ещё не переведённые.",
+  "linhas": 48
+ },
+ {
+  "nome": "glossario.py",
+  "descricao": "Детерминированный глоссарий EN->PT-BR, используемый аннотатором.",
+  "linhas": 680
+ },
+ {
+  "nome": "ls_dir.py",
+  "descricao": "",
+  "linhas": 14
+ },
+ {
+  "nome": "q.py",
+  "descricao": "Запрашивает индекс функций, созданный scan_source.py.",
+  "linhas": 82
+ },
+ {
+  "nome": "qc.py",
+  "descricao": "Быстрый поиск по regex в исходниках с фильтрами по папке/тегу.",
+  "linhas": 61
+ },
+ {
+  "nome": "scan_comments.py",
+  "descricao": "Извлекает все комментарии исходников в index/comentarios.csv.",
+  "linhas": 410
+ },
+ {
+  "nome": "scan_source.py",
+  "descricao": "Индексатор функций C++ из исходников DayZ.",
+  "linhas": 266
+ },
+ {
+  "nome": "show_comment.py",
+  "descricao": "Ищет аннотированный комментарий по файлу:строке или группе.",
+  "linhas": 66
+ },
+ {
+  "nome": "vocab_extra.py",
+  "descricao": "Дополнительный словарь, извлечённый из самого корпуса.",
+  "linhas": 3039
+ }
+]

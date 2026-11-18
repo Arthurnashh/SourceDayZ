@@ -20,7 +20,7 @@ function isAba(value: string | undefined): value is Aba {
 }
 
 export function Atualizacoes() {
-  const { t } = useDocsT();
+  const { t, locale } = useDocsT();
   const correcoesMd = useMd("correcoes");
   const implementacoesMd = useMd("implementacoes");
   const animacoesMd = useMd("animacoes");
@@ -29,7 +29,7 @@ export function Atualizacoes() {
   const route = useRoute();
   const pedida = route.parts[1];
   const [aba, setAba] = useState<Aba>(isAba(pedida) ? pedida : "correcoes");
-  const store = useWorkStore();
+  const store = useWorkStore(locale);
 
   useEffect(() => {
     if (isAba(pedida)) setAba(pedida);

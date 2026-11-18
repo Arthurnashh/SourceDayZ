@@ -1,0 +1,1278 @@
+{
+  "raiz": "D:\\SOURCEDAYZS!!\\SOURCE DEFINITIVA\\DayZ-0.45.124252",
+  "medido_em": "16/11/2026",
+  "total": {
+    "arquivos": 20171,
+    "bytes": 10554052988,
+    "pastas": 41
+  },
+  "geradas": [
+    {
+      "nome": "build",
+      "arquivos": 18455,
+      "bytes": 207965221490
+    },
+    {
+      "nome": "dist",
+      "arquivos": 690,
+      "bytes": 1529260947
+    }
+  ],
+  "arquivos_raiz": [
+    {
+      "nome": ".gitignore",
+      "bytes": 180,
+      "nota": ""
+    },
+    {
+      "nome": "buildNo.h",
+      "bytes": 24,
+      "nota": "Build number compiled into the binary."
+    },
+    {
+      "nome": "DayZ.sln",
+      "bytes": 17877,
+      "nota": "Visual Studio 2010 solution (6 projects)."
+    },
+    {
+      "nome": "DayZ.smproj",
+      "bytes": 37088472,
+      "nota": "Auxiliary build project (36 MB, generated)."
+    },
+    {
+      "nome": "DayZ2010.sln",
+      "bytes": 13926,
+      "nota": "Twin solution, same 6 projects."
+    },
+    {
+      "nome": "PENDENCIAS_MENU_E_INVENTARIO.md",
+      "bytes": 5315,
+      "nota": ""
+    },
+    {
+      "nome": "rv.natvis",
+      "bytes": 2203,
+      "nota": "Type visualizer for the Visual Studio debugger."
+    }
+  ],
+  "dirs": [
+    {
+      "nome": "Addons",
+      "arquivos": 232,
+      "bytes": 6444003584,
+      "nota": "116 PBOs + 116 .bisign signatures: the packaged content (maps, objects, textures, sound).",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "lib",
+      "arquivos": 5480,
+      "bytes": 3145674378,
+      "nota": "The game and the engine: world, scene, object, network, AI, UI, d3d9, d3d11.",
+      "filhos": [
+        {
+          "nome": "obj",
+          "arquivos": 2882,
+          "bytes": 1930771262
+        },
+        {
+          "nome": "lib",
+          "arquivos": 1657,
+          "bytes": 1177788152
+        },
+        {
+          "nome": "Protect",
+          "arquivos": 22,
+          "bytes": 5595544
+        },
+        {
+          "nome": "UI",
+          "arquivos": 42,
+          "bytes": 4680467
+        },
+        {
+          "nome": "d3d9",
+          "arquivos": 42,
+          "bytes": 3871803
+        },
+        {
+          "nome": "Network",
+          "arquivos": 30,
+          "bytes": 2083882
+        },
+        {
+          "nome": "GameSpy",
+          "arquivos": 111,
+          "bytes": 1568605
+        },
+        {
+          "nome": "d3dT",
+          "arquivos": 23,
+          "bytes": 1170540
+        },
+        {
+          "nome": "d3dXB",
+          "arquivos": 107,
+          "bytes": 873030
+        },
+        {
+          "nome": "AI",
+          "arquivos": 17,
+          "bytes": 800076
+        },
+        {
+          "nome": "Shape",
+          "arquivos": 20,
+          "bytes": 733588
+        },
+        {
+          "nome": "JNI",
+          "arquivos": 13,
+          "bytes": 457735
+        },
+        {
+          "nome": "Inventory",
+          "arquivos": 20,
+          "bytes": 260886
+        },
+        {
+          "nome": "SimulWeather",
+          "arquivos": 18,
+          "bytes": 154306
+        },
+        {
+          "nome": "Marina",
+          "arquivos": 11,
+          "bytes": 141608
+        },
+        {
+          "nome": "TerdiStrip",
+          "arquivos": 8,
+          "bytes": 123190
+        },
+        {
+          "nome": "WorldRes",
+          "arquivos": 6,
+          "bytes": 115556
+        },
+        {
+          "nome": "TerSynth",
+          "arquivos": 7,
+          "bytes": 72784
+        },
+        {
+          "nome": "NVTriStrip",
+          "arquivos": 6,
+          "bytes": 71990
+        },
+        {
+          "nome": "Tools",
+          "arquivos": 24,
+          "bytes": 71226
+        },
+        {
+          "nome": "VisitorExchange",
+          "arquivos": 8,
+          "bytes": 51584
+        },
+        {
+          "nome": "MSStrip",
+          "arquivos": 2,
+          "bytes": 50888
+        },
+        {
+          "nome": "KBExt",
+          "arquivos": 2,
+          "bytes": 49029
+        },
+        {
+          "nome": "Cloth",
+          "arquivos": 2,
+          "bytes": 14108
+        },
+        {
+          "nome": "SvnUpdate",
+          "arquivos": 4,
+          "bytes": 9085
+        },
+        {
+          "nome": "Encryption",
+          "arquivos": 2,
+          "bytes": 8268
+        },
+        {
+          "nome": "ASE",
+          "arquivos": 3,
+          "bytes": 7117
+        },
+        {
+          "nome": "ShadersCommon",
+          "arquivos": 17,
+          "bytes": 5748
+        }
+      ],
+      "filhos_total": 28
+    },
+    {
+      "nome": "extern",
+      "arquivos": 8354,
+      "bytes": 855864111,
+      "nota": "Third-party SDKs: Boost, Bullet 2.76, DirectX SDK 2010, Steamworks, Botan, RotorLib, SimulWeather.",
+      "filhos": [
+        {
+          "nome": "RotorLib",
+          "arquivos": 251,
+          "bytes": 382087475
+        },
+        {
+          "nome": "SimulWeather",
+          "arquivos": 591,
+          "bytes": 271279938
+        },
+        {
+          "nome": "svn-win32-1.7.2",
+          "arquivos": 574,
+          "bytes": 43278962
+        },
+        {
+          "nome": "DXSDK",
+          "arquivos": 138,
+          "bytes": 30546820
+        },
+        {
+          "nome": "boost",
+          "arquivos": 3774,
+          "bytes": 27102407
+        },
+        {
+          "nome": "bullet2.76",
+          "arquivos": 585,
+          "bytes": 24399775
+        },
+        {
+          "nome": "HLA",
+          "arquivos": 15,
+          "bytes": 14821445
+        },
+        {
+          "nome": "Steamworks",
+          "arquivos": 34,
+          "bytes": 12471772
+        },
+        {
+          "nome": "Botan",
+          "arquivos": 1682,
+          "bytes": 9732447
+        },
+        {
+          "nome": "libcurl",
+          "arquivos": 269,
+          "bytes": 3190239
+        },
+        {
+          "nome": "libpng",
+          "arquivos": 6,
+          "bytes": 1562742
+        },
+        {
+          "nome": "msxml",
+          "arquivos": 3,
+          "bytes": 909490
+        },
+        {
+          "nome": "tbb",
+          "arquivos": 72,
+          "bytes": 893444
+        },
+        {
+          "nome": "mtl_vs7",
+          "arquivos": 77,
+          "bytes": 815015
+        },
+        {
+          "nome": "mtl",
+          "arquivos": 71,
+          "bytes": 685014
+        },
+        {
+          "nome": "Intel",
+          "arquivos": 8,
+          "bytes": 350585
+        },
+        {
+          "nome": "X360",
+          "arquivos": 1,
+          "bytes": 317688
+        },
+        {
+          "nome": "GfW",
+          "arquivos": 10,
+          "bytes": 219918
+        },
+        {
+          "nome": "ifc22",
+          "arquivos": 26,
+          "bytes": 214033
+        },
+        {
+          "nome": "speex-1.2",
+          "arquivos": 28,
+          "bytes": 184448
+        },
+        {
+          "nome": "json",
+          "arquivos": 3,
+          "bytes": 177890
+        },
+        {
+          "nome": "lzma",
+          "arquivos": 15,
+          "bytes": 159647
+        },
+        {
+          "nome": "rapidjson",
+          "arquivos": 15,
+          "bytes": 117464
+        },
+        {
+          "nome": "al",
+          "arquivos": 6,
+          "bytes": 113261
+        },
+        {
+          "nome": "theora",
+          "arquivos": 4,
+          "bytes": 100174
+        },
+        {
+          "nome": "Java",
+          "arquivos": 2,
+          "bytes": 68262
+        },
+        {
+          "nome": "RTreeTemplate",
+          "arquivos": 4,
+          "bytes": 63247
+        },
+        {
+          "nome": "Connexion3D",
+          "arquivos": 11,
+          "bytes": 48101
+        },
+        {
+          "nome": "MARX",
+          "arquivos": 2,
+          "bytes": 43189
+        },
+        {
+          "nome": "HASP",
+          "arquivos": 1,
+          "bytes": 34600
+        },
+        {
+          "nome": "speex-1.0.5",
+          "arquivos": 10,
+          "bytes": 30012
+        },
+        {
+          "nome": "cJSON",
+          "arquivos": 2,
+          "bytes": 24924
+        },
+        {
+          "nome": "RSA",
+          "arquivos": 6,
+          "bytes": 19636
+        },
+        {
+          "nome": "Fonix",
+          "arquivos": 1,
+          "bytes": 16802
+        },
+        {
+          "nome": "vorbis",
+          "arquivos": 3,
+          "bytes": 16563
+        },
+        {
+          "nome": "ogg",
+          "arquivos": 4,
+          "bytes": 12097
+        },
+        {
+          "nome": "SpeereoSpeech",
+          "arquivos": 1,
+          "bytes": 2622
+        },
+        {
+          "nome": "TNGaming",
+          "arquivos": 1,
+          "bytes": 2379
+        }
+      ],
+      "filhos_total": 38
+    },
+    {
+      "nome": "cfg",
+      "arquivos": 1655,
+      "bytes": 34943729,
+      "nota": "Game configuration (CfgVehicles, CfgWeapons, UI) and the cfg project.",
+      "filhos": [
+        {
+          "nome": "build",
+          "arquivos": 1317,
+          "bytes": 27764701
+        },
+        {
+          "nome": "lib",
+          "arquivos": 253,
+          "bytes": 5208807
+        },
+        {
+          "nome": "Bin",
+          "arquivos": 50,
+          "bytes": 1560662
+        },
+        {
+          "nome": "obj",
+          "arquivos": 20,
+          "bytes": 179392
+        },
+        {
+          "nome": "Win32",
+          "arquivos": 10,
+          "bytes": 105593
+        }
+      ],
+      "filhos_total": 5
+    },
+    {
+      "nome": "Allocators",
+      "arquivos": 2631,
+      "bytes": 30027873,
+      "nota": "5 allocator families: JEMalloc, NedMalloc, TBB3, TBB4, TCMalloc.",
+      "filhos": [
+        {
+          "nome": "TBB4",
+          "arquivos": 1444,
+          "bytes": 17072206
+        },
+        {
+          "nome": "TBB3",
+          "arquivos": 1104,
+          "bytes": 11827717
+        },
+        {
+          "nome": "TCMalloc",
+          "arquivos": 67,
+          "bytes": 620872
+        },
+        {
+          "nome": "NedMalloc",
+          "arquivos": 7,
+          "bytes": 281031
+        },
+        {
+          "nome": "JEMalloc",
+          "arquivos": 9,
+          "bytes": 226047
+        }
+      ],
+      "filhos_total": 5
+    },
+    {
+      "nome": "FileBank",
+      "arquivos": 67,
+      "bytes": 8890942,
+      "nota": "PBO creator (the engine's official packer).",
+      "filhos": [
+        {
+          "nome": "Release",
+          "arquivos": 50,
+          "bytes": 8756310
+        },
+        {
+          "nome": "_UpgradeReport_Files",
+          "arquivos": 4,
+          "bytes": 16067
+        },
+        {
+          "nome": "Backup",
+          "arquivos": 1,
+          "bytes": 1520
+        }
+      ],
+      "filhos_total": 3
+    },
+    {
+      "nome": "BankRev",
+      "arquivos": 43,
+      "bytes": 7835240,
+      "nota": "Console tool that lists/extracts the contents of a PBO.",
+      "filhos": [
+        {
+          "nome": "Release",
+          "arquivos": 38,
+          "bytes": 7783588
+        }
+      ],
+      "filhos_total": 1
+    },
+    {
+      "nome": "ComRef",
+      "arquivos": 40,
+      "bytes": 6678540,
+      "nota": "SQF command manual generated from the engine itself (comref.xml).",
+      "filhos": [
+        {
+          "nome": "html",
+          "arquivos": 6,
+          "bytes": 2271585
+        },
+        {
+          "nome": "html_SR",
+          "arquivos": 6,
+          "bytes": 2162555
+        }
+      ],
+      "filhos_total": 2
+    },
+    {
+      "nome": "El",
+      "arquivos": 537,
+      "bytes": 4981192,
+      "nota": "Base library: parser, streams, ParamFile, network, math, threads.",
+      "filhos": [
+        {
+          "nome": "Evaluator",
+          "arquivos": 50,
+          "bytes": 691054
+        },
+        {
+          "nome": "LZO",
+          "arquivos": 27,
+          "bytes": 558285
+        },
+        {
+          "nome": "Speech",
+          "arquivos": 19,
+          "bytes": 332150
+        },
+        {
+          "nome": "Network",
+          "arquivos": 20,
+          "bytes": 329945
+        },
+        {
+          "nome": "QStream",
+          "arquivos": 26,
+          "bytes": 326784
+        },
+        {
+          "nome": "FileServer",
+          "arquivos": 14,
+          "bytes": 307362
+        },
+        {
+          "nome": "Math",
+          "arquivos": 17,
+          "bytes": 259159
+        },
+        {
+          "nome": "ParamFile",
+          "arquivos": 16,
+          "bytes": 234311
+        },
+        {
+          "nome": "MultiThread2",
+          "arquivos": 60,
+          "bytes": 233013
+        },
+        {
+          "nome": "Shapes",
+          "arquivos": 37,
+          "bytes": 155885
+        },
+        {
+          "nome": "WindowsFirewall",
+          "arquivos": 4,
+          "bytes": 143541
+        },
+        {
+          "nome": "MultiThread",
+          "arquivos": 42,
+          "bytes": 136651
+        },
+        {
+          "nome": "Scc",
+          "arquivos": 7,
+          "bytes": 135463
+        },
+        {
+          "nome": "Debugging",
+          "arquivos": 12,
+          "bytes": 111103
+        },
+        {
+          "nome": "Common",
+          "arquivos": 10,
+          "bytes": 84436
+        },
+        {
+          "nome": "Encryption",
+          "arquivos": 5,
+          "bytes": 73775
+        },
+        {
+          "nome": "DataSignatures",
+          "arquivos": 7,
+          "bytes": 59258
+        },
+        {
+          "nome": "ParamArchive",
+          "arquivos": 8,
+          "bytes": 59153
+        },
+        {
+          "nome": "Multicore",
+          "arquivos": 5,
+          "bytes": 52544
+        },
+        {
+          "nome": "SoundFile",
+          "arquivos": 2,
+          "bytes": 52328
+        },
+        {
+          "nome": "ActiveObject",
+          "arquivos": 5,
+          "bytes": 48187
+        },
+        {
+          "nome": "Pathname",
+          "arquivos": 3,
+          "bytes": 45094
+        },
+        {
+          "nome": "FreeOnDemand",
+          "arquivos": 4,
+          "bytes": 42508
+        },
+        {
+          "nome": "BTree",
+          "arquivos": 1,
+          "bytes": 36334
+        },
+        {
+          "nome": "XML",
+          "arquivos": 5,
+          "bytes": 34876
+        },
+        {
+          "nome": "RegularExpressions",
+          "arquivos": 1,
+          "bytes": 34831
+        },
+        {
+          "nome": "TCPIPBasics",
+          "arquivos": 7,
+          "bytes": 34549
+        },
+        {
+          "nome": "Calendar",
+          "arquivos": 4,
+          "bytes": 33631
+        },
+        {
+          "nome": "PreprocC",
+          "arquivos": 5,
+          "bytes": 33127
+        },
+        {
+          "nome": "Stringtable",
+          "arquivos": 13,
+          "bytes": 31399
+        },
+        {
+          "nome": "Interfaces",
+          "arquivos": 13,
+          "bytes": 27731
+        },
+        {
+          "nome": "SimpleExpression",
+          "arquivos": 2,
+          "bytes": 18112
+        },
+        {
+          "nome": "HierWalker",
+          "arquivos": 3,
+          "bytes": 14948
+        },
+        {
+          "nome": "Statistics",
+          "arquivos": 2,
+          "bytes": 14375
+        },
+        {
+          "nome": "Color",
+          "arquivos": 6,
+          "bytes": 13263
+        },
+        {
+          "nome": "DebugWindow",
+          "arquivos": 4,
+          "bytes": 12056
+        },
+        {
+          "nome": "Enum",
+          "arquivos": 7,
+          "bytes": 11636
+        },
+        {
+          "nome": "Time",
+          "arquivos": 3,
+          "bytes": 10544
+        },
+        {
+          "nome": "MemoryStore",
+          "arquivos": 2,
+          "bytes": 10414
+        },
+        {
+          "nome": "DLC",
+          "arquivos": 2,
+          "bytes": 10110
+        }
+      ],
+      "filhos_total": 62
+    },
+    {
+      "nome": "Enfusion",
+      "arquivos": 191,
+      "bytes": 3692777,
+      "nota": "New engine: Enforce script VM, render, physics, animation, audio.",
+      "filhos": [
+        {
+          "nome": "src",
+          "arquivos": 82,
+          "bytes": 2396566
+        },
+        {
+          "nome": "include",
+          "arquivos": 109,
+          "bytes": 1296211
+        }
+      ],
+      "filhos_total": 2
+    },
+    {
+      "nome": "Drobnosti",
+      "arquivos": 188,
+      "bytes": 2116083,
+      "nota": "Internal utilities (SVN updater, setup, HTML).",
+      "filhos": [
+        {
+          "nome": "SvnAutoUpdater",
+          "arquivos": 143,
+          "bytes": 1843402
+        },
+        {
+          "nome": "Security",
+          "arquivos": 16,
+          "bytes": 109379
+        },
+        {
+          "nome": "SetupConvert",
+          "arquivos": 12,
+          "bytes": 43336
+        },
+        {
+          "nome": "SvnAutoUpdaterTest",
+          "arquivos": 7,
+          "bytes": 40700
+        },
+        {
+          "nome": "GutenbergHtmlFormating",
+          "arquivos": 6,
+          "bytes": 40134
+        },
+        {
+          "nome": "SvnAutoUpdaterConsole",
+          "arquivos": 4,
+          "bytes": 39132
+        }
+      ],
+      "filhos_total": 6
+    },
+    {
+      "nome": "OFPPatch",
+      "arquivos": 64,
+      "bytes": 2085013,
+      "nota": "OFP addon patch generator/applier.",
+      "filhos": [
+        {
+          "nome": "RSA",
+          "arquivos": 30,
+          "bytes": 210461
+        }
+      ],
+      "filhos_total": 1
+    },
+    {
+      "nome": "RV",
+      "arquivos": 177,
+      "bytes": 1928703,
+      "nota": "Voice runtime (speech recognition), KBBase and trees.",
+      "filhos": [
+        {
+          "nome": "Tree",
+          "arquivos": 166,
+          "bytes": 1869111
+        },
+        {
+          "nome": "KBBase",
+          "arquivos": 7,
+          "bytes": 45911
+        },
+        {
+          "nome": "SpeechRecognition",
+          "arquivos": 4,
+          "bytes": 13681
+        }
+      ],
+      "filhos_total": 3
+    },
+    {
+      "nome": "bin",
+      "arquivos": 58,
+      "bytes": 1813593,
+      "nota": "Engine config compiled as C++ (cfg*.hpp, config.cpp).",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "Es",
+      "arquivos": 116,
+      "bytes": 860406,
+      "nota": "Containers, strings, files, memory and threads of the base layer.",
+      "filhos": [
+        {
+          "nome": "Containers",
+          "arquivos": 37,
+          "bytes": 389686
+        },
+        {
+          "nome": "Types",
+          "arquivos": 11,
+          "bytes": 101643
+        },
+        {
+          "nome": "Memory",
+          "arquivos": 12,
+          "bytes": 84232
+        },
+        {
+          "nome": "Threads",
+          "arquivos": 9,
+          "bytes": 66989
+        },
+        {
+          "nome": "Strings",
+          "arquivos": 3,
+          "bytes": 46341
+        },
+        {
+          "nome": "Common",
+          "arquivos": 8,
+          "bytes": 45359
+        },
+        {
+          "nome": "Framework",
+          "arquivos": 13,
+          "bytes": 39356
+        },
+        {
+          "nome": "Algorithms",
+          "arquivos": 7,
+          "bytes": 36061
+        },
+        {
+          "nome": "Files",
+          "arquivos": 4,
+          "bytes": 14825
+        },
+        {
+          "nome": "HeapManager",
+          "arquivos": 1,
+          "bytes": 11196
+        },
+        {
+          "nome": "ErrorProp",
+          "arquivos": 2,
+          "bytes": 4560
+        },
+        {
+          "nome": "SortTree",
+          "arquivos": 1,
+          "bytes": 2366
+        },
+        {
+          "nome": "ReportStack",
+          "arquivos": 2,
+          "bytes": 2038
+        },
+        {
+          "nome": "lib",
+          "arquivos": 1,
+          "bytes": 1623
+        }
+      ],
+      "filhos_total": 14
+    },
+    {
+      "nome": "Setup",
+      "arquivos": 77,
+      "bytes": 816938,
+      "nota": "Installer and deploy routines.",
+      "filhos": [
+        {
+          "nome": "Setup",
+          "arquivos": 55,
+          "bytes": 661596
+        },
+        {
+          "nome": "AutoRun",
+          "arquivos": 12,
+          "bytes": 79136
+        },
+        {
+          "nome": "UnInstall",
+          "arquivos": 9,
+          "bytes": 72610
+        }
+      ],
+      "filhos_total": 3
+    },
+    {
+      "nome": "binarize",
+      "arquivos": 13,
+      "bytes": 337610,
+      "nota": "Model/world optimizer: generates the final .p3d/.wrp and feeds the PBOs.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "texMerge",
+      "arquivos": 46,
+      "bytes": 254604,
+      "nota": "Texture merge tool.",
+      "filhos": [
+        {
+          "nome": "res",
+          "arquivos": 7,
+          "bytes": 9356
+        }
+      ],
+      "filhos_total": 1
+    },
+    {
+      "nome": "Docs",
+      "arquivos": 13,
+      "bytes": 234021,
+      "nota": "Internal documentation.",
+      "filhos": [
+        {
+          "nome": "performance",
+          "arquivos": 1,
+          "bytes": 55009
+        },
+        {
+          "nome": "MainMenu",
+          "arquivos": 1,
+          "bytes": 7289
+        }
+      ],
+      "filhos_total": 2
+    },
+    {
+      "nome": "buldozer",
+      "arquivos": 13,
+      "bytes": 220843,
+      "nota": "Legacy model editor (Buldozer), used to validate .p3d.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "BICDKeys",
+      "arquivos": 23,
+      "bytes": 145239,
+      "nota": "Historical Bohemia CD keys.",
+      "filhos": [
+        {
+          "nome": "nbproject",
+          "arquivos": 6,
+          "bytes": 74696
+        },
+        {
+          "nome": "src",
+          "arquivos": 11,
+          "bytes": 58666
+        },
+        {
+          "nome": "web",
+          "arquivos": 4,
+          "bytes": 6626
+        },
+        {
+          "nome": "setup",
+          "arquivos": 1,
+          "bytes": 1754
+        }
+      ],
+      "filhos_total": 4
+    },
+    {
+      "nome": "OPFCreatePatch",
+      "arquivos": 15,
+      "bytes": 109870,
+      "nota": "Patch creator for OFP addons.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "BIUsers",
+      "arquivos": 16,
+      "bytes": 100538,
+      "nota": "Internal user database.",
+      "filhos": [
+        {
+          "nome": "nbproject",
+          "arquivos": 6,
+          "bytes": 74258
+        },
+        {
+          "nome": "src",
+          "arquivos": 6,
+          "bytes": 20261
+        },
+        {
+          "nome": "setup",
+          "arquivos": 1,
+          "bytes": 1749
+        },
+        {
+          "nome": "web",
+          "arquivos": 2,
+          "bytes": 775
+        }
+      ],
+      "filhos_total": 4
+    },
+    {
+      "nome": "PerfLog",
+      "arquivos": 27,
+      "bytes": 84471,
+      "nota": "Frame profile capture and analysis.",
+      "filhos": [
+        {
+          "nome": "res",
+          "arquivos": 4,
+          "bytes": 3633
+        }
+      ],
+      "filhos_total": 1
+    },
+    {
+      "nome": "BIRegistration",
+      "arquivos": 7,
+      "bytes": 71698,
+      "nota": "Registration/license utility.",
+      "filhos": [
+        {
+          "nome": "nbproject",
+          "arquivos": 4,
+          "bytes": 60676
+        },
+        {
+          "nome": "src",
+          "arquivos": 1,
+          "bytes": 7200
+        }
+      ],
+      "filhos_total": 2
+    },
+    {
+      "nome": "BIServerKey",
+      "arquivos": 7,
+      "bytes": 69087,
+      "nota": "Server key.",
+      "filhos": [
+        {
+          "nome": "nbproject",
+          "arquivos": 4,
+          "bytes": 60428
+        },
+        {
+          "nome": "src",
+          "arquivos": 1,
+          "bytes": 4846
+        }
+      ],
+      "filhos_total": 2
+    },
+    {
+      "nome": "CfgEdit",
+      "arquivos": 22,
+      "bytes": 66386,
+      "nota": "config.cpp/ParamFile editor.",
+      "filhos": [
+        {
+          "nome": "res",
+          "arquivos": 5,
+          "bytes": 5679
+        }
+      ],
+      "filhos_total": 1
+    },
+    {
+      "nome": "XBOXPBORepack",
+      "arquivos": 11,
+      "bytes": 51603,
+      "nota": "PBO repacker for Xbox 360.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "CheckBank",
+      "arquivos": 11,
+      "bytes": 20551,
+      "nota": "PBO integrity checker.",
+      "filhos": [
+        {
+          "nome": "Deploy",
+          "arquivos": 2,
+          "bytes": 113
+        }
+      ],
+      "filhos_total": 1
+    },
+    {
+      "nome": "Makefiles",
+      "arquivos": 6,
+      "bytes": 20174,
+      "nota": "Legacy GNU make build (Linux/gcc), before Visual Studio.",
+      "filhos": [
+        {
+          "nome": "Poseidon",
+          "arquivos": 3,
+          "bytes": 13857
+        },
+        {
+          "nome": "RSA",
+          "arquivos": 1,
+          "bytes": 1631
+        },
+        {
+          "nome": "ogg",
+          "arquivos": 1,
+          "bytes": 1434
+        }
+      ],
+      "filhos_total": 3
+    },
+    {
+      "nome": "LauncherSample",
+      "arquivos": 5,
+      "bytes": 10609,
+      "nota": "Sample launcher.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "LaunchServer",
+      "arquivos": 3,
+      "bytes": 9975,
+      "nota": "Project that compiles the dedicated server launcher.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "posAccess",
+      "arquivos": 3,
+      "bytes": 9563,
+      "nota": "Position/memory access utility.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "PhysicalLibs",
+      "arquivos": 4,
+      "bytes": 9095,
+      "nota": "Physics libraries (ODE/RigidBody).",
+      "filhos": [
+        {
+          "nome": "RigidBody",
+          "arquivos": 4,
+          "bytes": 9095
+        }
+      ],
+      "filhos_total": 1
+    },
+    {
+      "nome": "RVExtension",
+      "arquivos": 5,
+      "bytes": 6382,
+      "nota": "Example of a native engine extension (DLL).",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "serial",
+      "arquivos": 3,
+      "bytes": 5505,
+      "nota": "Auxiliary serialization.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "Protect",
+      "arquivos": 1,
+      "bytes": 2062,
+      "nota": "Data packaging/protection.",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": " ",
+      "arquivos": 7,
+      "bytes": 0,
+      "nota": "",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "Release",
+      "arquivos": 0,
+      "bytes": 0,
+      "nota": "Auxiliary output folder (empty in this snapshot).",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "Resistance",
+      "arquivos": 0,
+      "bytes": 0,
+      "nota": "Historical variant of the project (empty).",
+      "filhos": [],
+      "filhos_total": 0
+    },
+    {
+      "nome": "ResistanceServer",
+      "arquivos": 0,
+      "bytes": 0,
+      "nota": "Historical variant of the project (empty).",
+      "filhos": [],
+      "filhos_total": 0
+    }
+  ]
+}

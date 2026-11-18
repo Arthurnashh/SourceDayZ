@@ -10,12 +10,12 @@ import { useMd } from "../lib/content";
 type Aba = "fps" | "pendencias" | "animacoes" | "builds";
 
 export function Pendencias() {
-  const { t } = useDocsT();
+  const { t, locale } = useDocsT();
   const pendenciasMd = useMd("pendencias");
   const animacoesMd = useMd("animacoes");
   const buildsMd = useMd("builds");
   const [aba, setAba] = useState<Aba>("fps");
-  const store = useWorkStore();
+  const store = useWorkStore(locale);
   const openBugs =
     store.state?.items.filter(
       (item) => item.kind === "bug" && item.status !== "concluido"

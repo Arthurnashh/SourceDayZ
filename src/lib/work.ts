@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { Locale } from "./i18n";
 
 export type WorkKind = "tarefa" | "bug";
 export type WorkStatus = "aberto" | "andamento" | "bloqueado" | "concluido";
@@ -74,6 +75,7 @@ export interface WorkStore {
 }
 
 const STORAGE_KEY = "sourcedayz.board.v1";
+const storageKey = (locale: Locale) => `${STORAGE_KEY}.${locale}`;
 const STATUSES: WorkStatus[] = ["aberto", "andamento", "bloqueado", "concluido"];
 const PRIORITIES: Priority[] = ["baixa", "media", "alta", "critica"];
 const KINDS: WorkKind[] = ["tarefa", "bug"];
@@ -257,9 +259,9 @@ function emptyBoard(): BoardState {
   };
 }
 
-function readLocal(): BoardState | null {
+function readLocal(locale: Locale): BoardState | null {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(locale));
     if (!raw) return null;
     return normalizeBoard(JSON.parse(raw));
   } catch {
@@ -267,17 +269,21 @@ function readLocal(): BoardState | null {
   }
 }
 
-function writeLocal(state: BoardState): void {
+function writeLocal(locale: Locale, state: BoardState): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(storageKey(locale), JSON.stringify(state));
   } catch {
     // Navegador sem storage / cota cheia: o estado continua em memória.
   }
 }
 
-async function fetchSeed(): Promise<BoardState> {
-  const url = `${import.meta.env.BASE_URL}data/board.json`;
-  const response = await fetch(url, { cache: "no-store" });
+async function fetchSeed(locale: Locale): Promise<BoardState> {
+  const base = `${import.meta.env.BASE_URL}data/`;
+  const url = locale === "pt" ? `${base}board.json` : `${base}board.${locale}.json`;
+  let response = await fetch(url, { cache: "no-store" });
+  if (!response.ok && locale !== "pt") {
+    response = await fetch(`${base}board.json`, { cache: "no-store" });
+  }
   if (!response.ok) throw new Error(`Falha ao carregar ${url} (${response.status})`);
   return normalizeBoard(await response.json());
 }
@@ -294,26 +300,33 @@ export function downloadJSON(filename: string, data: unknown): void {
   URL.revokeObjectURL(url);
 }
 
-export function useWorkStore(): WorkStore {
+export function useWorkStore(locale: Locale = "pt"): WorkStore {
   const [state, setState] = useState<BoardState | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const loadedFor = useRef<Locale | null>(null);
 
   useEffect(() => {
     let alive = true;
-    const local = readLocal();
+    loadedFor.current = null;
+    setLoading(true);
+    setError(null);
+    setState(null);
+    const local = readLocal(locale);
     if (local) {
+      loadedFor.current = locale;
       setState(local);
       setLoading(false);
       return () => {
         alive = false;
       };
     }
-    fetchSeed()
+    fetchSeed(locale)
       .then((seed) => {
         if (!alive) return;
+        loadedFor.current = locale;
         setState(seed);
-        writeLocal(seed);
+        writeLocal(locale, seed);
       })
       .catch((err: unknown) => {
         if (!alive) return;
@@ -326,11 +339,11 @@ export function useWorkStore(): WorkStore {
     return () => {
       alive = false;
     };
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
-    if (state) writeLocal(state);
-  }, [state]);
+    if (state && loadedFor.current === locale) writeLocal(locale, state);
+  }, [state, locale]);
 
   const update = (change: (current: BoardState) => BoardState) => {
     setState((current) => {
@@ -410,9 +423,10 @@ export function useWorkStore(): WorkStore {
     setLoading(true);
     setError(null);
     try {
-      const seed = await fetchSeed();
+      const seed = await fetchSeed(locale);
+      loadedFor.current = locale;
       setState(seed);
-      writeLocal(seed);
+      writeLocal(locale, seed);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : String(err));
       throw err;

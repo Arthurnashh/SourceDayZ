@@ -1,0 +1,5580 @@
+{
+  "total": 316,
+  "achados": 153,
+  "comentarios": 163,
+  "categorias": [
+    {
+      "slug": "render",
+      "nome": "Рендер / DX11",
+      "total": 203
+    },
+    {
+      "slug": "rede",
+      "nome": "Сеть / сервер",
+      "total": 55
+    },
+    {
+      "slug": "terreno",
+      "nome": "Ландшафт / clutter",
+      "total": 12
+    },
+    {
+      "slug": "ia",
+      "nome": "ИИ / заражённые",
+      "total": 120
+    },
+    {
+      "slug": "fisica",
+      "nome": "Физика / коллизии",
+      "total": 12
+    },
+    {
+      "slug": "streaming",
+      "nome": "Стриминг / IO",
+      "total": 48
+    },
+    {
+      "slug": "script",
+      "nome": "Script VM / геймплей",
+      "total": 14
+    },
+    {
+      "slug": "ui",
+      "nome": "UI / HUD",
+      "total": 54
+    },
+    {
+      "slug": "som",
+      "nome": "Звук / аудио",
+      "total": 14
+    },
+    {
+      "slug": "outros",
+      "nome": "Прочее",
+      "total": 19
+    }
+  ],
+  "itens": [
+    {
+      "id": "A-01",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "back-face stencil зафиксирован в `KEEP`/`ALWAYS`",
+      "local": "`Dx11StateTranslator.cpp:135-142`",
+      "campos": {
+        "Local": "`Dx11StateTranslator.cpp:135-142`",
+        "Problema": "back-face stencil зафиксирован в `KEEP`/`ALWAYS`",
+        "Impacto": "shadow volumes не работают; двусторонний stencil ломается"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-02",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SrcBlendAlpha=ONE`, `DestBlendAlpha=ZERO` зафиксированы",
+      "local": "`Dx11StateTranslator.cpp:160-161`",
+      "campos": {
+        "Local": "`Dx11StateTranslator.cpp:160-161`",
+        "Problema": "`SrcBlendAlpha=ONE`, `DestBlendAlpha=ZERO` зафиксированы",
+        "Impacto": "неверное смешивание в R2T с alpha (частицы, стекло, UI)"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-03",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`FillMode = SOLID` зафиксирован",
+      "local": "`Dx11StateTranslator.cpp:174`",
+      "campos": {
+        "Local": "`Dx11StateTranslator.cpp:174`",
+        "Problema": "`FillMode = SOLID` зафиксирован",
+        "Impacto": "debug-wireframe/`SS_WIREFRAME` не рендерится"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-04",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`AddressW = CLAMP` зафиксирован",
+      "local": "`Dx11StateTranslator.cpp:196`",
+      "campos": {
+        "Local": "`Dx11StateTranslator.cpp:196`",
+        "Problema": "`AddressW = CLAMP` зафиксирован",
+        "Impacto": "неверно для `Dx11VolumeTexture`"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-05",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`clip()` работает только если PS вызывает `Dx11ApplyAlphaTest`",
+      "local": "`Dx11AlphaTest.cpp:72-76`",
+      "campos": {
+        "Local": "`Dx11AlphaTest.cpp:72-76`",
+        "Problema": "`clip()` работает только если PS вызывает `Dx11ApplyAlphaTest`",
+        "Impacto": "листва/растительность превращается в квадрат, если какой-то PS его не вызывает"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-06",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SampleDesc.Count = 1`",
+      "local": "`Dx11Device.cpp:41`",
+      "campos": {
+        "Local": "`Dx11Device.cpp:41`",
+        "Problema": "`SampleDesc.Count = 1`",
+        "Impacto": "MSAA отсутствует на любом пути"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-07",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`BeginFrame` не сбрасывает viewport",
+      "local": "`Dx11Device.cpp:129-134`",
+      "campos": {
+        "Local": "`Dx11Device.cpp:129-134`",
+        "Problema": "`BeginFrame` не сбрасывает viewport",
+        "Impacto": "R2T, меняющий viewport, загрязняет следующий кадр"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-08",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`R8G8B8A8_UNORM` без `_SRGB`",
+      "local": "`Dx11Device.cpp:40`",
+      "campos": {
+        "Local": "`Dx11Device.cpp:40`",
+        "Problema": "`R8G8B8A8_UNORM` без `_SRGB`",
+        "Impacto": "неверная гамма; «вымытые» цвета"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-09",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`DrawSectionTL` **отклоняет** `instancesCount>0` и требует `_activeShape == &shape`",
+      "local": "`Dx11EngineCore.cpp:505-513`",
+      "campos": {
+        "Local": "`Dx11EngineCore.cpp:505-513`",
+        "Problema": "`DrawSectionTL` **отклоняет** `instancesCount>0` и требует `_activeShape == &shape`",
+        "Impacto": "instancing отсутствует в новом бэкенде; один shape за раз, без батчинга"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "fisica"
+      ]
+    },
+    {
+      "id": "A-10",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "faces с `N()>32` молча отбрасываются",
+      "local": "`Dx11EngineCore.cpp:708`",
+      "campos": {
+        "Local": "`Dx11EngineCore.cpp:708`",
+        "Problema": "faces с `N()>32` молча отбрасываются",
+        "Impacto": "визуальные дыры в геометрии крупного ландшафта/коллайдера"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "terreno",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-11",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`BlendFactor` не отображает 12/13 (`BOTHSRCALPHA`/`BOTHINVSRCALPHA`)",
+      "local": "`Dx11StateTranslator.cpp:36-59`",
+      "campos": {
+        "Local": "`Dx11StateTranslator.cpp:36-59`",
+        "Problema": "`BlendFactor` не отображает 12/13 (`BOTHSRCALPHA`/`BOTHINVSRCALPHA`)",
+        "Impacto": "материалы, использующие эти факторы, падают с `E_INVALIDARG` и наследуют предыдущее смешивание"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-12",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "движок использует путь **TL (CPU)** и игнорирует `Dx11ShapeMesh` (статический GPU)",
+      "local": "`Dx11EngineCore.cpp:499-825` vs `Dx11ShapeMesh.cpp:40-128`",
+      "campos": {
+        "Local": "`Dx11EngineCore.cpp:499-825` vs `Dx11ShapeMesh.cpp:40-128`",
+        "Problema": "движок использует путь **TL (CPU)** и игнорирует `Dx11ShapeMesh` (статический GPU)",
+        "Impacto": "новый бэкенд платит за трансформацию/освещение на каждую вершину на CPU каждый кадр"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "fisica"
+      ]
+    },
+    {
+      "id": "A-13",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "фиксированный профиль `vs_4_0`/`ps_4_0`",
+      "local": "`Dx11ShaderCompiler.cpp:64,88`",
+      "campos": {
+        "Local": "`Dx11ShaderCompiler.cpp:64,88`",
+        "Problema": "фиксированный профиль `vs_4_0`/`ps_4_0`",
+        "Impacto": "бэкенд «DX11» на практике — это DX10/SM4: без compute, без tessellation и без бо́льших лимитов SM5"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "script"
+      ]
+    },
+    {
+      "id": "A-14",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "мипы с размером `<2` отбрасываются при подсчёте",
+      "local": "`Dx11TextBank.cpp:83`",
+      "campos": {
+        "Local": "`Dx11TextBank.cpp:83`",
+        "Problema": "мипы с размером `<2` отбрасываются при подсчёте",
+        "Impacto": "цепочка мипов обрезана; текстура 1×1 падает целиком"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-15",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "asset объявляет `TFAnizotropic16`, реальный sampler — `LINEAR`/`MaxAnisotropy=1`",
+      "local": "`Dx11TextBank.cpp:214` vs `Dx11Texture.cpp:209,217`",
+      "campos": {
+        "Local": "`Dx11TextBank.cpp:214` vs `Dx11Texture.cpp:209,217`",
+        "Problema": "asset объявляет `TFAnizotropic16`, реальный sampler — `LINEAR`/`MaxAnisotropy=1`",
+        "Impacto": "материал верит в несуществующую анизотропию; земля размывается под острым углом"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-16",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`BeginD3D11Frame` очищает **фиксированным чёрным** и вызывается после `Engine::InitDraw(color)`",
+      "local": "`Dx11EngineCore.cpp:81-85` + `:1013-1017`",
+      "campos": {
+        "Local": "`Dx11EngineCore.cpp:81-85` + `:1013-1017`",
+        "Problema": "`BeginD3D11Frame` очищает **фиксированным чёрным** и вызывается после `Engine::InitDraw(color)`",
+        "Impacto": "цвет фона, запрошенный игрой, всегда перезаписывается; небо/затухание экрана не появляется"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-17",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SetGamma` только сохраняет float; никакого `SetGammaControl`/гаммы шейдера",
+      "local": "`Dx11EngineCore.cpp:854-855`",
+      "campos": {
+        "Local": "`Dx11EngineCore.cpp:854-855`",
+        "Problema": "`SetGamma` только сохраняет float; никакого `SetGammaControl`/гаммы шейдера",
+        "Impacto": "настройка яркости/гаммы пользователя не влияет на бэкенд DX11"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-18",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "клиент считает байты негарантированных сообщений по `msg->size`; сервер использует сетевой `rawSize`; оба используют payload на гарантированном пути",
+      "local": "`networkClient.cpp:8613-8662` vs `networkServer.cpp:13062-13119`",
+      "campos": {
+        "Local": "`networkClient.cpp:8613-8662` vs `networkServer.cpp:13062-13119`",
+        "Problema": "клиент считает байты негарантированных сообщений по `msg->size`; сервер использует сетевой `rawSize`; оба используют payload на гарантированном пути",
+        "Impacto": "клиент и сервер измеряют одну сессию разными мерками; расходящийся бюджет полосы"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "streaming"
+      ]
+    },
+    {
+      "id": "A-19",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "комментарий говорит \"maximum error not sent\", но цикл останавливается на **первом** объекте с `error<FLT_MAX` и присваивает его в `sumError`",
+      "local": "`networkServer.cpp:13125-13137`",
+      "campos": {
+        "Local": "`networkServer.cpp:13125-13137`",
+        "Problema": "комментарий говорит \"maximum error not sent\", но цикл останавливается на **первом** объекте с `error<FLT_MAX` и присваивает его в `sumError`",
+        "Impacto": "`pInfo._desync` занижает худшую ошибку; плохой объект в конце списка остаётся невидимым"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-20",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`char mission[256]; strcpy(mission, t)` копирует `template` из `server.cfg` без проверки размера",
+      "local": "`networkServer.cpp:3663-3666`",
+      "campos": {
+        "Local": "`networkServer.cpp:3663-3666`",
+        "Problema": "`char mission[256]; strcpy(mission, t)` копирует `template` из `server.cfg` без проверки размера",
+        "Impacto": "переполнение стека на выделенном сервере при имени шаблона >255 символов"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-21",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`NCMTVoteMissionExt` читает `count` из сети и индексирует `_serverMissions[i]` без сравнения с размером массива",
+      "local": "`networkClient.cpp:3040-3049`",
+      "campos": {
+        "Local": "`networkClient.cpp:3040-3049`",
+        "Problema": "`NCMTVoteMissionExt` читает `count` из сети и индексирует `_serverMissions[i]` без сравнения с размером массива",
+        "Impacto": "вредоносный/повреждённый сервер переполняет кучу клиента"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "streaming"
+      ]
+    },
+    {
+      "id": "A-22",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`ask._index % (nBanks+nFiles)` без защиты, когда нет ни подписанного банка, ни дополнительного файла",
+      "local": "`networkClient.cpp:5338`",
+      "campos": {
+        "Local": "`networkClient.cpp:5338`",
+        "Problema": "`ask._index % (nBanks+nFiles)` без защиты, когда нет ни подписанного банка, ни дополнительного файла",
+        "Impacto": "деление на ноль на клиенте при получении запроса подписи"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-23",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`rChat._sender->Brain()` и `chat._sender->Brain()` без проверки `_sender`",
+      "local": "`networkClient.cpp:4731,4771`",
+      "campos": {
+        "Local": "`networkClient.cpp:4731,4771`",
+        "Problema": "`rChat._sender->Brain()` и `chat._sender->Brain()` без проверки `_sender`",
+        "Impacto": "радиосообщение с нулевым sender роняет клиент"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-24",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`RptF(\"Object %d:%\",OID_FORMAT,\" delete requested from client %d\",...)` передаёт `OID_FORMAT` как аргумент вместо конкатенации",
+      "local": "`networkServer.cpp:7250`",
+      "campos": {
+        "Local": "`networkServer.cpp:7250`",
+        "Problema": "`RptF(\"Object %d:%\",OID_FORMAT,\" delete requested from client %d\",...)` передаёт `OID_FORMAT` как аргумент вместо конкатенации",
+        "Impacto": "формат/varargs рассинхронизированы: UB в логе удаления не-бота"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "A-25",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`NMTMissionParams` не проверяет отправителя; записывает `_param1/_param2` и реплицирует всем",
+      "local": "`networkServer.cpp:8223-8238`",
+      "campos": {
+        "Local": "`networkServer.cpp:8223-8238`",
+        "Problema": "`NMTMissionParams` не проверяет отправителя; записывает `_param1/_param2` и реплицирует всем",
+        "Impacto": "модифицированный клиент меняет параметры миссии у остальных"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "script"
+      ]
+    },
+    {
+      "id": "A-26",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SendMsgRemote`/`SendMsgQueue` отбрасывают возврат `SendMsgRaw` и возвращают размер; `RptF` при сбое печатает `result!=NULL` (всегда 0) вместо кода ошибки",
+      "local": "`networkMsg.cpp:3272-3275,3350-3355,3390-3395`",
+      "campos": {
+        "Local": "`networkMsg.cpp:3272-3275,3350-3355,3390-3395`",
+        "Problema": "`SendMsgRemote`/`SendMsgQueue` отбрасывают возврат `SendMsgRaw` и возвращают размер; `RptF` при сбое печатает `result!=NULL` (всегда 0) вместо кода ошибки",
+        "Impacto": "сбой отправки невидим, а статистика полосы считает байты, которые не ушли"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "A-27",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`AddLocalMessage` синхронно диспатчит `OnMessage`; единственный производитель `_receivedLocalMessages` находится в `#if 0`",
+      "local": "`network.cpp:3341-3348,3529-3537`",
+      "campos": {
+        "Local": "`network.cpp:3341-3348,3529-3537`",
+        "Problema": "`AddLocalMessage` синхронно диспатчит `OnMessage`; единственный производитель `_receivedLocalMessages` находится в `#if 0`",
+        "Impacto": "реентерабельный loopback, а `ReceiveLocalMessages` — мёртвый код"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "A-28",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "агрегация `NMTMessages` пишет только тип для каждого элемента; декодер проставляет им всем время пакета",
+      "local": "`networkMsg.cpp:3342-3347` + `network.cpp:3453-3454`",
+      "campos": {
+        "Local": "`networkMsg.cpp:3342-3347` + `network.cpp:3453-3454`",
+        "Problema": "агрегация `NMTMessages` пишет только тип для каждого элемента; декодер проставляет им всем время пакета",
+        "Impacto": "подсообщения теряют индивидуальный `msg->time`"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "A-29",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "неизвестный формат внутри `NMTMessages` делает `return`, бросая остаток пакета и лог байтов",
+      "local": "`network.cpp:3444-3452`",
+      "campos": {
+        "Local": "`network.cpp:3444-3452`",
+        "Problema": "неизвестный формат внутри `NMTMessages` делает `return`, бросая остаток пакета и лог байтов",
+        "Impacto": "тихая потеря уже полученных сообщений, без повторной передачи"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "A-30",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "очереди `_messageQueue` на игрока/клиента без ограничения размера или количества",
+      "local": "`networkServer.cpp:8852-8892` / `networkClient.cpp:7055-7087`",
+      "campos": {
+        "Local": "`networkServer.cpp:8852-8892` / `networkClient.cpp:7055-7087`",
+        "Problema": "очереди `_messageQueue` на игрока/клиента без ограничения размера или количества",
+        "Impacto": "медленный клиент накапливает элементы вплоть до disconnect; память и задержка"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "A-31",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`OnClientStateChanged` отбрасывает `NCSPlayerAssigned`, когда `oldState > NCSPlayerAssigned`, без записи и без уведомления",
+      "local": "`networkServer.cpp:11272-11273`",
+      "campos": {
+        "Local": "`networkServer.cpp:11272-11273`",
+        "Problema": "`OnClientStateChanged` отбрасывает `NCSPlayerAssigned`, когда `oldState > NCSPlayerAssigned`, без записи и без уведомления",
+        "Impacto": "переподключение/повторное применение JIP, переиспользующее `NetworkPlayerInfo`, не перезапускает поток миссии"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-32",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SendMissionFile` помечает `missionFileValid/paramFileValid=true` и переходит в `NCSMissionReceived` без ack и без проверки `AutoOpen`/`rest`/`read`",
+      "local": "`networkServer.cpp:13388-13420,13459-13479` (и `13505-13560`)",
+      "campos": {
+        "Local": "`networkServer.cpp:13388-13420,13459-13479` (и `13505-13560`)",
+        "Problema": "`SendMissionFile` помечает `missionFileValid/paramFileValid=true` и переходит в `NCSMissionReceived` без ack и без проверки `AutoOpen`/`rest`/`read`",
+        "Impacto": "клиент с отсутствующим или усечённым файлом считается готовым; сбой проявляется только при загрузке"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-33",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "клиент принудительно ставит `_missionFileValid=true` в `NCSMissionReceived`; предыдущий `DoAssert` — только debug",
+      "local": "`networkClient.cpp:2140-2141`",
+      "campos": {
+        "Local": "`networkClient.cpp:2140-2141`",
+        "Problema": "клиент принудительно ставит `_missionFileValid=true` в `NCSMissionReceived`; предыдущий `DoAssert` — только debug",
+        "Impacto": "отсутствующая в release проверка миссии маскирует неполную передачу"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "A-34",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`_initMessages` имеет override только для 5 типов, а у `InitMessageIsDeleted` нет специализации; `RemoveInitObjectDeleted` никогда не удаляет, и список очищается только в `DestroyAllObjects`",
+      "local": "`networkServer.cpp:6038-6123,6191-6209,10058`",
+      "campos": {
+        "Local": "`networkServer.cpp:6038-6123,6191-6209,10058`",
+        "Problema": "`_initMessages` имеет override только для 5 типов, а у `InitMessageIsDeleted` нет специализации; `RemoveInitObjectDeleted` никогда не удаляет, и список очищается только в `DestroyAllObjects`",
+        "Impacto": "рост списка в долгих сессиях и растущая стоимость каждого JIP"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-35",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`OnPlayerDisconnected` публикует `_id` из `identity->playerid`, не проверяя `identity` на ноль (тернарник использует только `_uid`)",
+      "local": "`networkServer.cpp:8759-8765`",
+      "campos": {
+        "Local": "`networkServer.cpp:8759-8765`",
+        "Problema": "`OnPlayerDisconnected` публикует `_id` из `identity->playerid`, не проверяя `identity` на ноль (тернарник использует только `_uid`)",
+        "Impacto": "краш на игроке без идентичности (BOT или незавершённый логин)"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-36",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`OnPlayerCreate` копирует имя через `strcpy` в `char[256]` и добавляет суффикс через `sprintf` в тот же буфер, без ограничения",
+      "local": "`networkServer.cpp:9125-9144`",
+      "campos": {
+        "Local": "`networkServer.cpp:9125-9144`",
+        "Problema": "`OnPlayerCreate` копирует имя через `strcpy` в `char[256]` и добавляет суффикс через `sprintf` в тот же буфер, без ограничения",
+        "Impacto": "длинное имя от клиента переполняет стек сервера"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-37",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`OnPlayerDestroy` вызывает `DisconnectPlayer(dpid, playerPerson)` даже когда `info` равен нулю; `playerPerson` остаётся по умолчанию, и функция обходит все объекты",
+      "local": "`networkServer.cpp:9435-9501`",
+      "campos": {
+        "Local": "`networkServer.cpp:9435-9501`",
+        "Problema": "`OnPlayerDestroy` вызывает `DisconnectPlayer(dpid, playerPerson)` даже когда `info` равен нулю; `playerPerson` остаётся по умолчанию, и функция обходит все объекты",
+        "Impacto": "стоимость O(объектов) и удаление/очистка по, возможно, недействительному dpid"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "A-38",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`CheckSquadObject::IsDone` индексирует `msgList[cf._fragmentNo++]` после `PrepareTransferFileMessages`, не проверяя, есть ли в списке сообщения",
+      "local": "`network.cpp:2937-2941`",
+      "campos": {
+        "Local": "`network.cpp:2937-2941`",
+        "Problema": "`CheckSquadObject::IsDone` индексирует `msgList[cf._fragmentNo++]` после `PrepareTransferFileMessages`, не проверяя, есть ли в списке сообщения",
+        "Impacto": "файл, который не открывается, оставляет список пустым, и доступ выходит за границы"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-39",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`ApplyVoting` кастует `id.Data()`/`value->Data()` в `int*` и читает тип/игрока без проверки `Size() >= sizeof(int)`",
+      "local": "`networkServer.cpp:2970-3025`",
+      "campos": {
+        "Local": "`networkServer.cpp:2970-3025`",
+        "Problema": "`ApplyVoting` кастует `id.Data()`/`value->Data()` в `int*` и читает тип/игрока без проверки `Size() >= sizeof(int)`",
+        "Impacto": "искажённый голос от модифицированного клиента читает за пределами буфера"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "A-40",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`FileSize` возвращает `INT_MAX`, а `GetFileCRC` возвращает CRC пустого потока, когда файл не открывается; размер попадает в список и в расчёт фрагментов",
+      "local": "`network.cpp:2714-2749,2767-2799`",
+      "campos": {
+        "Local": "`network.cpp:2714-2749,2767-2799`",
+        "Problema": "`FileSize` возвращает `INT_MAX`, а `GetFileCRC` возвращает CRC пустого потока, когда файл не открывается; размер попадает в список и в расчёт фрагментов",
+        "Impacto": "прогресс custom files переполняется, и передача пытается отправить несуществующий файл"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-41",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`InitDraw` вызывает `Fail(\"Unable to begin rendering - Reset needed\")`, но продолжает к `D3DSetRenderState`, `D3DBeginScene` и `Begin3DRendering`",
+      "local": "`d3d9/engdd9.cpp:3446-3502`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:3446-3502`",
+        "Problema": "`InitDraw` вызывает `Fail(\"Unable to begin rendering - Reset needed\")`, но продолжает к `D3DSetRenderState`, `D3DBeginScene` и `Begin3DRendering`",
+        "Impacto": "в release кадр открывается с недействительным device; повреждённая отрисовка или краш"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-42",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`FlushQueue` обновляет `_indexBufferUsed` до проверки `ret == D3D_OK`; сбой `LockDynBuffer` только логируется",
+      "local": "`d3d9/engdd9.cpp:10756-10765`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:10756-10765`",
+        "Problema": "`FlushQueue` обновляет `_indexBufferUsed` до проверки `ret == D3D_OK`; сбой `LockDynBuffer` только логируется",
+        "Impacto": "индексированный draw со смещением в незаполненный буфер (мусор)"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "streaming"
+      ]
+    },
+    {
+      "id": "A-43",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`Init3DState` использует `HANDLE_ERR`, который делает `return`, не сигнализируя о сбое; `Init3D` не проверяет и продолжает",
+      "local": "`d3d9/engdd9.cpp:19734,19819-19881,20170`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:19734,19819-19881,20170`",
+        "Problema": "`Init3DState` использует `HANDLE_ERR`, который делает `return`, не сигнализируя о сбое; `Init3D` не проверяет и продолжает",
+        "Impacto": "движок с нулевыми render targets продолжает инициализацию и падает далеко от причины"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-44",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`Init3D` может блокироваться до 60 с в цикле `CreateDevice`; `Init3DState()` — `void` и не передаёт ошибку; потоки привязаны к CPU 2 и 4",
+      "local": "`d3d9/engdd9.cpp:22356-22421,22492`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:22356-22421,22492`",
+        "Problema": "`Init3D` может блокироваться до 60 с в цикле `CreateDevice`; `Init3DState()` — `void` и не передаёт ошибку; потоки привязаны к CPU 2 и 4",
+        "Impacto": "запуск зависает на потерянном устройстве, а потоки рендера отсутствуют на машинах с <4 CPU"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "script",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-45",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`DoPostprocess` вызывает `_pp._glow->GetPriority()` без null-check, хотя проверяет `_pp._glow` сразу после, а `ReleasePostProcessStuff` обнуляет указатель",
+      "local": "`d3d9/engdd9.cpp:2728,2788,26373`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:2728,2788,26373`",
+        "Problema": "`DoPostprocess` вызывает `_pp._glow->GetPriority()` без null-check, хотя проверяет `_pp._glow` сразу после, а `ReleasePostProcessStuff` обнуляет указатель",
+        "Impacto": "краш, если post-process выполняется после освобождения ресурсов (потерянное устройство/reset)"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-46",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Генератор шейдеров использует `min==max` (`0x300`/`SBT_Default`), игнорирует возврат `CreateShaderDeclarations()` и возвращает `false` на пути успеха",
+      "local": "`d3d9/engdd9.cpp:27027-27030,27058,27072`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:27027-27030,27058,27072`",
+        "Problema": "Генератор шейдеров использует `min==max` (`0x300`/`SBT_Default`), игнорирует возврат `CreateShaderDeclarations()` и возвращает `false` на пути успеха",
+        "Impacto": "сгенерированный кэш не покрывает SM2/другие техники SB, и вызывающий код не различает успех и сбой"
+      },
+      "texto": "генератор зафиксирован на `0x300`/`SBT_Default`: циклы намекают на общность, но `min==max`. Он **игнорирует** возврат `CreateShaderDeclarations()` (`27058`) и всегда возвращает `false` (`27072`), неотличимо от сбоя для нового вызывающего кода.",
+      "cats": [
+        "render",
+        "streaming"
+      ]
+    },
+    {
+      "id": "A-47",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Сбой `CreatePostProcessStuff` пишет в лог \"Error while creating stencil shadows stuff\" и уничтожает объявления перед выходом",
+      "local": "`d3d9/engdd9.cpp:27118-27125`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:27118-27125`",
+        "Problema": "Сбой `CreatePostProcessStuff` пишет в лог \"Error while creating stencil shadows stuff\" и уничтожает объявления перед выходом",
+        "Impacto": "диагностика указывает на неверную подсистему; движок полуинициализирован, если процесс не завершится"
+      },
+      "texto": "сбой `CreatePostProcessStuff` пишет в лог \"stencil shadows stuff\" и уничтожает объявления перед выходом; диагностика указывает на неверную подсистему, а движок остаётся полуинициализированным, если процесс не завершится.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-48",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SetTexture0Color` использует `maxColor` в нелинейной ветви (`linear = toLinear ? SRGBToLinear(avgColor) : maxColor`)",
+      "local": "`d3d9/engdd9.cpp:12991`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:12991`",
+        "Problema": "`SetTexture0Color` использует `maxColor` в нелинейной ветви (`linear = toLinear ? SRGBToLinear(avgColor) : maxColor`)",
+        "Impacto": "при `_linearSpace=false` `PSC_T0AvgColor` получает максимальный цвет вместо среднего; шейдеры листвы/травы получают неверный тон"
+      },
+      "texto": "`SetTexture0Color` использует `maxColor` в нелинейной ветви: `Color linear = toLinear ? SRGBToLinear(avgColor) : maxColor;` (`12991`). При `_linearSpace=false` `PSC_T0AvgColor` получает **максимальный** цвет, а не средний; шейдеры, использующие average (листва/трава), получают неверный тон. в нелинейной ветви `linear = maxColor` (`12991`): отношение становится 1 по каждому каналу, и шейдер трактует avg==max; листва/трава выглядят плоскими или слишком светлыми.",
+      "cats": [
+        "render",
+        "terreno",
+        "ia",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-49",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`ML_Stars` есть в enum `EMainLight`, но у `SetupMaterialLights` нет `case` для него, и он попадает в `Fail(\"Unknown type of main light\")`",
+      "local": "`d3d9/engdd9.cpp:8206-8207`; `lib/engine.hpp:751`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:8206-8207`; `lib/engine.hpp:751`",
+        "Problema": "`ML_Stars` есть в enum `EMainLight`, но у `SetupMaterialLights` нет `case` для него, и он попадает в `Fail(\"Unknown type of main light\")`",
+        "Impacto": "в release, если `Fail` не прерывает работу, константы света остаются от предыдущего прохода"
+      },
+      "texto": "`ML_Stars` есть в enum (`engine.hpp:751`), но **не имеет `case`**: попадает в `default` и вызывает `Fail(\"Unknown type of main light\")`. В release, если `Fail` не прерывает работу, константы остаются от предыдущего света.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-50",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SetupSectionTL` получает `uvSource`, `uvSourceCount`, `instancesCount`, `pointLightsCount` и `spotLightsCount`, но тело использует только `uvSourceOnlyTex0`",
+      "local": "`d3d9/engdd9.cpp:15869-15876,15877-16084`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:15869-15876,15877-16084`",
+        "Problema": "`SetupSectionTL` получает `uvSource`, `uvSourceCount`, `instancesCount`, `pointLightsCount` и `spotLightsCount`, но тело использует только `uvSourceOnlyTex0`",
+        "Impacto": "вызывающий код считает, что настраивает UV/свет/инстансы через сигнатуру, но состояние приходит из канала; порт, который начнёт читать параметры, изменит поведение"
+      },
+      "texto": "пять мёртвых параметров создают ложное впечатление контракта: порт, который их использует (например, передаёт `pointLightsCount` в шейдер), меняет поведение, хотя оригинальный DX9 их никогда не читал.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-51",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`DoSelectPixelShader` принимает `mat=NULL` (по умолчанию) и, если выбранный шейдер — ландшафтный, `SetPixelShaderConstantLayers` разыменовывает `mat`",
+      "local": "`d3d9/engdd9.cpp:18450,18614-18617,11628`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:18450,18614-18617,11628`",
+        "Problema": "`DoSelectPixelShader` принимает `mat=NULL` (по умолчанию) и, если выбранный шейдер — ландшафтный, `SetPixelShaderConstantLayers` разыменовывает `mat`",
+        "Impacto": "вызовы в `10699` и `18102` с дефолтами могут дать краш, если последний выбранный шейдер — ландшафтный"
+      },
+      "texto": "`DoSelectPixelShader(cb, mat=NULL)` с выбранным ландшафтным шейдером разыменовывает `mat` в `SetPixelShaderConstantLayers` (`11628`); есть вызовы с дефолтами в `10699` и `18102`.",
+      "cats": [
+        "render",
+        "terreno",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-52",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`BeginMeshTL` получает `spec`, `lights` и `bias`, но не использует их в теле; состояние уже приходит из `BeginInstanceTL`, а bias пересчитывается по секции в `DrawSectionTL`",
+      "local": "`d3d9/engdd9.cpp:9239-9241,9243-9266`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:9239-9241,9243-9266`",
+        "Problema": "`BeginMeshTL` получает `spec`, `lights` и `bias`, но не использует их в теле; состояние уже приходит из `BeginInstanceTL`, а bias пересчитывается по секции в `DrawSectionTL`",
+        "Impacto": "порт, который начнёт читать параметры (например, применять `bias` к мешу), меняет результат, хотя оригинальный DX9 этого никогда не делал"
+      },
+      "texto": "мёртвые параметры (`spec`, `lights`, `bias`) создают ложный контракт; порт, который начнёт их читать, меняет поведение.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-53",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Fallback объявления записывает `_vertexShaderID=VSBasic` и `_pixelShaderSel=PSNormal` в `RendStateExt` канала вместо использования локальных переменных",
+      "local": "`d3d9/engdd9.cpp:16942-16949`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:16942-16949`",
+        "Problema": "Fallback объявления записывает `_vertexShaderID=VSBasic` и `_pixelShaderSel=PSNormal` в `RendStateExt` канала вместо использования локальных переменных",
+        "Impacto": "секция с несовместимым объявлением молча понижает все следующие секции того же меша до следующей настройки материала"
+      },
+      "texto": "fallback меняет `_vertexShaderID`/`_pixelShaderSel` в канале и не восстанавливает их: несовместимая секция понижает следующие до `VSBasic/PSNormal` до следующей настройки материала.",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-54",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Когда `_dipCount >= LimitDIPCount`, код вызывает `YieldProcessor()` и продолжает цикл секций вместо выхода",
+      "local": "`d3d9/engdd9.cpp:12362-12393`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:12362-12393`",
+        "Problema": "Когда `_dipCount >= LimitDIPCount`, код вызывает `YieldProcessor()` и продолжает цикл секций вместо выхода",
+        "Impacto": "превышенный бюджет DIP превращается в спин по всем оставшимся секциям без отрисовки"
+      },
+      "texto": "при превышении `LimitDIPCount` код вызывает `YieldProcessor()` и продолжает итерацию (`12390-12393`) вместо выхода: тратит CPU и всё равно проходит все оставшиеся секции.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-55",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`VSSimulWeatherClouds` и `VSSimulWeatherCloudsCPU` имеют валидный специальный ID и входят в ветвь `VSToVSS < NVertexShaderSpecialID`, но не имеют подветви: `SetupVSConstants` возвращается, ничего не загрузив",
+      "local": "`d3d9/engdd9.cpp:16826-16852`; `lib/engine.cpp:296-297`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:16826-16852`; `lib/engine.cpp:296-297`",
+        "Problema": "`VSSimulWeatherClouds` и `VSSimulWeatherCloudsCPU` имеют валидный специальный ID и входят в ветвь `VSToVSS < NVertexShaderSpecialID`, но не имеют подветви: `SetupVSConstants` возвращается, ничего не загрузив",
+        "Impacto": "любая shape, нарисованная `DrawSectionTL` с этим VS, использует константы предыдущего draw; сегодня это не взрывается только потому, что рендерер облаков загружает свои (`SimulCloudRendererDX9.cpp:522-534`)"
+      },
+      "texto": "`VSSimulWeatherClouds` и `VSSimulWeatherCloudsCPU` имеют валидные специальные ID (`engine.cpp:296-297`), входят в ветвь `16826`, но **не имеют подветви**: функция возвращается, молча не загрузив ни одной константы. Сегодня рендерер облаков загружает свои константы (`SimulCloudRendererDX9.cpp:522-534`) и сюда не заходит; любая shape, нарисованная через `DrawSectionTL` с этим VS, наследует старые константы.",
+      "cats": [
+        "render",
+        "ia",
+        "fisica",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-56",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SetPixelShaderConstantDBS` разыменовывает `GScene->MainLight()` без null-check, а `SetupPSConstants` не проверяет `GScene` (в отличие от `SetupMaterialLights:8074`)",
+      "local": "`d3d9/engdd9.cpp:11515,16870,16895`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:11515,16870,16895`",
+        "Problema": "`SetPixelShaderConstantDBS` разыменовывает `GScene->MainLight()` без null-check, а `SetupPSConstants` не проверяет `GScene` (в отличие от `SetupMaterialLights:8074`)",
+        "Impacto": "с `ML_Sun` и нулевой сценой — краш; на практике `DrawSectionTL` требует сцену, но контракт не проверяется"
+      },
+      "texto": "`SetPixelShaderConstantDBS` разыменовывает `GScene->MainLight()` (`11515`) без null-check, а `SetupPSConstants` не проверяет `GScene` (в отличие от `SetupMaterialLights:8074`). С `ML_Sun` и нулевой сценой это краш; на практике `DrawSectionTL` требует сцену.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-57",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`PrepareTriangleTL` проверяет `GetVertexShaderID()` в `[0,NVertexShaderID)`, но вне диапазона только вызывает `Fail` и продолжает; невалидный ID остаётся в канале и индексируется без bounds check в `SetupVSConstants`",
+      "local": "`d3d9/engdd9.cpp:15589-15593,16818,16826`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:15589-15593,16818,16826`",
+        "Problema": "`PrepareTriangleTL` проверяет `GetVertexShaderID()` в `[0,NVertexShaderID)`, но вне диапазона только вызывает `Fail` и продолжает; невалидный ID остаётся в канале и индексируется без bounds check в `SetupVSConstants`",
+        "Impacto": "в release материал с невалидным VS портит выбор шейдера/констант вместо отката к `VSBasic`"
+      },
+      "texto": "`GetVertexShaderID()` вне `[0,NVertexShaderID)` только вызывает `Fail(\"Error: Vertex shader ID out of limits\")` и **продолжает**; невалидный ID остаётся в канале и индексируется без bounds check в `SetupVSConstants` (`16818`/`16826`) и в `DoSelectVertexShader`.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-58",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Параметр `section` у `PrepareTriangleTL` не читается в теле",
+      "local": "`d3d9/engdd9.cpp:15574-15579`; вызывающие `drawpoly.cpp:352,358` и `engdd9.cpp:23192`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:15574-15579`; вызывающие `drawpoly.cpp:352,358` и `engdd9.cpp:23192`",
+        "Problema": "Параметр `section` у `PrepareTriangleTL` не читается в теле",
+        "Impacto": "вызывающий код считает, что передаёт свойства полигона; порт, который начнёт их использовать, изменит результат без эквивалента в DX9"
+      },
+      "texto": "`section` — мёртвый параметр: сигнатура обещает использовать свойства полигона, тело их игнорирует; порт, который \"исправит\" это, изменит результат без эквивалента в оригинальном DX9.",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-59",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`RFAlphaTest64/32/128` схлопываются в один и тот же `IsTransparent`; DX9 использует фиксированный `ALPHAREF=128`, а DX11 хранит `_preparedAlphaTestReference` как 64/32/128",
+      "local": "`d3d9/engdd9.cpp:15089-15100,15481`; `d3d11/Dx11EngineCore.cpp:479-484`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:15089-15100,15481`; `d3d11/Dx11EngineCore.cpp:479-484`",
+        "Problema": "`RFAlphaTest64/32/128` схлопываются в один и тот же `IsTransparent`; DX9 использует фиксированный `ALPHAREF=128`, а DX11 хранит `_preparedAlphaTestReference` как 64/32/128",
+        "Impacto": "материалы, зависящие от порога alpha test, рендерятся по-разному в DX9 и DX11"
+      },
+      "texto": "`RFAlphaTest64`, `RFAlphaTest32` и `RFAlphaTest128` становятся одним и тем же `IsTransparent`; в DX9 отсечение всегда 128/255, а DX11 использует 64/32/128. Материалы, зависящие от порога, рендерятся по-разному в двух бэкендах.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-60",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Параметр `level` у `DoPrepareTriangle` не читается в теле; на пути очереди он попадает только в ключ `AllocateQueue` (`10488`), который группирует очередь, но не используется в TP",
+      "local": "`d3d9/engdd9.cpp:15050-15051,15630-15631,10488,10609`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:15050-15051,15630-15631,10488,10609`",
+        "Problema": "Параметр `level` у `DoPrepareTriangle` не читается в теле; на пути очереди он попадает только в ключ `AllocateQueue` (`10488`), который группирует очередь, но не используется в TP",
+        "Impacto": "mip level не влияет на подготовку треугольника; кто ожидает выбор мипа по уровню, его не получает, а порт, который начнёт его использовать, меняет результат без эквивалента в DX9"
+      },
+      "texto": "`level` — мёртвый параметр; mip level, вычисленный в `PrepareTriangleTL:15631`, игнорируется, так что кто ожидает выбор мипа по уровню, его не получает.",
+      "cats": [
+        "render",
+        "ia",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-61",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`ColorScaleD2` фиксирует половину RGB, и `Assert` на `_modColor≈0.5` действует только в debug",
+      "local": "`d3d9/engdd9.cpp:15763-15766,10161-10165`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:15763-15766,10161-10165`",
+        "Problema": "`ColorScaleD2` фиксирует половину RGB, и `Assert` на `_modColor≈0.5` действует только в debug",
+        "Impacto": "вне режима яркости 0.5 декаль недодержана/пересвечена, без предупреждения в release"
+      },
+      "texto": "`ColorScaleD2` предполагает `_modColor` с яркостью 0.5; assert действует только в debug. В release любая другая модуляция яркости недодерживает или пересвечивает декаль (glow компенсирует только случай 0.5).",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-62",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Индекс анимации насыщается в `[0,frameCount-1]`, а строка модуля закомментирована, хотя комментарий велит делать цикл выше 1",
+      "local": "`d3d9/engdd9.cpp:8654-8661`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:8654-8661`",
+        "Problema": "Индекс анимации насыщается в `[0,frameCount-1]`, а строка модуля закомментирована, хотя комментарий велит делать цикл выше 1",
+        "Impacto": "частицы с накопленной фазой застывают на последнем кадре вместо циклирования"
+      },
+      "texto": "`animationPhase>1` **насыщается** в `frameCount-1` (`8657`); комментарий велит делать цикл, а строка модуля закомментирована (`8660`). Частицы с накопленной фазой застывают на последнем кадре вместо циклирования.",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-63",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Бэкенд DX11 не реализует `DrawShadowVolumeInstanced` и не настраивает состояние stencil (`STENCIL*`/`TWOSIDEDSTENCILMODE`); в файле встречаются только `clearStencil` и `ZShadowEpsilon`",
+      "local": "`d3d11/Dx11EngineCore.cpp:94-99,1069`; `d3d9/engdd9.cpp:8812-8964`",
+      "campos": {
+        "Local": "`d3d11/Dx11EngineCore.cpp:94-99,1069`; `d3d9/engdd9.cpp:8812-8964`",
+        "Problema": "Бэкенд DX11 не реализует `DrawShadowVolumeInstanced` и не настраивает состояние stencil (`STENCIL*`/`TWOSIDEDSTENCILMODE`); в файле встречаются только `clearStencil` и `ZShadowEpsilon`",
+        "Impacto": "перенос объёмных теней на DX11 требует реализовать stencil и оба прохода, иначе игра останется без динамических теней на этом бэкенде"
+      },
+      "texto": "у бэкенда DX11 **нет** пути stencil shadow volume: ни одного переопределения `DrawShadowVolumeInstanced`, ни одной настройки `STENCIL*`/`TWOSIDEDSTENCILMODE` в `Dx11EngineCore.cpp` (только `clearStencil` на `94-99`). Перенос объёмных теней на DX11 требует реализовать состояние stencil и оба прохода либо принять отсутствие теней.",
+      "cats": [
+        "render",
+        "ia",
+        "ui",
+        "som"
+      ]
+    },
+    {
+      "id": "A-64",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SetupWorldViewProjCam` разыменовывает `GScene` до какой-либо проверки; `if(!camera) return` защищает только камеру",
+      "local": "`d3d9/engdd9.cpp:9044-9047`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:9044-9047`",
+        "Problema": "`SetupWorldViewProjCam` разыменовывает `GScene` до какой-либо проверки; `if(!camera) return` защищает только камеру",
+        "Impacto": "`BeginInstanceTL` полагается на этот вызов без проверки `GScene`; при нулевой сцене — краш до assert"
+      },
+      "texto": "`SetupWorldViewProjCam` разыменовывает `GScene` на `9044` **до** любой проверки; `if (!camera) return` (`9046-9047`) защищает только камеру. `BeginInstanceTL` полагается на этот вызов без проверки `GScene`, в отличие от других мест, где `GScene` проверяется (например, `8520`).",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-65",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`VSC_ShadowVolumeLength` получает смещение глубины в `PrepareShadowOffset` и длину объёма в `BeginShadowVolume`; использование разделяет только `_renderingMode`",
+      "local": "`d3d9/engdd9.cpp:8508-8509,8968-8969`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:8508-8509,8968-8969`",
+        "Problema": "`VSC_ShadowVolumeLength` получает смещение глубины в `PrepareShadowOffset` и длину объёма в `BeginShadowVolume`; использование разделяет только `_renderingMode`",
+        "Impacto": "порт, объединяющий проходы или меняющий порядок записей, перезаписывает одно значение другим без видимой ошибки"
+      },
+      "texto": "`VSC_ShadowVolumeLength` несёт два смысла (смещение vs длина) и записывается на `8509` и `8969`; любое изменение порядка проходов или порт, объединяющий пути, перезаписывает одно другим без видимой ошибки.",
+      "cats": [
+        "render",
+        "streaming"
+      ]
+    },
+    {
+      "id": "A-66",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`DrawMeshTLInstanced` применяет ночное ограничение по `lights.Size()>0` до того, как `SetupLights` вычислит `_night`; ясным днём (`_night<=0`, список опустошён) батч всё равно сокращается",
+      "local": "`d3d9/engdd9.cpp:8749-8764,7998-8007`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:8749-8764,7998-8007`",
+        "Problema": "`DrawMeshTLInstanced` применяет ночное ограничение по `lights.Size()>0` до того, как `SetupLights` вычислит `_night`; ясным днём (`_night<=0`, список опустошён) батч всё равно сокращается",
+        "Impacto": "константы света не были бы перезаписаны, но чанк отбрасывается без необходимости; код консервативен для `ENABLE_DAY_LIGHTS`"
+      },
+      "texto": "`DrawMeshTLInstanced` решает про ночное ограничение по `lights.Size()>0` **до** того, как `SetupLights` вычислит `_night` (`8749-8764` vs `7998-8007`). В разгар дня (`_night<=0`, список опустошён) батч всё равно сокращается, как будто ночь: константы света не были бы перезаписаны, но число инстансов на чанк падает без необходимости. С `ENABLE_DAY_LIGHTS` ограничение необходимо, поэтому код консервативен для обеих конфигураций.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-67",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Проверка `if (!CBState(cb)._tlActive != TLDisabled \\",
+      "local": "`d3d9/engdd9.cpp:8438`; `engdd9.hpp:3088-3096`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:8438`; `engdd9.hpp:3088-3096`",
+        "Problema": "Проверка `if (!CBState(cb)._tlActive != TLDisabled \\",
+        "Impacto": "\\"
+      },
+      "texto": "проверка `ProjectionChanged` корректна только потому, что `TLDisabled==0` (`engdd9.hpp:3091`); изменение порядка enum инвертирует тест без ошибки компиляции.",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "A-68",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`SetupSectionTL` оставляет `bool fogModeB[2]` неинициализированным, когда `fogMode` вне `FM_None..FM_FogAlpha` (switch без `default`); `SetFogMode` принимает любое значение",
+      "local": "`d3d9/engdd9.cpp:15909-15929`; `8481-8484`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:15909-15929`; `8481-8484`",
+        "Problema": "`SetupSectionTL` оставляет `bool fogModeB[2]` неинициализированным, когда `fogMode` вне `FM_None..FM_FogAlpha` (switch без `default`); `SetFogMode` принимает любое значение",
+        "Impacto": "недопустимый `EFogMode` пишет мусор в `b0/b1`, и VS берёт неопределённую ветку fog при каждом draw"
+      },
+      "texto": "`SetupSectionTL` объявляет `bool fogModeB[2]` и делает `switch(fogMode)` без `default` (`15909-15928`); `EFogMode` вне `0..3` оставляет оба булева значения **неинициализированными**, и `SetVertexShaderConstantB` пишет мусор в `b0/b1`. `SetFogMode` (`8483`) принимает любое значение enum, в том числе из загруженного материала.",
+      "cats": [
+        "render",
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "A-69",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`GetZCoefs` использует `zAdd=-2e-7*bias`, а активная ветка `ConvertProjectionMatrix` использует `zAdd=-1e-6*bias`; закомментированный блок на `2018-2019` и копия DX11 сохраняют старую формулу",
+      "local": "`d3d9/engdd9.cpp:1966-1967,2021-2024`; `transLight.cpp:251-268`; `d3d11/Dx11EngineCore.hpp:69-70`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:1966-1967,2021-2024`; `transLight.cpp:251-268`; `d3d11/Dx11EngineCore.hpp:69-70`",
+        "Problema": "`GetZCoefs` использует `zAdd=-2e-7*bias`, а активная ветка `ConvertProjectionMatrix` использует `zAdd=-1e-6*bias`; закомментированный блок на `2018-2019` и копия DX11 сохраняют старую формулу",
+        "Impacto": "один и тот же `_bias` даёт разные смещения глубины между software T&L и аппаратной проекцией"
+      },
+      "texto": "`GetZCoefs` использует `zAdd=-2e-7*bias` (`1966-1967`), тогда как активная ветка `ConvertProjectionMatrix` использует `zAdd=-1e-6*bias` (`2021-2024`); `transLight.cpp:256-268` и `Dx11EngineCore.hpp:69-70` используют старую формулу. Один и тот же `_bias` даёт разные смещения между software T&L и аппаратной проекцией.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-70",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Ветка w-buffer в `ConvertProjectionMatrix` недостижима в этой сборке: `HasWBuffer()` и `IsWBuffer()` — константы `false`, а `SetWBuffer` пуст",
+      "local": "`d3d9/engdd9.cpp:1995-2014,7929-7932`; `engdd9.hpp:5750`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:1995-2014,7929-7932`; `engdd9.hpp:5750`",
+        "Problema": "Ветка w-buffer в `ConvertProjectionMatrix` недостижима в этой сборке: `HasWBuffer()` и `IsWBuffer()` — константы `false`, а `SetWBuffer` пуст",
+        "Impacto": "подстройка near/far для w-buffer никогда не выполняется и может сгнить без тестов"
+      },
+      "texto": "ветка w-buffer (`1995-2014`) недостижима в этой сборке, потому что `HasWBuffer()`/`IsWBuffer()` — константы `false` (`engdd9.hpp:5750`, `engdd9.cpp:7929-7932`); код подстройки near/far никогда не выполняется и может сгнить без тестов.",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-71",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "`DoAssert(cratersCount <= 14)` работает только в debug, а предел `14` захардкожен; в release `cratersCount==15` превращается в `PSSprite`, потому что enum перескакивает с `Crater14` на `Sprite`, а `UseCraters` уже прочитал за пределы массивов из 14 элементов (`10126-10148`)",
+      "local": "`d3d9/engdd9.cpp:18461,18471`; `engine.hpp:517-518`; `common.h:167-169`; `object.cpp:2159`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:18461,18471`; `engine.hpp:517-518`; `common.h:167-169`; `object.cpp:2159`",
+        "Problema": "`DoAssert(cratersCount <= 14)` работает только в debug, а предел `14` захардкожен; в release `cratersCount==15` превращается в `PSSprite`, потому что enum перескакивает с `Crater14` на `Sprite`, а `UseCraters` уже прочитал за пределы массивов из 14 элементов (`10126-10148`)",
+        "Impacto": "вызов `DrawParameters` с `cratersCount>14` даёт чтение стека за границами и рисует секцию шейдером sprite"
+      },
+      "texto": "`DoAssert(cratersCount <= 14)` (`18461`) — **только для debug** (`debugLog.hpp:100-102`). В release `cratersCount==15` даёт `PSCrater1-1+15`, что в точности равно `PSSprite` — enum перескакивает с `Crater14` на `Sprite` (`engine.hpp:517-518`) — и секция уходит в ветку sprite (`18471`), включает depth texture в stage 1 и использует константы sprite. Хуже: `UseCraters` уже записал `cratersCount` float4 из массивов на 14 элементов на стеке (`10126-10148`), то есть переполнение начинается раньше, при записи констант. Сегодня `object.cpp:2159` ограничивает до `maxCraters = GetMaxCraters() = 14`, но конструктор `DrawParameters` принимает произвольный `cratersCount` (`engine.hpp:937-945`).",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-72",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Проверки против `PSUninitialized`/`PSTUninitialized` — это `Assert` (удаляются в release); поскольку `-1 < PSNone`, никогда не подготовленный канал индексирует `_pixelShader[-1][-1]`",
+      "local": "`d3d9/engdd9.cpp:18453-18455,26828-26829`; `debugLog.hpp:124`",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp:18453-18455,26828-26829`; `debugLog.hpp:124`",
+        "Problema": "Проверки против `PSUninitialized`/`PSTUninitialized` — это `Assert` (удаляются в release); поскольку `-1 < PSNone`, никогда не подготовленный канал индексирует `_pixelShader[-1][-1]`",
+        "Impacto": "`SetPixelShader` получает указатель, прочитанный за пределами матрицы `ComRef`, с риском краша; сегодня этого не происходит только потому, что пути подготовки всегда задают ID заранее"
+      },
+      "texto": "единственные проверки `_pixelShaderSel`/`_pixelShaderTypeSel` — это `Assert` (`18453-18454`), тоже удаляемые в release. Начальное состояние канала — `PSUninitialized=-1`/`PSTUninitialized=-1` (`26828-26829`), а `-1 < PSNone` истинно, поэтому `DoSelectPixelShader` на никогда не подготовленном канале индексирует `_pixelShader[-1][-1]` — чтение за пределами матрицы `ComRef` и `SetPixelShader` с недопустимым указателем. Сегодня оба пути подготовки (`PrepareSingleTexDiffuseA:12523-12527`, `PrepareDetailTex:12679`) всегда задают ID заранее, поэтому это латентно.",
+      "cats": [
+        "render",
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "A-73",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "14 точек постобработки DX11, помеченных самими разработчиками как \"DX11 TODO remove or repair\"",
+      "local": "`d3d11/postProcessDX11.cpp:428,521,705,875,1215,1854,4281,4936,4959,5071,6585,6660,8794,9299`",
+      "campos": {
+        "Local": "`d3d11/postProcessDX11.cpp:428,521,705,875,1215,1854,4281,4936,4959,5071,6585,6660,8794,9299`",
+        "Problema": "14 точек постобработки DX11, помеченных самими разработчиками как \"DX11 TODO remove or repair\"",
+        "Impacto": "эффекты постобработки, существующие в DX9, не имеют эквивалента в DX11 (согласуется с G-03: сегодня AA нет)"
+      },
+      "texto": "`lib/d3d11/postProcessDX11.cpp:428,521,705,875,1215,1854,4281,4936,4959,5071,6585,6660,8794,9299`: 14 точек, помеченных \"DX11 TODO remove or repair\" → постобработка DX11 **заявленно неполна**; эффекты, существующие в DX9, не имеют эквивалента (подтверждает G-03: сегодня AA нет).",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-74",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "DX11 не реализует alpha test, trianglefan, загрузку TGA и vsync, и сам код фиксирует \"DX11 TODO\" в каждом случае",
+      "local": "`d3d11/engdd11.cpp:15306,20397,17800,11644`",
+      "campos": {
+        "Local": "`d3d11/engdd11.cpp:15306,20397,17800,11644`",
+        "Problema": "DX11 не реализует alpha test, trianglefan, загрузку TGA и vsync, и сам код фиксирует \"DX11 TODO\" в каждом случае",
+        "Impacto": "материалы с alpha test, примитивы trianglefan и текстуры TGA не имеют пути в DX11; кадр выдаётся без vsync"
+      },
+      "texto": "`lib/d3d11/engdd11.cpp:15306` (alpha test), `20397` (trianglefan), `17800` (TGA), `11644` (vsync): функциональность отсутствует в DX11 → материалы с alpha test, примитивы trianglefan и загрузка TGA не имеют пути в DX11.",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-75",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Бэкенд DX11 — дословная копия DX9 с заменённым API, **включая TODO, HACK и заметки `\\patch` 2006/2007 годов**",
+      "local": "`d3d9/engdd9.cpp` vs `d3d11/engdd11.cpp` (1.437 идентичных текстов комментариев = 79,3% от DX11)",
+      "campos": {
+        "Local": "`d3d9/engdd9.cpp` vs `d3d11/engdd11.cpp` (1.437 идентичных текстов комментариев = 79,3% от DX11)",
+        "Problema": "Бэкенд DX11 — дословная копия DX9 с заменённым API, **включая TODO, HACK и заметки `\\patch` 2006/2007 годов**",
+        "Impacto": "весь технический долг DX9 наследуется в DX11, и любой патч нужно дублировать в обоих бэкендах, чтобы не было расхождений"
+      },
+      "texto": "79,3% комментариев в `engdd11.cpp` идентичны комментариям в `engdd9.cpp` (1.437 текстов) → бэкенд DX11 — копия DX9 с заменённым API; весь технический долг DX9 наследуется, и **любой патч нужно дублировать** в обоих бэкендах, чтобы не было расхождений.",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "A-76",
+      "origem": "achado",
+      "tipo": "arquitetura",
+      "severidade": "alta",
+      "titulo": "Структурный долг, заявленный в DX11: bias на каждый CB (проекция должна быть общей), TL, привязанный к пути MC, и неперсистентные источники света",
+      "local": "`d3d11/engdd11.cpp:13801,11299,16507`",
+      "campos": {
+        "Local": "`d3d11/engdd11.cpp:13801,11299,16507`",
+        "Problema": "Структурный долг, заявленный в DX11: bias на каждый CB (проекция должна быть общей), TL, привязанный к пути MC, и неперсистентные источники света",
+        "Impacto": "подтверждает A-69 и то, что DX11 работает только на пути TL; затраты на кадр и расходящийся bias между каналами"
+      },
+      "texto": "`lib/d3d11/engdd11.cpp:13801` (bias на CB), `11299` (TL привязан к пути MC), `16507` (неперсистентные источники света) → структурный долг DX11, согласующийся с A-69 (bias) и с находкой, что DX11 работает только на пути TL.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-01",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`restFrame = 0.045f` (22 FPS) фиксирован",
+      "local": "`world.cpp:11894`",
+      "campos": {
+        "Suspeito": "`restFrame = 0.045f` (22 FPS) фиксирован",
+        "Evidência": "`world.cpp:11894`",
+        "Como confirmar": "логировать реальный `estimateReserve`",
+        "Correção candidata": "выводить из `RefreshRate`"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "H-02",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "Lock/unlock `_objAroundCam` при ходьбе",
+      "local": "`world.cpp:7996-8015`",
+      "campos": {
+        "Suspeito": "Lock/unlock `_objAroundCam` при ходьбе",
+        "Evidência": "`world.cpp:7996-8015`",
+        "Como confirmar": "считать локи за кадр",
+        "Correção candidata": "больший гистерезис / асинхронный lock"
+      },
+      "texto": "",
+      "cats": [
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-03",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`ClearClutterDrawCache()` каждый кадр",
+      "local": "`world.cpp:11816`",
+      "campos": {
+        "Suspeito": "`ClearClutterDrawCache()` каждый кадр",
+        "Evidência": "`world.cpp:11816`",
+        "Como confirmar": "инструментировать размер кеша",
+        "Correção candidata": "кеш по ячейке ландшафта"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "terreno",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-04",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`GetLandShadowSmooth` на каждый инстанс",
+      "local": "`scene.cpp:6169,6188,6211`",
+      "campos": {
+        "Suspeito": "`GetLandShadowSmooth` на каждый инстанс",
+        "Evidência": "`scene.cpp:6169,6188,6211`",
+        "Como confirmar": "считать вызовы/объект",
+        "Correção candidata": "кеш по ячейке (значение зависит от позиции)"
+      },
+      "texto": "",
+      "cats": [
+        "terreno",
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-05",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`m_Stats.m_iExecuted++` на каждую инструкцию",
+      "local": "`enf_scriptvm.cpp:906`",
+      "campos": {
+        "Suspeito": "`m_Stats.m_iExecuted++` на каждую инструкцию",
+        "Evidência": "`enf_scriptvm.cpp:906`",
+        "Como confirmar": "профиль промахов кеша",
+        "Correção candidata": "локальный счётчик на поток"
+      },
+      "texto": "",
+      "cats": [
+        "streaming",
+        "script"
+      ]
+    },
+    {
+      "id": "H-06",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`ObjectCollisionLine` на каждого бездействующего зомби",
+      "local": "`zombie.cpp:3854`",
+      "campos": {
+        "Suspeito": "`ObjectCollisionLine` на каждого бездействующего зомби",
+        "Evidência": "`zombie.cpp:3854`",
+        "Como confirmar": "считать raycast'ы/кадр",
+        "Correção candidata": "планировать по бюджету, а не по времени"
+      },
+      "texto": "",
+      "cats": [
+        "ia",
+        "fisica"
+      ]
+    },
+    {
+      "id": "H-07",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "viewport не сбрасывается",
+      "local": "`Dx11Device.cpp:129`",
+      "campos": {
+        "Suspeito": "viewport не сбрасывается",
+        "Evidência": "`Dx11Device.cpp:129`",
+        "Como confirmar": "захват RenderDoc",
+        "Correção candidata": "задавать viewport в `BeginFrame`"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "H-08",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`OptimizeLevelRendering` мутирует на каждый draw call",
+      "local": "`object.cpp:2129`",
+      "campos": {
+        "Suspeito": "`OptimizeLevelRendering` мутирует на каждый draw call",
+        "Evidência": "`object.cpp:2129`",
+        "Como confirmar": "race detector / TSan",
+        "Correção candidata": "сделать идемпотентным или кэшировать по shape"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "fisica",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-09",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`shadowCache.Split` на каждый объект `OnSurface`",
+      "local": "`object.cpp:2182`",
+      "campos": {
+        "Suspeito": "`shadowCache.Split` на каждый объект `OnSurface`",
+        "Evidência": "`object.cpp:2182`",
+        "Como confirmar": "считать количество split на кадр",
+        "Correção candidata": "кэш split по shape+LOD"
+      },
+      "texto": "",
+      "cats": [
+        "fisica",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-10",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`FreeOnDemandGarbageCollect` на каждое сообщение",
+      "local": "`networkClient.cpp:2933`",
+      "campos": {
+        "Suspeito": "`FreeOnDemandGarbageCollect` на каждое сообщение",
+        "Evidência": "`networkClient.cpp:2933`",
+        "Como confirmar": "считать сборки/с",
+        "Correção candidata": "собирать по бюджету времени"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "H-11",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "расхождение хеша PBO, если расшифровка заголовка не удалась",
+      "local": "`networkClient.cpp:1813-1837`",
+      "campos": {
+        "Suspeito": "расхождение хеша PBO, если расшифровка заголовка не удалась",
+        "Evidência": "`networkClient.cpp:1813-1837`",
+        "Como confirmar": "тест с защищённым PBO",
+        "Correção candidata": "обрабатывать сбой как явную ошибку"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "H-12",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "broadcast O(N²) позиций каждые 30 с",
+      "local": "`networkServer.cpp:4591-4621`",
+      "campos": {
+        "Suspeito": "broadcast O(N²) позиций каждые 30 с",
+        "Evidência": "`networkServer.cpp:4591-4621`",
+        "Como confirmar": "считать сообщения/с при N игроках",
+        "Correção candidata": "единый батч на игрока"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "H-13",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "стоимость травы растёт с **площадью** видимого прямоугольника, а не с расстоянием",
+      "local": "`landClutter.cpp:4224,4242-4274`",
+      "campos": {
+        "Suspeito": "стоимость травы растёт с **площадью** видимого прямоугольника, а не с расстоянием",
+        "Evidência": "`landClutter.cpp:4224,4242-4274`",
+        "Como confirmar": "считать `nResults` на кадр",
+        "Correção candidata": "бюджет по расстоянию, а не по прямоугольнику"
+      },
+      "texto": "",
+      "cats": [
+        "terreno",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-14",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`lodLimit` clutter пересчитывается каждый кадр",
+      "local": "`landClutter.cpp:4187-4211`",
+      "campos": {
+        "Suspeito": "`lodLimit` clutter пересчитывается каждый кадр",
+        "Evidência": "`landClutter.cpp:4187-4211`",
+        "Como confirmar": "логировать значения при неподвижной камере",
+        "Correção candidata": "кэшировать по (тип, разрешение, плотность)"
+      },
+      "texto": "",
+      "cats": [
+        "terreno",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-15",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`_clutterData` читается без блокировки во время jobs",
+      "local": "`landClutter.cpp:4242-4274` `[hipótese]`",
+      "campos": {
+        "Suspeito": "`_clutterData` читается без блокировки во время jobs",
+        "Evidência": "`landClutter.cpp:4242-4274` `[гипотеза]`",
+        "Como confirmar": "race detector / принудительный refresh",
+        "Correção candidata": "неизменяемый снапшот на кадр"
+      },
+      "texto": "",
+      "cats": [
+        "terreno",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-16",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`CreateMaterial` + `PrepareTL` на секцию, на объект",
+      "local": "`shapeDraw.cpp:139-153`",
+      "campos": {
+        "Suspeito": "`CreateMaterial` + `PrepareTL` на секцию, на объект",
+        "Evidência": "`shapeDraw.cpp:139-153`",
+        "Como confirmar": "считать вызовы/кадр",
+        "Correção candidata": "кэш по (`PolyProperties`, `animColor`)"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "fisica",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-17",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "конкатенация секций существует, но **никогда не выполняется** (вызывающие передают `end=beg+1`)",
+      "local": "`engdd9.cpp:12283-12301` vs `shapeDraw.cpp:155` e `engdd9.cpp:8728`",
+      "campos": {
+        "Suspeito": "конкатенация секций существует, но **никогда не выполняется** (вызывающие передают `end=beg+1`)",
+        "Evidência": "`engdd9.cpp:12283-12301` против `shapeDraw.cpp:155` и `engdd9.cpp:8728`",
+        "Como confirmar": "считать DIPs = `NSections()`",
+        "Correção candidata": "группировать смежные секции у вызывающего"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "fisica"
+      ]
+    },
+    {
+      "id": "H-18",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "4 матрицы волн пересчитываются **на каждую секцию**",
+      "local": "`engdd9.cpp:12589-12603`",
+      "campos": {
+        "Suspeito": "4 матрицы волн пересчитываются **на каждую секцию**",
+        "Evidência": "`engdd9.cpp:12589-12603`",
+        "Como confirmar": "считать `GetSeaWaveMatrices`/кадр",
+        "Correção candidata": "считать 1× на кадр в глобальном CB"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "som"
+      ]
+    },
+    {
+      "id": "H-19",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "батч instancing ограничен VB **и** `_maxNightInstances`",
+      "local": "`engdd9.cpp:8746-8764`",
+      "campos": {
+        "Suspeito": "батч instancing ограничен VB **и** `_maxNightInstances`",
+        "Evidência": "`engdd9.cpp:8746-8764`",
+        "Como confirmar": "измерить draws/батч ночью",
+        "Correção candidata": "1 draw на батч; DX11 снимает потолок"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "H-20",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`CheckShadowSize` пересчитывается на каждый инстанс без кэша",
+      "local": "`engdd9.cpp:8853-8865`",
+      "campos": {
+        "Suspeito": "`CheckShadowSize` пересчитывается на каждый инстанс без кэша",
+        "Evidência": "`engdd9.cpp:8853-8865`",
+        "Como confirmar": "считать вызовы/кадр",
+        "Correção candidata": "кэш по объекту + LOD"
+      },
+      "texto": "",
+      "cats": [
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-21",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "payload инстанса = 5 vec4 в `FREESPACE` (лимит регистров)",
+      "local": "`engdd9.cpp:8590-8613`",
+      "campos": {
+        "Suspeito": "payload инстанса = 5 vec4 в `FREESPACE` (лимит регистров)",
+        "Evidência": "`engdd9.cpp:8590-8613`",
+        "Como confirmar": "эффективный `MaxInstances()`",
+        "Correção candidata": "*instance buffer* + `SV_InstanceID`"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-22",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "CB трансформации с `Map/Unmap` **на каждый draw**",
+      "local": "`Dx11Renderer.cpp:227-232`",
+      "campos": {
+        "Suspeito": "CB трансформации с `Map/Unmap` **на каждый draw**",
+        "Evidência": "`Dx11Renderer.cpp:227-232`",
+        "Como confirmar": "считать maps/кадр",
+        "Correção candidata": "CB на кадр + смещение"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "H-23",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`new TLVertexTable` на mesh, на кадр, под глобальной блокировкой",
+      "local": "`Dx11EngineCore.cpp:329-335`",
+      "campos": {
+        "Suspeito": "`new TLVertexTable` на mesh, на кадр, под глобальной блокировкой",
+        "Evidência": "`Dx11EngineCore.cpp:329-335`",
+        "Como confirmar": "измерить аллокацию/время в `obDrw`",
+        "Correção candidata": "переиспользуемый пул + убрать блокировку"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-24",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "глобальный `CULL_NONE` в бэкенде DX11",
+      "local": "`Dx11TLRenderer.cpp:160`",
+      "campos": {
+        "Suspeito": "глобальный `CULL_NONE` в бэкенде DX11",
+        "Evidência": "`Dx11TLRenderer.cpp:160`",
+        "Como confirmar": "GPUView / overdraw",
+        "Correção candidata": "cull back-face по winding"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "H-25",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "3 `Map/Unmap` на draw (VB, IB, CB) + identity IB",
+      "local": "`Dx11TLRenderer.cpp:234-270`",
+      "campos": {
+        "Suspeito": "3 `Map/Unmap` на draw (VB, IB, CB) + identity IB",
+        "Evidência": "`Dx11TLRenderer.cpp:234-270`",
+        "Como confirmar": "считать maps и байты/кадр",
+        "Correção candidata": "VB/CB на кадр + `Draw` без IB"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "H-26",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "swap chain *blt model* (`DISCARD`, 2 буфера)",
+      "local": "`Dx11Device.cpp:41-46`",
+      "campos": {
+        "Suspeito": "swap chain *blt model* (`DISCARD`, 2 буфера)",
+        "Evidência": "`Dx11Device.cpp:41-46`",
+        "Como confirmar": "GPUView / задержка кадра",
+        "Correção candidata": "`FLIP_DISCARD` + 3 буфера"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-27",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "depth `D24_UNORM_S8_UINT` (stencil 8 бит)",
+      "local": "`Dx11Device.cpp:92`",
+      "campos": {
+        "Suspeito": "depth `D24_UNORM_S8_UINT` (stencil 8 бит)",
+        "Evidência": "`Dx11Device.cpp:92`",
+        "Como confirmar": "захват со shadow volume",
+        "Correção candidata": "`D32_FLOAT_S8` или отдельный stencil"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-28",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "CB всегда с полным `Map/Unmap`, без sub-allocation по смещению",
+      "local": "`Dx11ConstantBuffer.cpp:49-54`",
+      "campos": {
+        "Suspeito": "CB всегда с полным `Map/Unmap`, без sub-allocation по смещению",
+        "Evidência": "`Dx11ConstantBuffer.cpp:49-54`",
+        "Como confirmar": "считать обновления/байты на кадр",
+        "Correção candidata": "CB на кадр + выровненные смещения"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-29",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "текстура DX11 без генерации mip (`BindFlags` только `SHADER_RESOURCE`)",
+      "local": "`Dx11Texture.cpp:41`",
+      "campos": {
+        "Suspeito": "текстура DX11 без генерации mip (`BindFlags` только `SHADER_RESOURCE`)",
+        "Evidência": "`Dx11Texture.cpp:41`",
+        "Como confirmar": "захват с текстурой в 1 уровень / лог `MipLevels`",
+        "Correção candidata": "`MISC_GENERATE_MIPS`+`GenerateMips` или обязательная цепочка"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-30",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "кэш шейдеров в `%TEMP%` без общего лимита и без eviction",
+      "local": "`Dx11ShaderCache.cpp:93-124,205-278`",
+      "campos": {
+        "Suspeito": "кэш шейдеров в `%TEMP%` без общего лимита и без eviction",
+        "Evidência": "`Dx11ShaderCache.cpp:93-124,205-278`",
+        "Como confirmar": "считать `.bin` и байты после N запусков",
+        "Correção candidata": "LRU по размеру + очистка при инициализации"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-31",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`Dx11TextBank::Load` держит блокировку банка во время I/O PAC",
+      "local": "`Dx11TextBank.cpp:278-283`",
+      "campos": {
+        "Suspeito": "`Dx11TextBank::Load` держит блокировку банка во время I/O PAC",
+        "Evidência": "`Dx11TextBank.cpp:278-283`",
+        "Como confirmar": "измерить время `Load` на холодном диске",
+        "Correção candidata": "загружать вне блокировки + вставлять с double-check"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-32",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "линейный поиск текстуры в банке + `FindKey(NULL)`",
+      "local": "`Dx11TextBank.cpp:238-244,300`",
+      "campos": {
+        "Suspeito": "линейный поиск текстуры в банке + `FindKey(NULL)`",
+        "Evidência": "`Dx11TextBank.cpp:238-244,300`",
+        "Como confirmar": "считать сравнения при старте",
+        "Correção candidata": "hash map имя→индекс"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-33",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "кэш из 32 текстур без блокировки, доступный из 2D и из render workers",
+      "local": "`Dx11EngineCore.cpp:133-171`",
+      "campos": {
+        "Suspeito": "кэш из 32 текстур без блокировки, доступный из 2D и из render workers",
+        "Evidência": "`Dx11EngineCore.cpp:133-171`",
+        "Como confirmar": "TSan / лог victim на поток",
+        "Correção candidata": "блокировка на кэш или *thread-local* кэш + владелец на кадр"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "streaming",
+        "script",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-34",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "32 текстуры на весь мир → thrash и повторный upload каждый кадр; на пути материала **материал из 15 stages занимает до 15 записей** (stage 0 переиспользует `gpuTexture`, поэтому `stageCount-1` промахов на материал)",
+      "local": "`Dx11EngineCore.hpp:114`, `Dx11EngineCore.cpp:158-168`, `:612-649`",
+      "campos": {
+        "Suspeito": "32 текстуры на весь мир → thrash и повторный upload каждый кадр; на пути материала **материал из 15 stages занимает до 15 записей** (stage 0 переиспользует `gpuTexture`, поэтому `stageCount-1` промахов на материал)",
+        "Evidência": "`Dx11EngineCore.hpp:114`, `Dx11EngineCore.cpp:158-168`, `:612-649`",
+        "Como confirmar": "считать промахи/байты upload на кадр",
+        "Correção candidata": "кэш по бюджету памяти + residency по ячейке"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "terreno",
+        "ia",
+        "streaming",
+        "ui",
+        "som"
+      ]
+    },
+    {
+      "id": "H-35",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "eviction может оставить `_polyTexture` указывающим на освобождённую текстуру",
+      "local": "`Dx11EngineCore.cpp:164-168,182`",
+      "campos": {
+        "Suspeito": "eviction может оставить `_polyTexture` указывающим на освобождённую текстуру",
+        "Evidência": "`Dx11EngineCore.cpp:164-168,182`",
+        "Como confirmar": "запустить 2D с >32 текстурами и ASan/debug heap",
+        "Correção candidata": "`Ref<Dx11Texture>` или индекс+поколение вместо сырого указателя"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-36",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`SendMsgQueue` не проверяет `maxPacketSize`; фрагментация остаётся на транспорт",
+      "local": "`networkMsg.cpp:3349-3355`, `network.cpp:142`",
+      "campos": {
+        "Suspeito": "`SendMsgQueue` не проверяет `maxPacketSize`; фрагментация остаётся на транспорт",
+        "Evidência": "`networkMsg.cpp:3349-3355`, `network.cpp:142`",
+        "Como confirmar": "собрать гарантированную очередь > `par.maxPacketSize` и проверить, режет ли её `DXSendMsg`",
+        "Correção candidata": "валидировать размер до сборки или принудительно `NMFGuaranteed`"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-37",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`msg->size=0` в loopback исключает BOT из учёта трафика",
+      "local": "`networkServer.cpp:14435-14438`, `networkClient.cpp:8855-8860`",
+      "campos": {
+        "Suspeito": "`msg->size=0` в loopback исключает BOT из учёта трафика",
+        "Evidência": "`networkServer.cpp:14435-14438`, `networkClient.cpp:8855-8860`",
+        "Como confirmar": "измерить `EstimateBandwidth` с BOT и без",
+        "Correção candidata": "учитывать loopback в отдельной статистике"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-38",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`OnServerSendComplete`/`OnClientSendComplete` пусты: прикладного retry нет",
+      "local": "`networkServer.cpp:3041-3043`, `networkClient.cpp:1904-1906`",
+      "campos": {
+        "Suspeito": "`OnServerSendComplete`/`OnClientSendComplete` пусты: прикладного retry нет",
+        "Evidência": "`networkServer.cpp:3041-3043`, `networkClient.cpp:1904-1906`",
+        "Como confirmar": "форсировать потерю пакета и посмотреть, сходится ли состояние без ретрансмиссии",
+        "Correção candidata": "корреляция/retry только если транспорт не гарантирует"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "H-39",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`MissionStatsMessage` объявляет `_objects.card()` creates/updates, но JIP пропускает объекты вне bubble и уже синхронизированные",
+      "local": "`networkServer.cpp:11355-11357,11375,11394-11399,11416-11417`; `networkClient.cpp:2841,5485`",
+      "campos": {
+        "Suspeito": "`MissionStatsMessage` объявляет `_objects.card()` creates/updates, но JIP пропускает объекты вне bubble и уже синхронизированные",
+        "Evidência": "`networkServer.cpp:11355-11357,11375,11394-11399,11416-11417`; `networkClient.cpp:2841,5485`",
+        "Como confirmar": "зайти на полный сервер и измерить, доходит ли `_remainingToCreate` до 0",
+        "Correção candidata": "считать только то, что реально будет отправлено, или считать прогресс оценкой"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-40",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`ppaaEnabled` не исключает `_thermalVisionThis`, поэтому PPAA выполняется после thermal-прохода",
+      "local": "`d3d9/engdd9.cpp:2594,2600-2618,2840-2848`",
+      "campos": {
+        "Suspeito": "`ppaaEnabled` не исключает `_thermalVisionThis`, поэтому PPAA выполняется после thermal-прохода",
+        "Evidência": "`d3d9/engdd9.cpp:2594,2600-2618,2840-2848`",
+        "Como confirmar": "включить SMAA/FXAA и тепловизор и сравнить резкость/края изображения",
+        "Correção candidata": "пропускать PPAA на thermal или применять до `PPFinalThermal`"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-41",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "При включённом `THREADED_SHADER_COMPILER` `D3DXMACRO::Definition` указывает на стековый `BString rmNumber`, который умирает до компиляции в потоке",
+      "local": "`d3d9/engdd9.cpp:11213,11221-11231,11272,17448-17591`",
+      "campos": {
+        "Suspeito": "При включённом `THREADED_SHADER_COMPILER` `D3DXMACRO::Definition` указывает на стековый `BString rmNumber`, который умирает до компиляции в потоке",
+        "Evidência": "`d3d9/engdd9.cpp:11213,11221-11231,11272,17448-17591`",
+        "Como confirmar": "скомпилировать с макросом в 1 и запустить с пустым кэшем шейдеров",
+        "Correção candidata": "копировать строки в `Job` (или использовать `std::string`/`RString` в массиве)"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "streaming",
+        "script"
+      ]
+    },
+    {
+      "id": "H-42",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`_cbState` рассчитан по `GetCPUCount()+1`, но у лимита в 32 канала есть только `Assert`",
+      "local": "`d3d9/engdd9.cpp:26777-26780`; `d3d9/engdd9.hpp:4257,4271-4274`",
+      "campos": {
+        "Suspeito": "`_cbState` рассчитан по `GetCPUCount()+1`, но у лимита в 32 канала есть только `Assert`",
+        "Evidência": "`d3d9/engdd9.cpp:26777-26780`; `d3d9/engdd9.hpp:4257,4271-4274`",
+        "Como confirmar": "запустить на машине с >31 логических CPU и заставить использовать все каналы",
+        "Correção candidata": "ограничить `GetCPUCount()` поддерживаемым максимумом или падать явно"
+      },
+      "texto": "`_cbState.Resize(GetCPUCount()+1)` имеет только `Assert(Size()<=32)`; на машинах с >31 логических CPU лимит нарушается в release, и любая структура с индексом по каналу может выйти за границы.",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-43",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`_initialized=true` выставляется до `InitTexMemEstimations()`, которая может скорректировать бюджет текстур",
+      "local": "`d3d9/engdd9.cpp:27355-27360`",
+      "campos": {
+        "Suspeito": "`_initialized=true` выставляется до `InitTexMemEstimations()`, которая может скорректировать бюджет текстур",
+        "Evidência": "`d3d9/engdd9.cpp:27355-27360`",
+        "Como confirmar": "форсировать ранний выход в `InitTexMemEstimations` и проверить, продолжает ли игра со старым бюджетом",
+        "Correção candidata": "перенести флаг после оценки и пересчёта text bank"
+      },
+      "texto": "`_initialized=true` до `InitTexMemEstimations`; если оценка выходит рано или падает, движок объявляет себя готовым со старым бюджетом текстур.",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-44",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "Сентинел `Color(-1,-1,-1,-1)` «невозможен» только если `Color` сохраняет отрицательные значения; если конструктор сатурирует в 0..1, сентинел становится белым и белый случай может пропустить upload",
+      "local": "`d3d9/engdd9.cpp:19677-19682`; `d3d9/engdd9.cpp:12978,12987`",
+      "campos": {
+        "Suspeito": "Сентинел `Color(-1,-1,-1,-1)` «невозможен» только если `Color` сохраняет отрицательные значения; если конструктор сатурирует в 0..1, сентинел становится белым и белый случай может пропустить upload",
+        "Evidência": "`d3d9/engdd9.cpp:19677-19682`; `d3d9/engdd9.cpp:12978,12987`",
+        "Como confirmar": "инициализировать состояние белым и проверить, перестаёт ли `SetTexture0Color(HWhite,...)` отправлять константу",
+        "Correção candidata": "использовать эталонный `Color`, безопасный при сатурации, или сравнивать с `_texture0MaxColor` ещё и по alpha"
+      },
+      "texto": "сентинел `Color(-1,-1,-1,-1)` «невозможен» только если `Color` сохраняет отрицательные значения; если конструктор сатурирует в 0..1, сентинел становится белым и белый случай может пропустить upload.",
+      "cats": [
+        "render",
+        "ia",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-45",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "В release `DoAssert` у `_vdNonTL/_vsNonTL` ничего не останавливают; после `DestroyShaderDeclarations` оба становятся null, и `SetVertexDeclaration(NULL)`/`SetVertexShader(NULL)` оставляют любой 2D без шейдера",
+      "local": "`d3d9/engdd9.cpp:8369-8376,25512-25524`",
+      "campos": {
+        "Suspeito": "В release `DoAssert` у `_vdNonTL/_vsNonTL` ничего не останавливают; после `DestroyShaderDeclarations` оба становятся null, и `SetVertexDeclaration(NULL)`/`SetVertexShader(NULL)` оставляют любой 2D без шейдера",
+        "Evidência": "`d3d9/engdd9.cpp:8369-8376,25512-25524`",
+        "Como confirmar": "освободить декларации и нарисовать 2D до следующего `DoSwitchTL(TLEnabled)`",
+        "Correção candidata": "пересоздавать декларации по требованию или падать явно"
+      },
+      "texto": "в release `DoAssert` у `_vdNonTL/_vsNonTL` ничего не останавливают; после `DestroyShaderDeclarations` (`25512-25524`) оба становятся null, и `SetVertexDeclaration(NULL)`/`SetVertexShader(NULL)` оставляют любой 2D без шейдера.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-46",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "Кэш avg хранит сырой `avgColor`, но константа преобразуется через `_linearSpace`; кэш max хранит уже преобразованное значение",
+      "local": "`d3d9/engdd9.cpp:12978-12992,3426,3077,13895`",
+      "campos": {
+        "Suspeito": "Кэш avg хранит сырой `avgColor`, но константа преобразуется через `_linearSpace`; кэш max хранит уже преобразованное значение",
+        "Evidência": "`d3d9/engdd9.cpp:12978-12992,3426,3077,13895`",
+        "Como confirmar": "переключить `_linearSpace` (начало/конец 3D или thermal) и перерисовать ту же текстуру: max переотправляется, avg нет",
+        "Correção candidata": "хранить в кэше avg ещё и флаг пространства или сравнивать с преобразованным значением"
+      },
+      "texto": "переключение `_linearSpace` в рантайме (`3426` включает; `3077`/`13895` выключают) с той же текстурой переотправляет max (преобразованное значение меняется), но **пропускает** avg (сырое значение не меняется), оставляя `PSC_T0AvgColor` в старом пространстве.",
+      "cats": [
+        "render",
+        "rede",
+        "ia",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-47",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`cratersCount>0` имеет приоритет над `RMShadowBuffer` при вычислении `rMode`",
+      "local": "`d3d9/engdd9.cpp:15898-15902`",
+      "campos": {
+        "Suspeito": "`cratersCount>0` имеет приоритет над `RMShadowBuffer` при вычислении `rMode`",
+        "Evidência": "`d3d9/engdd9.cpp:15898-15902`",
+        "Como confirmar": "нарисовать кратер в проходе теней и проверить выбранный VS",
+        "Correção candidata": "обрабатывать кратер только в `RMCommon` или ассертить `cratersCount==0` в буфере теней"
+      },
+      "texto": "`cratersCount>0` имеет приоритет над `RMShadowBuffer` (`15898`); если кратер рисуется в проходе теней, `rMode=RMCrater` выбирает неверный VS.",
+      "cats": [
+        "render",
+        "ia",
+        "som"
+      ]
+    },
+    {
+      "id": "H-48",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "Лимит кратеров — только `DoAssert(cratersCount<=14)`; в release `cratersCount=15` выбирает следующий enum (`PSSprite`), а большие значения продвигаются дальше по списку",
+      "local": "`d3d9/engdd9.cpp:18459-18464`; `lib/engine.hpp:504-518`",
+      "campos": {
+        "Suspeito": "Лимит кратеров — только `DoAssert(cratersCount<=14)`; в release `cratersCount=15` выбирает следующий enum (`PSSprite`), а большие значения продвигаются дальше по списку",
+        "Evidência": "`d3d9/engdd9.cpp:18459-18464`; `lib/engine.hpp:504-518`",
+        "Como confirmar": "вызвать `DoSelectPixelShader` с `cratersCount>14` и проверить использованный PS",
+        "Correção candidata": "clamp или явный отказ до приведения"
+      },
+      "texto": "лимит кратеров — только `DoAssert(cratersCount<=14)`; в release `cratersCount=15` выбирает следующий enum (`PSSprite`), а большие значения продвигаются дальше по списку и могут дойти до `PSNone`/выйти за пределы массива.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-49",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`SetBias` записывает `_bias`, даже когда `ProjectionChanged` выходит раньше, но не перегенерирует матрицу; `DoSwitchTL` не применяет проекцию заново",
+      "local": "`d3d9/engdd9.cpp:2094-2105,8438,8441,8329`",
+      "campos": {
+        "Suspeito": "`SetBias` записывает `_bias`, даже когда `ProjectionChanged` выходит раньше, но не перегенерирует матрицу; `DoSwitchTL` не применяет проекцию заново",
+        "Evidência": "`d3d9/engdd9.cpp:2094-2105,8438,8441,8329`",
+        "Como confirmar": "вызвать `SetBias` с `TLDisabled` (или в `RMShadowBuffer`), затем `SwitchTL(TLEnabled)` и нарисовать без нового `SetWorldView`",
+        "Correção candidata": "применять отложенную проекцию в `DoSwitchTL` или перенести `SetBias` после `SwitchTL`"
+      },
+      "texto": "`SetBias` с выключенным TL записывает `_bias`, но не обновляет матрицу; `DoSwitchTL` (`8329`) не применяет её заново. Сегодня любой 3D-путь проходит через `SetWorldView` перед draw (который вызывает `ProjectionChanged`), поэтому bias применяется с опозданием; обратный порядок оставил бы bias без эффекта.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-50",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`ProjectionChanged` фильтрует только `TLDisabled` (`(!_tlActive)!=TLDisabled` истинно только для 0), но не `TLViewspace`; у `TLMode` три значения",
+      "local": "`d3d9/engdd9.cpp:8438`; `d3d9/engdd9.hpp:3088-3096`; `d3d9/postProcess.cpp:372`",
+      "campos": {
+        "Suspeito": "`ProjectionChanged` фильтрует только `TLDisabled` (`(!_tlActive)!=TLDisabled` истинно только для 0), но не `TLViewspace`; у `TLMode` три значения",
+        "Evidência": "`d3d9/engdd9.cpp:8438`; `d3d9/engdd9.hpp:3088-3096`; `d3d9/postProcess.cpp:372`",
+        "Como confirmar": "вызвать `SetBias`/`SetWorldView` во время `TLViewspace` и проверить `VSC_ProjMatrix`",
+        "Correção candidata": "ограничить до `_tlActive==TLEnabled` или обрабатывать `TLViewspace` явно"
+      },
+      "texto": "`ProjectionChanged` фильтрует только `TLDisabled` (`8438`), но не `TLViewspace`: `SetBias`/`SetWorldView` во время пост-процесса (`postProcess.cpp:372`, `engdd9.cpp:13709`) перезаписал бы проекцию камеры посреди viewspace.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-51",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`DrawIndexedPrimitive` берёт `sMesh.GetVertexBuffer()` без null-check и индексирует `_sections` напрямую",
+      "local": "`d3d9/engdd9.cpp:12200-12202`",
+      "campos": {
+        "Suspeito": "`DrawIndexedPrimitive` берёт `sMesh.GetVertexBuffer()` без null-check и индексирует `_sections` напрямую",
+        "Evidência": "`d3d9/engdd9.cpp:12200-12202`",
+        "Como confirmar": "вызвать `DrawSectionTL` без `BeginMeshTL` (меш не залочен) и проверить, может ли `GetVertexBuffer()` быть нулевым",
+        "Correção candidata": "валидировать `buf` и диапазон до assert"
+      },
+      "texto": "`buf` берётся из `GetVertexBuffer()` без null-check (`12200`); если меш не залочен, `buf->_sections` разыменовывает null. Контракт с `BeginMeshTL` удерживает текущих вызывающих.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-52",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "Проверка диапазона вершин в debug игнорирует `instanceOffset`; при `nInstances>1` она валидирует только инстанс 0",
+      "local": "`d3d9/engdd9.cpp:12312-12325`",
+      "campos": {
+        "Suspeito": "Проверка диапазона вершин в debug игнорирует `instanceOffset`; при `nInstances>1` она валидирует только инстанс 0",
+        "Evidência": "`d3d9/engdd9.cpp:12312-12325`",
+        "Como confirmar": "нарисовать N инстансов, где последний блок вне VB, и посмотреть, срабатывает ли `Fail(\"Vertex out of range\")`",
+        "Correção candidata": "прибавить `instanceOffset` к валидируемому диапазону"
+      },
+      "texto": "валидация диапазона вершин (`12313`) игнорирует `instanceOffset`; при `nInstances>1` она покрывает только инстанс 0 (сам комментарий на `12324` признаёт, что `begVertex/endVertex` в этом случае не работают).",
+      "cats": [
+        "render",
+        "ia",
+        "som"
+      ]
+    },
+    {
+      "id": "H-53",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "Индекс инстанса в альфе `BLENDINDICES` может превысить 32 и прочитать за пределами `instancingItems_33[33]`, без видимой ошибки",
+      "local": "`d3d9/engdd9.cpp:8595,8611`; `lib/d3d9/ShaderSources_3_0/VS.h:16-23`; `VS.hlsl:101`",
+      "campos": {
+        "Suspeito": "Индекс инстанса в альфе `BLENDINDICES` может превысить 32 и прочитать за пределами `instancingItems_33[33]`, без видимой ошибки",
+        "Evidência": "`d3d9/engdd9.cpp:8595,8611`; `lib/d3d9/ShaderSources_3_0/VS.h:16-23`; `VS.hlsl:101`",
+        "Como confirmar": "принудительно задать `BLENDINDICES.a=33` на вершине и проверить использованную матрицу",
+        "Correção candidata": "зажать индекс в VS или валидировать при сборке меша"
+      },
+      "texto": "индекс инстанса ≥33 в альфе `BLENDINDICES` читает за пределами `instancingItems_33`; в SM3 чтение константы вне диапазона не определено (0 или мусор), без видимой ошибки.",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-54",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`matMod.* = tlMat.* * _modColor` умножает и альфу; `forcedDiffuse.A()` — коэффициент пропускания в `SetPixelShaderConstantDBS`",
+      "local": "`d3d9/engdd9.cpp:15660-15665,11496-11499`; `El/Color/colorsFloat.hpp:86-89`; `world.cpp:8854,8935,10469`",
+      "campos": {
+        "Suspeito": "`matMod.* = tlMat.* * _modColor` умножает и альфу; `forcedDiffuse.A()` — коэффициент пропускания в `SetPixelShaderConstantDBS`",
+        "Evidência": "`d3d9/engdd9.cpp:15660-15665,11496-11499`; `El/Color/colorsFloat.hpp:86-89`; `world.cpp:8854,8935,10469`",
+        "Como confirmar": "вызвать `SetModulateColor` с альфой < 1 и измерить непрозрачность/пропускание полигона T&L",
+        "Correção candidata": "отделить альфу от модуляции или принудительно ставить альфу 1 в `matMod`"
+      },
+      "texto": "`matMod.* = tlMat.* * _modColor` умножает альфу; если будущий вызывающий передаст `_modColor` с альфой < 1, коэффициент пропускания (`forcedDiffuse.A()`) и альфа всех материалов T&L изменятся вместе.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-55",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`SetupInstancesSprite` разыменовывает `instances[i]._object` без null-check, хотя функция виртуальная и публичная",
+      "local": "`d3d9/engdd9.cpp:8630,8642`; `d3d9/engdd9.hpp:5818`",
+      "campos": {
+        "Suspeito": "`SetupInstancesSprite` разыменовывает `instances[i]._object` без null-check, хотя функция виртуальная и публичная",
+        "Evidência": "`d3d9/engdd9.cpp:8630,8642`; `d3d9/engdd9.hpp:5818`",
+        "Como confirmar": "вызвать `SetupInstancesSprite` с инстансом, у которого `_object` нулевой",
+        "Correção candidata": "валидировать и уходить в общий путь"
+      },
+      "texto": "`instances[i]._object` разыменовывается без null-check (`8630,8642`); текущие вызывающие гарантируют не-null (`DrawMeshTLInstanced:8785`), но функция виртуальная и публичная (`engdd9.hpp:5818`).",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-56",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "Чанк `DrawMeshTLInstanced` использует `SetupInstances` первого инстанса для всех N в чанке, не проверяя однородность",
+      "local": "`d3d9/engdd9.cpp:8785-8792`",
+      "campos": {
+        "Suspeito": "Чанк `DrawMeshTLInstanced` использует `SetupInstances` первого инстанса для всех N в чанке, не проверяя однородность",
+        "Evidência": "`d3d9/engdd9.cpp:8785-8792`",
+        "Como confirmar": "собрать смешанный батч из `Cloudlet` (спрайт) и обычного объекта и проверить константы",
+        "Correção candidata": "требовать одинаковую декларацию/тип на чанк или делить батч"
+      },
+      "texto": "чанк использует `SetupInstances` **первого** инстанса для всех `newInstances`; если батч смешивает объекты/типы, раскладка констант получается неверной. Текущий батчинг, похоже, группирует по типу, но функция это не проверяет.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-57",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`DrawShadowVolumeInstanced` разыменовывает `instances[i]._object` и `GScene` без null-check в цикле, который считает размер тени",
+      "local": "`d3d9/engdd9.cpp:8857,8860`; `engine.hpp:1678`",
+      "campos": {
+        "Suspeito": "`DrawShadowVolumeInstanced` разыменовывает `instances[i]._object` и `GScene` без null-check в цикле, который считает размер тени",
+        "Evidência": "`d3d9/engdd9.cpp:8857,8860`; `engine.hpp:1678`",
+        "Como confirmar": "вызвать с батчем из нулевых `_object` или с нулевой сценой",
+        "Correção candidata": "валидировать до цикла и уходить в одиночный путь"
+      },
+      "texto": "`instances[i]._object` (`8857`) и `GScene` (`8860`) разыменовываются без null-check в цикле, который выполняется до любой проверки; функция виртуальная и публичная (`engine.hpp:1678`).",
+      "cats": [
+        "render",
+        "ia",
+        "som"
+      ]
+    },
+    {
+      "id": "H-58",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`EndMeshTL` разыменовывает `vb` без null-check, хотя функция виртуальная и публичная; контракт держится на том, что каждый вызывающий под `if(ok)`",
+      "local": "`d3d9/engdd9.cpp:9280-9281`; `engdd9.hpp:5844`",
+      "campos": {
+        "Suspeito": "`EndMeshTL` разыменовывает `vb` без null-check, хотя функция виртуальная и публичная; контракт держится на том, что каждый вызывающий под `if(ok)`",
+        "Evidência": "`d3d9/engdd9.cpp:9280-9281`; `engdd9.hpp:5844`",
+        "Como confirmar": "вызвать `EndMeshTL` после неудавшегося `BeginMeshTL`",
+        "Correção candidata": "хранить VB в `RendState` или валидировать до `Unlock`"
+      },
+      "texto": "`EndMeshTL` разыменовывает `vb` без null-check (`9281`); сегодня все вызывающие под `if(ok)`, но функция виртуальная и публичная (`engdd9.hpp:5844`), и `ReleaseVBuffer` между Begin и End оставил бы указатель нулевым.",
+      "cats": [
+        "render",
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "H-59",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`_night` не записывается на тепловом пути (`SetupLights` выходит до `7998`) и наследует значение предыдущего draw",
+      "local": "`d3d9/engdd9.cpp:7958-7973,7998`; `16123`",
+      "campos": {
+        "Suspeito": "`_night` не записывается на тепловом пути (`SetupLights` выходит до `7998`) и наследует значение предыдущего draw",
+        "Evidência": "`d3d9/engdd9.cpp:7958-7973,7998`; `16123`",
+        "Como confirmar": "нарисовать тепловой объект после ночного и после дневного, сравнив `nightMul`",
+        "Correção candidata": "записывать `_night` и в тепловой ветке или изолировать его по каналу"
+      },
+      "texto": "на тепловом пути `_night` **не записывается** (`7958-7973` выходит до `7998`), поэтому наследует значение предыдущего draw. Сегодня единственный читатель — `nightMul` на `16123`, где тепловой список пуст и цикл не выполняется; остаётся латентным для любого будущего использования.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-60",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`SetupMaterialLights` в ветке `ML_None` не записывает `VSC_LDirectionGround` (строка закомментирована) и оставляет константу предыдущего материала",
+      "local": "`d3d9/engdd9.cpp:8190-8204`",
+      "campos": {
+        "Suspeito": "`SetupMaterialLights` в ветке `ML_None` не записывает `VSC_LDirectionGround` (строка закомментирована) и оставляет константу предыдущего материала",
+        "Evidência": "`d3d9/engdd9.cpp:8190-8204`",
+        "Como confirmar": "нарисовать материал `ML_None` сразу после `ML_Sun` и проверить регистр ground",
+        "Correção candidata": "писать чёрный в ветке `ML_None` или гарантировать, что ни один VS не читает ground в этом режиме"
+      },
+      "texto": "`ML_None` не записывает `VSC_LDirectionGround` (`8195` закомментирован); VS, который читает ground в этом режиме, наследует значение предыдущего материала.",
+      "cats": [
+        "render",
+        "terreno",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-61",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`SetWorldView` и `ProjectionChanged` разыменовывают `camera` и `_sceneProps` без null-check, хотя проверяют `GScene`",
+      "local": "`d3d9/engdd9.cpp:8316-8317,8451,8469`",
+      "campos": {
+        "Suspeito": "`SetWorldView` и `ProjectionChanged` разыменовывают `camera` и `_sceneProps` без null-check, хотя проверяют `GScene`",
+        "Evidência": "`d3d9/engdd9.cpp:8316-8317,8451,8469`",
+        "Como confirmar": "вызвать с валидным `GScene`, но нулевой камерой или `_sceneProps`",
+        "Correção candidata": "валидировать `camera`/`_sceneProps` до использования"
+      },
+      "texto": "`camera` (`8316-8317`, `8451`) и `_sceneProps` (`8469`) разыменовываются без null-check, хотя `GScene` проверяется.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-62",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`DoSwitchTL` только ассертит `cb<0` в debug при отключении TL; в release записанный канал получает глобальные объекты `_vsNonTL`/`_vdNonTL`",
+      "local": "`d3d9/engdd9.cpp:8362,8371-8374`; `engdd9.hpp:3254-3256`",
+      "campos": {
+        "Suspeito": "`DoSwitchTL` только ассертит `cb<0` в debug при отключении TL; в release записанный канал получает глобальные объекты `_vsNonTL`/`_vdNonTL`",
+        "Evidência": "`d3d9/engdd9.cpp:8362,8371-8374`; `engdd9.hpp:3254-3256`",
+        "Como confirmar": "записать `SwitchTL(TLDisabled)` в канал с `cb>=0` и воспроизвести",
+        "Correção candidata": "требовать немедленный канал в release или хранить non-TL VS/VD по каналу"
+      },
+      "texto": "`Assert(cb<0)` (`8362`) действует только в debug; в release отключение TL в записанном канале пишет глобальные `_vsNonTL`/`_vdNonTL`, и воспроизведение использует неверный шейдер.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-63",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "`SetBias` вызывает `ProjectionChanged` только при `_tlActive==TLEnabled`, хотя `ProjectionChanged` принимает `TLViewspace`",
+      "local": "`d3d9/engdd9.cpp:2100-2103,8438`",
+      "campos": {
+        "Suspeito": "`SetBias` вызывает `ProjectionChanged` только при `_tlActive==TLEnabled`, хотя `ProjectionChanged` принимает `TLViewspace`",
+        "Evidência": "`d3d9/engdd9.cpp:2100-2103,8438`",
+        "Como confirmar": "задать bias в канале в `TLViewspace` и проверить, меняется ли `VSC_ProjMatrix`",
+        "Correção candidata": "обрабатывать `TLViewspace` как `TLEnabled` при обновлении или задокументировать, что bias действует только на 3D-пути"
+      },
+      "texto": "`SetBias` вызывает `ProjectionChanged` только при `_tlActive==TLEnabled` (`2100`); `ProjectionChanged` принимает `TLViewspace` (`8438`). Если эффект пост-процесса задаёт bias во view-space, проекция не обновляется до следующего `SetBias`/`SetWorldView`.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-64",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "Точки DX11, помеченные самими разработчиками как ненадёжные (\"not working\", \"not sure if this is right\")",
+      "local": "`d3d11/engdd11.cpp:9925,14791`",
+      "campos": {
+        "Suspeito": "Точки DX11, помеченные самими разработчиками как ненадёжные (\"not working\", \"not sure if this is right\")",
+        "Evidência": "`d3d11/engdd11.cpp:9925,14791`",
+        "Como confirmar": "воспроизвести эффекты пост-процесса на DX11 и сравнить изображение с DX9",
+        "Correção candidata": "пересмотреть эти места до того, как считать DX11 эквивалентом DX9"
+      },
+      "texto": "`lib/d3d11/engdd11.cpp:9925` (\"not working\") и `14791` (\"not sure if this is right\") → точки DX11, помеченные как **ненадёжные самими разработчиками**; [гипотеза] могут давать неверный визуальный результат без видимой ошибки.",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "H-65",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "У assert `DoAssert(_end3DRequested)` стоит \"TODO: make this assert working\", и он был скопирован в DX11",
+      "local": "`d3d9/engdd9.cpp:10104`; `d3d11/engdd11.cpp:12950`",
+      "campos": {
+        "Suspeito": "У assert `DoAssert(_end3DRequested)` стоит \"TODO: make this assert working\", и он был скопирован в DX11",
+        "Evidência": "`d3d9/engdd9.cpp:10104`; `d3d11/engdd11.cpp:12950`",
+        "Como confirmar": "завершить 3D-кадр, не закрыв проход, и проверить, что ни одна диагностика не срабатывает",
+        "Correção candidata": "реализовать assert или убрать маркер, чтобы не создавать ложного ощущения проверки"
+      },
+      "texto": "`lib/d3d11/engdd11.cpp:12950` и `lib/d3d9/engdd9.cpp:10104` (\"DoAssert(_end3DRequested); // TODO: make this assert working\") → assert так и не был реализован ни в одном из бэкендов; [гипотеза] незавершённое 3D-состояние проходит без диагностики.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "H-66",
+      "origem": "achado",
+      "tipo": "hipotese/risco",
+      "severidade": "média",
+      "titulo": "vsync и SRGB не обрабатываются в DX11, помечены как \"DX11 TODO\"",
+      "local": "`d3d11/engdd11.cpp:11644`; `d3d11/postProcessDX11.cpp:9147,9294`",
+      "campos": {
+        "Suspeito": "vsync и SRGB не обрабатываются в DX11, помечены как \"DX11 TODO\"",
+        "Evidência": "`d3d11/engdd11.cpp:11644`; `d3d11/postProcessDX11.cpp:9147,9294`",
+        "Como confirmar": "запустить DX11 в оконном режиме и проверить тиринг и цветовую гамму",
+        "Correção candidata": "реализовать vsync в swap chain и конвертировать в SRGB на выходе"
+      },
+      "texto": "`lib/d3d11/engdd11.cpp:11644` (vsync) и `lib/d3d11/postProcessDX11.cpp:9147,9294` (SRGB) → vsync и SRGB не обрабатываются в DX11; [гипотеза] тиринг и неверная гамма, согласуется с G-02 (гамма только сохраняется) и с принудительным `Present(1)`.",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "G-01",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Depth `D32_FLOAT` вместо `D24S8`",
+      "local": "",
+      "campos": {
+        "Melhoria": "Depth `D32_FLOAT` вместо `D24S8`",
+        "Onde": "`Dx11Device.cpp:92`",
+        "Custo": "низкая",
+        "Ganho visual": "устраняет z-fighting на удалённых объектах"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "G-02",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Swap chain `_SRGB` + SRGB-представления",
+      "local": "",
+      "campos": {
+        "Melhoria": "Swap chain `_SRGB` + SRGB-представления",
+        "Onde": "`Dx11Device.cpp:40`",
+        "Custo": "низкая",
+        "Ganho visual": "корректная гамма/цвета"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "G-03",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "FXAA/SMAA постобработка",
+      "local": "",
+      "campos": {
+        "Melhoria": "FXAA/SMAA постобработка",
+        "Onde": "новый проход в `Dx11RenderTarget`",
+        "Custo": "средняя",
+        "Ganho visual": "зубчатость (сейчас **AA нет**)"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "G-04",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Shadow map вместо объёма",
+      "local": "",
+      "campos": {
+        "Melhoria": "Shadow map вместо объёма",
+        "Onde": "`Dx11StateTranslator` + шейдеры",
+        "Custo": "высокая",
+        "Ganho visual": "мягкие и дешёвые тени"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "som"
+      ]
+    },
+    {
+      "id": "G-05",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Окклюзия через queries (HiZ)",
+      "local": "",
+      "campos": {
+        "Melhoria": "Окклюзия через queries (HiZ)",
+        "Onde": "новый",
+        "Custo": "средняя",
+        "Ganho visual": "меньше overdraw в городе"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "G-06",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Instancing выше 512",
+      "local": "",
+      "campos": {
+        "Melhoria": "Instancing выше 512",
+        "Onde": "`scene.cpp:6116`",
+        "Custo": "низкая",
+        "Ganho visual": "меньше draw calls"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "G-07",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Стриминг текстур с LRU",
+      "local": "",
+      "campos": {
+        "Melhoria": "Стриминг текстур с LRU",
+        "Onde": "`Dx11EngineCore` (`TextureCacheSize = 32`)",
+        "Custo": "средняя",
+        "Ganho visual": "меньше stall текстур"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "streaming",
+        "ui"
+      ]
+    },
+    {
+      "id": "G-08",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Clutter на GPU (instanced grass)",
+      "local": "",
+      "campos": {
+        "Melhoria": "Clutter на GPU (instanced grass)",
+        "Onde": "`landClutter.cpp`",
+        "Custo": "высокая",
+        "Ganho visual": "густая трава без нагрузки на CPU"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "terreno"
+      ]
+    },
+    {
+      "id": "G-09",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Временной LOD (не пересчитывать LOD каждый кадр)",
+      "local": "",
+      "campos": {
+        "Melhoria": "Временной LOD (не пересчитывать LOD каждый кадр)",
+        "Onde": "`scene.cpp:6196`",
+        "Custo": "средняя",
+        "Ganho visual": "меньше CPU на объект"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "G-10",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "`PIX`/`RenderDoc` в CI",
+      "local": "",
+      "campos": {
+        "Melhoria": "`PIX`/`RenderDoc` в CI",
+        "Onde": "процесс",
+        "Custo": "низкая",
+        "Ganho visual": "визуальная регрессия обнаруживается рано"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "G-11",
+      "origem": "achado",
+      "tipo": "glossario",
+      "severidade": "melhoria",
+      "titulo": "Анизотропная фильтрация 8×/16× вместо `MaxAnisotropy=1`",
+      "local": "",
+      "campos": {
+        "Melhoria": "Анизотропная фильтрация 8×/16× вместо `MaxAnisotropy=1`",
+        "Onde": "`Dx11Texture.cpp:209,217`",
+        "Custo": "низкая",
+        "Ganho visual": "чёткие земля/дорога под острым углом"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-154",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "OK, we failed to get the rect from the quick hack. Either explorer isn't",
+      "local": "`Drobnosti/SvnAutoUpdater/SystemTraySDK.cpp:979`",
+      "campos": {
+        "Arquivo": "`Drobnosti/SvnAutoUpdater/SystemTraySDK.cpp:979`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-155",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Hack to allow us to not block for io on the prompt, so * we can cancel.",
+      "local": "`Drobnosti/SvnAutoUpdater/libsvn_subr/prompt.c:112`",
+      "campos": {
+        "Arquivo": "`Drobnosti/SvnAutoUpdater/libsvn_subr/prompt.c:112`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-156",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Our base64-encoding routines append a final newline if any data was created at all, so let's hack that off.",
+      "local": "`Drobnosti/SvnAutoUpdater/libsvn_subr/svn_base64.c:541`",
+      "campos": {
+        "Arquivo": "`Drobnosti/SvnAutoUpdater/libsvn_subr/svn_base64.c:541`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-157",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "* * A hack to remove the last entry from libsvn_client. This simply fetches an * some values from WC-NG, and puts the needed bits into the output parameters, * allocated in @a resu",
+      "local": "`Drobnosti/SvnAutoUpdater/private/svn_wc_private.h:642`",
+      "campos": {
+        "Arquivo": "`Drobnosti/SvnAutoUpdater/private/svn_wc_private.h:642`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia",
+        "streaming",
+        "som"
+      ]
+    },
+    {
+      "id": "T-158",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Obsolete very easy to hack serial key check. //#define SERIAL_KEY 7856 //#define SERIAL_KEY 5896 #define SERIAL_KEY 6985 inline unsigned long CheckCode(unsigned long inval) { retur",
+      "local": "`El/CDKey/serial.hpp:4`",
+      "campos": {
+        "Arquivo": "`El/CDKey/serial.hpp:4`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia"
+      ]
+    },
+    {
+      "id": "T-159",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "dirty hack: FIX of Linux FileServer destruction",
+      "local": "`El/FileServer/fileServer.cpp:2278`",
+      "campos": {
+        "Arquivo": "`El/FileServer/fileServer.cpp:2278`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-160",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Progammer's interface: ---------------------- 1. To raise an instance: RegExp My_grep( regexp ); where: regexp is a UNIX style regular expression contained in a NULL terminated cha",
+      "local": "`El/RegularExpressions/regexp.h:1`",
+      "campos": {
+        "Arquivo": "`El/RegularExpressions/regexp.h:1`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-161",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "! return an estimation of 1/sqrt(f) -> 12-14 bits of accuracy timing: 1/sqrt() 32.203 sse_rcps(sse_sqrt) 6.4218 int hack (newton it) 10.108 invsqrte 4.4817 \\param f",
+      "local": "`Enfusion/include/Common/enf_mathlib.h:525`",
+      "campos": {
+        "Arquivo": "`Enfusion/include/Common/enf_mathlib.h:525`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-162",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "! Kind of hack fo resolving issue with Meqon. He has his own serialization and we get real pointer to object at later stage (in RestoreObject method). We need to replace 'old' poin",
+      "local": "`Enfusion/include/Common/enf_serialize.h:332`",
+      "campos": {
+        "Arquivo": "`Enfusion/include/Common/enf_serialize.h:332`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia"
+      ]
+    },
+    {
+      "id": "T-163",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "! hack, to get the model context data into BeginPass function, it comes out from the fact, that SetModelContext is called before BeginPass and in the case the model context is chan",
+      "local": "`Enfusion/include/materials/enf_materials.h:406`",
+      "campos": {
+        "Arquivo": "`Enfusion/include/materials/enf_materials.h:406`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-164",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "because of hack in LoadMeshObjectResource :(",
+      "local": "`Enfusion/include/resource/enf_vobject.h:193`",
+      "campos": {
+        "Arquivo": "`Enfusion/include/resource/enf_vobject.h:193`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-165",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "registruje funkci z API namespace (hack proti duplicitnim nazvum)",
+      "local": "`Enfusion/include/script/enf_scriptapi.h:163`",
+      "campos": {
+        "Arquivo": "`Enfusion/include/script/enf_scriptapi.h:163`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "script"
+      ]
+    },
+    {
+      "id": "T-166",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "//HACK: solve it in CParser",
+      "local": "`Enfusion/src/Physics/enf_physicsragdoll.cpp:457`",
+      "campos": {
+        "Arquivo": "`Enfusion/src/Physics/enf_physicsragdoll.cpp:457`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "fisica"
+      ]
+    },
+    {
+      "id": "T-167",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack, to have more power in direct impact from entities than the global wind",
+      "local": "`Enfusion/src/resource/enf_particleeffect.cpp:977`",
+      "campos": {
+        "Arquivo": "`Enfusion/src/resource/enf_particleeffect.cpp:977`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-168",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK: Particle effect don't accept per entity parameters. It's too expensive",
+      "local": "`Enfusion/src/resource/enf_particleeffect.cpp:4861`",
+      "campos": {
+        "Arquivo": "`Enfusion/src/resource/enf_particleeffect.cpp:4861`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-169",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK: function pointer",
+      "local": "`Enfusion/src/script/enf_scriptcompiler.cpp:3231`",
+      "campos": {
+        "Arquivo": "`Enfusion/src/script/enf_scriptcompiler.cpp:3231`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "script"
+      ]
+    },
+    {
+      "id": "T-170",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK: function pointer",
+      "local": "`Enfusion/src/script/enf_scriptcompiler.cpp:3300`",
+      "campos": {
+        "Arquivo": "`Enfusion/src/script/enf_scriptcompiler.cpp:3300`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "script"
+      ]
+    },
+    {
+      "id": "T-171",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK: we have to set goto pointer before condition",
+      "local": "`Enfusion/src/script/enf_scriptcompiler.cpp:4182`",
+      "campos": {
+        "Arquivo": "`Enfusion/src/script/enf_scriptcompiler.cpp:4182`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "script"
+      ]
+    },
+    {
+      "id": "T-172",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK: solve it in CParser",
+      "local": "`Enfusion/src/sound/enf_isoundsystem.cpp:277`",
+      "campos": {
+        "Arquivo": "`Enfusion/src/sound/enf_isoundsystem.cpp:277`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "som"
+      ]
+    },
+    {
+      "id": "T-173",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack :( We cannot start loop after loop region",
+      "local": "`Enfusion/src/sound/enf_xaudio2sample.cpp:829`",
+      "campos": {
+        "Arquivo": "`Enfusion/src/sound/enf_xaudio2sample.cpp:829`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "som"
+      ]
+    },
+    {
+      "id": "T-174",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "note: offsetting is quite a hack",
+      "local": "`RV/Tree/cutShape.cpp:628`",
+      "campos": {
+        "Arquivo": "`RV/Tree/cutShape.cpp:628`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "fisica",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-175",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Delete level 0 - a simple hack to solve the problem the LODObject cannot be empty",
+      "local": "`RV/Tree/mytree.cpp:2531`",
+      "campos": {
+        "Arquivo": "`RV/Tree/mytree.cpp:2531`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-176",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "* @param respectCombatModeCost sometimes we need to increase base cost to indicate movement in the open is more dangerous/slower. This is a hack needed because otherwise the paths ",
+      "local": "`lib/AI/operMap.cpp:6078`",
+      "campos": {
+        "Arquivo": "`lib/AI/operMap.cpp:6078`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia",
+        "som"
+      ]
+    },
+    {
+      "id": "T-177",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack to enable scripted missions to work in MP",
+      "local": "`lib/arcadeTemplate.cpp:1102`",
+      "campos": {
+        "Arquivo": "`lib/arcadeTemplate.cpp:1102`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "script"
+      ]
+    },
+    {
+      "id": "T-178",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack to enable scripted missions to work in MP",
+      "local": "`lib/arcadeTemplate.hpp:105`",
+      "campos": {
+        "Arquivo": "`lib/arcadeTemplate.hpp:105`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "script"
+      ]
+    },
+    {
+      "id": "T-179",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack to enable scripted missions to work in MP",
+      "local": "`lib/arcadeTemplate.hpp:110`",
+      "campos": {
+        "Arquivo": "`lib/arcadeTemplate.hpp:110`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "script"
+      ]
+    },
+    {
+      "id": "T-180",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "dirty hack - when heli is destroyed, we want it to fall down",
+      "local": "`lib/helicopter.cpp:1408`",
+      "campos": {
+        "Arquivo": "`lib/helicopter.cpp:1408`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-181",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "// dirty hack - when heli is destroyed, we want it to fall down",
+      "local": "`lib/helicopter.cpp:7254`",
+      "campos": {
+        "Arquivo": "`lib/helicopter.cpp:7254`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-182",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack: RI_KEY_E1 is not documented well, so convert VKey into DIK_CODE, as we do not know details",
+      "local": "`lib/input.cpp:351`",
+      "campos": {
+        "Arquivo": "`lib/input.cpp:351`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia"
+      ]
+    },
+    {
+      "id": "T-183",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "dirty hack: provide our own implementation of printf to allow using printf for debugging",
+      "local": "`lib/main.cpp:13324`",
+      "campos": {
+        "Arquivo": "`lib/main.cpp:13324`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia"
+      ]
+    },
+    {
+      "id": "T-184",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "dirty hack: if the level is not loaded, pretend there are some proxies",
+      "local": "`lib/object.cpp:1466`",
+      "campos": {
+        "Arquivo": "`lib/object.cpp:1466`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "streaming",
+        "som"
+      ]
+    },
+    {
+      "id": "T-185",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "/ hack used to fix textures that have alpha flag missing",
+      "local": "`lib/pactext.cpp:4348`",
+      "campos": {
+        "Arquivo": "`lib/pactext.cpp:4348`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ui"
+      ]
+    },
+    {
+      "id": "T-186",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "/ hack used to fix textures that have alpha flag missing",
+      "local": "`lib/pactext.hpp:388`",
+      "campos": {
+        "Arquivo": "`lib/pactext.hpp:388`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ui"
+      ]
+    },
+    {
+      "id": "T-187",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "/ hack used to fix textures that have alpha flag missing",
+      "local": "`lib/pactext.hpp:541`",
+      "campos": {
+        "Arquivo": "`lib/pactext.hpp:541`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ui"
+      ]
+    },
+    {
+      "id": "T-188",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "/ hack used to fix textures that have alpha flag missing",
+      "local": "`lib/pactext.hpp:598`",
+      "campos": {
+        "Arquivo": "`lib/pactext.hpp:598`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ui"
+      ]
+    },
+    {
+      "id": "T-189",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack for small object inside of a large object",
+      "local": "`lib/scene.cpp:7817`",
+      "campos": {
+        "Arquivo": "`lib/scene.cpp:7817`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-190",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "quick hack: do not do this for pass 2 (alpha) objects - otherwise muzzle flashes sort bad against particles",
+      "local": "`lib/scene.cpp:7827`",
+      "campos": {
+        "Arquivo": "`lib/scene.cpp:7827`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-191",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack for a water: we want water to be rendered first",
+      "local": "`lib/scene.cpp:7844`",
+      "campos": {
+        "Arquivo": "`lib/scene.cpp:7844`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-192",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK! Enlarge frustum corners in 2D to match epsilons introduced in original GridRectangle",
+      "local": "`lib/scene.cpp:11929`",
+      "campos": {
+        "Arquivo": "`lib/scene.cpp:11929`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "terreno"
+      ]
+    },
+    {
+      "id": "T-193",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "detect if the cheaters is only testing the hack",
+      "local": "`lib/shots.cpp:178`",
+      "campos": {
+        "Arquivo": "`lib/shots.cpp:178`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-194",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "memory breakpoint usually means hack development",
+      "local": "`lib/shots.cpp:180`",
+      "campos": {
+        "Arquivo": "`lib/shots.cpp:180`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-195",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "currently we hack it and to transition only for Person,",
+      "local": "`lib/soldierOld.cpp:14732`",
+      "campos": {
+        "Arquivo": "`lib/soldierOld.cpp:14732`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-196",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack - enable to change side to enemy when unit becomes a renegade",
+      "local": "`lib/target.cpp:2473`",
+      "campos": {
+        "Arquivo": "`lib/target.cpp:2473`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-197",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack - check if I'm in the enemy target list",
+      "local": "`lib/target.cpp:3310`",
+      "campos": {
+        "Arquivo": "`lib/target.cpp:3310`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-198",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Ugly hack: these are used SO OFTEN that I'll better make them public.",
+      "local": "`lib/vehicle.hpp:358`",
+      "campos": {
+        "Arquivo": "`lib/vehicle.hpp:358`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-199",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "WIP: DOOR: remove hack",
+      "local": "`lib/vehicleTypes.cpp:613`",
+      "campos": {
+        "Arquivo": "`lib/vehicleTypes.cpp:613`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-200",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "find which pool owns this pointer!!!!, this is kind of a hack.... but here goes.",
+      "local": "`lib/GameSpy/common/gsMemory.c:1310`",
+      "campos": {
+        "Arquivo": "`lib/GameSpy/common/gsMemory.c:1310`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-201",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "this may seem like a hack, but it's the best way to avoid",
+      "local": "`lib/GameSpy/ghttp/ghttpEncryption.c:286`",
+      "campos": {
+        "Arquivo": "`lib/GameSpy/ghttp/ghttpEncryption.c:286`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-202",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Hack: we hope the delayed PublicVariableMessage would contain object with NetworkId present",
+      "local": "`lib/Network/networkClient.cpp:7498`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkClient.cpp:7498`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-203",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "return true when HACK detected",
+      "local": "`lib/Network/networkImpl.hpp:3445`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3445`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-204",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack detected",
+      "local": "`lib/Network/networkImpl.hpp:3455`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3455`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-205",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack detected",
+      "local": "`lib/Network/networkImpl.hpp:3463`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3463`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-206",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack detected",
+      "local": "`lib/Network/networkImpl.hpp:3480`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3480`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-207",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack detected",
+      "local": "`lib/Network/networkImpl.hpp:3497`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3497`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-208",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "return true when HACK detected",
+      "local": "`lib/Network/networkImpl.hpp:3522`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3522`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-209",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK, unexpected message with index set during collecting phase",
+      "local": "`lib/Network/networkImpl.hpp:3528`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3528`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-210",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK, index and fileName does not match",
+      "local": "`lib/Network/networkImpl.hpp:3535`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3535`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-211",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack detected (sent signature not found)",
+      "local": "`lib/Network/networkImpl.hpp:3552`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3552`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-212",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "return true when HACK detected",
+      "local": "`lib/Network/networkImpl.hpp:3556`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3556`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-213",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK, unexpected answer with index set during collecting phase",
+      "local": "`lib/Network/networkImpl.hpp:3567`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3567`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-214",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK, prefixes differ",
+      "local": "`lib/Network/networkImpl.hpp:3579`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3579`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-215",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK, index should be set in clients FileSignatureAnswers",
+      "local": "`lib/Network/networkImpl.hpp:3617`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3617`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-216",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "! return true when HACK detected",
+      "local": "`lib/Network/networkImpl.hpp:3674`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3674`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-217",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack detected (the same answer sent second time)",
+      "local": "`lib/Network/networkImpl.hpp:3692`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3692`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-218",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "CollectEndIndex was expected! => HACK?",
+      "local": "`lib/Network/networkImpl.hpp:3755`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3755`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-219",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "! return true when HACK detected",
+      "local": "`lib/Network/networkImpl.hpp:3762`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3762`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-220",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "returns true when hack was detected",
+      "local": "`lib/Network/networkImpl.hpp:3824`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkImpl.hpp:3824`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-221",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Check if there has been a hack attempt on player size limit",
+      "local": "`lib/Network/networkServer.cpp:4796`",
+      "campos": {
+        "Arquivo": "`lib/Network/networkServer.cpp:4796`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede"
+      ]
+    },
+    {
+      "id": "T-222",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "note: offsetting is quite a hack",
+      "local": "`lib/Shape/shape.cpp:1185`",
+      "campos": {
+        "Arquivo": "`lib/Shape/shape.cpp:1185`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "fisica",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-223",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "experimental hack - prevent UV mapping which exceeds reasonable limits - news:g8mgb4$v5r$1@new-server.localdomain",
+      "local": "`lib/Shape/shapeFile.cpp:1513`",
+      "campos": {
+        "Arquivo": "`lib/Shape/shapeFile.cpp:1513`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "rede",
+        "ia",
+        "fisica",
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-224",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK: approximate sqrtf",
+      "local": "`lib/TerSynth/tersynth_helpers.cpp:569`",
+      "campos": {
+        "Arquivo": "`lib/TerSynth/tersynth_helpers.cpp:569`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-225",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "HACK: approximate atanf",
+      "local": "`lib/TerSynth/tersynth_helpers.cpp:570`",
+      "campos": {
+        "Arquivo": "`lib/TerSynth/tersynth_helpers.cpp:570`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "outros"
+      ]
+    },
+    {
+      "id": "T-226",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "hack to enable scripted missions to work in MP",
+      "local": "`lib/UI/dispMissionEditor.cpp:626`",
+      "campos": {
+        "Arquivo": "`lib/UI/dispMissionEditor.cpp:626`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "script",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-227",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - this just a temporary solution - it is too slow! Make special shaders for alpha-tested materials",
+      "local": "`lib/d3d11/ShaderSources_4_0/PS.h:62`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/ShaderSources_4_0/PS.h:62`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-228",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "LUKE HACK",
+      "local": "`lib/d3d11/ShaderSources_4_0/PS.h:3436`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/ShaderSources_4_0/PS.h:3436`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-229",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "LUKE HACK - will this work?",
+      "local": "`lib/d3d11/ShaderSources_4_0/PS.hlsl:421`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/ShaderSources_4_0/PS.hlsl:421`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-230",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "LUKE HACK",
+      "local": "`lib/d3d11/ShaderSources_4_0/VSVolCloud.hlsl:132`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/ShaderSources_4_0/VSVolCloud.hlsl:132`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-231",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO OPT",
+      "local": "`lib/d3d11/ShaderSources_4_0/common.h:120`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/ShaderSources_4_0/common.h:120`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-232",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "LUKE HACK - just to speed things up",
+      "local": "`lib/d3d11/d3d11Defs.hpp:37`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/d3d11Defs.hpp:37`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-233",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/d3d11Defs.hpp:38`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/d3d11Defs.hpp:38`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-234",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "LUKE - little hack - we need to initialize GEngine",
+      "local": "`lib/d3d11/engdd11.cpp:5724`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:5724`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-235",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:6359`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:6359`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-236",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:6544`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:6544`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-237",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:7479`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:7479`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-238",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:7491`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:7491`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-239",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:9196`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:9196`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-240",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - not working",
+      "local": "`lib/d3d11/engdd11.cpp:9925`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:9925`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-241",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Hack in the nVidia driver that makes G80 equivalent to G7x what concerns fog",
+      "local": "`lib/d3d11/engdd11.cpp:11447`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:11447`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-242",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - vsync",
+      "local": "`lib/d3d11/engdd11.cpp:11644`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:11644`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-243",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:12164`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:12164`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-244",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:13256`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:13256`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-245",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:14122`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:14122`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-246",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:14767`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:14767`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-247",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO not sure if this is right",
+      "local": "`lib/d3d11/engdd11.cpp:14791`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:14791`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-248",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - alpha test",
+      "local": "`lib/d3d11/engdd11.cpp:15307`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:15307`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-249",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "LUKE HACK - temporary solution",
+      "local": "`lib/d3d11/engdd11.cpp:15308`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:15308`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-250",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "dirty hack: leave _currRenderTargetSurface untouched, just point the real RT to something else",
+      "local": "`lib/d3d11/engdd11.cpp:16213`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:16213`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "som"
+      ]
+    },
+    {
+      "id": "T-251",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - should not be needed",
+      "local": "`lib/d3d11/engdd11.cpp:16237`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:16237`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-252",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - should not be needed",
+      "local": "`lib/d3d11/engdd11.cpp:16244`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:16244`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-253",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "LUKE HACK",
+      "local": "`lib/d3d11/engdd11.cpp:17803`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:17803`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-254",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - TGA not supported, add texture to core/data directory!",
+      "local": "`lib/d3d11/engdd11.cpp:17804`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:17804`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-255",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - ?",
+      "local": "`lib/d3d11/engdd11.cpp:18232`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:18232`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-256",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:19796`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:19796`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-257",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:19803`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:19803`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-258",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO DRAW",
+      "local": "`lib/d3d11/engdd11.cpp:20398`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:20398`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-259",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO DRAW - trianglefan no longer supported",
+      "local": "`lib/d3d11/engdd11.cpp:20401`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:20401`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-260",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:21230`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:21230`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-261",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:21700`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:21700`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-262",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "horrible hack!",
+      "local": "`lib/d3d11/engdd11.cpp:21701`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:21701`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-263",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:21716`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:21716`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-264",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "horrible hack!",
+      "local": "`lib/d3d11/engdd11.cpp:21717`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:21717`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-265",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO DRAW",
+      "local": "`lib/d3d11/engdd11.cpp:23746`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:23746`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-266",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO DIAG",
+      "local": "`lib/d3d11/engdd11.cpp:25590`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:25590`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-267",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:25623`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:25623`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-268",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:25624`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:25624`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-269",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:25625`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:25625`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-270",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:25626`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:25626`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-271",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO DIAG",
+      "local": "`lib/d3d11/engdd11.cpp:25714`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:25714`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-272",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO DIAG",
+      "local": "`lib/d3d11/engdd11.cpp:26946`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:26946`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-273",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO PP",
+      "local": "`lib/d3d11/engdd11.cpp:27012`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:27012`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-274",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - not sure if this is the right constant...",
+      "local": "`lib/d3d11/engdd11.cpp:27018`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:27018`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-275",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/engdd11.cpp:27603`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:27603`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-276",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - not sure about these...",
+      "local": "`lib/d3d11/engdd11.cpp:27636`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.cpp:27636`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-277",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "/ this does not need to be template, but we are using template, so this would compile (little hack..)",
+      "local": "`lib/d3d11/engdd11.hpp:1253`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.hpp:1253`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-278",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "/ this does not need to be template, but we are using template, so this would compile (little hack..)",
+      "local": "`lib/d3d11/engdd11.hpp:1349`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/engdd11.hpp:1349`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-279",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:428`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:428`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-280",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:521`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:521`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-281",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:705`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:705`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-282",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:875`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:875`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-283",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:1215`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:1215`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-284",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:1854`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:1854`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-285",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO PP",
+      "local": "`lib/d3d11/postProcessDX11.cpp:1954`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:1954`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-286",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/postProcessDX11.cpp:4247`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:4247`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-287",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:4281`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:4281`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-288",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - should be already set in SetRenderTargetAndDepthStencil",
+      "local": "`lib/d3d11/postProcessDX11.cpp:4354`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:4354`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-289",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/postProcessDX11.cpp:4781`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:4781`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-290",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/postProcessDX11.cpp:4843`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:4843`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-291",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - repair or remove",
+      "local": "`lib/d3d11/postProcessDX11.cpp:4936`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:4936`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-292",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - repair or remove",
+      "local": "`lib/d3d11/postProcessDX11.cpp:4959`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:4959`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-293",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - repair or remove",
+      "local": "`lib/d3d11/postProcessDX11.cpp:5071`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:5071`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-294",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/postProcessDX11.cpp:5390`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:5390`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-295",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/postProcessDX11.cpp:5609`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:5609`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-296",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:6333`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:6333`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-297",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/postProcessDX11.cpp:6345`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:6345`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-298",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO - repair or remove",
+      "local": "`lib/d3d11/postProcessDX11.cpp:6585`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:6585`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-299",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/postProcessDX11.cpp:6619`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:6619`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-300",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:6660`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:6660`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-301",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:8794`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:8794`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-302",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO SRGB",
+      "local": "`lib/d3d11/postProcessDX11.cpp:9147`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:9147`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-303",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO SRGB",
+      "local": "`lib/d3d11/postProcessDX11.cpp:9294`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:9294`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-304",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO remove or repair",
+      "local": "`lib/d3d11/postProcessDX11.cpp:9299`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.cpp:9299`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia"
+      ]
+    },
+    {
+      "id": "T-305",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/postProcessDX11.hpp:575`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/postProcessDX11.hpp:575`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-306",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/txtD3D11.cpp:2521`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/txtD3D11.cpp:2521`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-307",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/txtD3D11.cpp:3238`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/txtD3D11.cpp:3238`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-308",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/txtD3D11.cpp:5112`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/txtD3D11.cpp:5112`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-309",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/txtD3D11.cpp:5360`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/txtD3D11.cpp:5360`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-310",
+      "origem": "comentário",
+      "tipo": "DX11 TODO",
+      "severidade": "média",
+      "titulo": "DX11 TODO",
+      "local": "`lib/d3d11/txtD3D11.cpp:5399`",
+      "campos": {
+        "Arquivo": "`lib/d3d11/txtD3D11.cpp:5399`",
+        "Tag": "DX11 TODO"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-311",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "dirty hack: leave _currRenderTargetSurface untouched, just point the real RT to something else",
+      "local": "`lib/d3d9/engdd9.cpp:8977`",
+      "campos": {
+        "Arquivo": "`lib/d3d9/engdd9.cpp:8977`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "som"
+      ]
+    },
+    {
+      "id": "T-312",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Hack in the nVidia driver that makes G80 equivalent to G7x what concerns fog",
+      "local": "`lib/d3d9/engdd9.cpp:19648`",
+      "campos": {
+        "Arquivo": "`lib/d3d9/engdd9.cpp:19648`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "ui"
+      ]
+    },
+    {
+      "id": "T-313",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "/ this does not need to be template, but we are using template, so this would compile (little hack..)",
+      "local": "`lib/d3d9/engdd9.hpp:933`",
+      "campos": {
+        "Arquivo": "`lib/d3d9/engdd9.hpp:933`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-314",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "/ this does not need to be template, but we are using template, so this would compile (little hack..)",
+      "local": "`lib/d3d9/engdd9.hpp:1031`",
+      "campos": {
+        "Arquivo": "`lib/d3d9/engdd9.hpp:1031`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render"
+      ]
+    },
+    {
+      "id": "T-315",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "this is hack, VSPostprocess has exact UV in stream biased by these values",
+      "local": "`lib/d3d9/postProcess.cpp:1916`",
+      "campos": {
+        "Arquivo": "`lib/d3d9/postProcess.cpp:1916`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "render",
+        "ia",
+        "streaming"
+      ]
+    },
+    {
+      "id": "T-316",
+      "origem": "comentário",
+      "tipo": "HACK",
+      "severidade": "alta",
+      "titulo": "Obsolete very easy to hack serial key check. //#define SERIAL_KEY 7856 //#define SERIAL_KEY 5896 #define SERIAL_KEY 6985 inline unsigned long CheckCode(unsigned long inval) { retur",
+      "local": "`serial/serial.hpp:4`",
+      "campos": {
+        "Arquivo": "`serial/serial.hpp:4`",
+        "Tag": "HACK"
+      },
+      "texto": "",
+      "cats": [
+        "ia"
+      ]
+    }
+  ]
+}

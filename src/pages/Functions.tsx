@@ -24,8 +24,8 @@ function statusText(locale: Locale, status: string): string {
 }
 
 export function Functions() {
-  const { t } = useDocsT();
-  const { data, error, loading } = useAsync(getFuncoes);
+  const { t, locale } = useDocsT();
+  const { data, error, loading } = useAsync(() => getFuncoes(locale), [locale]);
   const route = useRoute();
   if (loading) return <Loading />;
   if (error) return <ErrorBox message={error} />;

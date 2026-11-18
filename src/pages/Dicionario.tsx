@@ -8,7 +8,9 @@ const LETRAS = ["todas", ..."abcdefghijklmnopqrstuvwxyz".split(""), "#"];
 
 export function Dicionario() {
   const { t, locale } = useDocsT();
-  const { data, error, loading } = useAsync(getGlossario);
+  const { data, error, loading } = useAsync(() => getGlossario(locale), [locale]);
+  const alvo = (it: { pt: string; ru?: string }) =>
+    locale === "ru" ? it.ru ?? it.pt : it.pt;
   const [q, setQ] = useState("");
   const [letra, setLetra] = useState("todas");
   const [tipo, setTipo] = useState("todos");
@@ -23,9 +25,10 @@ export function Dicionario() {
         if (letra === "#" ? /[a-z]/.test(c) : c !== letra) return false;
       }
       if (!needle) return true;
-      return it.en.toLowerCase().includes(needle) || it.pt.toLowerCase().includes(needle);
+      if (it.en.toLowerCase().includes(needle)) return true;
+      return locale !== "en" && alvo(it).toLowerCase().includes(needle);
     });
-  }, [data, q, letra, tipo]);
+  }, [data, q, letra, tipo, locale]);
 
   if (loading) return <Loading />;
   if (error) return <ErrorBox message={error} />;
@@ -72,8 +75,12 @@ export function Dicionario() {
         {visiveis.map((it) => (
           <div className="dict-item" key={it.en + it.tipo}>
             <code className="dict-en">{it.en}</code>
-            <span className="dict-arrow">→</span>
-            <span className="dict-pt">{it.pt}</span>
+            {locale !== "en" && (
+              <>
+                <span className="dict-arrow">→</span>
+                <span className="dict-pt">{alvo(it)}</span>
+              </>
+            )}
             <span className={`dict-tipo ${it.tipo}`}>
               {it.tipo === "frase" ? t("dict.type.phrase") : t("dict.type.term")}
             </span>

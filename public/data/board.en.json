@@ -1,0 +1,484 @@
+{
+  "version": 1,
+  "seedVersion": 2,
+  "updatedAt": "2026-11-18T02:30:00.000Z",
+  "removedSeedIds": [],
+  "items": [
+    {
+      "id": "T-001",
+      "kind": "tarefa",
+      "titulo": "Port the 1.30 animations to the 0.45 client",
+      "descricao": "1.390 of 2.028 RTMs are already in 1.30 format in E6; 638 remain BMTR. E7 is ready with the 2 IK tracks of the battery reverted, awaiting installation and testing.",
+      "area": "Animations",
+      "status": "andamento",
+      "prioridade": "alta",
+      "responsavel": "animation team",
+      "etiquetas": [
+        "E6",
+        "E7",
+        "RTM",
+        "1.30"
+      ],
+      "criadoEm": "2026-11-16T12:00:00.000Z",
+      "atualizadoEm": "2026-11-18T01:30:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-002",
+      "kind": "tarefa",
+      "titulo": "Check the V38 pause menu on screen",
+      "descricao": "Validate the 3D world in the background, the logo, the “Check-up completo 25/35” card, CONTINUAR/OPÇÕES/SAIR/RESPAWN, the OFFICIAL/COMMUNITIES/LAN tabs, Change Server and the mission return without legacy overlap.",
+      "area": "Menus and UI",
+      "status": "andamento",
+      "prioridade": "media",
+      "responsavel": "UI team",
+      "etiquetas": [
+        "V38",
+        "ui.pbo",
+        "pause menu"
+      ],
+      "criadoEm": "2026-11-17T10:00:00.000Z",
+      "atualizadoEm": "2026-11-18T00:40:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-003",
+      "kind": "tarefa",
+      "titulo": "Keep the client WRP identical to the server's",
+      "descricao": "Permanent rule: worlds_chernarusplus.pbo revision 17865 and SHA-256 0B8DAD26…8E28 on both sides. Any future build that repackages the client WRP can bring the startup crash back.",
+      "area": "Map / WRP",
+      "status": "concluido",
+      "prioridade": "alta",
+      "responsavel": "map team",
+      "etiquetas": [
+        "WRP",
+        "17865",
+        "V32"
+      ],
+      "criadoEm": "2026-11-16T12:00:00.000Z",
+      "atualizadoEm": "2026-11-17T18:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "Client and server used different revisions of worlds_chernarusplus.pbo. The V27 client was at 17983 and the server at 17865; the crash happened during loading.",
+        "comoCorrigiu": "V28 aligned the PBO and the signature with the server. V32 kept the WRP and restored the texture package from the current Addons, repairing the red/pink terrain and the menu.",
+        "oQueUsou": "BankRev, SHA-256 of the PBOs, RPT, V27/V30/V31/V32 restore points and the worlds_chernarusplus_data.pbo from the current Addons.",
+        "tentativas": 4,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T18:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "T-004",
+      "kind": "tarefa",
+      "titulo": "Validate doors and actions in game",
+      "descricao": "The V127 test server is ready. Still to do: open, close, lock, break open and enter doors of houses, fences and structures, noting the type of door that fails.",
+      "area": "Doors and actions",
+      "status": "aberto",
+      "prioridade": "media",
+      "responsavel": "gameplay team",
+      "etiquetas": [
+        "V127",
+        "doors",
+        "in-game test"
+      ],
+      "criadoEm": "2026-11-17T12:00:00.000Z",
+      "atualizadoEm": "2026-11-17T12:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-005",
+      "kind": "tarefa",
+      "titulo": "Decide the fate of the redesigned inventory",
+      "descricao": "The old and the new inventory coexist; the new panel still has no functional character or items. The decision is whether to continue the redesign or freeze at the current native inventory.",
+      "area": "Inventory",
+      "status": "aberto",
+      "prioridade": "media",
+      "responsavel": "UI team",
+      "etiquetas": [
+        "inventory",
+        "decision"
+      ],
+      "criadoEm": "2026-11-17T12:00:00.000Z",
+      "atualizadoEm": "2026-11-17T12:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-006",
+      "kind": "tarefa",
+      "titulo": "Close out the FPS front in cities",
+      "descricao": "F2 brought back the character and houses/trees, but the grass appears only occasionally, the character's shadow is on its back and the FPS stayed low. The front is paused; the resume script is on the Resolve FPS drop tab.",
+      "area": "FPS and engine",
+      "status": "andamento",
+      "prioridade": "alta",
+      "responsavel": "render team",
+      "etiquetas": [
+        "F2",
+        "high priority",
+        "paused"
+      ],
+      "criadoEm": "2026-11-17T09:00:00.000Z",
+      "atualizadoEm": "2026-11-17T22:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-007",
+      "kind": "tarefa",
+      "titulo": "Automate install + test + summarize RPT",
+      "descricao": "A single script is missing that closes the game, copies the build, checks the SHA1, starts server and client and summarizes the RPT. Today the DayZTestLaunch launcher covers only part of the flow.",
+      "area": "Builds and infra",
+      "status": "aberto",
+      "prioridade": "media",
+      "responsavel": "build team",
+      "etiquetas": [
+        "RPT",
+        "automation",
+        "SHA1"
+      ],
+      "criadoEm": "2026-11-17T14:00:00.000Z",
+      "atualizadoEm": "2026-11-17T14:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-008",
+      "kind": "tarefa",
+      "titulo": "Install and test the E7 build",
+      "descricao": "The file out\\anims_E7.pbo has 918.285.584 B, SHA1 A986CA7C…166C, 2.053 entries and the 9v_battery and battery_d tracks reverted to BMTR 0.45. Test the flashlight and battery bug with the game closed for installation.",
+      "area": "Animations",
+      "status": "aberto",
+      "prioridade": "alta",
+      "responsavel": "animation team",
+      "etiquetas": [
+        "E7",
+        "flashlight",
+        "battery"
+      ],
+      "criadoEm": "2026-11-18T00:30:00.000Z",
+      "atualizadoEm": "2026-11-18T01:30:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-009",
+      "kind": "tarefa",
+      "titulo": "Validate the 1.390 animations in game, item by item",
+      "descricao": "The RPT is not enough. Checklist: flashlight, battery, eat, drink, bandage, map, compass, throw, signals, doors and pause menu. Note the item and action name when something fails.",
+      "area": "Animations",
+      "status": "aberto",
+      "prioridade": "media",
+      "responsavel": "animation team",
+      "etiquetas": [
+        "checklist",
+        "1.390",
+        "in game"
+      ],
+      "criadoEm": "2026-11-17T16:00:00.000Z",
+      "atualizadoEm": "2026-11-17T16:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-010",
+      "kind": "tarefa",
+      "titulo": "Keep the documentation in sync with every build",
+      "descricao": "Updates, Pending items, Step by step and the E1–E7 build list must reflect the result of each round. Record hashes, RPT counts and what failed in game.",
+      "area": "Documentation",
+      "status": "andamento",
+      "prioridade": "baixa",
+      "responsavel": "documentation team",
+      "etiquetas": [
+        "docs",
+        "builds"
+      ],
+      "criadoEm": "2026-11-16T12:00:00.000Z",
+      "atualizadoEm": "2026-11-18T01:45:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-011",
+      "kind": "tarefa",
+      "titulo": "Zombie animations from 1.30",
+      "descricao": "There are 273 files and the zombie rig is different. Blocked until the bone mapping and the track set accepted by 0.45 are defined.",
+      "area": "Animations",
+      "status": "bloqueado",
+      "prioridade": "media",
+      "responsavel": "animation team",
+      "etiquetas": [
+        "zombie",
+        "rig",
+        "273 files"
+      ],
+      "criadoEm": "2026-11-17T16:00:00.000Z",
+      "atualizadoEm": "2026-11-17T16:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-012",
+      "kind": "tarefa",
+      "titulo": "Evaluate the full 1.30 menu",
+      "descricao": "There are 140 files and about +255 MB trimmed. It was left out because it is a cosmetic preview and comes close to the ~1.1 GB PBO ceiling. It only goes in if the current preview becomes a problem.",
+      "area": "Animations",
+      "status": "bloqueado",
+      "prioridade": "baixa",
+      "responsavel": "animation team",
+      "etiquetas": [
+        "menu 1.30",
+        "PBO ceiling"
+      ],
+      "criadoEm": "2026-11-17T16:00:00.000Z",
+      "atualizadoEm": "2026-11-17T16:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-013",
+      "kind": "tarefa",
+      "titulo": "Publish the board and the changelog on GitHub Personed/Game",
+      "descricao": "The site reads site-data/updates.json and site-data/board.json from the repository. Still to do: publish both files with a fine-grained token (Contents: Read and write) or commit directly to the main branch. Until then, edits stay in the browser and the feed shows only commits and releases.",
+      "area": "Documentation",
+      "status": "aberto",
+      "prioridade": "alta",
+      "responsavel": "whoever has the source",
+      "etiquetas": [
+        "GitHub",
+        "board.json",
+        "updates.json"
+      ],
+      "criadoEm": "2026-11-18T02:30:00.000Z",
+      "atualizadoEm": "2026-11-18T02:30:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "B-001",
+      "kind": "bug",
+      "titulo": "Flashlight + battery stretch the arms",
+      "descricao": "Holding the flashlight and the battery, the character stretches his arms and the item becomes a giant sign. It happens in the holding pose and in the Lick battery action.",
+      "area": "Animations",
+      "status": "andamento",
+      "prioridade": "alta",
+      "severidade": "alta",
+      "local": "Cdzp…_batteryLicking · ik\\comsumables\\9v_battery.rtm / battery_d.rtm",
+      "passos": "Equip the flashlight, equip the battery, hold and perform Lick battery. Observe the pose and the item size.",
+      "responsavel": "animation team",
+      "etiquetas": [
+        "flashlight",
+        "battery",
+        "E7"
+      ],
+      "criadoEm": "2026-11-17T18:00:00.000Z",
+      "atualizadoEm": "2026-11-18T01:30:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "B-002",
+      "kind": "bug",
+      "titulo": "Character animated but did not move",
+      "descricao": "The body did the walk cycle and the jump, the camera orbited and the inventory opened, but the position did not change. No crash and no error on screen.",
+      "area": "Engine",
+      "status": "concluido",
+      "prioridade": "alta",
+      "severidade": "alta",
+      "local": "lib/motion.cpp · ActionMap / DecodeUpDegree",
+      "passos": "Enter the world, try to walk, run and jump. Compare pos, prim, info and minmax in the diagnostic.",
+      "responsavel": "engine team",
+      "etiquetas": [
+        "upDegree",
+        "movement",
+        "V37"
+      ],
+      "criadoEm": "2026-11-16T10:00:00.000Z",
+      "atualizadoEm": "2026-11-17T12:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "The config writes upDegree=\"ManPosNoWeapon\" as text, but the ActionMap constructor read it directly into int. The evaluator returned 0 for all maps and debug.log had 345 warnings Cannot evaluate 'ManPos*'.",
+        "comoCorrigiu": "I created DecodeUpDegree() in lib/motion.cpp before the ActionMap constructor. The function accepts ManPosXxx and Xxx case-insensitively, keeps numeric values and logs Unknown upDegree for an unknown name.",
+        "oQueUsou": "debug.log, DIAGMOVE instrumentation, the motion.cpp code and the clean V37 build (DayZInt-v37-clean.exe).",
+        "tentativas": 1,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T12:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "B-003",
+      "kind": "bug",
+      "titulo": "Crash on entering the game: different WRP + invalid mip",
+      "descricao": "The crash happened during loading, in material/texture. The client reached GAME LOADED and fell with C0000094 INT_DIVIDE_BY_ZERO.",
+      "area": "Map / textures",
+      "status": "concluido",
+      "prioridade": "critica",
+      "severidade": "critica",
+      "local": "worlds_chernarusplus.pbo · TextBankD3D9::UseMipmap",
+      "passos": "Open the client with the worlds_chernarusplus.pbo of a revision different from the server and load a texture with an invalid mip.",
+      "responsavel": "engine team",
+      "etiquetas": [
+        "WRP",
+        "mip",
+        "V28",
+        "V30",
+        "V31"
+      ],
+      "criadoEm": "2026-11-16T11:00:00.000Z",
+      "atualizadoEm": "2026-11-17T18:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "Two causes combined: client and server used different revisions of worlds_chernarusplus.pbo (17983 × 17865) and an invalid mip led to division by zero in TextureD3D9, blowing the assert level >= 0 in TextBankD3D9::UseMipmap.",
+        "comoCorrigiu": "V28 aligned the WRP and the signature with the server. V30 added validations in GetPixel, GetRect and RequestGetRect. V31 validated _nMipmaps and limited level/levelA before the assert. V32 repaired the visual regression that V31 left.",
+        "oQueUsou": "RPT, debug.log, BankRev, SHA-256 of the PBOs, V27/V30/V31/V32 restore points and comparison of worlds_chernarusplus_data.pbo with the current Addons.",
+        "tentativas": 4,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T18:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "B-004",
+      "kind": "bug",
+      "titulo": "Red/pink terrain and menu without 3D scenery",
+      "descricao": "After V31, the ground appeared red/pink, the main menu was left without the 3D scenery and the browser showed the six legacy tabs.",
+      "area": "Map / UI",
+      "status": "concluido",
+      "prioridade": "alta",
+      "severidade": "alta",
+      "local": "worlds_chernarusplus_data.pbo · dta\\bin.pbo",
+      "passos": "Start V31, open the main menu and enter the world. Compare the layers\\*_lco.paa textures with the current Addons.",
+      "responsavel": "UI team",
+      "etiquetas": [
+        "V31",
+        "V32",
+        "terrain",
+        "menu"
+      ],
+      "criadoEm": "2026-11-17T10:00:00.000Z",
+      "atualizadoEm": "2026-11-17T18:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "The V31 worlds_chernarusplus_data.pbo had 509 files different from the current Addons, including layers\\*_lco.paa textures, despite declaring the same revision 17380. It was the server WRP combined with a texture package from another build.",
+        "comoCorrigiu": "V32 restored the worlds_chernarusplus_data.pbo and the signature from the current Addons, kept the server WRP and adjusted dta\\bin.pbo for the native OFFICIAL/COMMUNITIES/LAN tabs. The native onLoad of RscDisplayMain returned and Early Access was closed.",
+        "oQueUsou": "PBO comparison with BankRev, V32.1 capture, PBO hashes and restore point restore-point-v32-before-terrain-menu-repair-20261117.",
+        "tentativas": 2,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T18:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "B-005",
+      "kind": "bug",
+      "titulo": "Server browser missing 10 controls",
+      "descricao": "The browser screen was empty, with repeated Error loading control and the world frozen behind. Exactly 10 controls were missing, including B_Join, B_Cancel and BrowserLabelName.",
+      "area": "Menus and UI",
+      "status": "concluido",
+      "prioridade": "alta",
+      "severidade": "alta",
+      "local": "ui.pbo · dta/bin/config.bin",
+      "passos": "Open the server browser and check the ButtonInternet, ButtonFavorite, ButtonLAN, B_Cancel, B_Join and BrowserLabelName/Ping/Password/Full/BattlEye controls.",
+      "responsavel": "UI team",
+      "etiquetas": [
+        "V34",
+        "sizeEx",
+        "idc"
+      ],
+      "criadoEm": "2026-11-17T09:00:00.000Z",
+      "atualizadoEm": "2026-11-17T15:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "The controls were not even created. sizeEx held text (Size_Text_Very_Small, Small, Medium) and the evaluation threw an exception swallowed by ERROR_CATCH_ANY. Four BrowserLabel* inherited the broken value from BrowserLabelName.",
+        "comoCorrigiu": "sizeEx became a number again in ui.pbo (Very_Small=0.022, Small=0.027, Medium=0.033) and the idc were replaced with the values from lib/UI/resincl.hpp:630-632 (12025 prev, 12027 name, 12026 next) in dta/bin/config.bin.",
+        "oQueUsou": "V34 RPT, search for Error loading control and Size_Text_*, lib/UI/resincl.hpp, CfgConvert -test and the package-v34-sizefix package.",
+        "tentativas": 1,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T15:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "B-006",
+      "kind": "bug",
+      "titulo": "Rotating an item in the inventory closed the screen",
+      "descricao": "Pressing space to rotate the item closed the inventory instead of rotating the object.",
+      "area": "Inventory",
+      "status": "concluido",
+      "prioridade": "media",
+      "severidade": "media",
+      "local": "lib/UI/uiContainers.cpp:2166-2175",
+      "passos": "Open the inventory, select an item and press space. Observe whether the screen closes and whether the item rotates.",
+      "responsavel": "UI team",
+      "etiquetas": [
+        "space",
+        "keyup",
+        "inventory"
+      ],
+      "criadoEm": "2026-11-17T08:00:00.000Z",
+      "atualizadoEm": "2026-11-17T14:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "The screen's default button consumed the space keyup after the keydown had already been handled as rotation.",
+        "comoCorrigiu": "DIK_SPACE started being consumed on keyup while the inventory is open, in lib/UI/uiContainers.cpp:2166-2175.",
+        "oQueUsou": "Reading the inventory keyboard flow, the uiContainers.cpp code and an in-game test with the space key.",
+        "tentativas": 1,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T14:00:00.000Z"
+      },
+      "origem": "base"
+    }
+  ],
+  "updates": [
+    {
+      "id": "U-005",
+      "tipo": "implementacao",
+      "titulo": "Editable task board, bug log and GitHub feed",
+      "resumo": "Pending items and Bugs gained editable boards with creation, editing, deletion, in progress and completion. On completion, the outcome requires what it was, how it was solved, what was used and how many attempts were made.",
+      "detalhes": "Changes stay in the browser and can be exported/imported as JSON. Whoever has the source publishes the board and the changelog in the Personed/Game repository. The Updates page now reads commits, releases and the site-data/updates.json manifest; Patches shows the same feed.",
+      "data": "2026-11-18T02:30:00.000Z",
+      "versao": "site",
+      "autor": "SourceDayZ",
+      "url": "https://github.com/Personed/Game",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T02:30:00.000Z"
+    },
+    {
+      "id": "U-001",
+      "tipo": "anuncio",
+      "titulo": "Community landing and the REMANESCENT Z server",
+      "resumo": "The site gained a public page for visitors, with official and community servers. REMANESCENT Z is the first world on the list, in active development since 14/06/2025.",
+      "detalhes": "The landing does not expose source or documentation. The server card uses the icon and the permanent Discord invite, with member count updated by the API.",
+      "data": "2026-11-18T01:00:00.000Z",
+      "versao": "site",
+      "autor": "SourceDayZ",
+      "url": "https://discord.gg/4yvv6KrxwD",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T01:00:00.000Z"
+    },
+    {
+      "id": "U-002",
+      "tipo": "build",
+      "titulo": "E7 packaged with 2 reverted IK tracks",
+      "resumo": "The E7 build has 918.285.584 B, SHA1 A986CA7C…166C, 2.053 entries and 2.028 RTMs. The 9v_battery and battery_d tracks went back to BMTR 0.45 to test the flashlight and battery bug.",
+      "detalhes": "E7 has not yet been installed or tested, E6 remains in game until the test with the game closed and the RPT checked.",
+      "data": "2026-11-18T00:30:00.000Z",
+      "versao": "E7",
+      "autor": "animation team",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T00:30:00.000Z"
+    },
+    {
+      "id": "U-003",
+      "tipo": "patch",
+      "titulo": "V38 pause menu",
+      "resumo": "RscDisplayMPInterrupt and RscDisplayInterrupt were rewritten in the ui.pbo config. The pause menu now has a 3D world in the background, logo, check-up card and preserved native IDs.",
+      "detalhes": "Only ui.pbo changed relative to V34: 48.349.274 B, SHA-256 EBC95ACE…5500. The visual check of the 3D world, the tabs and the return to the mission is still pending.",
+      "data": "2026-11-17T23:30:00.000Z",
+      "versao": "V38",
+      "autor": "UI team",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-17T23:30:00.000Z"
+    },
+    {
+      "id": "U-004",
+      "tipo": "implementacao",
+      "titulo": "1.390 DayZ 1.30 animations in game",
+      "resumo": "E6 entered the world with 1.390 RTMs in 1.30 format, 638 BMTR and the vanilla baseline of 12 not found, 23 Bad move and 15 Invalid move. The inventory preview returned to 0.45.",
+      "detalhes": "The bone trim reduced 23,45% of the collection (1.425,9 → 1.091,5 MB). The full 1.30 menu was left out due to the PBO ceiling and the flashlight remains an open bug.",
+      "data": "2026-11-17T20:00:00.000Z",
+      "versao": "E6",
+      "autor": "animation team",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-17T20:00:00.000Z"
+    }
+  ]
+}

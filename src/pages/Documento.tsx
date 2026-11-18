@@ -8,7 +8,7 @@ import { docsTitle } from "../content/docs-titles";
 
 export function Documento() {
   const { t, locale } = useDocsT();
-  const { data, error, loading } = useAsync(getDoc);
+  const { data, error, loading } = useAsync(() => getDoc(locale), [locale]);
   const [sel, setSel] = useState(0);
   const [q, setQ] = useState("");
   const [abertos, setAbertos] = useState<Set<number>>(() => new Set([0]));
@@ -147,7 +147,7 @@ export function Documento() {
             <span className="chip">{t("doc.lineChip", { n: atual.linha })}</span>
             <span className="chip">{t("doc.linesChip", { n: atual.linhas })}</span>
             <span className="chip">{t("doc.levelChip", { n: atual.nivel })}</span>
-            {locale !== "pt" && (
+            {locale !== "pt" && !data.traduzido && (
               <span className="chip amber" title={t("docs.corpusNote")}>
                 {t("docs.corpusNoteShort")}
               </span>

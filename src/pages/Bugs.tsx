@@ -11,10 +11,30 @@ import { useMd } from "../lib/content";
 type Aba = "registro" | "catalogo" | "fps";
 
 export function Bugs() {
-  const { t } = useDocsT();
+  const { t, locale } = useDocsT();
   const fpsMd = useMd("fps-cidades");
-  const { data, error, loading } = useAsync(getBugs);
-  const store = useWorkStore();
+  const { data, error, loading } = useAsync(() => getBugs(locale), [locale]);
+  const store = useWorkStore(locale);
+  const campoLabel = (key: string) => {
+    const id = `data.field.${key}`;
+    const texto = t(id);
+    return texto === id ? key : texto;
+  };
+  const sevLabel = (key: string) => {
+    const id = `data.severity.${key}`;
+    const texto = t(id);
+    return texto === id ? key : texto;
+  };
+  const origemLabel = (key: string) => {
+    const id = `data.origin.${key}`;
+    const texto = t(id);
+    return texto === id ? key : texto;
+  };
+  const catLabel = (key: string) => {
+    const id = `data.category.${key}`;
+    const texto = t(id);
+    return texto === id ? key : texto;
+  };
   const route = useRoute();
   const [aba, setAba] = useState<Aba>(
     route.parts[1] === "fps"
@@ -112,7 +132,7 @@ export function Bugs() {
             </button>
             {data.categorias.filter((c) => c.total > 0).map((c) => (
               <button key={c.slug} className={`cat-pill ${cat === c.slug ? "on" : ""}`} onClick={() => setCat(c.slug)}>
-                {c.nome} <small>{c.total}</small>
+                {catLabel(c.slug)} <small>{c.total}</small>
               </button>
             ))}
           </div>
@@ -124,21 +144,21 @@ export function Bugs() {
                   <Badge tone={b.id.startsWith("A") ? "violet" : b.id.startsWith("H") ? "amber" : b.id.startsWith("G") ? "blue" : "red"}>
                     {b.id}
                   </Badge>
-                  <span className={`sev ${b.severidade}`}>{b.severidade}</span>
-                  <span className="bug-origem">{b.origem}</span>
+                  <span className={`sev ${b.severidade}`}>{sevLabel(b.severidade)}</span>
+                  <span className="bug-origem">{origemLabel(b.origem)}</span>
                 </header>
                 <h3>{b.titulo}</h3>
                 {b.local && <code className="bug-local">{b.local}</code>}
                 <dl>
                   {Object.entries(b.campos).filter(([k]) => k !== "Local").slice(0, 4).map(([k, v]) => (
                     <div key={k}>
-                      <dt>{k}</dt>
+                      <dt>{campoLabel(k)}</dt>
                       <dd>{v}</dd>
                     </div>
                   ))}
                 </dl>
                 <div className="bug-cats">
-                  {b.cats.map((c) => <span key={c}>{c}</span>)}
+                  {b.cats.map((c) => <span key={c}>{catLabel(c)}</span>)}
                 </div>
               </article>
             ))}

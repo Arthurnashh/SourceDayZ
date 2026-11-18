@@ -87,11 +87,16 @@ export interface DocData {
   bytes: number;
   secoes: DocSecao[];
   raizes: number[];
+  /** Presente nos arquivos doc.en.json / doc.ru.json já traduzidos. */
+  traduzido?: boolean;
+  locale?: string;
 }
 
 export interface GlossarioItem {
   en: string;
   pt: string;
+  /** Tradução russa gerada a partir de `pt` para o dicionário em RU. */
+  ru?: string;
   tipo: string;
 }
 

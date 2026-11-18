@@ -12,8 +12,13 @@ const LABEL_KEY: Record<string, string> = {
 };
 
 export function Findings() {
-  const { t } = useDocsT();
-  const { data, error, loading } = useAsync(getAchados);
+  const { t, locale } = useDocsT();
+  const { data, error, loading } = useAsync(() => getAchados(locale), [locale]);
+  const label = (key: string) => {
+    const id = `data.field.${key}`;
+    const texto = t(id);
+    return texto === id ? key : texto;
+  };
   const [filtro, setFiltro] = useState<Filtro>("todos");
   const [q, setQ] = useState("");
 
@@ -69,7 +74,7 @@ export function Findings() {
             <dl>
               {Object.entries(a.campos).map(([k, v]) => (
                 <div key={k}>
-                  <dt>{k}</dt>
+                  <dt>{label(k)}</dt>
                   <dd>{v}</dd>
                 </div>
               ))}

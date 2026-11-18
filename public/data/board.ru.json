@@ -1,0 +1,484 @@
+{
+  "version": 1,
+  "seedVersion": 2,
+  "updatedAt": "2026-11-18T02:30:00.000Z",
+  "removedSeedIds": [],
+  "items": [
+    {
+      "id": "T-001",
+      "kind": "tarefa",
+      "titulo": "Перенести анимации 1.30 в клиент 0.45",
+      "descricao": "1.390 из 2.028 RTM уже в формате 1.30 в E6; 638 остаются BMTR. E7 готова: 2 IK-трека батареи откачены, ожидает установки и тестирования.",
+      "area": "Анимации",
+      "status": "andamento",
+      "prioridade": "alta",
+      "responsavel": "команда анимации",
+      "etiquetas": [
+        "E6",
+        "E7",
+        "RTM",
+        "1.30"
+      ],
+      "criadoEm": "2026-11-16T12:00:00.000Z",
+      "atualizadoEm": "2026-11-18T01:30:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-002",
+      "kind": "tarefa",
+      "titulo": "Проверить меню паузы V38 на экране",
+      "descricao": "Проверить 3D-мир на фоне, логотип, карточку “Check-up completo 25/35”, CONTINUAR/OPÇÕES/SAIR/RESPAWN, вкладки OFFICIAL/COMMUNITIES/LAN, Change Server и возврат из миссии без наложения legacy.",
+      "area": "Меню и UI",
+      "status": "andamento",
+      "prioridade": "media",
+      "responsavel": "команда UI",
+      "etiquetas": [
+        "V38",
+        "ui.pbo",
+        "меню паузы"
+      ],
+      "criadoEm": "2026-11-17T10:00:00.000Z",
+      "atualizadoEm": "2026-11-18T00:40:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-003",
+      "kind": "tarefa",
+      "titulo": "Держать WRP клиента идентичным серверному",
+      "descricao": "Постоянное правило: worlds_chernarusplus.pbo ревизия 17865 и SHA-256 0B8DAD26…8E28 с обеих сторон. Любая будущая сборка, которая перепакует WRP клиента, может вернуть краш при входе.",
+      "area": "Карта / WRP",
+      "status": "concluido",
+      "prioridade": "alta",
+      "responsavel": "команда карты",
+      "etiquetas": [
+        "WRP",
+        "17865",
+        "V32"
+      ],
+      "criadoEm": "2026-11-16T12:00:00.000Z",
+      "atualizadoEm": "2026-11-17T18:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "Клиент и сервер использовали разные ревизии worlds_chernarusplus.pbo. Клиент V27 был на 17983, сервер на 17865; краш происходил при загрузке.",
+        "comoCorrigiu": "V28 выровняла PBO и подпись по серверу. V32 сохранила WRP и вернула пакет текстур из текущего Addons, исправив красный/розовый ландшафт и меню.",
+        "oQueUsou": "BankRev, SHA-256 PBO, RPT, restore points V27/V30/V31/V32 и worlds_chernarusplus_data.pbo из текущего Addons.",
+        "tentativas": 4,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T18:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "T-004",
+      "kind": "tarefa",
+      "titulo": "Проверить двери и действия в игре",
+      "descricao": "Тестовый сервер V127 готов. Осталось открыть, закрыть, запереть, взломать и войти в двери домов, заборов и построек, записывая тип двери, на которой произошёл сбой.",
+      "area": "Двери и действия",
+      "status": "aberto",
+      "prioridade": "media",
+      "responsavel": "команда геймплея",
+      "etiquetas": [
+        "V127",
+        "двери",
+        "тест в игре"
+      ],
+      "criadoEm": "2026-11-17T12:00:00.000Z",
+      "atualizadoEm": "2026-11-17T12:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-005",
+      "kind": "tarefa",
+      "titulo": "Решить судьбу переработанного инвентаря",
+      "descricao": "Старый и новый инвентарь сосуществуют; у новой панели всё ещё нет рабочего персонажа или предметов. Решение: продолжить редизайн или заморозить на текущем нативном инвентаре.",
+      "area": "Инвентарь",
+      "status": "aberto",
+      "prioridade": "media",
+      "responsavel": "команда UI",
+      "etiquetas": [
+        "инвентарь",
+        "решение"
+      ],
+      "criadoEm": "2026-11-17T12:00:00.000Z",
+      "atualizadoEm": "2026-11-17T12:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-006",
+      "kind": "tarefa",
+      "titulo": "Закрыть направление FPS в городах",
+      "descricao": "F2 вернула персонажа и дома/деревья, но трава появляется лишь время от времени, тень персонажа за спиной, а FPS остался низким. Направление на паузе; сценарий возобновления — на вкладке «Устранить падение FPS».",
+      "area": "FPS и движок",
+      "status": "andamento",
+      "prioridade": "alta",
+      "responsavel": "команда рендера",
+      "etiquetas": [
+        "F2",
+        "высокий приоритет",
+        "на паузе"
+      ],
+      "criadoEm": "2026-11-17T09:00:00.000Z",
+      "atualizadoEm": "2026-11-17T22:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-007",
+      "kind": "tarefa",
+      "titulo": "Автоматизировать установку + тест + сводку RPT",
+      "descricao": "Не хватает единого скрипта, который закроет игру, скопирует сборку, проверит SHA1, запустит сервер и клиент и суммирует RPT. Сегодня лаунчер DayZTestLaunch покрывает только часть процесса.",
+      "area": "Сборки и инфра",
+      "status": "aberto",
+      "prioridade": "media",
+      "responsavel": "команда сборок",
+      "etiquetas": [
+        "RPT",
+        "автоматизация",
+        "SHA1"
+      ],
+      "criadoEm": "2026-11-17T14:00:00.000Z",
+      "atualizadoEm": "2026-11-17T14:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-008",
+      "kind": "tarefa",
+      "titulo": "Установить и протестировать сборку E7",
+      "descricao": "Файл out\\anims_E7.pbo имеет 918.285.584 B, SHA1 A986CA7C…166C, 2.053 записи, а треки 9v_battery и battery_d откачены до BMTR 0.45. Протестировать баг фонарика и батареи при закрытой игре для установки.",
+      "area": "Анимации",
+      "status": "aberto",
+      "prioridade": "alta",
+      "responsavel": "команда анимации",
+      "etiquetas": [
+        "E7",
+        "фонарик",
+        "батарея"
+      ],
+      "criadoEm": "2026-11-18T00:30:00.000Z",
+      "atualizadoEm": "2026-11-18T01:30:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-009",
+      "kind": "tarefa",
+      "titulo": "Проверить 1.390 анимаций в игре, предмет за предметом",
+      "descricao": "RPT недостаточно. Чек-лист: фонарик, батарея, еда, питьё, бинт, карта, компас, бросок, сигналы, двери и меню паузы. Записывать название предмета и действия при сбое.",
+      "area": "Анимации",
+      "status": "aberto",
+      "prioridade": "media",
+      "responsavel": "команда анимации",
+      "etiquetas": [
+        "чек-лист",
+        "1.390",
+        "в игре"
+      ],
+      "criadoEm": "2026-11-17T16:00:00.000Z",
+      "atualizadoEm": "2026-11-17T16:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-010",
+      "kind": "tarefa",
+      "titulo": "Держать документацию синхронизированной с каждой сборкой",
+      "descricao": "Обновления, Задачи, Пошагово и список сборок E1–E7 должны отражать результат каждого раунда. Записывать хеши, счётчики RPT и то, что сломалось в игре.",
+      "area": "Документация",
+      "status": "andamento",
+      "prioridade": "baixa",
+      "responsavel": "команда документации",
+      "etiquetas": [
+        "docs",
+        "сборки"
+      ],
+      "criadoEm": "2026-11-16T12:00:00.000Z",
+      "atualizadoEm": "2026-11-18T01:45:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-011",
+      "kind": "tarefa",
+      "titulo": "Анимации зомби из 1.30",
+      "descricao": "Это 273 файла, и риг зомби отличается. Заблокировано до определения маппинга костей и набора треков, принимаемого 0.45.",
+      "area": "Анимации",
+      "status": "bloqueado",
+      "prioridade": "media",
+      "responsavel": "команда анимации",
+      "etiquetas": [
+        "зомби",
+        "rig",
+        "273 файла"
+      ],
+      "criadoEm": "2026-11-17T16:00:00.000Z",
+      "atualizadoEm": "2026-11-17T16:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-012",
+      "kind": "tarefa",
+      "titulo": "Оценить полное меню 1.30",
+      "descricao": "Это 140 файлов и около +255 MB после трима. Осталось за бортом, потому что это косметический preview и он подходит к потолку PBO ~1,1 GB. Войдёт, только если текущий preview начнёт мешать.",
+      "area": "Анимации",
+      "status": "bloqueado",
+      "prioridade": "baixa",
+      "responsavel": "команда анимации",
+      "etiquetas": [
+        "меню 1.30",
+        "потолок PBO"
+      ],
+      "criadoEm": "2026-11-17T16:00:00.000Z",
+      "atualizadoEm": "2026-11-17T16:00:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "T-013",
+      "kind": "tarefa",
+      "titulo": "Опубликовать доску и changelog на GitHub Personed/Game",
+      "descricao": "Сайт читает site-data/updates.json и site-data/board.json из репозитория. Осталось опубликовать оба файла через fine-grained token (Contents: Read and write) или закоммитить напрямую в ветку main. До этого правки остаются в браузере, а лента показывает только коммиты и релизы.",
+      "area": "Документация",
+      "status": "aberto",
+      "prioridade": "alta",
+      "responsavel": "у кого есть исходники",
+      "etiquetas": [
+        "GitHub",
+        "board.json",
+        "updates.json"
+      ],
+      "criadoEm": "2026-11-18T02:30:00.000Z",
+      "atualizadoEm": "2026-11-18T02:30:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "B-001",
+      "kind": "bug",
+      "titulo": "Фонарик + батарея растягивают руки",
+      "descricao": "Держа фонарик и батарею, персонаж растягивает руки, а предмет превращается в гигантскую табличку. Происходит в позе удержания и в действии Lick battery.",
+      "area": "Анимации",
+      "status": "andamento",
+      "prioridade": "alta",
+      "severidade": "alta",
+      "local": "Cdzp…_batteryLicking · ik\\comsumables\\9v_battery.rtm / battery_d.rtm",
+      "passos": "Экипировать фонарик, экипировать батарею, взять в руки и выполнить Lick battery. Наблюдать позу и размер предмета.",
+      "responsavel": "команда анимации",
+      "etiquetas": [
+        "фонарик",
+        "батарея",
+        "E7"
+      ],
+      "criadoEm": "2026-11-17T18:00:00.000Z",
+      "atualizadoEm": "2026-11-18T01:30:00.000Z",
+      "origem": "base"
+    },
+    {
+      "id": "B-002",
+      "kind": "bug",
+      "titulo": "Персонаж анимировался, но не двигался",
+      "descricao": "Тело выполняло цикл ходьбы и прыжок, камера вращалась, инвентарь открывался, но позиция не менялась. Без краша и без ошибки на экране.",
+      "area": "Движок",
+      "status": "concluido",
+      "prioridade": "alta",
+      "severidade": "alta",
+      "local": "lib/motion.cpp · ActionMap / DecodeUpDegree",
+      "passos": "Войти в мир, попробовать идти, бежать и прыгать. Сравнить pos, prim, info и minmax в диагностике.",
+      "responsavel": "команда движка",
+      "etiquetas": [
+        "upDegree",
+        "движение",
+        "V37"
+      ],
+      "criadoEm": "2026-11-16T10:00:00.000Z",
+      "atualizadoEm": "2026-11-17T12:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "Конфиг записывает upDegree=\"ManPosNoWeapon\" как текст, но конструктор ActionMap читал его напрямую в int. Вычислитель возвращал 0 для всех карт, а в debug.log было 345 предупреждений Cannot evaluate 'ManPos*'.",
+        "comoCorrigiu": "Я создал DecodeUpDegree() в lib/motion.cpp перед конструктором ActionMap. Функция принимает ManPosXxx и Xxx без учёта регистра, сохраняет числовые значения и пишет Unknown upDegree для неизвестного имени.",
+        "oQueUsou": "debug.log, инструментация DIAGMOVE, код motion.cpp и чистая сборка V37 (DayZInt-v37-clean.exe).",
+        "tentativas": 1,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T12:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "B-003",
+      "kind": "bug",
+      "titulo": "Краш при входе в игру: другой WRP + невалидный mip",
+      "descricao": "Краш происходил при загрузке, в материале/текстуре. Клиент доходил до GAME LOADED и падал с C0000094 INT_DIVIDE_BY_ZERO.",
+      "area": "Карта / текстуры",
+      "status": "concluido",
+      "prioridade": "critica",
+      "severidade": "critica",
+      "local": "worlds_chernarusplus.pbo · TextBankD3D9::UseMipmap",
+      "passos": "Открыть клиент с worlds_chernarusplus.pbo ревизии, отличной от серверной, и загрузить текстуру с невалидным mip.",
+      "responsavel": "команда движка",
+      "etiquetas": [
+        "WRP",
+        "mip",
+        "V28",
+        "V30",
+        "V31"
+      ],
+      "criadoEm": "2026-11-16T11:00:00.000Z",
+      "atualizadoEm": "2026-11-17T18:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "Две причины вместе: клиент и сервер использовали разные ревизии worlds_chernarusplus.pbo (17983 × 17865), а невалидный mip приводил к делению на ноль в TextureD3D9, срывая assert level >= 0 в TextBankD3D9::UseMipmap.",
+        "comoCorrigiu": "V28 выровняла WRP и подпись по серверу. V30 добавила проверки в GetPixel, GetRect и RequestGetRect. V31 провалидировала _nMipmaps и ограничила level/levelA перед assert. V32 исправила визуальную регрессию, оставленную V31.",
+        "oQueUsou": "RPT, debug.log, BankRev, SHA-256 PBO, restore points V27/V30/V31/V32 и сравнение worlds_chernarusplus_data.pbo с текущим Addons.",
+        "tentativas": 4,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T18:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "B-004",
+      "kind": "bug",
+      "titulo": "Красный/розовый ландшафт и меню без 3D-сцены",
+      "descricao": "После V31 земля стала красной/розовой, главное меню осталось без 3D-сцены, а браузер показывал шесть legacy-вкладок.",
+      "area": "Карта / UI",
+      "status": "concluido",
+      "prioridade": "alta",
+      "severidade": "alta",
+      "local": "worlds_chernarusplus_data.pbo · dta\\bin.pbo",
+      "passos": "Запустить V31, открыть главное меню и войти в мир. Сравнить текстуры layers\\*_lco.paa с текущим Addons.",
+      "responsavel": "команда UI",
+      "etiquetas": [
+        "V31",
+        "V32",
+        "ландшафт",
+        "меню"
+      ],
+      "criadoEm": "2026-11-17T10:00:00.000Z",
+      "atualizadoEm": "2026-11-17T18:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "В worlds_chernarusplus_data.pbo от V31 было 509 файлов, отличающихся от текущего Addons, включая текстуры layers\\*_lco.paa, хотя заявлена та же ревизия 17380. Это был серверный WRP в сочетании с пакетом текстур из другой сборки.",
+        "comoCorrigiu": "V32 вернула worlds_chernarusplus_data.pbo и подпись из текущего Addons, сохранила серверный WRP и настроила dta\\bin.pbo под нативные вкладки OFFICIAL/COMMUNITIES/LAN. Нативный onLoad RscDisplayMain вернулся, а Early Access был закрыт.",
+        "oQueUsou": "Сравнение PBO через BankRev, скриншот V32.1, хеши PBO и restore point restore-point-v32-before-terrain-menu-repair-20261117.",
+        "tentativas": 2,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T18:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "B-005",
+      "kind": "bug",
+      "titulo": "В браузере серверов не хватает 10 контролов",
+      "descricao": "Экран браузера был пустым, повторялся Error loading control, а мир застывал позади. Не хватало ровно 10 контролов, включая B_Join, B_Cancel и BrowserLabelName.",
+      "area": "Меню и UI",
+      "status": "concluido",
+      "prioridade": "alta",
+      "severidade": "alta",
+      "local": "ui.pbo · dta/bin/config.bin",
+      "passos": "Открыть браузер серверов и проверить контролы ButtonInternet, ButtonFavorite, ButtonLAN, B_Cancel, B_Join и BrowserLabelName/Ping/Password/Full/BattlEye.",
+      "responsavel": "команда UI",
+      "etiquetas": [
+        "V34",
+        "sizeEx",
+        "idc"
+      ],
+      "criadoEm": "2026-11-17T09:00:00.000Z",
+      "atualizadoEm": "2026-11-17T15:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "Контролы даже не создавались. sizeEx содержал текст (Size_Text_Very_Small, Small, Medium), и вычисление выбрасывало исключение, проглатываемое ERROR_CATCH_ANY. Четыре BrowserLabel* наследовали сломанное значение BrowserLabelName.",
+        "comoCorrigiu": "sizeEx снова стал числом в ui.pbo (Very_Small=0.022, Small=0.027, Medium=0.033), а idc заменены на значения из lib/UI/resincl.hpp:630-632 (12025 prev, 12027 name, 12026 next) в dta/bin/config.bin.",
+        "oQueUsou": "RPT от V34, поиск Error loading control и Size_Text_*, lib/UI/resincl.hpp, CfgConvert -test и пакет package-v34-sizefix.",
+        "tentativas": 1,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T15:00:00.000Z"
+      },
+      "origem": "base"
+    },
+    {
+      "id": "B-006",
+      "kind": "bug",
+      "titulo": "Вращение предмета в инвентаре закрывало экран",
+      "descricao": "Нажатие пробела для вращения предмета закрывало инвентарь вместо вращения объекта.",
+      "area": "Инвентарь",
+      "status": "concluido",
+      "prioridade": "media",
+      "severidade": "media",
+      "local": "lib/UI/uiContainers.cpp:2166-2175",
+      "passos": "Открыть инвентарь, выбрать предмет и нажать пробел. Наблюдать, закрывается ли экран и вращается ли предмет.",
+      "responsavel": "команда UI",
+      "etiquetas": [
+        "пробел",
+        "keyup",
+        "инвентарь"
+      ],
+      "criadoEm": "2026-11-17T08:00:00.000Z",
+      "atualizadoEm": "2026-11-17T14:00:00.000Z",
+      "desfecho": {
+        "oQueEra": "Кнопка по умолчанию на экране поглощала keyup пробела после того, как keydown уже был обработан как вращение.",
+        "comoCorrigiu": "DIK_SPACE стал поглощаться на keyup, пока инвентарь открыт, в lib/UI/uiContainers.cpp:2166-2175.",
+        "oQueUsou": "Чтение потока клавиатуры инвентаря, код uiContainers.cpp и тест в игре с клавишей пробел.",
+        "tentativas": 1,
+        "commit": "",
+        "resolvidoEm": "2026-11-17T14:00:00.000Z"
+      },
+      "origem": "base"
+    }
+  ],
+  "updates": [
+    {
+      "id": "U-005",
+      "tipo": "implementacao",
+      "titulo": "Редактируемая доска задач, журнал багов и лента GitHub",
+      "resumo": "Задачи и Баги получили редактируемые доски с созданием, редактированием, удалением, статусом «в работе» и завершением. При завершении итог требует: что было, как исправлено, что использовалось и сколько попыток потребовалось.",
+      "detalhes": "Изменения остаются в браузере и могут экспортироваться/импортироваться в JSON. У кого есть исходники — публикует доску и changelog в репозитории Personed/Game. Страница Обновления теперь читает коммиты, релизы и манифест site-data/updates.json; Patches показывает ту же ленту.",
+      "data": "2026-11-18T02:30:00.000Z",
+      "versao": "site",
+      "autor": "SourceDayZ",
+      "url": "https://github.com/Personed/Game",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T02:30:00.000Z"
+    },
+    {
+      "id": "U-001",
+      "tipo": "anuncio",
+      "titulo": "Сообщество на лендинге и сервер REMANESCENT Z",
+      "resumo": "У сайта появилась публичная страница для посетителей с официальными и community-серверами. REMANESCENT Z — первый мир в списке, в активной разработке с 14/06/2025.",
+      "detalhes": "Лендинг не раскрывает исходники и документацию. Карточка сервера использует иконку и постоянный инвайт Discord, счётчик участников обновляется через API.",
+      "data": "2026-11-18T01:00:00.000Z",
+      "versao": "site",
+      "autor": "SourceDayZ",
+      "url": "https://discord.gg/4yvv6KrxwD",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T01:00:00.000Z"
+    },
+    {
+      "id": "U-002",
+      "tipo": "build",
+      "titulo": "E7 упакована с 2 откаченными IK-треками",
+      "resumo": "Сборка E7 имеет 918.285.584 B, SHA1 A986CA7C…166C, 2.053 записи и 2.028 RTM. Треки 9v_battery и battery_d вернулись в BMTR 0.45 для теста бага фонарика и батареи.",
+      "detalhes": "E7 ещё не установлена и не протестирована. E6 остаётся в игре до теста с закрытой игрой и проверенным RPT.",
+      "data": "2026-11-18T00:30:00.000Z",
+      "versao": "E7",
+      "autor": "команда анимации",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T00:30:00.000Z"
+    },
+    {
+      "id": "U-003",
+      "tipo": "patch",
+      "titulo": "Меню паузы V38",
+      "resumo": "RscDisplayMPInterrupt и RscDisplayInterrupt переписаны в конфиге ui.pbo. У меню паузы теперь 3D-мир на фоне, логотип, карточка проверки и сохранённые нативные ID.",
+      "detalhes": "Относительно V34 изменился только ui.pbo: 48.349.274 B, SHA-256 EBC95ACE…5500. Визуальная проверка 3D-мира, вкладок и возврата в миссию ещё впереди.",
+      "data": "2026-11-17T23:30:00.000Z",
+      "versao": "V38",
+      "autor": "команда UI",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-17T23:30:00.000Z"
+    },
+    {
+      "id": "U-004",
+      "tipo": "implementacao",
+      "titulo": "1.390 анимаций DayZ 1.30 в игре",
+      "resumo": "E6 вошла в мир с 1.390 RTM в формате 1.30, 638 BMTR и ванильным базлайном: 12 not found, 23 Bad move и 15 Invalid move. Preview инвентаря вернулся к 0.45.",
+      "detalhes": "Трим костей сократил 23,45% набора (1.425,9 → 1.091,5 MB). Полное меню 1.30 осталось за бортом из-за потолка PBO, а фонарик остаётся открытым багом.",
+      "data": "2026-11-17T20:00:00.000Z",
+      "versao": "E6",
+      "autor": "команда анимации",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-17T20:00:00.000Z"
+    }
+  ]
+}

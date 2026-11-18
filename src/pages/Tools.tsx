@@ -4,7 +4,7 @@ import { useDocsT } from "../content/docs-i18n";
 
 export function Tools() {
   const { t, locale } = useDocsT();
-  const { data, error, loading } = useAsync(getFerramentas);
+  const { data, error, loading } = useAsync(() => getFerramentas(locale), [locale]);
   if (loading) return <Loading />;
   if (error) return <ErrorBox message={error} />;
 

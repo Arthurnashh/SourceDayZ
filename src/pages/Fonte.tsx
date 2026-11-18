@@ -18,8 +18,8 @@ function bytes(n: number): string {
 }
 
 export function Fonte() {
-  const { t } = useDocsT();
-  const { data, error, loading } = useAsync(getSource);
+  const { t, locale } = useDocsT();
+  const { data, error, loading } = useAsync(() => getSource(locale), [locale]);
   const route = useRoute();
   const estruturaMd = useMd("estrutura");
   const compilacaoMd = useMd("compilacao");

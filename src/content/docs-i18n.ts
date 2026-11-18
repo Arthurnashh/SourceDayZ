@@ -73,6 +73,44 @@ export const DOCS_COPY: Record<string, Tri> = {
   "common.category": { pt: "categoria", en: "category", ru: "категория" },
   "common.type": { pt: "tipo", en: "type", ru: "тип" },
 
+  // Rótulos dos dados de achados e bugs
+  "data.field.Local": { pt: "Local", en: "Location", ru: "Место" },
+  "data.field.Problema": { pt: "Problema", en: "Problem", ru: "Проблема" },
+  "data.field.Impacto": { pt: "Impacto", en: "Impact", ru: "Влияние" },
+  "data.field.Suspeito": { pt: "Suspeito", en: "Suspect", ru: "Подозрение" },
+  "data.field.Evidência": { pt: "Evidência", en: "Evidence", ru: "Доказательство" },
+  "data.field.Como confirmar": { pt: "Como confirmar", en: "How to confirm", ru: "Как подтвердить" },
+  "data.field.Correção candidata": { pt: "Correção candidata", en: "Candidate fix", ru: "Возможное исправление" },
+  "data.field.Melhoria": { pt: "Melhoria", en: "Improvement", ru: "Улучшение" },
+  "data.field.Onde": { pt: "Onde", en: "Where", ru: "Где" },
+  "data.field.Custo": { pt: "Custo", en: "Cost", ru: "Стоимость" },
+  "data.field.Ganho visual": { pt: "Ganho visual", en: "Visual gain", ru: "Визуальный выигрыш" },
+  "data.field.Arquivo": { pt: "Arquivo", en: "File", ru: "Файл" },
+  "data.field.Tag": { pt: "Tag", en: "Tag", ru: "Тег" },
+
+  "data.origin.achado": { pt: "achado", en: "finding", ru: "находка" },
+  "data.origin.comentário": { pt: "comentário", en: "comment", ru: "комментарий" },
+
+  "data.severity.alta": { pt: "alta", en: "high", ru: "высокая" },
+  "data.severity.média": { pt: "média", en: "medium", ru: "средняя" },
+  "data.severity.baixa": { pt: "baixa", en: "low", ru: "низкая" },
+  "data.severity.melhoria": { pt: "melhoria", en: "improvement", ru: "улучшение" },
+
+  "data.category.render": { pt: "Render / DX11", en: "Render / DX11", ru: "Рендер / DX11" },
+  "data.category.rede": { pt: "Rede / servidor", en: "Network / server", ru: "Сеть / сервер" },
+  "data.category.terreno": { pt: "Terreno / clutter", en: "Terrain / clutter", ru: "Ландшафт / clutter" },
+  "data.category.ia": { pt: "IA / infectados", en: "AI / infected", ru: "ИИ / заражённые" },
+  "data.category.fisica": { pt: "Física / colisão", en: "Physics / collision", ru: "Физика / коллизия" },
+  "data.category.streaming": { pt: "Streaming / IO", en: "Streaming / IO", ru: "Стриминг / IO" },
+  "data.category.script": { pt: "Script VM / gameplay", en: "Script VM / gameplay", ru: "Script VM / геймплей" },
+  "data.category.ui": { pt: "UI / HUD", en: "UI / HUD", ru: "UI / HUD" },
+  "data.category.som": { pt: "Som / áudio", en: "Sound / audio", ru: "Звук / аудио" },
+  "data.category.outros": { pt: "Outros", en: "Other", ru: "Другое" },
+
+  "data.bugType.arquitetura": { pt: "arquitetura", en: "architecture", ru: "архитектура" },
+  "data.bugType.hipotese/risco": { pt: "hipótese/risco", en: "hypothesis/risk", ru: "гипотеза/риск" },
+  "data.bugType.glossario": { pt: "glossário", en: "glossary", ru: "глоссарий" },
+
   // Aviso do acervo técnico
   "docs.corpusNote": {
     pt: "O acervo técnico desta seção está em português. Os comentários da source mostram o original em inglês e a tradução PT-BR; a tradução completa para EN/RU será publicada em uma próxima etapa.",
