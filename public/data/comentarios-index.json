@@ -1,0 +1,1266 @@
+{
+ "total": 180545,
+ "grupos": [
+  {
+   "grupo": "lib",
+   "slug": "lib",
+   "total": 45892,
+   "partes": [
+    "lib__0.json",
+    "lib__1.json",
+    "lib__2.json",
+    "lib__3.json",
+    "lib__4.json",
+    "lib__5.json",
+    "lib__6.json",
+    "lib__7.json",
+    "lib__8.json",
+    "lib__9.json",
+    "lib__10.json",
+    "lib__11.json",
+    "lib__12.json",
+    "lib__13.json",
+    "lib__14.json",
+    "lib__15.json",
+    "lib__16.json",
+    "lib__17.json",
+    "lib__18.json"
+   ]
+  },
+  {
+   "grupo": "lib/d3d9",
+   "slug": "lib-d3d9",
+   "total": 11130,
+   "partes": [
+    "lib-d3d9__0.json",
+    "lib-d3d9__1.json",
+    "lib-d3d9__2.json",
+    "lib-d3d9__3.json",
+    "lib-d3d9__4.json"
+   ]
+  },
+  {
+   "grupo": "lib/GameSpy",
+   "slug": "lib-gamespy",
+   "total": 11080,
+   "partes": [
+    "lib-gamespy__0.json",
+    "lib-gamespy__1.json",
+    "lib-gamespy__2.json",
+    "lib-gamespy__3.json",
+    "lib-gamespy__4.json"
+   ]
+  },
+  {
+   "grupo": "lib/d3d11",
+   "slug": "lib-d3d11",
+   "total": 11063,
+   "partes": [
+    "lib-d3d11__0.json",
+    "lib-d3d11__1.json",
+    "lib-d3d11__2.json",
+    "lib-d3d11__3.json",
+    "lib-d3d11__4.json"
+   ]
+  },
+  {
+   "grupo": "lib/UI",
+   "slug": "lib-ui",
+   "total": 10327,
+   "partes": [
+    "lib-ui__0.json",
+    "lib-ui__1.json",
+    "lib-ui__2.json",
+    "lib-ui__3.json",
+    "lib-ui__4.json"
+   ]
+  },
+  {
+   "grupo": "lib/d3dT",
+   "slug": "lib-d3dt",
+   "total": 8979,
+   "partes": [
+    "lib-d3dt__0.json",
+    "lib-d3dt__1.json",
+    "lib-d3dt__2.json",
+    "lib-d3dt__3.json"
+   ]
+  },
+  {
+   "grupo": "Enfusion/src",
+   "slug": "enfusion-src",
+   "total": 7242,
+   "partes": [
+    "enfusion-src__0.json",
+    "enfusion-src__1.json",
+    "enfusion-src__2.json"
+   ]
+  },
+  {
+   "grupo": "cfg/$(SolutionDir)build",
+   "slug": "cfg-solutiondir-build",
+   "total": 7238,
+   "partes": [
+    "cfg-solutiondir-build__0.json",
+    "cfg-solutiondir-build__1.json",
+    "cfg-solutiondir-build__2.json"
+   ]
+  },
+  {
+   "grupo": "lib/Network",
+   "slug": "lib-network",
+   "total": 7037,
+   "partes": [
+    "lib-network__0.json",
+    "lib-network__1.json",
+    "lib-network__2.json"
+   ]
+  },
+  {
+   "grupo": "Enfusion/include",
+   "slug": "enfusion-include",
+   "total": 6408,
+   "partes": [
+    "enfusion-include__0.json",
+    "enfusion-include__1.json",
+    "enfusion-include__2.json"
+   ]
+  },
+  {
+   "grupo": "RV/Tree",
+   "slug": "rv-tree",
+   "total": 5573,
+   "partes": [
+    "rv-tree__0.json",
+    "rv-tree__1.json",
+    "rv-tree__2.json"
+   ]
+  },
+  {
+   "grupo": "Drobnosti/SvnAutoUpdater",
+   "slug": "drobnosti-svnautoupdater",
+   "total": 4519,
+   "partes": [
+    "drobnosti-svnautoupdater__0.json",
+    "drobnosti-svnautoupdater__1.json"
+   ]
+  },
+  {
+   "grupo": "lib/Shape",
+   "slug": "lib-shape",
+   "total": 3336,
+   "partes": [
+    "lib-shape__0.json",
+    "lib-shape__1.json"
+   ]
+  },
+  {
+   "grupo": "cfg/Bin",
+   "slug": "cfg-bin",
+   "total": 3293,
+   "partes": [
+    "cfg-bin__0.json",
+    "cfg-bin__1.json"
+   ]
+  },
+  {
+   "grupo": "lib/d3dXB",
+   "slug": "lib-d3dxb",
+   "total": 2921,
+   "partes": [
+    "lib-d3dxb__0.json",
+    "lib-d3dxb__1.json"
+   ]
+  },
+  {
+   "grupo": "lib/AI",
+   "slug": "lib-ai",
+   "total": 2814,
+   "partes": [
+    "lib-ai__0.json",
+    "lib-ai__1.json"
+   ]
+  },
+  {
+   "grupo": "Setup/Setup",
+   "slug": "setup-setup",
+   "total": 1913,
+   "partes": [
+    "setup-setup__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Speech",
+   "slug": "el-speech",
+   "total": 1679,
+   "partes": [
+    "el-speech__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Containers",
+   "slug": "es-containers",
+   "total": 1552,
+   "partes": [
+    "es-containers__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Network",
+   "slug": "el-network",
+   "total": 1430,
+   "partes": [
+    "el-network__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Evaluator",
+   "slug": "el-evaluator",
+   "total": 1373,
+   "partes": [
+    "el-evaluator__0.json"
+   ]
+  },
+  {
+   "grupo": "El/QStream",
+   "slug": "el-qstream",
+   "total": 1255,
+   "partes": [
+    "el-qstream__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Math",
+   "slug": "el-math",
+   "total": 1150,
+   "partes": [
+    "el-math__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/TerdiStrip",
+   "slug": "lib-terdistrip",
+   "total": 1147,
+   "partes": [
+    "lib-terdistrip__0.json"
+   ]
+  },
+  {
+   "grupo": "El/WindowsFirewall",
+   "slug": "el-windowsfirewall",
+   "total": 1041,
+   "partes": [
+    "el-windowsfirewall__0.json"
+   ]
+  },
+  {
+   "grupo": "El/FileServer",
+   "slug": "el-fileserver",
+   "total": 979,
+   "partes": [
+    "el-fileserver__0.json"
+   ]
+  },
+  {
+   "grupo": "El/MultiThread2",
+   "slug": "el-multithread2",
+   "total": 755,
+   "partes": [
+    "el-multithread2__0.json"
+   ]
+  },
+  {
+   "grupo": "OFPPatch",
+   "slug": "ofppatch",
+   "total": 747,
+   "partes": [
+    "ofppatch__0.json"
+   ]
+  },
+  {
+   "grupo": "El/ParamFile",
+   "slug": "el-paramfile",
+   "total": 716,
+   "partes": [
+    "el-paramfile__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/Inventory",
+   "slug": "lib-inventory",
+   "total": 700,
+   "partes": [
+    "lib-inventory__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/SimulWeather",
+   "slug": "lib-simulweather",
+   "total": 625,
+   "partes": [
+    "lib-simulweather__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/WorldRes",
+   "slug": "lib-worldres",
+   "total": 598,
+   "partes": [
+    "lib-worldres__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Debugging",
+   "slug": "el-debugging",
+   "total": 569,
+   "partes": [
+    "el-debugging__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/Marina",
+   "slug": "lib-marina",
+   "total": 542,
+   "partes": [
+    "lib-marina__0.json"
+   ]
+  },
+  {
+   "grupo": "El/MultiThread",
+   "slug": "el-multithread",
+   "total": 507,
+   "partes": [
+    "el-multithread__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Shapes",
+   "slug": "el-shapes",
+   "total": 501,
+   "partes": [
+    "el-shapes__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Scc",
+   "slug": "el-scc",
+   "total": 496,
+   "partes": [
+    "el-scc__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Types",
+   "slug": "es-types",
+   "total": 481,
+   "partes": [
+    "es-types__0.json"
+   ]
+  },
+  {
+   "grupo": "texMerge",
+   "slug": "texmerge",
+   "total": 479,
+   "partes": [
+    "texmerge__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/NVTriStrip",
+   "slug": "lib-nvtristrip",
+   "total": 441,
+   "partes": [
+    "lib-nvtristrip__0.json"
+   ]
+  },
+  {
+   "grupo": "OFPPatch/RSA",
+   "slug": "ofppatch-rsa",
+   "total": 436,
+   "partes": [
+    "ofppatch-rsa__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Memory",
+   "slug": "es-memory",
+   "total": 423,
+   "partes": [
+    "es-memory__0.json"
+   ]
+  },
+  {
+   "grupo": "OPFCreatePatch",
+   "slug": "opfcreatepatch",
+   "total": 369,
+   "partes": [
+    "opfcreatepatch__0.json"
+   ]
+  },
+  {
+   "grupo": "PerfLog",
+   "slug": "perflog",
+   "total": 349,
+   "partes": [
+    "perflog__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Common",
+   "slug": "el-common",
+   "total": 331,
+   "partes": [
+    "el-common__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Multicore",
+   "slug": "el-multicore",
+   "total": 325,
+   "partes": [
+    "el-multicore__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/MSStrip",
+   "slug": "lib-msstrip",
+   "total": 324,
+   "partes": [
+    "lib-msstrip__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Encryption",
+   "slug": "el-encryption",
+   "total": 301,
+   "partes": [
+    "el-encryption__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Threads",
+   "slug": "es-threads",
+   "total": 301,
+   "partes": [
+    "es-threads__0.json"
+   ]
+  },
+  {
+   "grupo": "El/LZO",
+   "slug": "el-lzo",
+   "total": 297,
+   "partes": [
+    "el-lzo__0.json"
+   ]
+  },
+  {
+   "grupo": "CfgEdit",
+   "slug": "cfgedit",
+   "total": 266,
+   "partes": [
+    "cfgedit__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Framework",
+   "slug": "es-framework",
+   "total": 258,
+   "partes": [
+    "es-framework__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/TerSynth",
+   "slug": "lib-tersynth",
+   "total": 248,
+   "partes": [
+    "lib-tersynth__0.json"
+   ]
+  },
+  {
+   "grupo": "El/SoundFile",
+   "slug": "el-soundfile",
+   "total": 226,
+   "partes": [
+    "el-soundfile__0.json"
+   ]
+  },
+  {
+   "grupo": "cfg",
+   "slug": "cfg",
+   "total": 222,
+   "partes": [
+    "cfg__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Strings",
+   "slug": "es-strings",
+   "total": 218,
+   "partes": [
+    "es-strings__0.json"
+   ]
+  },
+  {
+   "grupo": "El/FreeOnDemand",
+   "slug": "el-freeondemand",
+   "total": 206,
+   "partes": [
+    "el-freeondemand__0.json"
+   ]
+  },
+  {
+   "grupo": "El/DataSignatures",
+   "slug": "el-datasignatures",
+   "total": 205,
+   "partes": [
+    "el-datasignatures__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Common",
+   "slug": "es-common",
+   "total": 195,
+   "partes": [
+    "es-common__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Calendar",
+   "slug": "el-calendar",
+   "total": 192,
+   "partes": [
+    "el-calendar__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/VisitorExchange",
+   "slug": "lib-visitorexchange",
+   "total": 178,
+   "partes": [
+    "lib-visitorexchange__0.json"
+   ]
+  },
+  {
+   "grupo": "El/BTree",
+   "slug": "el-btree",
+   "total": 159,
+   "partes": [
+    "el-btree__0.json"
+   ]
+  },
+  {
+   "grupo": "El/ActiveObject",
+   "slug": "el-activeobject",
+   "total": 155,
+   "partes": [
+    "el-activeobject__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Pathname",
+   "slug": "el-pathname",
+   "total": 151,
+   "partes": [
+    "el-pathname__0.json"
+   ]
+  },
+  {
+   "grupo": "Setup/AutoRun",
+   "slug": "setup-autorun",
+   "total": 149,
+   "partes": [
+    "setup-autorun__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Algorithms",
+   "slug": "es-algorithms",
+   "total": 148,
+   "partes": [
+    "es-algorithms__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Interfaces",
+   "slug": "el-interfaces",
+   "total": 144,
+   "partes": [
+    "el-interfaces__0.json"
+   ]
+  },
+  {
+   "grupo": "Setup/UnInstall",
+   "slug": "setup-uninstall",
+   "total": 140,
+   "partes": [
+    "setup-uninstall__0.json"
+   ]
+  },
+  {
+   "grupo": "El/XML",
+   "slug": "el-xml",
+   "total": 137,
+   "partes": [
+    "el-xml__0.json"
+   ]
+  },
+  {
+   "grupo": "El/TCPIPBasics",
+   "slug": "el-tcpipbasics",
+   "total": 136,
+   "partes": [
+    "el-tcpipbasics__0.json"
+   ]
+  },
+  {
+   "grupo": "RV/KBBase",
+   "slug": "rv-kbbase",
+   "total": 134,
+   "partes": [
+    "rv-kbbase__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/Protect",
+   "slug": "lib-protect",
+   "total": 126,
+   "partes": [
+    "lib-protect__0.json"
+   ]
+  },
+  {
+   "grupo": "XBOXPBORepack",
+   "slug": "xboxpborepack",
+   "total": 122,
+   "partes": [
+    "xboxpborepack__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/KBExt",
+   "slug": "lib-kbext",
+   "total": 117,
+   "partes": [
+    "lib-kbext__0.json"
+   ]
+  },
+  {
+   "grupo": "El/ParamArchive",
+   "slug": "el-paramarchive",
+   "total": 105,
+   "partes": [
+    "el-paramarchive__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/d3dCommon",
+   "slug": "lib-d3dcommon",
+   "total": 103,
+   "partes": [
+    "lib-d3dcommon__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Stringtable",
+   "slug": "el-stringtable",
+   "total": 95,
+   "partes": [
+    "el-stringtable__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/Cloth",
+   "slug": "lib-cloth",
+   "total": 77,
+   "partes": [
+    "lib-cloth__0.json"
+   ]
+  },
+  {
+   "grupo": "Drobnosti/SetupConvert",
+   "slug": "drobnosti-setupconvert",
+   "total": 76,
+   "partes": [
+    "drobnosti-setupconvert__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/Files",
+   "slug": "es-files",
+   "total": 67,
+   "partes": [
+    "es-files__0.json"
+   ]
+  },
+  {
+   "grupo": "BICDKeys/nbproject",
+   "slug": "bicdkeys-nbproject",
+   "total": 65,
+   "partes": [
+    "bicdkeys-nbproject__0.json"
+   ]
+  },
+  {
+   "grupo": "BIUsers/nbproject",
+   "slug": "biusers-nbproject",
+   "total": 65,
+   "partes": [
+    "biusers-nbproject__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/HeapManager",
+   "slug": "es-heapmanager",
+   "total": 64,
+   "partes": [
+    "es-heapmanager__0.json"
+   ]
+  },
+  {
+   "grupo": "El/PreprocC",
+   "slug": "el-preprocc",
+   "total": 59,
+   "partes": [
+    "el-preprocc__0.json"
+   ]
+  },
+  {
+   "grupo": "RV/SpeechRecognition",
+   "slug": "rv-speechrecognition",
+   "total": 57,
+   "partes": [
+    "rv-speechrecognition__0.json"
+   ]
+  },
+  {
+   "grupo": "El/DebugConsole",
+   "slug": "el-debugconsole",
+   "total": 54,
+   "partes": [
+    "el-debugconsole__0.json"
+   ]
+  },
+  {
+   "grupo": "Drobnosti/Security",
+   "slug": "drobnosti-security",
+   "total": 52,
+   "partes": [
+    "drobnosti-security__0.json"
+   ]
+  },
+  {
+   "grupo": "El/MemoryStore",
+   "slug": "el-memorystore",
+   "total": 52,
+   "partes": [
+    "el-memorystore__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Rectangle",
+   "slug": "el-rectangle",
+   "total": 50,
+   "partes": [
+    "el-rectangle__0.json"
+   ]
+  },
+  {
+   "grupo": "El/RegularExpressions",
+   "slug": "el-regularexpressions",
+   "total": 49,
+   "partes": [
+    "el-regularexpressions__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Statistics",
+   "slug": "el-statistics",
+   "total": 49,
+   "partes": [
+    "el-statistics__0.json"
+   ]
+  },
+  {
+   "grupo": "BIRegistration/nbproject",
+   "slug": "biregistration-nbproject",
+   "total": 48,
+   "partes": [
+    "biregistration-nbproject__0.json"
+   ]
+  },
+  {
+   "grupo": "BIServerKey/nbproject",
+   "slug": "biserverkey-nbproject",
+   "total": 48,
+   "partes": [
+    "biserverkey-nbproject__0.json"
+   ]
+  },
+  {
+   "grupo": "(raiz)",
+   "slug": "raiz",
+   "total": 48,
+   "partes": [
+    "raiz__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/SvnUpdate",
+   "slug": "lib-svnupdate",
+   "total": 48,
+   "partes": [
+    "lib-svnupdate__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/ASE",
+   "slug": "lib-ase",
+   "total": 45,
+   "partes": [
+    "lib-ase__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Color",
+   "slug": "el-color",
+   "total": 42,
+   "partes": [
+    "el-color__0.json"
+   ]
+  },
+  {
+   "grupo": "Drobnosti/SvnAutoUpdaterTest",
+   "slug": "drobnosti-svnautoupdatertest",
+   "total": 39,
+   "partes": [
+    "drobnosti-svnautoupdatertest__0.json"
+   ]
+  },
+  {
+   "grupo": "FileBank",
+   "slug": "filebank",
+   "total": 39,
+   "partes": [
+    "filebank__0.json"
+   ]
+  },
+  {
+   "grupo": "Docs",
+   "slug": "docs",
+   "total": 37,
+   "partes": [
+    "docs__0.json"
+   ]
+  },
+  {
+   "grupo": "El",
+   "slug": "el",
+   "total": 36,
+   "partes": [
+    "el__0.json"
+   ]
+  },
+  {
+   "grupo": "El/CDKey",
+   "slug": "el-cdkey",
+   "total": 35,
+   "partes": [
+    "el-cdkey__0.json"
+   ]
+  },
+  {
+   "grupo": "El/DebugWindow",
+   "slug": "el-debugwindow",
+   "total": 34,
+   "partes": [
+    "el-debugwindow__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Enum",
+   "slug": "el-enum",
+   "total": 34,
+   "partes": [
+    "el-enum__0.json"
+   ]
+  },
+  {
+   "grupo": "BankRev",
+   "slug": "bankrev",
+   "total": 33,
+   "partes": [
+    "bankrev__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Sleepy",
+   "slug": "el-sleepy",
+   "total": 32,
+   "partes": [
+    "el-sleepy__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Text",
+   "slug": "el-text",
+   "total": 31,
+   "partes": [
+    "el-text__0.json"
+   ]
+  },
+  {
+   "grupo": "Es",
+   "slug": "es",
+   "total": 31,
+   "partes": [
+    "es__0.json"
+   ]
+  },
+  {
+   "grupo": "El/DLC",
+   "slug": "el-dlc",
+   "total": 30,
+   "partes": [
+    "el-dlc__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Graph",
+   "slug": "el-graph",
+   "total": 30,
+   "partes": [
+    "el-graph__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Time",
+   "slug": "el-time",
+   "total": 29,
+   "partes": [
+    "el-time__0.json"
+   ]
+  },
+  {
+   "grupo": "El/PCH",
+   "slug": "el-pch",
+   "total": 28,
+   "partes": [
+    "el-pch__0.json"
+   ]
+  },
+  {
+   "grupo": "CheckBank",
+   "slug": "checkbank",
+   "total": 25,
+   "partes": [
+    "checkbank__0.json"
+   ]
+  },
+  {
+   "grupo": "El/CRC",
+   "slug": "el-crc",
+   "total": 24,
+   "partes": [
+    "el-crc__0.json"
+   ]
+  },
+  {
+   "grupo": "El/ProgressBar",
+   "slug": "el-progressbar",
+   "total": 23,
+   "partes": [
+    "el-progressbar__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Breakpoint",
+   "slug": "el-breakpoint",
+   "total": 22,
+   "partes": [
+    "el-breakpoint__0.json"
+   ]
+  },
+  {
+   "grupo": "El/SimpleExpression",
+   "slug": "el-simpleexpression",
+   "total": 22,
+   "partes": [
+    "el-simpleexpression__0.json"
+   ]
+  },
+  {
+   "grupo": "lib/Encryption",
+   "slug": "lib-encryption",
+   "total": 21,
+   "partes": [
+    "lib-encryption__0.json"
+   ]
+  },
+  {
+   "grupo": "posAccess",
+   "slug": "posaccess",
+   "total": 20,
+   "partes": [
+    "posaccess__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Activity",
+   "slug": "el-activity",
+   "total": 18,
+   "partes": [
+    "el-activity__0.json"
+   ]
+  },
+  {
+   "grupo": "El/FileBinMake",
+   "slug": "el-filebinmake",
+   "total": 18,
+   "partes": [
+    "el-filebinmake__0.json"
+   ]
+  },
+  {
+   "grupo": "El/HierWalker",
+   "slug": "el-hierwalker",
+   "total": 18,
+   "partes": [
+    "el-hierwalker__0.json"
+   ]
+  },
+  {
+   "grupo": "El/PerlinNoise",
+   "slug": "el-perlinnoise",
+   "total": 18,
+   "partes": [
+    "el-perlinnoise__0.json"
+   ]
+  },
+  {
+   "grupo": "Drobnosti/SvnAutoUpdaterConsole",
+   "slug": "drobnosti-svnautoupdaterconsole",
+   "total": 16,
+   "partes": [
+    "drobnosti-svnautoupdaterconsole__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/ErrorProp",
+   "slug": "es-errorprop",
+   "total": 16,
+   "partes": [
+    "es-errorprop__0.json"
+   ]
+  },
+  {
+   "grupo": "LauncherSample",
+   "slug": "launchersample",
+   "total": 16,
+   "partes": [
+    "launchersample__0.json"
+   ]
+  },
+  {
+   "grupo": "El/ParamXML",
+   "slug": "el-paramxml",
+   "total": 14,
+   "partes": [
+    "el-paramxml__0.json"
+   ]
+  },
+  {
+   "grupo": "PhysicalLibs/RigidBody",
+   "slug": "physicallibs-rigidbody",
+   "total": 13,
+   "partes": [
+    "physicallibs-rigidbody__0.json"
+   ]
+  },
+  {
+   "grupo": "ComRef",
+   "slug": "comref",
+   "total": 10,
+   "partes": [
+    "comref__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Modules",
+   "slug": "el-modules",
+   "total": 10,
+   "partes": [
+    "el-modules__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/SortTree",
+   "slug": "es-sorttree",
+   "total": 10,
+   "partes": [
+    "es-sorttree__0.json"
+   ]
+  },
+  {
+   "grupo": "BICDKeys",
+   "slug": "bicdkeys",
+   "total": 9,
+   "partes": [
+    "bicdkeys__0.json"
+   ]
+  },
+  {
+   "grupo": "BIRegistration",
+   "slug": "biregistration",
+   "total": 9,
+   "partes": [
+    "biregistration__0.json"
+   ]
+  },
+  {
+   "grupo": "BIServerKey",
+   "slug": "biserverkey",
+   "total": 9,
+   "partes": [
+    "biserverkey__0.json"
+   ]
+  },
+  {
+   "grupo": "BIUsers",
+   "slug": "biusers",
+   "total": 9,
+   "partes": [
+    "biusers__0.json"
+   ]
+  },
+  {
+   "grupo": "El/BIDebugEngine",
+   "slug": "el-bidebugengine",
+   "total": 9,
+   "partes": [
+    "el-bidebugengine__0.json"
+   ]
+  },
+  {
+   "grupo": "El/CorelAnalys",
+   "slug": "el-corelanalys",
+   "total": 9,
+   "partes": [
+    "el-corelanalys__0.json"
+   ]
+  },
+  {
+   "grupo": "Es/ReportStack",
+   "slug": "es-reportstack",
+   "total": 9,
+   "partes": [
+    "es-reportstack__0.json"
+   ]
+  },
+  {
+   "grupo": "serial",
+   "slug": "serial",
+   "total": 6,
+   "partes": [
+    "serial__0.json"
+   ]
+  },
+  {
+   "grupo": "El/Credits",
+   "slug": "el-credits",
+   "total": 4,
+   "partes": [
+    "el-credits__0.json"
+   ]
+  },
+  {
+   "grupo": "RVExtension",
+   "slug": "rvextension",
+   "total": 3,
+   "partes": [
+    "rvextension__0.json"
+   ]
+  },
+  {
+   "grupo": "El/HiResTime",
+   "slug": "el-hirestime",
+   "total": 2,
+   "partes": [
+    "el-hirestime__0.json"
+   ]
+  },
+  {
+   "grupo": "buldozer",
+   "slug": "buldozer",
+   "total": 1,
+   "partes": [
+    "buldozer__0.json"
+   ]
+  }
+ ],
+ "kinds": [
+  [
+   "OUTRO",
+   123261
+  ],
+  [
+   "DOC",
+   36247
+  ],
+  [
+   "NEGACAO",
+   12263
+  ],
+  [
+   "TODO",
+   2806
+  ],
+  [
+   "PROBLEMA",
+   1718
+  ],
+  [
+   "NOTE",
+   1269
+  ],
+  [
+   "PERF",
+   890
+  ],
+  [
+   "PATCH",
+   731
+  ],
+  [
+   "DEADCODE",
+   546
+  ],
+  [
+   "WARNING",
+   256
+  ],
+  [
+   "PORTING",
+   243
+  ],
+  [
+   "UNSUPPORTED",
+   154
+  ],
+  [
+   "HACK",
+   99
+  ],
+  [
+   "FIXME",
+   62
+  ]
+ ],
+ "status": [
+  [
+   "auto (glossario)",
+   180545
+  ]
+ ],
+ "chunk": 2500
+}

@@ -1,0 +1,81 @@
+﻿diff --git antes/lib/scene.cpp depois/lib/scene.cpp
+index 414b648..38781a6 100644
+--- antes/lib/scene.cpp
++++ depois/lib/scene.cpp
+@@ -6102,16 +6102,19 @@ void Scene::DrawObjectsInstanced(
+ #if _HELISIM_RENDER_TO_TEXTURE
+   , int drawListId
+ #endif
+ )
+ {  
+   const int maxInstancingChain = 512;
+   // if instance count is very large, it would cause memory allocation
+   // we rather to split it into several chains on the top level instead
++  // Priming passes use PSAlphaOnly shaders, which do not consume the per-instance
++  // landscape shadow coefficient. GetLandShadowSmooth samples the land shadow map
++  // (and may call Landscape::SurfaceY) for every instance, so skip it there.
+   
+   while (instancesBeg<=instancesEnd)
+   {
+     // count instances including chains passed to us from the object lists
+     int instCount = 0;
+     int iiEnd;
+     for (iiEnd=instancesBeg; iiEnd<=instancesEnd; iiEnd++)
+     {
+@@ -6153,17 +6156,17 @@ void Scene::DrawObjectsInstanced(
+             Object *obj = list->Get(li);
+ 
+             if (color>0)
+             {
+             ObjectInstanceInfo &info = instances[tgt++];
+             info._origin = obj->RenderVisualState().Transform();
+               info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+               info._color = Color(1,1,1,color);
+-              info._shadowCoef = GetLandShadowSmooth(info._origin.Position());
++              info._shadowCoef = dp._zprimeIsBeingRendered ? 1.0f : GetLandShadowSmooth(info._origin.Position());
+             info._object = info._parentObject = obj;
+             info._limitSpriteSize = iObj->limitSpriteSize;
+           }
+           }
+         }
+ 				//do the last one
+ 				{
+ 					if (iObj->IsVisible(li))
+@@ -6171,17 +6174,17 @@ void Scene::DrawObjectsInstanced(
+             Object *obj = list->Get(li);
+             if (color>0)
+             {
+ 
+             ObjectInstanceInfo &info = instances[tgt++];
+             info._origin = obj->RenderVisualState().Transform();
+               info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+               info._color = Color(1,1,1,color);
+-              info._shadowCoef = GetLandShadowSmooth(info._origin.Position());
++              info._shadowCoef = dp._zprimeIsBeingRendered ? 1.0f : GetLandShadowSmooth(info._origin.Position());
+             info._object = info._parentObject = obj;
+             info._limitSpriteSize = iObj->limitSpriteSize;
+           }
+           }
+         }
+         if (updateBF) iObj->UpdateBlendFactor();
+         // assume scale is around 1, therefore the same for all objects here
+         if (minDist2>iObj->distance2) // TODO: this should perhaps be done inside in the loop - or can distance2 be assumed to be known for all at once?
+@@ -6194,17 +6197,17 @@ void Scene::DrawObjectsInstanced(
+       {
+         if (color>0)
+         {
+         ObjectInstanceInfo &info = instances[tgt++];
+         info._origin = iObj->position.position;
+           info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+           info._color = Color(1,1,1,color);
+         Assert(!iObj->position.camSpace);
+-          info._shadowCoef = GetLandShadowSmooth(info._origin.Position());
++          info._shadowCoef = dp._zprimeIsBeingRendered ? 1.0f : GetLandShadowSmooth(info._origin.Position());
+         info._object = info._parentObject = iObj->GetObject();
+         info._limitSpriteSize = iObj->limitSpriteSize;
+         }
+         float scale2 = Square(iObj->GetObject()->RenderVisualState().Scale());
+         if (minDist2*scale2>iObj->distance2)
+         {
+           minDist2 = iObj->distance2/scale2;
+         }

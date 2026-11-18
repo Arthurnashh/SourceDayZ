@@ -1,0 +1,218 @@
+diff --git antes/lib/object.cpp depois/lib/object.cpp
+index 8753e3f..027bd05 100644
+--- antes/lib/object.cpp
++++ depois/lib/object.cpp
+@@ -30,12 +30,13 @@ Implements general and  drawing functions
+ #include "Shape/material.hpp"
+ #include <Es/Files/filenames.hpp>
+ #include "diagModes.hpp"
+ #include "objDestroy.hpp"
+ #include "rtAnimation.hpp"
+ #include "objectClasses.hpp"
++#include "vehicleAI.hpp"
+ 
+ #include "Shape/specLods.hpp"
+ #include "Network/network.hpp"
+ #include "AI/ai.hpp"
+ 
+ #include "stringtableExt.hpp"
+@@ -439,13 +440,13 @@ static void ReportObjDiagMode(int mode)
+   const char *name = FindEnumName(ObjDiagEnable(mode));
+   GlobalShowMessage(2000,"Object diag mode %s %s",name,status);
+ }
+ 
+ static GameValue SetObjDiagEnable(const GameState *state, GameValuePar oper1, GameValuePar oper2)
+ {
+-  const char *modeStr = (RString)oper1;
++  const char *modeStr = oper1.GetData()->GetString();
+   bool onOff = oper2;
+   int modeMask = ~0;
+   int mode = GetEnumValue<ObjDiagEnable>(modeStr);
+   if (mode<0) return NOTHING;
+   modeMask = 1<<mode;
+ 
+@@ -454,24 +455,24 @@ static GameValue SetObjDiagEnable(const GameState *state, GameValuePar oper1, Ga
+   ReportObjDiagMode(mode);
+   return NOTHING;
+ }
+ 
+ static GameValue SetObjDiagScale(const GameState *state, GameValuePar oper1, GameValuePar oper2)
+ {
+-  const char *modeStr = (RString)oper1;
++  const char *modeStr = oper1.GetData()->GetString();
+   float scale = oper2;
+   int mode = GetEnumValue<ObjDiagEnable>(modeStr);
+   if (mode<0) return NOTHING;
+   ObjDrawScale[mode] = scale;
+   return NOTHING;
+ }
+ 
+ 
+ static GameValue SetObjDiagToggle(const GameState *state, GameValuePar oper1)
+ {
+-  const char *modeStr = (RString)oper1;
++  const char *modeStr = oper1.GetData()->GetString();
+   int mode = GetEnumValue<ObjDiagEnable>(modeStr);
+   if (mode==-1) return NOTHING;
+   int modeMask = 1<<mode;
+ 
+   ObjDiagMode ^= modeMask;
+   
+@@ -1834,13 +1835,16 @@ void Object::DrawSimpleInstanced(
+ 
+   //CurrentAppFrameFunctions->ProfileEndGraphScope();
+   
+   // make sure texture loading does not evict our vertex buffer (if it exists)
+   VertexBufferLock vbLock(sShape);
+   
+-  sShape->PrepareTextures(dist2, NULL, special, dp._sbIsBeingRendered);
++  {
++    PROFILE_SCOPE_DETAIL_EX(inTex,oSort);
++    sShape->PrepareTextures(dist2, NULL, special, dp._sbIsBeingRendered);
++  }
+ 
+   // If some hints then draw non-instanced version
+   if ((sShape->GetOrHints()&ClipLandOn)!=0)
+   {
+     DoAssert(cb<0);
+     DoAssert(!isSkinned);
+@@ -1931,16 +1935,19 @@ void Object::DrawSimpleInstanced(
+     }
+     else
+     {
+       bias = ((special&ZBiasMask)/ZBiasStep) * 5;
+     }
+     
+-    GEngine->DrawMeshTLInstanced(
+-      cb,*sShape, *_shape, special, lights, bias,
+-      instances, instanceCount, dist2, dpTI
+-    );
++    {
++      PROFILE_SCOPE_DETAIL_EX(inDrw,oSort);
++      GEngine->DrawMeshTLInstanced(
++        cb,*sShape, *_shape, special, lights, bias,
++        instances, instanceCount, dist2, dpTI
++      );
++    }
+     // Set skinning to default value (FLY Better than this clean-up would be better to set it before each drawing)
+     GEngine->SetSkinningType(cb,STNone);
+   }
+ 
+ 
+ }
+@@ -2041,13 +2048,16 @@ void Object::Draw(int cb, int forceLOD, ClipFlags clipFlags, const DrawParameter
+   // test if reference points to valid object
+   // get object position in clipping coordinates
+   AnimationContextStorageRender storage;
+   AnimationContext animContext(RenderVisualState(),storage);
+   sShape->InitAnimationContext(animContext, _shape->GetConvexComponents(forceLOD), usingGeometry);
+ 
+-  Animate(animContext, forceLOD, setEngineStuff, parentObject, dist2);
++  {
++    PROFILE_SCOPE_DETAIL_EX(obAni,oSort);
++    Animate(animContext, forceLOD, setEngineStuff, parentObject, dist2);
++  }
+ 
+   // pos may be in camera space
+   // dist2 is used for mipmap+proxy lod selection
+   // Calculate the world position as well (it is not accurate though)
+ 
+   // for clipping tests we want to check world space, as clipping planes are world space
+@@ -2086,13 +2096,17 @@ void Object::Draw(int cb, int forceLOD, ClipFlags clipFlags, const DrawParameter
+     {
+       dpTI._heatSourceDirection = newHeatSource;
+       dpTI._useOwnHeatSource = true;
+     }
+ 
+     LightList work;
+-    const LightList &lights=GScene->SelectAggLights(worldPosition, this, forceLOD, work);
++    const LightList *lights;
++    {
++      PROFILE_SCOPE_DETAIL_EX(obLit,oSort);
++      lights = &GScene->SelectAggLights(worldPosition, this, forceLOD, work);
++    }
+     
+     OBJECT_LEVEL_DPRIM_STAT_SCOPE(cb,_shape,forceLOD);
+     ADD_COUNTER(obj,1);
+ 
+     if( special&IsColored ) GScene->SetConstantColor(GetConstantColor()); 
+     
+@@ -2117,23 +2131,29 @@ void Object::Draw(int cb, int forceLOD, ClipFlags clipFlags, const DrawParameter
+     // if necessary, split it
+     if (!(sShape->Special()&OnSurface) || (sShape->GetAndHints()&ClipLandMask)!=ClipLandOn)
+     {
+       // make sure texture loading does not evict our vertex buffer (if it exists)
+       VertexBufferLock vbLock(sShape);
+       
+-      PrepareTextures(&animContext, _shape, dist2/scale2, forceLOD, dp._sbIsBeingRendered);
++      {
++        PROFILE_SCOPE_DETAIL_EX(obTex,oSort);
++        PrepareTextures(&animContext, _shape, dist2/scale2, forceLOD, dp._sbIsBeingRendered);
++      }
+       
+       _shape->OptimizeLevelRendering(forceLOD,false);
+       // Preparing of drawing of the shape
+ #if _HELISIM_RENDER_TO_TEXTURE
+       UseDrawMatrices(cb, isSkinned, _shape, forceLOD, oi, drawListId);
+ #else
+       UseDrawMatrices(cb, isSkinned, _shape, forceLOD, oi);
+ #endif
+ 
+-      sShape->Draw(cb,&animContext, GetConstantColor(), *_shape, lights, clipFlags, special, pos, dist2, dpTI);
++      {
++        PROFILE_SCOPE_DETAIL_EX(obShp,oSort);
++        sShape->Draw(cb,&animContext, GetConstantColor(), *_shape, *lights, clipFlags, special, pos, dist2, dpTI);
++      }
+ 
+       // Draw craters (omit DB and z-prime passes), when predicating, predication will take care of omitting it
+       if (!dp._zprimeIsBeingRendered || Glob.config._predication)
+       {
+         int maxCraters = CheckCraterDrawing(dist2, dp);
+         if (maxCraters > 0)
+@@ -2147,34 +2167,43 @@ void Object::Draw(int cb, int forceLOD, ClipFlags clipFlags, const DrawParameter
+           const AutoArray<CraterProperties> &craters = _damage ? _damage->_craters : noCraters;
+           GEngine->UseCraters(cb,craters, maxCraters,  CraterColor());
+ 
+           // Draw it
+           DrawParameters dpc = dp;
+           dpc._cratersCount = std::min(craters.Size(), maxCraters);
+-          sShape->Draw(cb, &animContext, GetConstantColor(), *_shape, lights, clipFlags, special, pos, dist2, dpc);
++          {
++            PROFILE_SCOPE_DETAIL_EX(obShp,oSort);
++            sShape->Draw(cb, &animContext, GetConstantColor(), *_shape, *lights, clipFlags, special, pos, dist2, dpc);
++          }
+ #endif
+         }
+       }
+     }
+     else
+     {
+       // when rendering shadow buffer, rendering what is on surface has no sense
+       if (!dp._sbIsBeingRendered)
+       {
+-        PrepareTextures(&animContext, _shape, dist2/scale2, forceLOD, dp._sbIsBeingRendered);
++        {
++          PROFILE_SCOPE_DETAIL_EX(obTex,oSort);
++          PrepareTextures(&animContext, _shape, dist2/scale2, forceLOD, dp._sbIsBeingRendered);
++        }
+ 
+ #if _HELISIM_RENDER_TO_TEXTURE
+         UseDrawMatrices(cb, false, _shape, forceLOD, oi, drawListId);
+ #else
+         UseDrawMatrices(cb, false, _shape, forceLOD, oi);
+ #endif
+         
+         // if all point are LandOn, we can split cache
+         Ref<Shape> split = GScene->GetShadowCache().Split(this,VUp,forceLOD,special);
+         int specAdj = (special&~OnSurface)|IsOnSurface;
+-        split->Draw(cb, &animContext, GetConstantColor(), *_shape, lights, clipFlags, specAdj, pos, dist2, dpTI);
++        {
++          PROFILE_SCOPE_DETAIL_EX(obShp,oSort);
++          split->Draw(cb, &animContext, GetConstantColor(), *_shape, *lights, clipFlags, specAdj, pos, dist2, dpTI);
++        }
+       }
+     }
+ 
+     // Set skinning to default value (FLY Better than this clean-up would be better to set it before each drawing)
+     GEngine->SetSkinningType(cb,STNone);
+   }

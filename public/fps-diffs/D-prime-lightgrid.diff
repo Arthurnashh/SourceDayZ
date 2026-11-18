@@ -1,0 +1,86 @@
+﻿diff --git antes/lib/scene.cpp depois/lib/scene.cpp
+index 38781a6..0e8cdce 100644
+--- antes/lib/scene.cpp
++++ depois/lib/scene.cpp
+@@ -6154,17 +6154,17 @@ void Scene::DrawObjectsInstanced(
+ 					if (iObj->IsVisible(li))
+ 					{
+             Object *obj = list->Get(li);
+ 
+             if (color>0)
+             {
+             ObjectInstanceInfo &info = instances[tgt++];
+             info._origin = obj->RenderVisualState().Transform();
+-              info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
++              info._lightGridIndex = (!dp._zprimeIsBeingRendered && _gridLights.Size()) ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+               info._color = Color(1,1,1,color);
+               info._shadowCoef = dp._zprimeIsBeingRendered ? 1.0f : GetLandShadowSmooth(info._origin.Position());
+             info._object = info._parentObject = obj;
+             info._limitSpriteSize = iObj->limitSpriteSize;
+           }
+           }
+         }
+ 				//do the last one
+@@ -6172,17 +6172,17 @@ void Scene::DrawObjectsInstanced(
+ 					if (iObj->IsVisible(li))
+ 					{
+             Object *obj = list->Get(li);
+             if (color>0)
+             {
+ 
+             ObjectInstanceInfo &info = instances[tgt++];
+             info._origin = obj->RenderVisualState().Transform();
+-              info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
++              info._lightGridIndex = (!dp._zprimeIsBeingRendered && _gridLights.Size()) ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+               info._color = Color(1,1,1,color);
+               info._shadowCoef = dp._zprimeIsBeingRendered ? 1.0f : GetLandShadowSmooth(info._origin.Position());
+             info._object = info._parentObject = obj;
+             info._limitSpriteSize = iObj->limitSpriteSize;
+           }
+           }
+         }
+         if (updateBF) iObj->UpdateBlendFactor();
+@@ -6194,17 +6194,17 @@ void Scene::DrawObjectsInstanced(
+         if (iObj->coveredArea>maxCoveredArea) maxCoveredArea = iObj->coveredArea;
+       }
+       else
+       {
+         if (color>0)
+         {
+         ObjectInstanceInfo &info = instances[tgt++];
+         info._origin = iObj->position.position;
+-          info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
++          info._lightGridIndex = (!dp._zprimeIsBeingRendered && _gridLights.Size()) ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+           info._color = Color(1,1,1,color);
+         Assert(!iObj->position.camSpace);
+           info._shadowCoef = dp._zprimeIsBeingRendered ? 1.0f : GetLandShadowSmooth(info._origin.Position());
+         info._object = info._parentObject = iObj->GetObject();
+         info._limitSpriteSize = iObj->limitSpriteSize;
+         }
+         float scale2 = Square(iObj->GetObject()->RenderVisualState().Scale());
+         if (minDist2*scale2>iObj->distance2)
+@@ -6254,18 +6254,22 @@ void Scene::DrawObjectsInstanced(
+ 
+     // The level is instance-able - already verified, and no GC was performed in between
+     // TODO:MC: removed ShapeUsed from LevelUsesVBuffer
+     DoAssert(obj->CanBeInstanced(level, oiBeg->distance2, dp));
+     // airborne objects need special light selection and therefore cannot be instanced
+     Assert(!obj->Airborne());
+ 
+     // In case there is a day here (or zero lights) then draw it without worrying,
+-    // else draw it split into groups
+-    if (_gridLights.Size() == 0 /*(NLights()==0 || MainLight()->NightEffect()<0.01)*/)
++    // else draw it split into groups.
++    // Depth priming renders with PSAlphaOnly shaders, which do not consume any
++    // light. Sorting the whole chain by light grid and splitting it into groups
++    // would only add O(n log n) work and extra draws with identical depth output,
++    // so the chain is drawn in a single call with an empty light list there.
++    if (dp._zprimeIsBeingRendered || _gridLights.Size() == 0 /*(NLights()==0 || MainLight()->NightEffect()<0.01)*/)
+     {
+       // Draw the instances
+       LightList empty;
+       obj->DrawSimpleInstanced(
+         cb, level, ClipAll, dp, instances.Data(), instances.Size(), minDist2, empty, oiBeg, maxCoveredArea
+ #if _HELISIM_RENDER_TO_TEXTURE
+         , drawListId
+ #endif

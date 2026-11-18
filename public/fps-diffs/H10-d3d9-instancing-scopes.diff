@@ -1,0 +1,103 @@
+﻿diff --git antes/lib/d3d9/engdd9.cpp depois/lib/d3d9/engdd9.cpp
+index 7d09c6f..51ce115 100644
+--- antes/lib/d3d9/engdd9.cpp
++++ depois/lib/d3d9/engdd9.cpp
+@@ -404,13 +404,13 @@ static void ReportEngDiagMode(int mode)
+   const char *name = FindEnumName(EngDiagEnable(mode));
+   GlobalShowMessage(2000,"Engine diag mode %s %s",name,status);
+ }
+ 
+ static GameValue SetEngDiagEnable(const GameState *state, GameValuePar oper1, GameValuePar oper2)
+ {
+-  const char *modeStr = (RString)oper1;
++  const char *modeStr = oper1.GetData()->GetString();
+   bool onOff = oper2;
+   int modeMask = ~0;
+   int mode = -1;
+   if (strcmpi(modeStr,"all"))
+   {
+     mode = GetEnumValue<EngDiagEnable>(modeStr);
+@@ -426,13 +426,13 @@ static GameValue SetEngDiagEnable(const GameState *state, GameValuePar oper1, Ga
+   }
+   return NOTHING;
+ }
+ 
+ static GameValue SetEngDiagToggle(const GameState *state, GameValuePar oper1)
+ {
+-  const char *modeStr = (RString)oper1;
++  const char *modeStr = oper1.GetData()->GetString();
+   int mode = GetEnumValue<EngDiagEnable>(modeStr);
+   if (mode==-1) return NOTHING;
+   int modeMask = 1<<mode;
+ 
+   EngDiagMode ^= modeMask;
+ 
+@@ -518,22 +518,22 @@ static GameValue UseStaticVB(const GameState *state, GameValuePar oper1)
+   GEngineDD->ReleaseAllVertexBuffers();
+   return NOTHING;
+ }
+ 
+ static GameValue ReloadVS(const GameState *state, GameValuePar oper1)
+ {
+-  const char *shader = (RString)oper1;
++  const char *shader = oper1.GetData()->GetString();
+   VertexShaderID vs = GetEnumValue<VertexShaderID>(shader);
+   if (vs==-1) return NOTHING;
+   GEngineDD->ReloadVertexShader(vs);
+   return NOTHING;
+ }
+ 
+ static GameValue ReloadPS(const GameState *state, GameValuePar oper1)
+ {
+-  const char *shader = (RString)oper1;
++  const char *shader = oper1.GetData()->GetString();
+   // check all pixel shader which match the mask given in oper1
+   for(int ps=0; ps<NPixelShaderID; ps++)
+   {
+     PixelShaderID psid = PixelShaderID(ps);
+     RStringB name = FindEnumName(psid);
+     if (Matches(name,shader))
+@@ -8767,15 +8767,22 @@ void EngineDD9::DrawMeshTLInstanced(
+   if (nInstancesInOneStep >= 1)
+ #else
+   // Instances in one step must be > 1 (we don't create VB for smaller size)
+   if (nInstancesInOneStep > 1)
+ #endif
+   {
++    PROFILE_SCOPE_DETAIL_EX(d9HW,d3d);
+     bool ok = BeginMeshTLInstanced(cb,sMesh, prop, spec, lights, bias, minDist2, dp);
+     if (ok)
+     {
++#if _ENABLE_PERFLOG
++      DEF_COUNTER_P_EX(d9HWc,d3d,PROF_COUNT_SCALE);
++      COUNTER_P_NAME(d9HWc)+=1;
++      DEF_COUNTER_P_EX(d9HWi,d3d,PROF_COUNT_SCALE);
++      COUNTER_P_NAME(d9HWi)+=nInstances;
++#endif
+       // Either use a program to draw or draw it the usual way
+       int drawnInstances = 0;
+       while (drawnInstances < nInstances)
+       {
+         // Get number of instances
+         int newInstances = min(nInstancesInOneStep, nInstances - drawnInstances);
+@@ -8799,13 +8806,20 @@ void EngineDD9::DrawMeshTLInstanced(
+       // Finish mesh
+       EndMeshTL(cb,sMesh);
+     }
+   }
+   else
+   {
++    PROFILE_SCOPE_DETAIL_EX(d9FB,d3d);
+     DoAssert(instances);
++#if _ENABLE_PERFLOG
++    DEF_COUNTER_P_EX(d9FBc,d3d,PROF_COUNT_SCALE);
++    COUNTER_P_NAME(d9FBc)+=1;
++    DEF_COUNTER_P_EX(d9FBi,d3d,PROF_COUNT_SCALE);
++    COUNTER_P_NAME(d9FBi)+=nInstances;
++#endif
+     Engine::DrawMeshTLInstanced(cb,sMesh, prop, spec, lights, bias, instances, nInstances, minDist2, dp);
+     return;
+   }
+ }
+ 
+ void EngineDD9::DrawShadowVolumeInstanced(

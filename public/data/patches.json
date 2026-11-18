@@ -1,0 +1,714 @@
+[
+ {
+  "id": "5088",
+  "data": "11/15/2006",
+  "autor": "Jirka",
+  "texto": "Fixed: AI sometimes planned path through walls",
+  "arquivo": "lib/AI/operMap.cpp",
+  "linha": 6747
+ },
+ {
+  "id": "5089",
+  "data": "11/21/2006",
+  "autor": "Jirka",
+  "texto": "Fixed: AI sometimes did not found path around mountains",
+  "arquivo": "lib/AI/pathPlanner.cpp",
+  "linha": 762
+ },
+ {
+  "id": "5090",
+  "data": "11/27/2006",
+  "autor": "Jirka",
+  "texto": "Improved: AI pathfinding failing less often now",
+  "arquivo": "lib/AI/operMap.cpp",
+  "linha": 6180
+ },
+ {
+  "id": "5091",
+  "data": "11/28/2006",
+  "autor": "Ondra",
+  "texto": "Fixed: Improved AI reaction to friendly units observed being killed.",
+  "arquivo": "lib/target.cpp",
+  "linha": 3411
+ },
+ {
+  "id": "5092",
+  "data": "11/29/2006",
+  "autor": "Ondra",
+  "texto": "Fixed: AI more actively scanning visually for enemy when his position is not known.",
+  "arquivo": "lib/AI/aiUnit.cpp",
+  "linha": 4956
+ },
+ {
+  "id": "5093",
+  "data": "11/30/2006",
+  "autor": "Ondra",
+  "texto": "Fixed: Lowering terrain grid increased overall settings indication.",
+  "arquivo": "lib/scene.cpp",
+  "linha": 2978
+ },
+ {
+  "id": "5095",
+  "data": "12/4/2006",
+  "autor": "Ondra",
+  "texto": "Fixed: Report file size limited to 2 MB to prevent filling a lot of disc space.",
+  "arquivo": "El/Debugging/imexhnd.cpp",
+  "linha": 129
+ },
+ {
+  "id": "5098",
+  "data": "12/7/2006",
+  "autor": "Ondra",
+  "texto": "New: Joystick sensitivity configurable in ArmAProfile file. Configuration is done per positive/negative part of each axis. Default is: joystickSensitivity[]={ 0.500000,0.500000,0.500000,0.500000,0.500000,0.500000,1.000000,1.000000, 0.500000,0.500000,0.500000,0.500000,0.500000,0.500000,1.000000,1.000000};",
+  "arquivo": "lib/mainInput.cpp",
+  "linha": 1806
+ },
+ {
+  "id": "5097",
+  "data": "12/7/2006",
+  "autor": "Jirka",
+  "texto": "Fixed: Stealing gear from medics was possible",
+  "arquivo": "lib/vehSupply.cpp",
+  "linha": 592
+ },
+ {
+  "id": "5099",
+  "data": "12/8/2006",
+  "autor": "Ondra",
+  "texto": "Changed: Helicopter autohover default binding changed to double backslash key to improve A/S/D/W precision.",
+  "arquivo": "cfg/$(SolutionDir)build/port-baseline-vcvars/$(MSBuildProjectName)/cfgUI.hpp",
+  "linha": 2363
+ },
+ {
+  "id": "5100",
+  "data": "12/8/2006",
+  "autor": "Bebul",
+  "texto": "Fixed: Player with no legs gets no longer stuck in up/down limbo",
+  "arquivo": "lib/soldierOld.cpp",
+  "linha": 15145
+ },
+ {
+  "id": "5101",
+  "data": "12/12/2006",
+  "autor": "Jirka",
+  "texto": "Fixed: AI pathfinding improved (unexpected leaving of roads will happen less frequently)",
+  "arquivo": "lib/AI/aiUnit.cpp",
+  "linha": 4326
+ },
+ {
+  "id": "5104",
+  "data": "12/15/2006",
+  "autor": "Ondra",
+  "texto": "New: Grass flattened around soldiers, improving visibility.",
+  "arquivo": "lib/soldierOld.cpp",
+  "linha": 20564
+ },
+ {
+  "id": "5105",
+  "data": "12/19/2006",
+  "autor": "Ondra",
+  "texto": "Fixed: Briefing picture lighting was incorrect.",
+  "arquivo": "lib/UI/uiViewport.cpp",
+  "linha": 1011
+ },
+ {
+  "id": "5106",
+  "data": "12/20/2006",
+  "autor": "Ondra",
+  "texto": "Fixed: Dead units might sometimes be able to report kills in their neighbourhood.",
+  "arquivo": "lib/target.cpp",
+  "linha": 2357
+ },
+ {
+  "id": "5108",
+  "data": "12/20/2006",
+  "autor": "Bebul",
+  "texto": "Fixed: Player hosting game was not able to hear voice over net",
+  "arquivo": "lib/Network/networkClient.cpp",
+  "linha": 752
+ },
+ {
+  "id": "5110",
+  "data": "12/21/2006",
+  "autor": "Jirka",
+  "texto": "Fixed: Dedicated server can use missions in addons now",
+  "arquivo": "lib/Network/networkServer.cpp",
+  "linha": 3472
+ },
+ {
+  "id": "5111",
+  "data": "12/22/2006",
+  "autor": "Ondra",
+  "texto": "Fixed: Failure opening custom files (face, squad logo) might be causing server termination.",
+  "arquivo": "El/FileServer/fileServer.cpp",
+  "linha": 520
+ },
+ {
+  "id": "5112",
+  "data": "1/4/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Crash caused by target handling change in 5111.",
+  "arquivo": "lib/target.cpp",
+  "linha": 447
+ },
+ {
+  "id": "5115",
+  "data": "1/9/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Terrain detail settings not working properly - could introduce holes on lower settings.",
+  "arquivo": "lib/landscape.cpp",
+  "linha": 7696
+ },
+ {
+  "id": "5117",
+  "data": "1/12/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: AI soldiers sometimes went through handrail of bridge",
+  "arquivo": "lib/AI/operMap.cpp",
+  "linha": 7132
+ },
+ {
+  "id": "5118",
+  "data": "1/17/2007",
+  "autor": "Bebul",
+  "texto": "New: Eject mapped to user action",
+  "arquivo": "lib/mainInput.cpp",
+  "linha": 78
+ },
+ {
+  "id": "5119",
+  "data": "1/18/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: Some international characters was clipped in the chat log",
+  "arquivo": "lib/UI/chat.cpp",
+  "linha": 372
+ },
+ {
+  "id": "5120",
+  "data": "1/18/2007",
+  "autor": "Bebul",
+  "texto": "Fixed: Locking target by RMB in tank does not activate optics action",
+  "arquivo": "lib/UI/inGameUI.cpp",
+  "linha": 5134
+ },
+ {
+  "id": "5122",
+  "data": "1/24/2007",
+  "autor": "Bebul",
+  "texto": "New: Voice over Net - the recorded signal level is adjusted before sending out to recipients",
+  "arquivo": "El/Speech/vonApp.cpp",
+  "linha": 483
+ },
+ {
+  "id": "5124",
+  "data": "1/29/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: When the script change the player using \"selectPlayer\" function from the dead one, game info about the mission state is changed as well.",
+  "arquivo": "lib/gameStateExt.cpp",
+  "linha": 19739
+ },
+ {
+  "id": "5123",
+  "data": "1/29/2007",
+  "autor": "Ondra",
+  "texto": "Improved: Increased internal cache size for computers with more than 512 MB of RAM.",
+  "arquivo": "lib/memAllocCommon.cpp",
+  "linha": 290
+ },
+ {
+  "id": "5126",
+  "data": "1/31/2007",
+  "autor": "Bebul",
+  "texto": "Fixed: Voice over IP direct speak communication",
+  "arquivo": "El/Speech/vonApp.cpp",
+  "linha": 1139
+ },
+ {
+  "id": "5127",
+  "data": "2/8/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Switching into the mission editor by clicking on the Task bar caused selecting mode to be active.",
+  "arquivo": "lib/mainInput.cpp",
+  "linha": 1439
+ },
+ {
+  "id": "5128",
+  "data": "2/14/2007",
+  "autor": "Ondra",
+  "texto": "New: New double-tap bindings for compass and watch, new binding (Ctrl-M) for minimap.",
+  "arquivo": "cfg/$(SolutionDir)build/port-baseline-vcvars/$(MSBuildProjectName)/cfgUI.hpp",
+  "linha": 2166
+ },
+ {
+  "id": "5129",
+  "data": "2/19/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: MP - Radio messages echo on remote clients was missing",
+  "arquivo": "lib/AI/aiRadio.cpp",
+  "linha": 1769
+ },
+ {
+  "id": "5131",
+  "data": "2/21/2007",
+  "autor": "Bebul",
+  "texto": "Fixed: Prone rolling no longer activates lean toggle",
+  "arquivo": "lib/soldierOld.cpp",
+  "linha": 14660
+ },
+ {
+  "id": "5130",
+  "data": "2/22/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: Drawing of subtitles (all structured texts) - the offset of shadow was not always fixed",
+  "arquivo": "lib/drawText.cpp",
+  "linha": 1151
+ },
+ {
+  "id": "5132",
+  "data": "2/23/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: AI did now follow player over the bridge @return 1 on road, 2 on bridge",
+  "arquivo": "lib/AI/aiUnit.cpp",
+  "linha": 1636
+ },
+ {
+  "id": "5134",
+  "data": "2/26/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: Limit of iterations in while cycle no longer applied for scripts ran through execVM or spawn",
+  "arquivo": "El/Evaluator/expressCompiler.cpp",
+  "linha": 1928
+ },
+ {
+  "id": "5133",
+  "data": "2/26/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: when alternate directory for profiles given by command line options -profiles, user profiles are no longer stored to this directory, but to its Users subdirectory",
+  "arquivo": "lib/gameDirs.cpp",
+  "linha": 174
+ },
+ {
+  "id": "5135",
+  "data": "2/27/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: AI deprecated to get in heavy damaged vehicle even when repaired again",
+  "arquivo": "lib/transport.cpp",
+  "linha": 4721
+ },
+ {
+  "id": "5136",
+  "data": "2/28/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: MP - dynamically created helicopters handle \"FLY\" flag correctly now",
+  "arquivo": "lib/gameStateExt.cpp",
+  "linha": 10944
+ },
+ {
+  "id": "5137",
+  "data": "3/7/2007",
+  "autor": "Bebul",
+  "texto": "Fixed: Freelook still forced when changing from cargo to secondary turret",
+  "arquivo": "lib/AI/aiUnit.cpp",
+  "linha": 4559
+ },
+ {
+  "id": "5138",
+  "data": "3/8/2007",
+  "autor": "Ondra",
+  "texto": "Optimized: Grass depth of field is now performed only with Postprocess set to Very high.",
+  "arquivo": "lib/landscape.cpp",
+  "linha": 6081
+ },
+ {
+  "id": "5139",
+  "data": "3/13/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: function \"selectWeapon\" now switches character pose when launcher is selected",
+  "arquivo": "lib/gameStateExt.cpp",
+  "linha": 2252
+ },
+ {
+  "id": "5140",
+  "data": "3/14/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: Voice over net was not working when DS and client was running on a single PC",
+  "arquivo": "El/Network/netpeer.cpp",
+  "linha": 1391
+ },
+ {
+  "id": "5142",
+  "data": "3/19/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: AI - path planning improved (more smooth transition between plans)",
+  "arquivo": "lib/AI/aiUnit.cpp",
+  "linha": 3658
+ },
+ {
+  "id": "5143",
+  "data": "3/21/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: slightly improved AI path finding in a non-uniform environment.",
+  "arquivo": "lib/AI/operMap.cpp",
+  "linha": 6459
+ },
+ {
+  "id": "5145",
+  "data": "3/23/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Improved text output kerning.",
+  "arquivo": "lib/font.cpp",
+  "linha": 87
+ },
+ {
+  "id": "5147",
+  "data": "3/24/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Airplanes were firing rockets even when not aimed properly.",
+  "arquivo": "lib/airplane.cpp",
+  "linha": 3397
+ },
+ {
+  "id": "5148",
+  "data": "3/26/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: New animation controller noseWheelTurn.",
+  "arquivo": "lib/airplane.cpp",
+  "linha": 270
+ },
+ {
+  "id": "5149",
+  "data": "3/26/2007",
+  "autor": "Flyman",
+  "texto": "Fixed: Progress bar was too bright at the end of the loading for a little while",
+  "arquivo": "lib/progressScr.cpp",
+  "linha": 598
+ },
+ {
+  "id": "5150",
+  "data": "3/27/2007",
+  "autor": "Ondra",
+  "texto": "New: function isServer to check if given machine is the server.",
+  "arquivo": "lib/gameStateExt.cpp",
+  "linha": 3778
+ },
+ {
+  "id": "5151",
+  "data": "3/30/2007",
+  "autor": "Mark",
+  "texto": "Added: Heading source to HUD's",
+  "arquivo": "lib/hudDesc.cpp",
+  "linha": 38
+ },
+ {
+  "id": "5152",
+  "data": "3/30/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: Very long MP mission name could cause crashes or freezes",
+  "arquivo": "lib/UI/displayUI.cpp",
+  "linha": 536
+ },
+ {
+  "id": "5153",
+  "data": "4/17/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: UI - Missing addons error message - show the list of missing addons",
+  "arquivo": "lib/arcadeTemplate.cpp",
+  "linha": 1031
+ },
+ {
+  "id": "5154",
+  "data": "5/2/2007",
+  "autor": "Bebul",
+  "texto": "Fixed: VoN connection established by retranslation through server Game socket when NAT negotiation fails",
+  "arquivo": "El/Speech/vonApp.cpp",
+  "linha": 601
+ },
+ {
+  "id": "5155",
+  "data": "5/9/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: Movement config - entry primaryActionMaps telling what action maps will be loaded first (and so used for initialization of movement)",
+  "arquivo": "lib/motion.cpp",
+  "linha": 1172
+ },
+ {
+  "id": "5156",
+  "data": "5/12/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Memory manager sometimes flushed caches too deeply, causing short intensive disk activity.",
+  "arquivo": "El/FreeOnDemand/memFreeReq.cpp",
+  "linha": 67
+ },
+ {
+  "id": "5158",
+  "data": "5/16/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: AI is now less likely to use RPG against infantry when having other weapons.",
+  "arquivo": "lib/soldierOld.cpp",
+  "linha": 20678
+ },
+ {
+  "id": "5160",
+  "data": "5/23/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Improved Voice codec quality, bandwidth for voice increased from 6 kbps to 8 kbps",
+  "arquivo": "El/Speech/Speex/speex.cpp",
+  "linha": 20
+ },
+ {
+  "id": "5161",
+  "data": "5/29/2007",
+  "autor": "Bebul",
+  "texto": "New: Speex1.2 beta 2 used as VoN codec",
+  "arquivo": "El/Speech/Speex/speex.hpp",
+  "linha": 32
+ },
+ {
+  "id": "5162",
+  "data": "6/1/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: VASI light rendering distance significantly increased.",
+  "arquivo": "lib/objectClasses.cpp",
+  "linha": 430
+ },
+ {
+  "id": "5163",
+  "data": "6/4/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: Connection to GameSpy during dedicated server reporting was sometimes lost (Windows 2000 SP2 or newer are required now)",
+  "arquivo": "El/Network/peerfactory.cpp",
+  "linha": 122
+ },
+ {
+  "id": "5500",
+  "data": "8/1/2007",
+  "autor": "Jirka",
+  "texto": "Fixed: \"setPos position _object\" sometimes moved the _object",
+  "arquivo": "lib/gameStateExt.cpp",
+  "linha": 4785
+ },
+ {
+  "id": "5164",
+  "data": "8/17/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Possible crash caused by malformed resize scripting command.",
+  "arquivo": "El/Evaluator/express.cpp",
+  "linha": 1404
+ },
+ {
+  "id": "5170",
+  "data": "10/5/2007",
+  "autor": "Jirka",
+  "texto": "Added: Improved anti-cheat measures",
+  "arquivo": "lib/Network/network.cpp",
+  "linha": 274
+ },
+ {
+  "id": "5175",
+  "data": "10/11/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Reduced loading time for large textures.",
+  "arquivo": "El/QStream/qStream.cpp",
+  "linha": 219
+ },
+ {
+  "id": "5178",
+  "data": "11/5/2007",
+  "autor": "Bebul",
+  "texto": "New: Improved Voice over Net packet retranslation (voice is retranslated when no direct Peer to Peer connection is available or to spare some network bandwidth).",
+  "arquivo": "El/Speech/vonApp.cpp",
+  "linha": 3343
+ },
+ {
+  "id": "5179",
+  "data": "11/7/2007",
+  "autor": "Bebul",
+  "texto": "Fixed: VoN loudness is sometimes not matching selected voice channel (too quiet on Global channel or too loud on Direct channel).",
+  "arquivo": "El/Speech/vonApp.cpp",
+  "linha": 3707
+ },
+ {
+  "id": "5191",
+  "data": "11/27/2007",
+  "autor": "Jirka",
+  "texto": "New: publicVariable now works for all types of variables",
+  "arquivo": "lib/Network/networkClient.cpp",
+  "linha": 2597
+ },
+ {
+  "id": "5196",
+  "data": "12/11/2007",
+  "autor": "Ondra",
+  "texto": "New: Added difficulty option VonID (VON ID), allowing to see in-game who is currently speaking over the radio.",
+  "arquivo": "lib/UI/chat.cpp",
+  "linha": 372
+ },
+ {
+  "id": "5198",
+  "data": "12/12/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Dead players can no longer talk or write to in-game players unless they are admins.",
+  "arquivo": "lib/Network/networkServer.cpp",
+  "linha": 5081
+ },
+ {
+  "id": "5203",
+  "data": "12/19/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Possible crashes with VoN used with HW acceleration.",
+  "arquivo": "lib/soundOAL.cpp",
+  "linha": 2761
+ },
+ {
+  "id": "5180",
+  "data": "12/21/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Disabled player ID in non-admin #userlist.",
+  "arquivo": "lib/Network/networkClient.cpp",
+  "linha": 6758
+ },
+ {
+  "id": "5209",
+  "data": "12/31/2007",
+  "autor": "Ondra",
+  "texto": "Fixed: Sometimes AI might wrongly favor audible information over a visual one after not seeing the target for a while.",
+  "arquivo": "lib/target.cpp",
+  "linha": 2501
+ },
+ {
+  "id": "5213",
+  "data": "1/16/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: MP freeze opportunity fixed.",
+  "arquivo": "El/Speech/vonApp.hpp",
+  "linha": 679
+ },
+ {
+  "id": "5218",
+  "data": "1/31/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: VoN - mouth is moving but no voice is heard.",
+  "arquivo": "El/Speech/vonApp.cpp",
+  "linha": 3343
+ },
+ {
+  "id": "5226",
+  "data": "2/19/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: VoN - Unable to hear other players issue.",
+  "arquivo": "El/Speech/vonApp.cpp",
+  "linha": 738
+ },
+ {
+  "id": "5232",
+  "data": "2/26/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: VoN - P2P connection was not established sometimes.",
+  "arquivo": "lib/UI/displayUI.cpp",
+  "linha": 6344
+ },
+ {
+  "id": "5234",
+  "data": "2/28/2008",
+  "autor": "Jirka",
+  "texto": "Fixed: For players in driver and gunner position of the vehicle, obsolete network transfer was generated",
+  "arquivo": "lib/Network/networkClient.cpp",
+  "linha": 6345
+ },
+ {
+  "id": "5240",
+  "data": "3/13/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: More than 64 players can use VoN now.",
+  "arquivo": "lib/Network/voiceOAL.cpp",
+  "linha": 87
+ },
+ {
+  "id": "5241",
+  "data": "3/18/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: Too large update messages (caused by unusual weapon setups) were not sent.",
+  "arquivo": "lib/Network/networkMsg.cpp",
+  "linha": 3185
+ },
+ {
+  "id": "5245",
+  "data": "3/22/2008",
+  "autor": "Ondra",
+  "texto": "Improved: Mouse ballistics allowing for more precise aiming.",
+  "arquivo": "lib/input.cpp",
+  "linha": 677
+ },
+ {
+  "id": "5248",
+  "data": "3/26/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: NAT negotiation failed issue while connecting to server.",
+  "arquivo": "lib/Network/netTransportNet.cpp",
+  "linha": 2209
+ },
+ {
+  "id": "5253",
+  "data": "4/10/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: File Server was not working properly on Linux dedicated server. (Causing script files not being executed sometimes.)",
+  "arquivo": "El/Debugging/debugTrap.cpp",
+  "linha": 426
+ },
+ {
+  "id": "5254",
+  "data": "5/2/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: BattlEye issues while using server.cfg on Linux dedicated server",
+  "arquivo": "lib/Network/networkServer.cpp",
+  "linha": 443
+ },
+ {
+  "id": "5255",
+  "data": "5/13/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: Player could not use grenades added by Rearm",
+  "arquivo": "lib/vehSupply.cpp",
+  "linha": 317
+ },
+ {
+  "id": "5501",
+  "data": "6/12/2008",
+  "autor": "Jirka",
+  "texto": "Fixed: Crash at ArmA.exe:0x56536 - caused by wrong turret state in MP.",
+  "arquivo": "lib/transport.cpp",
+  "linha": 1339
+ },
+ {
+  "id": "5257",
+  "data": "7/15/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: Players connecting JIP with custom files do not cause server lagging.",
+  "arquivo": "lib/Network/networkServer.cpp",
+  "linha": 125
+ },
+ {
+  "id": "5260",
+  "data": "7/30/2008",
+  "autor": "Bebul",
+  "texto": "Fixed: Dedicated server crashed when script made soldier fire with Binocular.",
+  "arquivo": "lib/UI/inGameUI.cpp",
+  "linha": 4586
+ },
+ {
+  "id": "5262",
+  "data": "8/7/2008",
+  "autor": "Bebul",
+  "texto": "New: Optional server.cfg entry timeStampFormat to specify time stamp for each line in *.rpt file. Possible values: \"none\", \"short\", \"full\".",
+  "arquivo": "lib/main.cpp",
+  "linha": 13441
+ },
+ {
+  "id": "5276",
+  "data": "4/16/2009",
+  "autor": "Bebul",
+  "texto": "Fixed: Changed BattlEye integration (fixing \"random\" player kicks)",
+  "arquivo": "lib/Network/networkServer.cpp",
+  "linha": 443
+ }
+]

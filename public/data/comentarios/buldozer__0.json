@@ -1,0 +1,1 @@
+[{"file":"buldozer/mainBuld.cpp","line":1,"kind":"OUTRO","status":"auto (glossario)","original":"Poseidon - 3Dfx version wrapper","pt":"Poseidon - 3Dfx versao wrapper","code":"bool LandEditor=true; | extern RString ClientIP; | static Ref<EditCursor> cursor;","anchor":"abaixo","anchor_line":9,"func":"","qual":"","cats":""}]

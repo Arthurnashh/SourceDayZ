@@ -1,0 +1,73 @@
+diff --git antes/lib/scene.cpp depois/lib/scene.cpp
+index 302901e..414b648 100644
+--- antes/lib/scene.cpp
++++ depois/lib/scene.cpp
+@@ -6138,66 +6138,63 @@ void Scene::DrawObjectsInstanced(
+     {
+       SortObject *iObj = drawPass[ii];
+       #if DPRIM_STATS
+         int startTgt = tgt;
+       #endif
+       bool canBlend = iObj->GetObject()->GetShape()->CanBlend();
++      float color = iObj->GetBlendingCoef(bao,canBlend);
+       if (const ObjectListFull *list = iObj->_list)
+       {
+ 				int li;
+         for (li = iObj->_listBeg; (li+1)<iObj->_listEnd; li++) 
+         {
+ 					PrefetchT0Off(list->Get(li+1), 0);
+ 					if (iObj->IsVisible(li))
+ 					{
+             Object *obj = list->Get(li);
+ 
+-            float color = iObj->GetBlendingCoef(bao,canBlend);
+             if (color>0)
+             {
+             ObjectInstanceInfo &info = instances[tgt++];
+             info._origin = obj->RenderVisualState().Transform();
+               info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+               info._color = Color(1,1,1,color);
+               info._shadowCoef = GetLandShadowSmooth(info._origin.Position());
+             info._object = info._parentObject = obj;
+             info._limitSpriteSize = iObj->limitSpriteSize;
+           }
+           }
+-          if (updateBF) iObj->UpdateBlendFactor();
+         }
+ 				//do the last one
+ 				{
+ 					if (iObj->IsVisible(li))
+ 					{
+             Object *obj = list->Get(li);
+-            float color = iObj->GetBlendingCoef(bao,canBlend);
+             if (color>0)
+             {
+ 
+             ObjectInstanceInfo &info = instances[tgt++];
+             info._origin = obj->RenderVisualState().Transform();
+               info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+               info._color = Color(1,1,1,color);
+               info._shadowCoef = GetLandShadowSmooth(info._origin.Position());
+             info._object = info._parentObject = obj;
+             info._limitSpriteSize = iObj->limitSpriteSize;
+           }
+           }
+-          if (updateBF) iObj->UpdateBlendFactor();
+         }
++        if (updateBF) iObj->UpdateBlendFactor();
+         // assume scale is around 1, therefore the same for all objects here
+         if (minDist2>iObj->distance2) // TODO: this should perhaps be done inside in the loop - or can distance2 be assumed to be known for all at once?
+         {
+           minDist2 = iObj->distance2;
+         }
+         if (iObj->coveredArea>maxCoveredArea) maxCoveredArea = iObj->coveredArea;
+       }
+       else
+       {
+-        float color = iObj->GetBlendingCoef(bao,canBlend);
+         if (color>0)
+         {
+         ObjectInstanceInfo &info = instances[tgt++];
+         info._origin = iObj->position.position;
+           info._lightGridIndex = _gridLights.Size() ? GetLightGridIndex(info._origin.Position().X(), info._origin.Position().Z()) : -1;
+           info._color = Color(1,1,1,color);

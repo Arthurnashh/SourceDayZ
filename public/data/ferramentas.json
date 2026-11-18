@@ -1,0 +1,127 @@
+[
+ {
+  "nome": "annotate_comments.py",
+  "descricao": "Traduz, ancora no codigo e agrupa os comentarios; gera os .md por grupo.",
+  "linhas": 443
+ },
+ {
+  "nome": "build_docs_data.py",
+  "descricao": "Fatia o 1.md em doc.json e gera glossario.json e bugs.json categorizado.",
+  "linhas": 219
+ },
+ {
+  "nome": "build_site_data.py",
+  "descricao": "Gera o dataset estatico deste site.",
+  "linhas": 415
+ },
+ {
+  "nome": "check_comments.py",
+  "descricao": "Confere linhas do indice contra a source real.",
+  "linhas": 72
+ },
+ {
+  "nome": "check_curacao.py",
+  "descricao": "",
+  "linhas": 45
+ },
+ {
+  "nome": "check_doc.py",
+  "descricao": "Valida o 1.md (bytes, linhas, contagem de F/A/H/G, BOM).",
+  "linhas": 17
+ },
+ {
+  "nome": "count_entries.py",
+  "descricao": "",
+  "linhas": 14
+ },
+ {
+  "nome": "curacao.py",
+  "descricao": "Curadoria manual: traducao + o que o codigo faz, por arquivo:linha.",
+  "linhas": 630
+ },
+ {
+  "nome": "dump_alvo.py",
+  "descricao": "",
+  "linhas": 31
+ },
+ {
+  "nome": "dump_code.py",
+  "descricao": "",
+  "linhas": 43
+ },
+ {
+  "nome": "dump_comments.py",
+  "descricao": "Despeja comentarios de um arquivo para inspecao.",
+  "linhas": 152
+ },
+ {
+  "nome": "dump_exact.py",
+  "descricao": "",
+  "linhas": 23
+ },
+ {
+  "nome": "dump_exact2.py",
+  "descricao": "",
+  "linhas": 7
+ },
+ {
+  "nome": "dump_keys.py",
+  "descricao": "",
+  "linhas": 46
+ },
+ {
+  "nome": "dump_near.py",
+  "descricao": "",
+  "linhas": 22
+ },
+ {
+  "nome": "find_refs.py",
+  "descricao": "",
+  "linhas": 10
+ },
+ {
+  "nome": "gloss_gap.py",
+  "descricao": "Mede palavras do corpus ainda sem traducao.",
+  "linhas": 48
+ },
+ {
+  "nome": "glossario.py",
+  "descricao": "Glossario deterministico EN->PT-BR usado pelo anotador.",
+  "linhas": 680
+ },
+ {
+  "nome": "ls_dir.py",
+  "descricao": "",
+  "linhas": 14
+ },
+ {
+  "nome": "q.py",
+  "descricao": "Consulta ao indice de funcoes gerado por scan_source.py.",
+  "linhas": 82
+ },
+ {
+  "nome": "qc.py",
+  "descricao": "Busca rapida por regex na source, com filtros de pasta/tag.",
+  "linhas": 61
+ },
+ {
+  "nome": "scan_comments.py",
+  "descricao": "Extrai todos os comentarios da source para index/comentarios.csv.",
+  "linhas": 410
+ },
+ {
+  "nome": "scan_source.py",
+  "descricao": "Indexador de funcoes C++ da source DayZ.",
+  "linhas": 266
+ },
+ {
+  "nome": "show_comment.py",
+  "descricao": "Consulta um comentario anotado por arquivo:linha ou por grupo.",
+  "linhas": 66
+ },
+ {
+  "nome": "vocab_extra.py",
+  "descricao": "Vocabulario complementar extraido do proprio corpus.",
+  "linhas": 3039
+ }
+]

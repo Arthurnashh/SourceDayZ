@@ -1,0 +1,129 @@
+diff --git antes/lib/shapeDraw.cpp depois/lib/shapeDraw.cpp
+index 05b1b96..f56e498 100644
+--- antes/lib/shapeDraw.cpp
++++ depois/lib/shapeDraw.cpp
+@@ -80,26 +80,28 @@ void Shape::DrawSections(int cb, const AnimationContext *animContext, ColorVal a
+   {
+     beg = prop._begSection;
+     end = prop._endSection;
+   }
+   else
+   {
+     beg = 0;
+     end = NSections();
+   }
+ 
+-  // Go through the sections and draw them
+-  // there was section merging working here - it cannot work
+-  // as we cannot access FaceArray _face here (it can be discarded)
+-  for (int i = beg; i < end; i++)
++  PROFILE_SCOPE_DETAIL_EX(dSec,cuDrw);
++  int sectionsMerged = 0;
++  int sectionDraws = 0;
++
++  // Go through the sections and draw them. Adjacent sections can share one draw
++  // setup when their effective properties and bone ranges match.
++  for (int i = beg; i < end; )
+   {
+-    // const ShapeSection &sec = GetSection(i);
+     const PolyProperties &pp = animContext ? animContext->GetSection(this, i) : GetSection(i);
+ 
+     // If we render craters and the pixel shader is not designed for drawing craters (f.i. tree crowns), then go to the next section
+     if (dp._cratersCount > 0)
+     {
+       // Tree crown is determined by backface drawing and special pixel shader
+       if (pp.Special()&NoBackfaceCull)
+       {
+         const TexMaterial *mat = pp.GetMaterialExt();
+         if (mat)
+@@ -111,54 +113,84 @@ void Shape::DrawSections(int cb, const AnimationContext *animContext, ColorVal a
+           case PSNormalMapThroughSimple:
+           case PSNormalMapSpecularThrough:
+           case PSNormalMapSpecularThroughSimple:
+           case PSTree:
+           case PSTreeSN:
+           case PSTreePRT:
+           case PSTreeAdv:
+           case PSTreeAdvSimple:
+           case PSTreeAdvTrunk:
+           case PSTreeAdvTrunkSimple:
++            i++;
+             continue;
+           }
+         }
+       }
+     }
+ 
+     // Proxy or hidden - don't draw
+-    if (pp.Special() & (IsHidden | IsHiddenProxy)) continue;
++    if (pp.Special() & (IsHidden | IsHiddenProxy))
++    {
++      i++;
++      continue;
++    }
+ 
+     // Calculate the bias for section
+     int secBias = ((pp.Special() & ZBiasMask) / ZBiasStep) * 5;
+     int maxBias = intMax(bias, secBias);
+ 
++    bool uvchanged = false;
++    if (animContext) uvchanged = animContext->GetUVchanged(this, i);
++
++    int drawEnd = i+1;
++    if (dp._cratersCount==0 && !uvchanged)
++    {
++      const ShapeSection &firstSection = GetSection(i);
++      for (int next=i+1; next<end; next++)
++      {
++        const PolyProperties &nextPP = animContext ? animContext->GetSection(this, next) : GetSection(next);
++        if (nextPP.Special() & (IsHidden | IsHiddenProxy)) break;
++        if (nextPP!=pp) break;
++
++        const ShapeSection &nextSection = GetSection(next);
++        if (
++          nextSection._minBoneIndex!=firstSection._minBoneIndex ||
++          nextSection._bonesCount!=firstSection._bonesCount
++        ) break;
++        if (animContext && animContext->GetUVchanged(this, next)) break;
++
++        drawEnd = next+1;
++      }
++    }
++
+     // Get the material
+     TLMaterial mat;
+     CreateMaterial(mat,animColor);
+ 
+-    // Prepare and draw section
+-    bool uvchanged = false;
+-    if (animContext) uvchanged = animContext->GetUVchanged(this, i); 
++    // Prepare and draw section range
+     if (uvchanged)
+     {
+       // get information about UV offset if any and pass them to EngineDD9::PrepareDetailTex(...)
+       float offsetU = animContext->GetUOffset(this, i);
+       float offsetV = animContext->GetVOffset(this, i);
+       pp.PrepareTL(cb, mat, spec, prop, dp, true ,offsetU, offsetV);
+     }
+     else
+       pp.PrepareTL(cb, mat, spec, prop, dp);
+ 
+-    GEngine->DrawSectionTL(cb,*this, i, i+1, maxBias, 0, 0, dp);
++    GEngine->DrawSectionTL(cb,*this, i, drawEnd, maxBias, 0, 0, dp);
++    sectionDraws++;
++    sectionsMerged += drawEnd-i-1;
++    i = drawEnd;
+   }
+-}
+ 
++}
+ void Shape::Draw(
+   int cb, AnimationContext *animContext,
+   ColorVal animColor,
+   const EngineShapeProperties &prop, const LightList &lights,
+   ClipFlags clip, int spec, const PositionRender &transform, float minDist2,
+   const DrawParameters &dp
+ ) const
+ {
+   #ifndef ACCESS_ONLY
+   // if engine has T&L interface, use it

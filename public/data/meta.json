@@ -1,0 +1,313 @@
+{
+ "funcoes": 170,
+ "completas": 155,
+ "parciais": 14,
+ "comentarios": 180545,
+ "arquivosComentados": 2141,
+ "arquivosFonte": 2141,
+ "grupos": 143,
+ "patches": 89,
+ "alertas": 163,
+ "achados": 153,
+ "ferramentas": 24,
+ "topFiles": [
+  {
+   "file": "lib/d3dT/engddT.cpp",
+   "comentarios": 4320
+  },
+  {
+   "file": "lib/d3d11/engdd11.cpp",
+   "comentarios": 3185
+  },
+  {
+   "file": "lib/d3d9/engdd9.cpp",
+   "comentarios": 3140
+  },
+  {
+   "file": "lib/soldierOld.cpp",
+   "comentarios": 2615
+  },
+  {
+   "file": "lib/world.cpp",
+   "comentarios": 2084
+  },
+  {
+   "file": "lib/d3dXB/engD3DXB.cpp",
+   "comentarios": 1933
+  },
+  {
+   "file": "lib/UI/displayUI.cpp",
+   "comentarios": 1686
+  },
+  {
+   "file": "lib/d3d11/postProcessDX11.cpp",
+   "comentarios": 1676
+  },
+  {
+   "file": "lib/landscape.cpp",
+   "comentarios": 1654
+  },
+  {
+   "file": "lib/scene.cpp",
+   "comentarios": 1598
+  },
+  {
+   "file": "lib/UI/optionsUI.cpp",
+   "comentarios": 1597
+  },
+  {
+   "file": "lib/d3d11/ShaderSources_4_0/PS.h",
+   "comentarios": 1576
+  },
+  {
+   "file": "lib/d3d9/postProcess.cpp",
+   "comentarios": 1567
+  },
+  {
+   "file": "lib/d3dT/postProcessT.cpp",
+   "comentarios": 1556
+  },
+  {
+   "file": "lib/gameStateExt.cpp",
+   "comentarios": 1482
+  },
+  {
+   "file": "lib/vehicleAI.cpp",
+   "comentarios": 1451
+  },
+  {
+   "file": "lib/UI/uiControls.hpp",
+   "comentarios": 1439
+  },
+  {
+   "file": "lib/d3d9/ShaderSources_3_0/PS.h",
+   "comentarios": 1370
+  },
+  {
+   "file": "lib/main.cpp",
+   "comentarios": 1315
+  },
+  {
+   "file": "lib/Shape/shape.cpp",
+   "comentarios": 1285
+  },
+  {
+   "file": "Enfusion/include/Common/enf_mathlib.h",
+   "comentarios": 1275
+  },
+  {
+   "file": "lib/transport.cpp",
+   "comentarios": 1275
+  },
+  {
+   "file": "lib/GameSpy/serverbrowsing/sb_serverbrowsing.h",
+   "comentarios": 1273
+  },
+  {
+   "file": "lib/d3d9/engdd9.hpp",
+   "comentarios": 1191
+  }
+ ],
+ "kinds": [
+  [
+   "OUTRO",
+   123261
+  ],
+  [
+   "DOC",
+   36247
+  ],
+  [
+   "NEGACAO",
+   12263
+  ],
+  [
+   "TODO",
+   2806
+  ],
+  [
+   "PROBLEMA",
+   1718
+  ],
+  [
+   "NOTE",
+   1269
+  ],
+  [
+   "PERF",
+   890
+  ],
+  [
+   "PATCH",
+   731
+  ],
+  [
+   "DEADCODE",
+   546
+  ],
+  [
+   "WARNING",
+   256
+  ],
+  [
+   "PORTING",
+   243
+  ],
+  [
+   "UNSUPPORTED",
+   154
+  ],
+  [
+   "HACK",
+   99
+  ],
+  [
+   "FIXME",
+   62
+  ]
+ ],
+ "status": [
+  [
+   "auto (glossario)",
+   180545
+  ]
+ ],
+ "porLinguagem": [
+  {
+   "nome": "cpp",
+   "valor": 167290
+  },
+  {
+   "nome": "enforce",
+   "valor": 9666
+  },
+  {
+   "nome": "hlsl",
+   "valor": 3058
+  },
+  {
+   "nome": "xml",
+   "valor": 277
+  },
+  {
+   "nome": "text",
+   "valor": 254
+  }
+ ],
+ "porPasta": [
+  {
+   "nome": "lib",
+   "valor": 119919
+  },
+  {
+   "nome": "El",
+   "valor": 16501
+  },
+  {
+   "nome": "Enfusion",
+   "valor": 13650
+  },
+  {
+   "nome": "cfg",
+   "valor": 10753
+  },
+  {
+   "nome": "RV",
+   "valor": 5764
+  },
+  {
+   "nome": "Drobnosti",
+   "valor": 4702
+  },
+  {
+   "nome": "Es",
+   "valor": 3773
+  },
+  {
+   "nome": "Setup",
+   "valor": 2202
+  },
+  {
+   "nome": "OFPPatch",
+   "valor": 1183
+  },
+  {
+   "nome": "texMerge",
+   "valor": 479
+  },
+  {
+   "nome": "OPFCreatePatch",
+   "valor": 369
+  },
+  {
+   "nome": "PerfLog",
+   "valor": 349
+  }
+ ],
+ "porCategoria": [
+  {
+   "nome": "NO",
+   "valor": 12334
+  },
+  {
+   "nome": "NOT",
+   "valor": 8185
+  },
+  {
+   "nome": "REVIEW",
+   "valor": 4639
+  },
+  {
+   "nome": "TODO",
+   "valor": 2758
+  },
+  {
+   "nome": "MUST",
+   "valor": 2390
+  },
+  {
+   "nome": "DONT",
+   "valor": 2113
+  },
+  {
+   "nome": "ERROR",
+   "valor": 2081
+  },
+  {
+   "nome": "SHADER",
+   "valor": 1797
+  },
+  {
+   "nome": "MATH",
+   "valor": 1703
+  },
+  {
+   "nome": "THREAD",
+   "valor": 1696
+  },
+  {
+   "nome": "NULL",
+   "valor": 1580
+  },
+  {
+   "nome": "NOTE",
+   "valor": 1528
+  },
+  {
+   "nome": "PREVENT",
+   "valor": 1510
+  },
+  {
+   "nome": "TEMPORARY",
+   "valor": 1403
+  },
+  {
+   "nome": "PERFNOTE",
+   "valor": 1137
+  },
+  {
+   "nome": "CANNOT",
+   "valor": 1001
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+﻿diff --git antes/lib/d3d9/engdd9.cpp depois/lib/d3d9/engdd9.cpp
+index 5f015c6..3cb7c88 100644
+--- antes/lib/d3d9/engdd9.cpp
++++ depois/lib/d3d9/engdd9.cpp
+@@ -29241,16 +29241,21 @@ void EngineDD9::FlushBackground(WorkerThreadClass &bg, bool flushMem, const char
+   WorkerThreadClass::CBType::OnFlush();
+   
+ }
+ 
+ bool EngineDD9::CopyCBPredicatedScope(PredicatedCBScope &scope, PredicationMode pred)
+ {
+   LOG_MEM("CopyCBPredicatedScope %d..%d (%d)",scope.beg,scope.end,IsAbleToDrawCheckOnly());
+   if (!UsePredication()) return false;
++  // A never-recorded scope is not the same as an empty recorded scope. Return
++  // false so the caller renders its list directly; this is required when the
++  // depth prepass skips object submission (FSAA=0, see Landscape::PrimeDepthBuffer)
++  // and the color pass still has to draw those objects.
++  if (scope.beg < 0) return false;
+   Assert(scope.beg>=0); // the scope may be empty, but it needs to be recorded
+   // if the scope is empty, we do not have to do anything, but we return true to avoid overhead of the default solution
+   if (scope.end<=scope.beg)
+   {
+     scope.finalCopy = !_bgRecPredication; // see MarkNoDestroy below
+     return true;
+   }
+   Assert(_backgroundD3D!=RecHighLevel);
+diff --git antes/lib/scene.cpp depois/lib/scene.cpp
+index aba2d98..5587df5 100644
+--- antes/lib/scene.cpp
++++ depois/lib/scene.cpp
+@@ -11024,16 +11024,18 @@ void Scene::DrawDepthPrime(DrawContext &ctx, bool useSVShadows, Engine::Predicat
+ {
+   if (!GEngine->IsAbleToDrawCheckOnly()) return;
+   PROFILE_SCOPE_EX(oPasD,*);
+ 
+   // Draw the usual depth objects, near first
+   // When the main depth buffer is not shared this pass is required. When it
+   // is shared (FSAA off) the color pass writes depth itself, so submitting
+   // every object here would only duplicate the whole per-object preparation.
++  // If we skip this, the scopes stay unrecorded and CopyCBPredicatedScope
++  // returns false (beg < 0), making the color pass draw the lists directly.
+   if (drawObjects)
+   {
+     if (GEngine->StartCBPredicatedScope(ctx._oPasO,pass))
+     {
+       DrawPass1Part(ctx,ctx._drawPass1ON._original,pass);
+       DrawPass1Part(ctx,ctx._drawPass1ON._blending,pass);
+       GEngine->EndCBPredicatedScope(ctx._oPasO);
+     }

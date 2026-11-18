@@ -1,0 +1,96 @@
+﻿diff --git antes/lib/d3d9/engdd9.cpp depois/lib/d3d9/engdd9.cpp
+index 51ce115..09be324 100644
+--- antes/lib/d3d9/engdd9.cpp
++++ depois/lib/d3d9/engdd9.cpp
+@@ -15663,16 +15663,21 @@ void EngineDD9::PrepareTriangleTL(
+     // no material setup needed for shadows
+     DoPrepareTriangle(cb, tex,TexMaterialLODInfo(),level,specFlagsSB,prop);
+   }
+   else
+   {
+     DoPrepareTriangle(cb, tex,mat,level,specFlags,prop);
+   }
+ 
++  // Depth priming renders with PSAlphaOnly shaders and never writes color.
++  // Material and light constants are not consumed in this pass, so skip the
++  // per-section setup (several object-space transforms and VS constants).
++  if (_renderingMode==RMDPrime || _renderingMode==RMZPrime) return;
++
+   // make color information from the texture
+   // to be a part of the material
+   TLMaterial matMod = tlMat;
+   matMod.ambient = matMod.ambient*_modColor;
+   matMod.diffuse = matMod.diffuse*_modColor;
+   matMod.forcedDiffuse = matMod.forcedDiffuse*_modColor;
+   matMod.emmisive = matMod.emmisive*_modColor;
+   matMod.specular = matMod.specular*_modColor;
+diff --git antes/lib/object.cpp depois/lib/object.cpp
+index 027bd05..879c403 100644
+--- antes/lib/object.cpp
++++ depois/lib/object.cpp
+@@ -2095,16 +2095,23 @@ void Object::Draw(int cb, int forceLOD, ClipFlags clipFlags, const DrawParameter
+     if (GetOwnHeatSource(newHeatSource))
+     {
+       dpTI._heatSourceDirection = newHeatSource;
+       dpTI._useOwnHeatSource = true;
+     }
+ 
+     LightList work;
+     const LightList *lights;
++    if (dp._zprimeIsBeingRendered)
++    {
++      // Depth priming uses PSAlphaOnly shaders, object lighting is not consumed.
++      // Skip the light grid lookup and the per-object light constant setup.
++      lights = &work;
++    }
++    else
+     {
+       PROFILE_SCOPE_DETAIL_EX(obLit,oSort);
+       lights = &GScene->SelectAggLights(worldPosition, this, forceLOD, work);
+     }
+     
+     OBJECT_LEVEL_DPRIM_STAT_SCOPE(cb,_shape,forceLOD);
+     ADD_COUNTER(obj,1);
+ 
+@@ -2131,17 +2138,19 @@ void Object::Draw(int cb, int forceLOD, ClipFlags clipFlags, const DrawParameter
+     // if necessary, split it
+     if (!(sShape->Special()&OnSurface) || (sShape->GetAndHints()&ClipLandMask)!=ClipLandOn)
+     {
+       // make sure texture loading does not evict our vertex buffer (if it exists)
+       VertexBufferLock vbLock(sShape);
+       
+       {
+         PROFILE_SCOPE_DETAIL_EX(obTex,oSort);
+-        PrepareTextures(&animContext, _shape, dist2/scale2, forceLOD, dp._sbIsBeingRendered);
++        // Depth priming renders with PSAlphaOnly shaders - only the base texture
++        // (alpha test source) is needed there, material stages are not consumed.
++        PrepareTextures(&animContext, _shape, dist2/scale2, forceLOD, dp._sbIsBeingRendered || dp._zprimeIsBeingRendered);
+       }
+       
+       _shape->OptimizeLevelRendering(forceLOD,false);
+       // Preparing of drawing of the shape
+ #if _HELISIM_RENDER_TO_TEXTURE
+       UseDrawMatrices(cb, isSkinned, _shape, forceLOD, oi, drawListId);
+ #else
+       UseDrawMatrices(cb, isSkinned, _shape, forceLOD, oi);
+@@ -2180,17 +2189,19 @@ void Object::Draw(int cb, int forceLOD, ClipFlags clipFlags, const DrawParameter
+     }
+     else
+     {
+       // when rendering shadow buffer, rendering what is on surface has no sense
+       if (!dp._sbIsBeingRendered)
+       {
+         {
+           PROFILE_SCOPE_DETAIL_EX(obTex,oSort);
+-          PrepareTextures(&animContext, _shape, dist2/scale2, forceLOD, dp._sbIsBeingRendered);
++          // Depth priming renders with PSAlphaOnly shaders - only the base texture
++          // (alpha test source) is needed there, material stages are not consumed.
++          PrepareTextures(&animContext, _shape, dist2/scale2, forceLOD, dp._sbIsBeingRendered || dp._zprimeIsBeingRendered);
+         }
+ 
+ #if _HELISIM_RENDER_TO_TEXTURE
+         UseDrawMatrices(cb, false, _shape, forceLOD, oi, drawListId);
+ #else
+         UseDrawMatrices(cb, false, _shape, forceLOD, oi);
+ #endif
+         

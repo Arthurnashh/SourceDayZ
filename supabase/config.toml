@@ -1,0 +1,8 @@
+project_id = "yquuabmgebitshhcqtku"
+
+[functions.steam]
+verify_jwt = false
+
+# Valida o JWT e o papel de admin dentro da função, com service_role.
+[functions.admin-dev]
+verify_jwt = false

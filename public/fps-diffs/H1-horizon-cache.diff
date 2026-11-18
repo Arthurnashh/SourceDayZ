@@ -1,0 +1,107 @@
+﻿diff --git antes/lib/world.cpp depois/lib/world.cpp
+index d4dc366..3c63679 100644
+--- antes/lib/world.cpp
++++ depois/lib/world.cpp
+@@ -6467,12 +6467,25 @@ class HorizonPrune
+   /// inverse view space matrix 
+   /** used to transform into view space */
+   Matrix4 _invViewSpace;
+   mutable Matrix4 _modelToView;
+   mutable const Object* _lastObject;
+ 
++  // Small direct-mapped cache for repeated endpoints in one occluder shape.
++  // A collision only replaces an entry; it can never return another vertex.
++  static const int nVertexCache = 128;
++  struct VertexCacheEntry
++  {
++    unsigned int generation;
++    int index;
++    Vector3 position;
++    int clipCode;
++  };
++  VertexCacheEntry _vertexCache[nVertexCache];
++  unsigned int _vertexCacheGeneration;
++
+ public:
+   void SetModel(const Object* obj) const
+   {
+     //avoid twice transform when model is tested and added too
+     if(obj != _lastObject)
+     {
+@@ -6600,12 +6613,19 @@ private:
+ @param fov field of view of the virtual screen (width in 1m distance)
+ */
+ HorizonPrune::HorizonPrune(Vector3Par dir, Vector3Par pos, float fov)
+ {
+   _actBuffer = 0;
+   _t = 0;
++  _lastObject = NULL;
++  _vertexCacheGeneration = 0;
++  for (int i=0; i<nVertexCache; i++)
++  {
++    _vertexCache[i].generation = 0;
++    _vertexCache[i].index = -1;
++  }
+   
+   // when starting assume no horizon (in any frame)
+   for (int i = 0; i < nBuffers; i++)
+   {
+     for (int x=0; x<xSamples; x++)
+       _y[i][x] = -FLT_MAX;
+@@ -7295,25 +7315,51 @@ bool HorizonPrune::CheckMinmaxBox(const Object* obj, const Vector3 minmax[2], Cl
+   if (!CheckLineScreen(p01,p00)) return false;
+   return true;
+ }
+ 
+ void HorizonPrune::AddObjectHorizon(const Object* obj, const Shape *view, const AutoArray<OcclusionEdge> &edges)
+ {
++  PROFILE_SCOPE_DETAIL_EX(hObj,drw);
+   SetModel(obj);
+   // TODO: if the object is too small to be any significant, do not add it any more
+-  // TODO: optimization: transform each vertex to view/screen space only once
+   //Matrix4 modelToView = _invViewSpace*toWorld;
+ 
+   const AutoArray<Vector3>& posarray = view->GetPosArray();
++  unsigned int generation = ++_vertexCacheGeneration;
++  if (generation==0)
++  {
++    for (int i=0; i<nVertexCache; i++)
++      _vertexCache[i].generation = 0;
++    generation = ++_vertexCacheGeneration;
++  }
+ 
+   for (int e=0; e<edges.Size(); e++)
+   {
+-    Vector3 pos0 = _modelToView.FastTransform(posarray[edges[e].a]);
+-    Vector3 pos1 = _modelToView.FastTransform(posarray[edges[e].b]);
+-    int cc0 = ViewSpaceClipPoint(pos0);
+-    int cc1 = ViewSpaceClipPoint(pos1);
++    int index0 = edges[e].a;
++    int index1 = edges[e].b;
++    VertexCacheEntry &vertex0 = _vertexCache[index0 & (nVertexCache-1)];
++    if (vertex0.generation!=generation || vertex0.index!=index0)
++    {
++      vertex0.position = _modelToView.FastTransform(posarray[index0]);
++      vertex0.clipCode = ViewSpaceClipPoint(vertex0.position);
++      vertex0.index = index0;
++      vertex0.generation = generation;
++    }
++    Vector3 pos0 = vertex0.position;
++    int cc0 = vertex0.clipCode;
++
++    VertexCacheEntry &vertex1 = _vertexCache[index1 & (nVertexCache-1)];
++    if (vertex1.generation!=generation || vertex1.index!=index1)
++    {
++      vertex1.position = _modelToView.FastTransform(posarray[index1]);
++      vertex1.clipCode = ViewSpaceClipPoint(vertex1.position);
++      vertex1.index = index1;
++      vertex1.generation = generation;
++    }
++    Vector3 pos1 = vertex1.position;
++    int cc1 = vertex1.clipCode;
+ 
+     if((cc0 & cc1) != 0)
+       continue; //line is completely behind something
+ 
+     if((cc0 | cc1) == 0)
+     {

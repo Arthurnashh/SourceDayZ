@@ -1,0 +1,103 @@
+import { useEffect, useState, type ReactNode } from "react";
+import { navigate, useRoute } from "../lib/router";
+
+interface NavItem {
+  key: string;
+  label: string;
+  icon: ReactNode;
+  grupo: string;
+}
+
+const icon = (d: string) => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+    <path d={d} />
+  </svg>
+);
+
+const NAV: NavItem[] = [
+  { grupo: "estudo", key: "visao-geral", label: "Visão geral", icon: icon("M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z") },
+  { grupo: "estudo", key: "documento", label: "Documento", icon: icon("M4 4h11l5 5v11H4zM15 4v5h5M8 13h8M8 17h5") },
+  { grupo: "estudo", key: "fonte", label: "Código-fonte", icon: icon("M3 6h6l2 2h10v11H3zM3 6v13M7 12h4M7 16h7") },
+  { grupo: "estudo", key: "motor", label: "Motor", icon: icon("M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z") },
+  { grupo: "estudo", key: "diagrama", label: "Diagrama", icon: icon("M4 5h6v5H4zM14 14h6v5h-6zM4 15h6v4H4zM10 7h4v9") },
+  { grupo: "estudo", key: "linguagens", label: "Linguagens", icon: icon("M8 8l-4 4 4 4M16 8l4 4-4 4M13 5l-2 14") },
+  { grupo: "código", key: "funcoes", label: "Funções", icon: icon("M8 3H6a2 2 0 0 0-2 2v4a2 2 0 0 1-2 2 2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h2M16 3h2a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2 2 2 0 0 0-2 2v4a2 2 0 0 1-2 2h-2") },
+  { grupo: "código", key: "comentarios", label: "Comentários", icon: icon("M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2zM8 9h8M8 13h5") },
+  { grupo: "código", key: "patches", label: "Patches", icon: icon("M20 12l-8 8-8-8V4h8zM7.5 8h.01") },
+  { grupo: "código", key: "achados", label: "Achados", icon: icon("M12 2 2 21h20L12 2zM12 9v5M12 17.5v.5") },
+  { grupo: "código", key: "bugs", label: "Bugs", icon: icon("M8 6h8v4a4 4 0 0 1-8 0zM8 9H5M19 9h-3M8 13H5M19 13h-3M12 14v6M9 20h6M9 3l1.5 3M15 3l-1.5 3") },
+  { grupo: "projeto", key: "passo-a-passo", label: "Passo a passo", icon: icon("M4 6h5v5H4zM15 6h5v5h-5zM4 15h5v5H4zM15 15h5v5h-5zM9 8.5h6M9 17.5h6M6.5 11v4") },
+  { grupo: "projeto", key: "atualizacoes", label: "Atualizações", icon: icon("M12 8v5l3 2M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5") },
+  { grupo: "projeto", key: "pendencias", label: "Pendências", icon: icon("M9 3h6v3H9zM6 6h12v15H6zM9 12l2 2 4-4M9 17h4") },
+  { grupo: "dados", key: "dicionario", label: "Dicionário", icon: icon("M4 5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2zM8 7h8M8 11h8M8 15h5") },
+  { grupo: "dados", key: "ferramentas", label: "Ferramentas", icon: icon("M14.7 6.3a4 4 0 0 0-5.4 5.2L3 18v2h3l6.5-6.3a4 4 0 0 0 5.2-5.4l-2.4 2.4-2.3-2.3z") },
+];
+
+export function Layout({ children }: { children: ReactNode }) {
+  const route = useRoute();
+  const current = route.parts[0] ?? "";
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => setOpen(false), [route.path]);
+
+  const grupos = Array.from(new Set(NAV.map((n) => n.grupo)));
+
+  return (
+    <div className="shell">
+      <aside className={`sidebar ${open ? "open" : ""}`}>
+        <div className="brand" onClick={() => navigate("")} title="Voltar à página inicial">
+          <span className="brand-mark">DZ</span>
+          <span className="brand-text">
+            <strong>Source Explorer</strong>
+            <small>DayZ 0.45.124252</small>
+          </span>
+        </div>
+        <nav className="nav">
+          {grupos.map((g) => (
+            <div className="nav-group" key={g}>
+              <span className="nav-grupo">{g}</span>
+              {NAV.filter((n) => n.grupo === g).map((n) => (
+                <button
+                  key={n.key}
+                  className={`nav-item ${current === n.key ? "active" : ""}`}
+                  onClick={() => navigate(n.key)}
+                >
+                  {n.icon}
+                  <span>{n.label}</span>
+                </button>
+              ))}
+            </div>
+          ))}
+        </nav>
+        <div className="sidebar-foot">
+          <div className="dot" /> base local
+          <code>SOURCE DEFINITIVA\DayZ-0.45.124252</code>
+          <small>170 funções · 180.545 comentários</small>
+        </div>
+      </aside>
+
+      <div className="main">
+        <header className="topbar">
+          <button className="menu" onClick={() => setOpen((v) => !v)} aria-label="Menu">
+            <span /><span /><span />
+          </button>
+          <div className="crumb">
+            <span>Estudo da source</span>
+            <i>/</i>
+            <strong>{NAV.find((n) => n.key === current)?.label ?? "Visão geral"}</strong>
+          </div>
+          <div className="top-right">
+            <span className="chip">Enforce · SQF · C++</span>
+            <span className="chip accent">DX9 · v141</span>
+          </div>
+        </header>
+        <main className="content">{children}</main>
+        <footer className="foot">
+          Dados extraídos do código-fonte em <code>SOURCE DEFINITIVA\DayZ-0.45.124252</code>{" "}
+          e do estudo <code>1.md</code>. Traduções automáticas por glossário; entradas marcadas{" "}
+          <em>curado</em> são revisão manual.
+        </footer>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,1762 @@
+[
+ {
+  "id": "A-01",
+  "tipo": "arquitetura",
+  "resumo": "back-face de stencil fixa em `KEEP`/`ALWAYS`",
+  "campos": {
+   "Local": "`Dx11StateTranslator.cpp:135-142`",
+   "Problema": "back-face de stencil fixa em `KEEP`/`ALWAYS`",
+   "Impacto": "shadow volumes não funcionam; stencil de dois lados quebra"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-02",
+  "tipo": "arquitetura",
+  "resumo": "`SrcBlendAlpha=ONE`, `DestBlendAlpha=ZERO` fixos",
+  "campos": {
+   "Local": "`Dx11StateTranslator.cpp:160-161`",
+   "Problema": "`SrcBlendAlpha=ONE`, `DestBlendAlpha=ZERO` fixos",
+   "Impacto": "blending errado em R2T com alpha (partículas, vidro, UI)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-03",
+  "tipo": "arquitetura",
+  "resumo": "`FillMode = SOLID` fixo",
+  "campos": {
+   "Local": "`Dx11StateTranslator.cpp:174`",
+   "Problema": "`FillMode = SOLID` fixo",
+   "Impacto": "wireframe de debug/`SS_WIREFRAME` não renderiza"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-04",
+  "tipo": "arquitetura",
+  "resumo": "`AddressW = CLAMP` fixo",
+  "campos": {
+   "Local": "`Dx11StateTranslator.cpp:196`",
+   "Problema": "`AddressW = CLAMP` fixo",
+   "Impacto": "errado para `Dx11VolumeTexture`"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-05",
+  "tipo": "arquitetura",
+  "resumo": "`clip()` só funciona se o PS chamar `Dx11ApplyAlphaTest`",
+  "campos": {
+   "Local": "`Dx11AlphaTest.cpp:72-76`",
+   "Problema": "`clip()` só funciona se o PS chamar `Dx11ApplyAlphaTest`",
+   "Impacto": "folhagem/vegetação vira quadrado se algum PS não chamar"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-06",
+  "tipo": "arquitetura",
+  "resumo": "`SampleDesc.Count = 1`",
+  "campos": {
+   "Local": "`Dx11Device.cpp:41`",
+   "Problema": "`SampleDesc.Count = 1`",
+   "Impacto": "sem MSAA em nenhum caminho"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-07",
+  "tipo": "arquitetura",
+  "resumo": "`BeginFrame` não reseta viewport",
+  "campos": {
+   "Local": "`Dx11Device.cpp:129-134`",
+   "Problema": "`BeginFrame` não reseta viewport",
+   "Impacto": "R2T que muda viewport contamina o frame seguinte"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-08",
+  "tipo": "arquitetura",
+  "resumo": "`R8G8B8A8_UNORM` sem `_SRGB`",
+  "campos": {
+   "Local": "`Dx11Device.cpp:40`",
+   "Problema": "`R8G8B8A8_UNORM` sem `_SRGB`",
+   "Impacto": "gamma incorreto; cores \"lavadas\""
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-09",
+  "tipo": "arquitetura",
+  "resumo": "`DrawSectionTL` **rejeita** `instancesCount>0` e exige `_activeShape == &shape`",
+  "campos": {
+   "Local": "`Dx11EngineCore.cpp:505-513`",
+   "Problema": "`DrawSectionTL` **rejeita** `instancesCount>0` e exige `_activeShape == &shape`",
+   "Impacto": "instancing inexistente no backend novo; um shape por vez, sem batch"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-10",
+  "tipo": "arquitetura",
+  "resumo": "faces com `N()>32` são descartadas em silêncio",
+  "campos": {
+   "Local": "`Dx11EngineCore.cpp:708`",
+   "Problema": "faces com `N()>32` são descartadas em silêncio",
+   "Impacto": "buracos visuais em geometria de terreno/colisor grande"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-11",
+  "tipo": "arquitetura",
+  "resumo": "`BlendFactor` não mapeia 12/13 (`BOTHSRCALPHA`/`BOTHINVSRCALPHA`)",
+  "campos": {
+   "Local": "`Dx11StateTranslator.cpp:36-59`",
+   "Problema": "`BlendFactor` não mapeia 12/13 (`BOTHSRCALPHA`/`BOTHINVSRCALPHA`)",
+   "Impacto": "materiais que usam esses fatores falham com `E_INVALIDARG` e herdam o blend anterior"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-12",
+  "tipo": "arquitetura",
+  "resumo": "o engine usa o caminho **TL (CPU)** e ignora o `Dx11ShapeMesh` (GPU estático)",
+  "campos": {
+   "Local": "`Dx11EngineCore.cpp:499-825` vs `Dx11ShapeMesh.cpp:40-128`",
+   "Problema": "o engine usa o caminho **TL (CPU)** e ignora o `Dx11ShapeMesh` (GPU estático)",
+   "Impacto": "o backend novo paga transformação/iluminação por vértice no CPU todo frame"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-13",
+  "tipo": "arquitetura",
+  "resumo": "perfil fixo `vs_4_0`/`ps_4_0`",
+  "campos": {
+   "Local": "`Dx11ShaderCompiler.cpp:64,88`",
+   "Problema": "perfil fixo `vs_4_0`/`ps_4_0`",
+   "Impacto": "o backend \"DX11\" é, na prática, DX10/SM4: sem compute, sem tessellation e sem os limites maiores do SM5"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-14",
+  "tipo": "arquitetura",
+  "resumo": "mips com dimensão `<2` são descartados na contagem",
+  "campos": {
+   "Local": "`Dx11TextBank.cpp:83`",
+   "Problema": "mips com dimensão `<2` são descartados na contagem",
+   "Impacto": "cadeia de mips truncada; textura 1×1 falha por inteiro"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-15",
+  "tipo": "arquitetura",
+  "resumo": "asset anuncia `TFAnizotropic16`, sampler real é `LINEAR`/`MaxAnisotropy=1`",
+  "campos": {
+   "Local": "`Dx11TextBank.cpp:214` vs `Dx11Texture.cpp:209,217`",
+   "Problema": "asset anuncia `TFAnizotropic16`, sampler real é `LINEAR`/`MaxAnisotropy=1`",
+   "Impacto": "material acredita em anisotrópico que não existe; chão borra em ângulo rasante"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-16",
+  "tipo": "arquitetura",
+  "resumo": "`BeginD3D11Frame` limpa **preto fixo** e é chamado depois de `Engine::InitDraw(color)`",
+  "campos": {
+   "Local": "`Dx11EngineCore.cpp:81-85` + `:1013-1017`",
+   "Problema": "`BeginD3D11Frame` limpa **preto fixo** e é chamado depois de `Engine::InitDraw(color)`",
+   "Impacto": "a cor de fundo pedida pelo jogo é sempre sobrescrita; céu/fade de tela não aparece"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-17",
+  "tipo": "arquitetura",
+  "resumo": "`SetGamma` só grava o float; nenhum `SetGammaControl`/gamma de shader",
+  "campos": {
+   "Local": "`Dx11EngineCore.cpp:854-855`",
+   "Problema": "`SetGamma` só grava o float; nenhum `SetGammaControl`/gamma de shader",
+   "Impacto": "ajuste de brilho/gamma do usuário não tem efeito no backend DX11"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-18",
+  "tipo": "arquitetura",
+  "resumo": "cliente contabiliza bytes de não-garantidas por `msg->size`; servidor usa o `rawSize` de fio; ambos usam payload no caminho garantido",
+  "campos": {
+   "Local": "`networkClient.cpp:8613-8662` vs `networkServer.cpp:13062-13119`",
+   "Problema": "cliente contabiliza bytes de não-garantidas por `msg->size`; servidor usa o `rawSize` de fio; ambos usam payload no caminho garantido",
+   "Impacto": "cliente e servidor medem a mesma sessão com réguas diferentes; orçamento de banda divergente"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-19",
+  "tipo": "arquitetura",
+  "resumo": "comentário diz \"maximum error not sent\", mas o loop para no **primeiro** objeto com `error<FLT_MAX` e atribui a `sumError`",
+  "campos": {
+   "Local": "`networkServer.cpp:13125-13137`",
+   "Problema": "comentário diz \"maximum error not sent\", mas o loop para no **primeiro** objeto com `error<FLT_MAX` e atribui a `sumError`",
+   "Impacto": "`pInfo._desync` subestima o pior erro; objeto ruim no fim da lista fica invisível"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-20",
+  "tipo": "arquitetura",
+  "resumo": "`char mission[256]; strcpy(mission, t)` copia o `template` do `server.cfg` sem checar tamanho",
+  "campos": {
+   "Local": "`networkServer.cpp:3663-3666`",
+   "Problema": "`char mission[256]; strcpy(mission, t)` copia o `template` do `server.cfg` sem checar tamanho",
+   "Impacto": "estouro de stack no dedicado com nome de template >255 caracteres"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-21",
+  "tipo": "arquitetura",
+  "resumo": "`NCMTVoteMissionExt` lê `count` do fio e indexa `_serverMissions[i]` sem comparar com o tamanho do array",
+  "campos": {
+   "Local": "`networkClient.cpp:3040-3049`",
+   "Problema": "`NCMTVoteMissionExt` lê `count` do fio e indexa `_serverMissions[i]` sem comparar com o tamanho do array",
+   "Impacto": "servidor malicioso/corrompido estoura o heap do cliente"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-22",
+  "tipo": "arquitetura",
+  "resumo": "`ask._index % (nBanks+nFiles)` sem guarda quando não há banco assinado nem arquivo adicional",
+  "campos": {
+   "Local": "`networkClient.cpp:5338`",
+   "Problema": "`ask._index % (nBanks+nFiles)` sem guarda quando não há banco assinado nem arquivo adicional",
+   "Impacto": "divisão por zero no cliente ao receber pedido de assinatura"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-23",
+  "tipo": "arquitetura",
+  "resumo": "`rChat._sender->Brain()` e `chat._sender->Brain()` sem testar `_sender`",
+  "campos": {
+   "Local": "`networkClient.cpp:4731,4771`",
+   "Problema": "`rChat._sender->Brain()` e `chat._sender->Brain()` sem testar `_sender`",
+   "Impacto": "mensagem de rádio com sender nulo derruba o cliente"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-24",
+  "tipo": "arquitetura",
+  "resumo": "`RptF(\"Object %d:%\",OID_FORMAT,\" delete requested from client %d\",...)` passa `OID_FORMAT` como argumento em vez de concatenar",
+  "campos": {
+   "Local": "`networkServer.cpp:7250`",
+   "Problema": "`RptF(\"Object %d:%\",OID_FORMAT,\" delete requested from client %d\",...)` passa `OID_FORMAT` como argumento em vez de concatenar",
+   "Impacto": "formato/varargs desalinhados: UB no log de delete não-bot"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-25",
+  "tipo": "arquitetura",
+  "resumo": "`NMTMissionParams` não valida o remetente; grava `_param1/_param2` e replica a todos",
+  "campos": {
+   "Local": "`networkServer.cpp:8223-8238`",
+   "Problema": "`NMTMissionParams` não valida o remetente; grava `_param1/_param2` e replica a todos",
+   "Impacto": "cliente modificado altera parâmetros da missão dos outros"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-26",
+  "tipo": "arquitetura",
+  "resumo": "`SendMsgRemote`/`SendMsgQueue` descartam o retorno de `SendMsgRaw` e devolvem o tamanho; o `RptF` de falha imprime `result!=NULL` (sempre 0) no lugar do código de erro",
+  "campos": {
+   "Local": "`networkMsg.cpp:3272-3275,3350-3355,3390-3395`",
+   "Problema": "`SendMsgRemote`/`SendMsgQueue` descartam o retorno de `SendMsgRaw` e devolvem o tamanho; o `RptF` de falha imprime `result!=NULL` (sempre 0) no lugar do código de erro",
+   "Impacto": "falha de envio invisível e estatística de banda conta bytes que não saíram"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-27",
+  "tipo": "arquitetura",
+  "resumo": "`AddLocalMessage` despacha `OnMessage` sincronamente; o único produtor de `_receivedLocalMessages` está em `#if 0`",
+  "campos": {
+   "Local": "`network.cpp:3341-3348,3529-3537`",
+   "Problema": "`AddLocalMessage` despacha `OnMessage` sincronamente; o único produtor de `_receivedLocalMessages` está em `#if 0`",
+   "Impacto": "loopback reentrante e `ReceiveLocalMessages` é código morto"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-28",
+  "tipo": "arquitetura",
+  "resumo": "agregação `NMTMessages` escreve só o tipo por item; o decoder carimba todas com o tempo do pacote",
+  "campos": {
+   "Local": "`networkMsg.cpp:3342-3347` + `network.cpp:3453-3454`",
+   "Problema": "agregação `NMTMessages` escreve só o tipo por item; o decoder carimba todas com o tempo do pacote",
+   "Impacto": "sub-mensagens perdem o `msg->time` individual"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-29",
+  "tipo": "arquitetura",
+  "resumo": "formato desconhecido dentro de `NMTMessages` faz `return`, abandonando o resto do pacote e o log de bytes",
+  "campos": {
+   "Local": "`network.cpp:3444-3452`",
+   "Problema": "formato desconhecido dentro de `NMTMessages` faz `return`, abandonando o resto do pacote e o log de bytes",
+   "Impacto": "perda silenciosa de mensagens já recebidas, sem retransmissão"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-30",
+  "tipo": "arquitetura",
+  "resumo": "filas `_messageQueue` por jogador/cliente sem limite de tamanho ou quantidade",
+  "campos": {
+   "Local": "`networkServer.cpp:8852-8892` / `networkClient.cpp:7055-7087`",
+   "Problema": "filas `_messageQueue` por jogador/cliente sem limite de tamanho ou quantidade",
+   "Impacto": "cliente lento acumula itens até o disconnect; memória e atraso"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-31",
+  "tipo": "arquitetura",
+  "resumo": "`OnClientStateChanged` descarta `NCSPlayerAssigned` quando `oldState > NCSPlayerAssigned`, sem gravar nem notificar",
+  "campos": {
+   "Local": "`networkServer.cpp:11272-11273`",
+   "Problema": "`OnClientStateChanged` descarta `NCSPlayerAssigned` quando `oldState > NCSPlayerAssigned`, sem gravar nem notificar",
+   "Impacto": "reconexão/reaplicação de JIP que reaproveite o `NetworkPlayerInfo` não reinicia o fluxo de missão"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-32",
+  "tipo": "arquitetura",
+  "resumo": "`SendMissionFile` marca `missionFileValid/paramFileValid=true` e avança para `NCSMissionReceived` sem ack e sem checar `AutoOpen`/`rest`/`read`",
+  "campos": {
+   "Local": "`networkServer.cpp:13388-13420,13459-13479` (e `13505-13560`)",
+   "Problema": "`SendMissionFile` marca `missionFileValid/paramFileValid=true` e avança para `NCSMissionReceived` sem ack e sem checar `AutoOpen`/`rest`/`read`",
+   "Impacto": "cliente com arquivo faltando ou truncado é tratado como pronto; falha só aparece no carregamento"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-33",
+  "tipo": "arquitetura",
+  "resumo": "cliente força `_missionFileValid=true` em `NCSMissionReceived`; o `DoAssert` anterior é só debug",
+  "campos": {
+   "Local": "`networkClient.cpp:2140-2141`",
+   "Problema": "cliente força `_missionFileValid=true` em `NCSMissionReceived`; o `DoAssert` anterior é só debug",
+   "Impacto": "validação de missão inexistente em release mascara transferência incompleta"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-34",
+  "tipo": "arquitetura",
+  "resumo": "`_initMessages` só tem override para 5 tipos e `InitMessageIsDeleted` não tem especialização; `RemoveInitObjectDeleted` nunca remove e a lista só é limpa em `DestroyAllObjects`",
+  "campos": {
+   "Local": "`networkServer.cpp:6038-6123,6191-6209,10058`",
+   "Problema": "`_initMessages` só tem override para 5 tipos e `InitMessageIsDeleted` não tem especialização; `RemoveInitObjectDeleted` nunca remove e a lista só é limpa em `DestroyAllObjects`",
+   "Impacto": "crescimento da lista em sessões longas e custo crescente por JIP"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-35",
+  "tipo": "arquitetura",
+  "resumo": "`OnPlayerDisconnected` publica `_id` com `identity->playerid` sem checar `identity` nulo (só `_uid` usa ternário)",
+  "campos": {
+   "Local": "`networkServer.cpp:8759-8765`",
+   "Problema": "`OnPlayerDisconnected` publica `_id` com `identity->playerid` sem checar `identity` nulo (só `_uid` usa ternário)",
+   "Impacto": "crash em jogador sem identidade (BOT ou login incompleto)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-36",
+  "tipo": "arquitetura",
+  "resumo": "`OnPlayerCreate` copia o nome com `strcpy` para `char[256]` e aplica sufixo com `sprintf` no mesmo buffer, sem limite",
+  "campos": {
+   "Local": "`networkServer.cpp:9125-9144`",
+   "Problema": "`OnPlayerCreate` copia o nome com `strcpy` para `char[256]` e aplica sufixo com `sprintf` no mesmo buffer, sem limite",
+   "Impacto": "nome longo vindo do cliente estoura a pilha do servidor"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-37",
+  "tipo": "arquitetura",
+  "resumo": "`OnPlayerDestroy` chama `DisconnectPlayer(dpid, playerPerson)` mesmo quando `info` é nulo; `playerPerson` fica default e a função percorre todos os objetos",
+  "campos": {
+   "Local": "`networkServer.cpp:9435-9501`",
+   "Problema": "`OnPlayerDestroy` chama `DisconnectPlayer(dpid, playerPerson)` mesmo quando `info` é nulo; `playerPerson` fica default e a função percorre todos os objetos",
+   "Impacto": "custo O(objetos) e remoção/limpeza sobre um dpid possivelmente inválido"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-38",
+  "tipo": "arquitetura",
+  "resumo": "`CheckSquadObject::IsDone` indexa `msgList[cf._fragmentNo++]` após `PrepareTransferFileMessages` sem verificar se a lista tem mensagens",
+  "campos": {
+   "Local": "`network.cpp:2937-2941`",
+   "Problema": "`CheckSquadObject::IsDone` indexa `msgList[cf._fragmentNo++]` após `PrepareTransferFileMessages` sem verificar se a lista tem mensagens",
+   "Impacto": "arquivo que não abre deixa a lista vazia e o acesso é fora dos limites"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-39",
+  "tipo": "arquitetura",
+  "resumo": "`ApplyVoting` faz cast de `id.Data()`/`value->Data()` para `int*` e lê tipo/player sem validar `Size() >= sizeof(int)`",
+  "campos": {
+   "Local": "`networkServer.cpp:2970-3025`",
+   "Problema": "`ApplyVoting` faz cast de `id.Data()`/`value->Data()` para `int*` e lê tipo/player sem validar `Size() >= sizeof(int)`",
+   "Impacto": "voto malformado de cliente modificado lê fora do buffer"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-40",
+  "tipo": "arquitetura",
+  "resumo": "`FileSize` devolve `INT_MAX` e `GetFileCRC` devolve CRC de stream vazio quando o arquivo não abre; o tamanho entra na lista e no cálculo de fragmentos",
+  "campos": {
+   "Local": "`network.cpp:2714-2749,2767-2799`",
+   "Problema": "`FileSize` devolve `INT_MAX` e `GetFileCRC` devolve CRC de stream vazio quando o arquivo não abre; o tamanho entra na lista e no cálculo de fragmentos",
+   "Impacto": "progresso de custom files estoura e a transferência tenta enviar um arquivo inexistente"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-41",
+  "tipo": "arquitetura",
+  "resumo": "`InitDraw` chama `Fail(\"Unable to begin rendering - Reset needed\")` mas continua para `D3DSetRenderState`, `D3DBeginScene` e `Begin3DRendering`",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:3446-3502`",
+   "Problema": "`InitDraw` chama `Fail(\"Unable to begin rendering - Reset needed\")` mas continua para `D3DSetRenderState`, `D3DBeginScene` e `Begin3DRendering`",
+   "Impacto": "em release o frame é aberto com device inválido; desenho corrompido ou crash"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-42",
+  "tipo": "arquitetura",
+  "resumo": "`FlushQueue` atualiza `_indexBufferUsed` antes de checar `ret == D3D_OK`; falha de `LockDynBuffer` só loga",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:10756-10765`",
+   "Problema": "`FlushQueue` atualiza `_indexBufferUsed` antes de checar `ret == D3D_OK`; falha de `LockDynBuffer` só loga",
+   "Impacto": "draw indexado com offset em buffer não preenchido (lixo)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-43",
+  "tipo": "arquitetura",
+  "resumo": "`Init3DState` usa `HANDLE_ERR` que faz `return` sem sinalizar falha; `Init3D` não checa e continua",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:19734,19819-19881,20170`",
+   "Problema": "`Init3DState` usa `HANDLE_ERR` que faz `return` sem sinalizar falha; `Init3D` não checa e continua",
+   "Impacto": "engine com render targets nulos segue inicializando e falha longe da causa"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-44",
+  "tipo": "arquitetura",
+  "resumo": "`Init3D` pode bloquear até 60 s no laço de `CreateDevice`; `Init3DState()` é `void` e não propaga erro; threads fixadas nas CPUs 2 e 4",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:22356-22421,22492`",
+   "Problema": "`Init3D` pode bloquear até 60 s no laço de `CreateDevice`; `Init3DState()` é `void` e não propaga erro; threads fixadas nas CPUs 2 e 4",
+   "Impacto": "startup travado em device perdido e threads de render ausentes em máquinas com <4 CPUs"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-45",
+  "tipo": "arquitetura",
+  "resumo": "`DoPostprocess` chama `_pp._glow->GetPriority()` sem null-check, embora checar `_pp._glow` logo depois e `ReleasePostProcessStuff` anular o ponteiro",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:2728,2788,26373`",
+   "Problema": "`DoPostprocess` chama `_pp._glow->GetPriority()` sem null-check, embora checar `_pp._glow` logo depois e `ReleasePostProcessStuff` anular o ponteiro",
+   "Impacto": "crash se o post-process rodar após liberar os recursos (device perdido/reset)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "A-46",
+  "tipo": "arquitetura",
+  "resumo": "O gerador de shaders usa `min==max` (`0x300`/`SBT_Default`), ignora o retorno de `CreateShaderDeclarations()` e retorna `false` no caminho de sucesso",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:27027-27030,27058,27072`",
+   "Problema": "O gerador de shaders usa `min==max` (`0x300`/`SBT_Default`), ignora o retorno de `CreateShaderDeclarations()` e retorna `false` no caminho de sucesso",
+   "Impacto": "cache gerado não cobre SM2/outras técnicas de SB e o chamador não distingue sucesso de falha"
+  },
+  "texto": "o gerador está fixo em `0x300`/`SBT_Default`: os laços sugerem generalidade, mas `min==max`. Ele **ignora** o retorno de `CreateShaderDeclarations()` (`27058`) e sempre retorna `false` (`27072`), indistinguível de falha para um chamador novo."
+ },
+ {
+  "id": "A-47",
+  "tipo": "arquitetura",
+  "resumo": "Falha de `CreatePostProcessStuff` loga \"Error while creating stencil shadows stuff\" e destrói as declarações antes de sair",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:27118-27125`",
+   "Problema": "Falha de `CreatePostProcessStuff` loga \"Error while creating stencil shadows stuff\" e destrói as declarações antes de sair",
+   "Impacto": "diagnóstico aponta para o subsistema errado; engine meio-inicializado se o processo não encerrar"
+  },
+  "texto": "falha de `CreatePostProcessStuff` loga \"stencil shadows stuff\" e destrói as declarações antes de sair; o diagnóstico aponta para o subsistema errado e o engine fica meio-inicializado se o processo não encerrar."
+ },
+ {
+  "id": "A-48",
+  "tipo": "arquitetura",
+  "resumo": "`SetTexture0Color` usa `maxColor` no ramo não-linear (`linear = toLinear ? SRGBToLinear(avgColor) : maxColor`)",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:12991`",
+   "Problema": "`SetTexture0Color` usa `maxColor` no ramo não-linear (`linear = toLinear ? SRGBToLinear(avgColor) : maxColor`)",
+   "Impacto": "com `_linearSpace=false`, `PSC_T0AvgColor` recebe a cor máxima em vez da média; shaders de folhagem/grama ficam com tom errado"
+  },
+  "texto": "`SetTexture0Color` usa `maxColor` no ramo não-linear: `Color linear = toLinear ? SRGBToLinear(avgColor) : maxColor;` (`12991`). Com `_linearSpace=false`, `PSC_T0AvgColor` recebe a cor **máxima**, não a média; shaders que usam average (folhagem/grama) ficam com tom errado. no ramo não-linear, `linear = maxColor` (`12991`): a razão vira 1 por canal e o shader trata avg==max; folhagem/grama ficam chapadas ou claras demais."
+ },
+ {
+  "id": "A-49",
+  "tipo": "arquitetura",
+  "resumo": "`ML_Stars` existe no enum `EMainLight`, mas `SetupMaterialLights` não tem `case` para ele e cai em `Fail(\"Unknown type of main light\")`",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:8206-8207`; `lib/engine.hpp:751`",
+   "Problema": "`ML_Stars` existe no enum `EMainLight`, mas `SetupMaterialLights` não tem `case` para ele e cai em `Fail(\"Unknown type of main light\")`",
+   "Impacto": "em release, se `Fail` não abortar, as constantes de luz ficam as do passe anterior"
+  },
+  "texto": "`ML_Stars` existe no enum (`engine.hpp:751`) mas **não tem `case`**: cai no `default` e chama `Fail(\"Unknown type of main light\")`. Em release, se `Fail` não abortar, as constantes ficam as da luz anterior."
+ },
+ {
+  "id": "A-50",
+  "tipo": "arquitetura",
+  "resumo": "`SetupSectionTL` recebe `uvSource`, `uvSourceCount`, `instancesCount`, `pointLightsCount` e `spotLightsCount`, mas o corpo só usa `uvSourceOnlyTex0`",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:15869-15876,15877-16084`",
+   "Problema": "`SetupSectionTL` recebe `uvSource`, `uvSourceCount`, `instancesCount`, `pointLightsCount` e `spotLightsCount`, mas o corpo só usa `uvSourceOnlyTex0`",
+   "Impacto": "chamador acredita configurar UV/luz/instâncias pela assinatura, mas o estado vem do canal; porte que passe a ler os parâmetros muda o comportamento"
+  },
+  "texto": "os cinco parâmetros mortos criam uma falsa impressão de contrato: um porte que os use (por exemplo, passar `pointLightsCount` ao shader) muda o comportamento sem que o DX9 original jamais os tenha lido."
+ },
+ {
+  "id": "A-51",
+  "tipo": "arquitetura",
+  "resumo": "`DoSelectPixelShader` aceita `mat=NULL` (default) e, se o shader selecionado for de terreno, `SetPixelShaderConstantLayers` desreferencia `mat`",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:18450,18614-18617,11628`",
+   "Problema": "`DoSelectPixelShader` aceita `mat=NULL` (default) e, se o shader selecionado for de terreno, `SetPixelShaderConstantLayers` desreferencia `mat`",
+   "Impacto": "chamadas em `10699` e `18102` com os defaults podem crashar se o último shader selecionado for terreno"
+  },
+  "texto": "`DoSelectPixelShader(cb, mat=NULL)` com shader de terreno selecionado desreferencia `mat` em `SetPixelShaderConstantLayers` (`11628`); há chamadas com os defaults em `10699` e `18102`."
+ },
+ {
+  "id": "A-52",
+  "tipo": "arquitetura",
+  "resumo": "`BeginMeshTL` recebe `spec`, `lights` e `bias`, mas não os usa no corpo; o estado já vem de `BeginInstanceTL` e o bias é recalculado por seção em `DrawSectionTL`",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:9239-9241,9243-9266`",
+   "Problema": "`BeginMeshTL` recebe `spec`, `lights` e `bias`, mas não os usa no corpo; o estado já vem de `BeginInstanceTL` e o bias é recalculado por seção em `DrawSectionTL`",
+   "Impacto": "um porte que passe a ler os parâmetros (ex.: aplicar `bias` na malha) muda o resultado sem que o DX9 original jamais o tenha feito"
+  },
+  "texto": "parâmetros mortos (`spec`, `lights`, `bias`) criam contrato falso; um porte que passe a lê-los muda o comportamento."
+ },
+ {
+  "id": "A-53",
+  "tipo": "arquitetura",
+  "resumo": "O fallback de declaração grava `_vertexShaderID=VSBasic` e `_pixelShaderSel=PSNormal` no `RendStateExt` do canal, em vez de usar variáveis locais",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:16942-16949`",
+   "Problema": "O fallback de declaração grava `_vertexShaderID=VSBasic` e `_pixelShaderSel=PSNormal` no `RendStateExt` do canal, em vez de usar variáveis locais",
+   "Impacto": "uma seção com declaração incompatível rebaixa silenciosamente todas as seções seguintes da mesma malha até o próximo setup de material"
+  },
+  "texto": "o fallback muda `_vertexShaderID`/`_pixelShaderSel` no canal e não os restaura: uma seção incompatível rebaixa as seguintes para `VSBasic/PSNormal` até o próximo setup de material."
+ },
+ {
+  "id": "A-54",
+  "tipo": "arquitetura",
+  "resumo": "Quando `_dipCount >= LimitDIPCount`, o código chama `YieldProcessor()` e continua o laço de seções em vez de sair",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:12362-12393`",
+   "Problema": "Quando `_dipCount >= LimitDIPCount`, o código chama `YieldProcessor()` e continua o laço de seções em vez de sair",
+   "Impacto": "orçamento de DIP estourado vira spin por todas as seções restantes, sem desenhar"
+  },
+  "texto": "ao estourar `LimitDIPCount`, o código chama `YieldProcessor()` e continua iterando (`12390-12393`) em vez de sair: gasta CPU e ainda percorre todas as seções restantes."
+ },
+ {
+  "id": "A-55",
+  "tipo": "arquitetura",
+  "resumo": "`VSSimulWeatherClouds` e `VSSimulWeatherCloudsCPU` têm ID especial válido e entram no ramo `VSToVSS < NVertexShaderSpecialID`, mas não têm sub-branch: `SetupVSConstants` retorna sem subir nada",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:16826-16852`; `lib/engine.cpp:296-297`",
+   "Problema": "`VSSimulWeatherClouds` e `VSSimulWeatherCloudsCPU` têm ID especial válido e entram no ramo `VSToVSS < NVertexShaderSpecialID`, mas não têm sub-branch: `SetupVSConstants` retorna sem subir nada",
+   "Impacto": "qualquer shape desenhado por `DrawSectionTL` com esse VS usa constantes do draw anterior; hoje só não estoura porque o renderer de nuvens sobe as suas (`SimulCloudRendererDX9.cpp:522-534`)"
+  },
+  "texto": "`VSSimulWeatherClouds` e `VSSimulWeatherCloudsCPU` têm IDs especiais válidos (`engine.cpp:296-297`), entram no ramo `16826`, mas **não têm sub-branch**: a função retorna sem subir constante alguma, silenciosamente. Hoje o renderer de nuvens sobe as próprias constantes (`SimulCloudRendererDX9.cpp:522-534`) e não passa por aqui; qualquer shape desenhado via `DrawSectionTL` com esse VS herda constantes velhas."
+ },
+ {
+  "id": "A-56",
+  "tipo": "arquitetura",
+  "resumo": "`SetPixelShaderConstantDBS` desreferencia `GScene->MainLight()` sem null-check, e `SetupPSConstants` não guarda `GScene` (diferente de `SetupMaterialLights:8074`)",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:11515,16870,16895`",
+   "Problema": "`SetPixelShaderConstantDBS` desreferencia `GScene->MainLight()` sem null-check, e `SetupPSConstants` não guarda `GScene` (diferente de `SetupMaterialLights:8074`)",
+   "Impacto": "com `ML_Sun` e cena nula, crash; na prática `DrawSectionTL` exige cena, mas o contrato não é verificado"
+  },
+  "texto": "`SetPixelShaderConstantDBS` desreferencia `GScene->MainLight()` (`11515`) sem null-check, e `SetupPSConstants` não guarda `GScene` (ao contrário de `SetupMaterialLights:8074`). Com `ML_Sun` e cena nula, é crash; na prática `DrawSectionTL` exige cena."
+ },
+ {
+  "id": "A-57",
+  "tipo": "arquitetura",
+  "resumo": "`PrepareTriangleTL` valida `GetVertexShaderID()` em `[0,NVertexShaderID)` mas, fora da faixa, só chama `Fail` e segue; o ID inválido fica no canal e é indexado sem bounds check em `SetupVSConstants`",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:15589-15593,16818,16826`",
+   "Problema": "`PrepareTriangleTL` valida `GetVertexShaderID()` em `[0,NVertexShaderID)` mas, fora da faixa, só chama `Fail` e segue; o ID inválido fica no canal e é indexado sem bounds check em `SetupVSConstants`",
+   "Impacto": "em release, material com VS inválido corrompe a seleção de shader/constantes em vez de cair em `VSBasic`"
+  },
+  "texto": "`GetVertexShaderID()` fora de `[0,NVertexShaderID)` só chama `Fail(\"Error: Vertex shader ID out of limits\")` e **continua**; o ID inválido fica no canal e é indexado sem bounds check em `SetupVSConstants` (`16818`/`16826`) e em `DoSelectVertexShader`."
+ },
+ {
+  "id": "A-58",
+  "tipo": "arquitetura",
+  "resumo": "O parâmetro `section` de `PrepareTriangleTL` não é lido no corpo",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:15574-15579`; chamadores `drawpoly.cpp:352,358` e `engdd9.cpp:23192`",
+   "Problema": "O parâmetro `section` de `PrepareTriangleTL` não é lido no corpo",
+   "Impacto": "chamador acredita passar as propriedades do polígono; um porte que passe a usá-las altera o resultado sem equivalente no DX9"
+  },
+  "texto": "`section` é parâmetro morto: a assinatura promete usar as propriedades do polígono, o corpo ignora; um porte que \"conserte\" isso muda o resultado sem equivalente no DX9 original."
+ },
+ {
+  "id": "A-59",
+  "tipo": "arquitetura",
+  "resumo": "`RFAlphaTest64/32/128` colapsam no mesmo `IsTransparent`; o DX9 usa `ALPHAREF=128` fixo e o DX11 guarda `_preparedAlphaTestReference` em 64/32/128",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:15089-15100,15481`; `d3d11/Dx11EngineCore.cpp:479-484`",
+   "Problema": "`RFAlphaTest64/32/128` colapsam no mesmo `IsTransparent`; o DX9 usa `ALPHAREF=128` fixo e o DX11 guarda `_preparedAlphaTestReference` em 64/32/128",
+   "Impacto": "materiais que dependem do limiar de alpha test renderizam diferente entre DX9 e DX11"
+  },
+  "texto": "`RFAlphaTest64`, `RFAlphaTest32` e `RFAlphaTest128` viram o mesmo `IsTransparent`; no DX9 o corte é sempre 128/255, enquanto o DX11 usa 64/32/128. Materiais que dependem do limiar renderizam diferente entre os dois backends."
+ },
+ {
+  "id": "A-60",
+  "tipo": "arquitetura",
+  "resumo": "O parâmetro `level` de `DoPrepareTriangle` não é lido no corpo; no caminho de fila ele só entra na chave de `AllocateQueue` (`10488`), que agrupa a fila, mas não é usado no TP",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:15050-15051,15630-15631,10488,10609`",
+   "Problema": "O parâmetro `level` de `DoPrepareTriangle` não é lido no corpo; no caminho de fila ele só entra na chave de `AllocateQueue` (`10488`), que agrupa a fila, mas não é usado no TP",
+   "Impacto": "o mip level não influencia o prepare do triângulo; quem espera seleção de mip por nível não a obtém, e um porte que passe a usá-lo muda o resultado sem equivalente no DX9"
+  },
+  "texto": "`level` é parâmetro morto; o mip level calculado em `PrepareTriangleTL:15631` é ignorado, então quem espera seleção de mip por nível não a obtém."
+ },
+ {
+  "id": "A-61",
+  "tipo": "arquitetura",
+  "resumo": "`ColorScaleD2` fixa metade do RGB e o `Assert` de `_modColor≈0.5` só vale em debug",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:15763-15766,10161-10165`",
+   "Problema": "`ColorScaleD2` fixa metade do RGB e o `Assert` de `_modColor≈0.5` só vale em debug",
+   "Impacto": "fora do regime de brilho 0.5 o decalque fica sub/superexposto, sem aviso em release"
+  },
+  "texto": "`ColorScaleD2` assume `_modColor` com brilho 0.5; o assert só vale em debug. Em release, qualquer modulação de brilho diferente subexpõe ou superexpõe o decalque (o glow só compensa o caso 0.5)."
+ },
+ {
+  "id": "A-62",
+  "tipo": "arquitetura",
+  "resumo": "O índice de animação é saturado em `[0,frameCount-1]` e a linha de módulo está comentada, apesar do comentário mandar fazer loop acima de 1",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:8654-8661`",
+   "Problema": "O índice de animação é saturado em `[0,frameCount-1]` e a linha de módulo está comentada, apesar do comentário mandar fazer loop acima de 1",
+   "Impacto": "partículas com fase acumulada congelam no último frame em vez de ciclar"
+  },
+  "texto": "`animationPhase>1` é **saturado** em `frameCount-1` (`8657`); o comentário manda fazer loop e a linha de módulo está comentada (`8660`). Partículas com fase acumulada congelam no último frame em vez de ciclar."
+ },
+ {
+  "id": "A-63",
+  "tipo": "arquitetura",
+  "resumo": "O backend DX11 não implementa `DrawShadowVolumeInstanced` nem configura estado de stencil (`STENCIL*`/`TWOSIDEDSTENCILMODE`); só `clearStencil` e `ZShadowEpsilon` aparecem no arquivo",
+  "campos": {
+   "Local": "`d3d11/Dx11EngineCore.cpp:94-99,1069`; `d3d9/engdd9.cpp:8812-8964`",
+   "Problema": "O backend DX11 não implementa `DrawShadowVolumeInstanced` nem configura estado de stencil (`STENCIL*`/`TWOSIDEDSTENCILMODE`); só `clearStencil` e `ZShadowEpsilon` aparecem no arquivo",
+   "Impacto": "portar sombras volumétricas para DX11 exige implementar o stencil e os dois passes, ou o jogo fica sem sombras dinâmicas nesse backend"
+  },
+  "texto": "o backend DX11 **não tem** caminho de stencil shadow volume: nenhum override de `DrawShadowVolumeInstanced`, nenhuma configuração de `STENCIL*`/`TWOSIDEDSTENCILMODE` em `Dx11EngineCore.cpp` (só `clearStencil` em `94-99`). Portar sombras volumétricas para DX11 exige implementar o estado de stencil e os dois passes, ou aceitar a ausência de sombras."
+ },
+ {
+  "id": "A-64",
+  "tipo": "arquitetura",
+  "resumo": "`SetupWorldViewProjCam` desreferencia `GScene` antes de qualquer guarda; o `if(!camera) return` protege só a câmera",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:9044-9047`",
+   "Problema": "`SetupWorldViewProjCam` desreferencia `GScene` antes de qualquer guarda; o `if(!camera) return` protege só a câmera",
+   "Impacto": "`BeginInstanceTL` confia na chamada sem checar `GScene`; com cena nula, crash antes do assert"
+  },
+  "texto": "`SetupWorldViewProjCam` desreferencia `GScene` em `9044` **antes** de qualquer guarda; o `if (!camera) return` (`9046-9047`) só protege a câmera. `BeginInstanceTL` confia nessa chamada sem checar `GScene`, ao contrário de outros pontos que testam `GScene` (ex.: `8520`)."
+ },
+ {
+  "id": "A-65",
+  "tipo": "arquitetura",
+  "resumo": "`VSC_ShadowVolumeLength` recebe o offset de profundidade em `PrepareShadowOffset` e o comprimento do volume em `BeginShadowVolume`; só `_renderingMode` separa os usos",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:8508-8509,8968-8969`",
+   "Problema": "`VSC_ShadowVolumeLength` recebe o offset de profundidade em `PrepareShadowOffset` e o comprimento do volume em `BeginShadowVolume`; só `_renderingMode` separa os usos",
+   "Impacto": "um porte que una os passes ou reordene escritas sobrescreve um valor pelo outro sem erro visível"
+  },
+  "texto": "`VSC_ShadowVolumeLength` carrega dois significados (offset vs comprimento) e é escrito em `8509` e `8969`; qualquer reordenação de passes ou porte que una os caminhos sobrescreve um com o outro sem erro visível."
+ },
+ {
+  "id": "A-66",
+  "tipo": "arquitetura",
+  "resumo": "`DrawMeshTLInstanced` aplica o cap noturno por `lights.Size()>0` antes de `SetupLights` calcular `_night`; em dia claro (`_night<=0`, lista esvaziada) o lote ainda é reduzido",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:8749-8764,7998-8007`",
+   "Problema": "`DrawMeshTLInstanced` aplica o cap noturno por `lights.Size()>0` antes de `SetupLights` calcular `_night`; em dia claro (`_night<=0`, lista esvaziada) o lote ainda é reduzido",
+   "Impacto": "as constantes de luz não seriam sobrescritas, mas o chunk cai sem necessidade; o código é conservador para `ENABLE_DAY_LIGHTS`"
+  },
+  "texto": "`DrawMeshTLInstanced` decide o cap noturno por `lights.Size()>0` **antes** de `SetupLights` calcular `_night` (`8749-8764` vs `7998-8007`). Em pleno dia (`_night<=0`, lista esvaziada) o lote ainda é reduzido como se fosse noite: as constantes de luz não seriam sobrescritas, mas o número de instâncias por chunk cai sem necessidade. Com `ENABLE_DAY_LIGHTS` o cap é necessário, então o código é conservador para as duas configurações."
+ },
+ {
+  "id": "A-67",
+  "tipo": "arquitetura",
+  "resumo": "A guarda `if (!CBState(cb)._tlActive != TLDisabled \\",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:8438`; `engdd9.hpp:3088-3096`",
+   "Problema": "A guarda `if (!CBState(cb)._tlActive != TLDisabled \\",
+   "Impacto": "\\"
+  },
+  "texto": "a guarda de `ProjectionChanged` só está correta porque `TLDisabled==0` (`engdd9.hpp:3091`); reordenar o enum inverte o teste sem erro de compilação."
+ },
+ {
+  "id": "A-68",
+  "tipo": "arquitetura",
+  "resumo": "`SetupSectionTL` deixa `bool fogModeB[2]` sem inicialização quando `fogMode` está fora de `FM_None..FM_FogAlpha` (switch sem `default`); `SetFogMode` aceita qualquer valor",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:15909-15929`; `8481-8484`",
+   "Problema": "`SetupSectionTL` deixa `bool fogModeB[2]` sem inicialização quando `fogMode` está fora de `FM_None..FM_FogAlpha` (switch sem `default`); `SetFogMode` aceita qualquer valor",
+   "Impacto": "um `EFogMode` inválido grava lixo em `b0/b1` e o VS toma um ramo de fog indefinido a cada draw"
+  },
+  "texto": "`SetupSectionTL` declara `bool fogModeB[2]` e faz `switch(fogMode)` sem `default` (`15909-15928`); um `EFogMode` fora de `0..3` deixa os dois booleanos **não inicializados** e `SetVertexShaderConstantB` grava lixo em `b0/b1`. `SetFogMode` (`8483`) aceita qualquer valor do enum, inclusive vindo de material carregado."
+ },
+ {
+  "id": "A-69",
+  "tipo": "arquitetura",
+  "resumo": "`GetZCoefs` usa `zAdd=-2e-7*bias`, mas o ramo ativo de `ConvertProjectionMatrix` usa `zAdd=-1e-6*bias`; o bloco comentado em `2018-2019` e a cópia DX11 preservam a fórmula antiga",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:1966-1967,2021-2024`; `transLight.cpp:251-268`; `d3d11/Dx11EngineCore.hpp:69-70`",
+   "Problema": "`GetZCoefs` usa `zAdd=-2e-7*bias`, mas o ramo ativo de `ConvertProjectionMatrix` usa `zAdd=-1e-6*bias`; o bloco comentado em `2018-2019` e a cópia DX11 preservam a fórmula antiga",
+   "Impacto": "o mesmo `_bias` produz deslocamentos de profundidade diferentes entre o T&L por software e a projeção de hardware"
+  },
+  "texto": "`GetZCoefs` usa `zAdd=-2e-7*bias` (`1966-1967`) enquanto o ramo ativo de `ConvertProjectionMatrix` usa `zAdd=-1e-6*bias` (`2021-2024`); `transLight.cpp:256-268` e `Dx11EngineCore.hpp:69-70` usam a fórmula antiga. O mesmo `_bias` produz deslocamentos diferentes entre T&L por software e projeção de hardware."
+ },
+ {
+  "id": "A-70",
+  "tipo": "arquitetura",
+  "resumo": "O ramo de w-buffer de `ConvertProjectionMatrix` é inalcançável neste build: `HasWBuffer()` e `IsWBuffer()` são constantes `false`, e `SetWBuffer` é vazio",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:1995-2014,7929-7932`; `engdd9.hpp:5750`",
+   "Problema": "O ramo de w-buffer de `ConvertProjectionMatrix` é inalcançável neste build: `HasWBuffer()` e `IsWBuffer()` são constantes `false`, e `SetWBuffer` é vazio",
+   "Impacto": "o ajuste de near/far para w-buffer nunca é exercitado e pode apodrecer sem teste"
+  },
+  "texto": "o ramo de w-buffer (`1995-2014`) é inalcançável neste build porque `HasWBuffer()`/`IsWBuffer()` são constantes `false` (`engdd9.hpp:5750`, `engdd9.cpp:7929-7932`); o código de ajuste de near/far nunca é exercitado e pode apodrecer sem teste."
+ },
+ {
+  "id": "A-71",
+  "tipo": "arquitetura",
+  "resumo": "`DoAssert(cratersCount <= 14)` é debug-only e o limite `14` está hardcoded; em release, `cratersCount==15` vira `PSSprite` porque o enum salta de `Crater14` para `Sprite`, e `UseCraters` já leu além dos arrays de 14 elementos (`10126-10148`)",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:18461,18471`; `engine.hpp:517-518`; `common.h:167-169`; `object.cpp:2159`",
+   "Problema": "`DoAssert(cratersCount <= 14)` é debug-only e o limite `14` está hardcoded; em release, `cratersCount==15` vira `PSSprite` porque o enum salta de `Crater14` para `Sprite`, e `UseCraters` já leu além dos arrays de 14 elementos (`10126-10148`)",
+   "Impacto": "um chamador de `DrawParameters` com `cratersCount>14` gera leitura de pilha fora dos limites e desenha a seção com o shader de sprite"
+  },
+  "texto": "`DoAssert(cratersCount <= 14)` (`18461`) é **debug-only** (`debugLog.hpp:100-102`). Em release, `cratersCount==15` produz `PSCrater1-1+15`, que é exatamente `PSSprite` — o enum pula de `Crater14` para `Sprite` (`engine.hpp:517-518`) — e a seção entra no ramo de sprite (`18471`), liga depth texture no stage 1 e usa constantes de sprite. Pior: `UseCraters` já escreveu `cratersCount` float4 a partir de arrays de 14 elementos na pilha (`10126-10148`), então o overflow começa antes, na escrita das constantes. Hoje `object.cpp:2159` limita a `maxCraters = GetMaxCraters() = 14`, mas o construtor de `DrawParameters` aceita `cratersCount` arbitrário (`engine.hpp:937-945`)."
+ },
+ {
+  "id": "A-72",
+  "tipo": "arquitetura",
+  "resumo": "Os guards contra `PSUninitialized`/`PSTUninitialized` são `Assert` (removidos em release); como `-1 < PSNone`, um canal nunca preparado indexa `_pixelShader[-1][-1]`",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp:18453-18455,26828-26829`; `debugLog.hpp:124`",
+   "Problema": "Os guards contra `PSUninitialized`/`PSTUninitialized` são `Assert` (removidos em release); como `-1 < PSNone`, um canal nunca preparado indexa `_pixelShader[-1][-1]`",
+   "Impacto": "`SetPixelShader` recebe ponteiro lido fora da matriz de `ComRef`, com risco de crash; hoje só não ocorre porque os caminhos de preparo sempre setam o ID antes"
+  },
+  "texto": "os únicos guards de `_pixelShaderSel`/`_pixelShaderTypeSel` são `Assert` (`18453-18454`), também removidos em release. O estado inicial do canal é `PSUninitialized=-1`/`PSTUninitialized=-1` (`26828-26829`), e `-1 < PSNone` é verdadeiro, então um `DoSelectPixelShader` em canal nunca preparado indexa `_pixelShader[-1][-1]` — leitura fora da matriz de `ComRef` e `SetPixelShader` com ponteiro inválido. Hoje os dois caminhos de preparo (`PrepareSingleTexDiffuseA:12523-12527`, `PrepareDetailTex:12679`) sempre setam o ID antes, então é latente."
+ },
+ {
+  "id": "A-73",
+  "tipo": "arquitetura",
+  "resumo": "14 pontos do pós-processo DX11 marcados pelos próprios devs como \"DX11 TODO remove or repair\"",
+  "campos": {
+   "Local": "`d3d11/postProcessDX11.cpp:428,521,705,875,1215,1854,4281,4936,4959,5071,6585,6660,8794,9299`",
+   "Problema": "14 pontos do pós-processo DX11 marcados pelos próprios devs como \"DX11 TODO remove or repair\"",
+   "Impacto": "efeitos de pós-processo existentes no DX9 não têm equivalente no DX11 (coerente com G-03: hoje não há AA)"
+  },
+  "texto": "`lib/d3d11/postProcessDX11.cpp:428,521,705,875,1215,1854,4281,4936,4959,5071,6585,6660,8794,9299`: 14 pontos marcados \"DX11 TODO remove or repair\" → o pós-processo DX11 está **declaradamente incompleto**; efeitos existentes no DX9 não têm equivalente (corrobora G-03: hoje não há AA)."
+ },
+ {
+  "id": "A-74",
+  "tipo": "arquitetura",
+  "resumo": "O DX11 não implementa alpha test, trianglefan, carga de TGA nem vsync, e o próprio código registra \"DX11 TODO\" em cada caso",
+  "campos": {
+   "Local": "`d3d11/engdd11.cpp:15306,20397,17800,11644`",
+   "Problema": "O DX11 não implementa alpha test, trianglefan, carga de TGA nem vsync, e o próprio código registra \"DX11 TODO\" em cada caso",
+   "Impacto": "materiais com alpha test, primitivas trianglefan e texturas TGA não têm caminho no DX11; o frame é entregue sem vsync"
+  },
+  "texto": "`lib/d3d11/engdd11.cpp:15306` (alpha test), `20397` (trianglefan), `17800` (TGA), `11644` (vsync): funcionalidades ausentes no DX11 → materiais com alpha test, primitivas trianglefan e carga de TGA não têm caminho no DX11."
+ },
+ {
+  "id": "A-75",
+  "tipo": "arquitetura",
+  "resumo": "O backend DX11 é cópia literal do DX9 com a API trocada, **inclusive TODOs, HACKs e notas `\\patch` de 2006/2007**",
+  "campos": {
+   "Local": "`d3d9/engdd9.cpp` vs `d3d11/engdd11.cpp` (1.437 textos de comentário idênticos = 79,3% do DX11)",
+   "Problema": "O backend DX11 é cópia literal do DX9 com a API trocada, **inclusive TODOs, HACKs e notas `\\patch` de 2006/2007**",
+   "Impacto": "toda dívida técnica do DX9 é herdada no DX11 e qualquer patch precisa ser duplicado nos dois backends para não divergir"
+  },
+  "texto": "79,3% dos comentários de `engdd11.cpp` são idênticos aos de `engdd9.cpp` (1.437 textos) → o backend DX11 é cópia do DX9 com API trocada; toda dívida técnica do DX9 é herdada e **qualquer patch precisa ser duplicado** nos dois backends para não divergir."
+ },
+ {
+  "id": "A-76",
+  "tipo": "arquitetura",
+  "resumo": "Dívida estrutural declarada no DX11: bias por CB (projeção deveria ser comum), TL preso ao caminho MC e luzes não persistentes",
+  "campos": {
+   "Local": "`d3d11/engdd11.cpp:13801,11299,16507`",
+   "Problema": "Dívida estrutural declarada no DX11: bias por CB (projeção deveria ser comum), TL preso ao caminho MC e luzes não persistentes",
+   "Impacto": "confirma A-69 e que o DX11 só opera no caminho TL; custo por frame e bias divergente entre canais"
+  },
+  "texto": "`lib/d3d11/engdd11.cpp:13801` (bias por CB), `11299` (TL preso ao caminho MC), `16507` (luzes não persistentes) → dívida estrutural do DX11, alinhada com A-69 (bias) e com o achado de que o DX11 só opera no caminho TL."
+ },
+ {
+  "id": "H-01",
+  "tipo": "hipotese/risco",
+  "resumo": "`restFrame = 0.045f` (22 FPS) fixo",
+  "campos": {
+   "Suspeito": "`restFrame = 0.045f` (22 FPS) fixo",
+   "Evidência": "`world.cpp:11894`",
+   "Como confirmar": "logar `estimateReserve` real",
+   "Correção candidata": "derivar de `RefreshRate`"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-02",
+  "tipo": "hipotese/risco",
+  "resumo": "Lock/unlock do `_objAroundCam` ao andar",
+  "campos": {
+   "Suspeito": "Lock/unlock do `_objAroundCam` ao andar",
+   "Evidência": "`world.cpp:7996-8015`",
+   "Como confirmar": "contar locks por frame",
+   "Correção candidata": "histerese maior / lock assíncrono"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-03",
+  "tipo": "hipotese/risco",
+  "resumo": "`ClearClutterDrawCache()` por frame",
+  "campos": {
+   "Suspeito": "`ClearClutterDrawCache()` por frame",
+   "Evidência": "`world.cpp:11816`",
+   "Como confirmar": "instrumentar tamanho do cache",
+   "Correção candidata": "cache por célula de terreno"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-04",
+  "tipo": "hipotese/risco",
+  "resumo": "`GetLandShadowSmooth` por instância",
+  "campos": {
+   "Suspeito": "`GetLandShadowSmooth` por instância",
+   "Evidência": "`scene.cpp:6169,6188,6211`",
+   "Como confirmar": "contar chamadas/objeto",
+   "Correção candidata": "cache por célula (valor depende da posição)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-05",
+  "tipo": "hipotese/risco",
+  "resumo": "`m_Stats.m_iExecuted++` por instrução",
+  "campos": {
+   "Suspeito": "`m_Stats.m_iExecuted++` por instrução",
+   "Evidência": "`enf_scriptvm.cpp:906`",
+   "Como confirmar": "perfil de cache miss",
+   "Correção candidata": "contador local por thread"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-06",
+  "tipo": "hipotese/risco",
+  "resumo": "`ObjectCollisionLine` por zumbi ocioso",
+  "campos": {
+   "Suspeito": "`ObjectCollisionLine` por zumbi ocioso",
+   "Evidência": "`zombie.cpp:3854`",
+   "Como confirmar": "contar raycasts/frame",
+   "Correção candidata": "agendar por orçamento, não por tempo"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-07",
+  "tipo": "hipotese/risco",
+  "resumo": "viewport não resetado",
+  "campos": {
+   "Suspeito": "viewport não resetado",
+   "Evidência": "`Dx11Device.cpp:129`",
+   "Como confirmar": "captura RenderDoc",
+   "Correção candidata": "setar viewport em `BeginFrame`"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-08",
+  "tipo": "hipotese/risco",
+  "resumo": "`OptimizeLevelRendering` mutante por draw",
+  "campos": {
+   "Suspeito": "`OptimizeLevelRendering` mutante por draw",
+   "Evidência": "`object.cpp:2129`",
+   "Como confirmar": "race detector / TSan",
+   "Correção candidata": "tornar idempotente ou cachear por shape"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-09",
+  "tipo": "hipotese/risco",
+  "resumo": "`shadowCache.Split` por objeto `OnSurface`",
+  "campos": {
+   "Suspeito": "`shadowCache.Split` por objeto `OnSurface`",
+   "Evidência": "`object.cpp:2182`",
+   "Como confirmar": "contar splits por frame",
+   "Correção candidata": "cache de split por shape+LOD"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-10",
+  "tipo": "hipotese/risco",
+  "resumo": "`FreeOnDemandGarbageCollect` por mensagem",
+  "campos": {
+   "Suspeito": "`FreeOnDemandGarbageCollect` por mensagem",
+   "Evidência": "`networkClient.cpp:2933`",
+   "Como confirmar": "contar coletas/s",
+   "Correção candidata": "coletar por orçamento de tempo"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-11",
+  "tipo": "hipotese/risco",
+  "resumo": "hash de PBO divergente se decrypt do header falhar",
+  "campos": {
+   "Suspeito": "hash de PBO divergente se decrypt do header falhar",
+   "Evidência": "`networkClient.cpp:1813-1837`",
+   "Como confirmar": "teste com PBO protegido",
+   "Correção candidata": "tratar falha como erro explícito"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-12",
+  "tipo": "hipotese/risco",
+  "resumo": "broadcast O(N²) de posições a cada 30 s",
+  "campos": {
+   "Suspeito": "broadcast O(N²) de posições a cada 30 s",
+   "Evidência": "`networkServer.cpp:4591-4621`",
+   "Como confirmar": "contar mensagens/s com N players",
+   "Correção candidata": "batch único por jogador"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-13",
+  "tipo": "hipotese/risco",
+  "resumo": "custo de grama cresce com a **área** do retângulo visível, não com a distância",
+  "campos": {
+   "Suspeito": "custo de grama cresce com a **área** do retângulo visível, não com a distância",
+   "Evidência": "`landClutter.cpp:4224,4242-4274`",
+   "Como confirmar": "contar `nResults` por frame",
+   "Correção candidata": "orçamento por distância, não por retângulo"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-14",
+  "tipo": "hipotese/risco",
+  "resumo": "`lodLimit` do clutter recalculado por frame",
+  "campos": {
+   "Suspeito": "`lodLimit` do clutter recalculado por frame",
+   "Evidência": "`landClutter.cpp:4187-4211`",
+   "Como confirmar": "logar valores com câmera parada",
+   "Correção candidata": "cachear por (tipo, resolução, densidade)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-15",
+  "tipo": "hipotese/risco",
+  "resumo": "`_clutterData` lido sem lock durante os jobs",
+  "campos": {
+   "Suspeito": "`_clutterData` lido sem lock durante os jobs",
+   "Evidência": "`landClutter.cpp:4242-4274` `[hipótese]`",
+   "Como confirmar": "race detector / refresh forçado",
+   "Correção candidata": "snapshot imutável por frame"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-16",
+  "tipo": "hipotese/risco",
+  "resumo": "`CreateMaterial` + `PrepareTL` por seção, por objeto",
+  "campos": {
+   "Suspeito": "`CreateMaterial` + `PrepareTL` por seção, por objeto",
+   "Evidência": "`shapeDraw.cpp:139-153`",
+   "Como confirmar": "contar chamadas/frame",
+   "Correção candidata": "cache por (`PolyProperties`, `animColor`)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-17",
+  "tipo": "hipotese/risco",
+  "resumo": "concatenação de seções existe mas **nunca roda** (chamadores passam `end=beg+1`)",
+  "campos": {
+   "Suspeito": "concatenação de seções existe mas **nunca roda** (chamadores passam `end=beg+1`)",
+   "Evidência": "`engdd9.cpp:12283-12301` vs `shapeDraw.cpp:155` e `engdd9.cpp:8728`",
+   "Como confirmar": "contar DIPs = `NSections()`",
+   "Correção candidata": "agrupar seções contíguas no chamador"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-18",
+  "tipo": "hipotese/risco",
+  "resumo": "4 matrizes de onda recalculadas **por seção**",
+  "campos": {
+   "Suspeito": "4 matrizes de onda recalculadas **por seção**",
+   "Evidência": "`engdd9.cpp:12589-12603`",
+   "Como confirmar": "contar `GetSeaWaveMatrices`/frame",
+   "Correção candidata": "calcular 1× por frame no CB global"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-19",
+  "tipo": "hipotese/risco",
+  "resumo": "lote de instancing limitado por VB **e** por `_maxNightInstances`",
+  "campos": {
+   "Suspeito": "lote de instancing limitado por VB **e** por `_maxNightInstances`",
+   "Evidência": "`engdd9.cpp:8746-8764`",
+   "Como confirmar": "medir draws/batch à noite",
+   "Correção candidata": "1 draw por batch; DX11 remove o teto"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-20",
+  "tipo": "hipotese/risco",
+  "resumo": "`CheckShadowSize` recalculado por instância sem cache",
+  "campos": {
+   "Suspeito": "`CheckShadowSize` recalculado por instância sem cache",
+   "Evidência": "`engdd9.cpp:8853-8865`",
+   "Como confirmar": "contar chamadas/frame",
+   "Correção candidata": "cache por objeto + LOD"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-21",
+  "tipo": "hipotese/risco",
+  "resumo": "payload de instância = 5 vec4 em `FREESPACE` (limite de registradores)",
+  "campos": {
+   "Suspeito": "payload de instância = 5 vec4 em `FREESPACE` (limite de registradores)",
+   "Evidência": "`engdd9.cpp:8590-8613`",
+   "Como confirmar": "`MaxInstances()` efetivo",
+   "Correção candidata": "*instance buffer* + `SV_InstanceID`"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-22",
+  "tipo": "hipotese/risco",
+  "resumo": "CB de transformação com `Map/Unmap` **por draw**",
+  "campos": {
+   "Suspeito": "CB de transformação com `Map/Unmap` **por draw**",
+   "Evidência": "`Dx11Renderer.cpp:227-232`",
+   "Como confirmar": "contar maps/frame",
+   "Correção candidata": "CB por frame + offset"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-23",
+  "tipo": "hipotese/risco",
+  "resumo": "`new TLVertexTable` por mesh, por frame, sob lock global",
+  "campos": {
+   "Suspeito": "`new TLVertexTable` por mesh, por frame, sob lock global",
+   "Evidência": "`Dx11EngineCore.cpp:329-335`",
+   "Como confirmar": "medir alocação/tempo em `obDrw`",
+   "Correção candidata": "pool reutilizável + remover lock"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-24",
+  "tipo": "hipotese/risco",
+  "resumo": "`CULL_NONE` global no backend DX11",
+  "campos": {
+   "Suspeito": "`CULL_NONE` global no backend DX11",
+   "Evidência": "`Dx11TLRenderer.cpp:160`",
+   "Como confirmar": "GPUView / overdraw",
+   "Correção candidata": "cull back-face por winding"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-25",
+  "tipo": "hipotese/risco",
+  "resumo": "3 `Map/Unmap` por draw (VB, IB, CB) + IB de identidade",
+  "campos": {
+   "Suspeito": "3 `Map/Unmap` por draw (VB, IB, CB) + IB de identidade",
+   "Evidência": "`Dx11TLRenderer.cpp:234-270`",
+   "Como confirmar": "contar maps e bytes/frame",
+   "Correção candidata": "VB/CB por frame + `Draw` sem IB"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-26",
+  "tipo": "hipotese/risco",
+  "resumo": "swap chain *blt model* (`DISCARD`, 2 buffers)",
+  "campos": {
+   "Suspeito": "swap chain *blt model* (`DISCARD`, 2 buffers)",
+   "Evidência": "`Dx11Device.cpp:41-46`",
+   "Como confirmar": "GPUView / latência de frame",
+   "Correção candidata": "`FLIP_DISCARD` + 3 buffers"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-27",
+  "tipo": "hipotese/risco",
+  "resumo": "depth `D24_UNORM_S8_UINT` (stencil de 8 bits)",
+  "campos": {
+   "Suspeito": "depth `D24_UNORM_S8_UINT` (stencil de 8 bits)",
+   "Evidência": "`Dx11Device.cpp:92`",
+   "Como confirmar": "captura com shadow volume",
+   "Correção candidata": "`D32_FLOAT_S8` ou stencil separado"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-28",
+  "tipo": "hipotese/risco",
+  "resumo": "CB sempre com `Map/Unmap` completo, sem sub-allocation por offset",
+  "campos": {
+   "Suspeito": "CB sempre com `Map/Unmap` completo, sem sub-allocation por offset",
+   "Evidência": "`Dx11ConstantBuffer.cpp:49-54`",
+   "Como confirmar": "contar updates/bytes por frame",
+   "Correção candidata": "CB por frame + offsets alinhados"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-29",
+  "tipo": "hipotese/risco",
+  "resumo": "textura DX11 sem geração de mip (`BindFlags` só `SHADER_RESOURCE`)",
+  "campos": {
+   "Suspeito": "textura DX11 sem geração de mip (`BindFlags` só `SHADER_RESOURCE`)",
+   "Evidência": "`Dx11Texture.cpp:41`",
+   "Como confirmar": "captura com textura de 1 nível / log de `MipLevels`",
+   "Correção candidata": "`MISC_GENERATE_MIPS`+`GenerateMips` ou cadeia obrigatória"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-30",
+  "tipo": "hipotese/risco",
+  "resumo": "cache de shader em `%TEMP%` sem limite total nem eviction",
+  "campos": {
+   "Suspeito": "cache de shader em `%TEMP%` sem limite total nem eviction",
+   "Evidência": "`Dx11ShaderCache.cpp:93-124,205-278`",
+   "Como confirmar": "contar `.bin` e bytes após N boots",
+   "Correção candidata": "LRU por tamanho + limpeza na inicialização"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-31",
+  "tipo": "hipotese/risco",
+  "resumo": "`Dx11TextBank::Load` segura o lock do banco durante I/O de PAC",
+  "campos": {
+   "Suspeito": "`Dx11TextBank::Load` segura o lock do banco durante I/O de PAC",
+   "Evidência": "`Dx11TextBank.cpp:278-283`",
+   "Como confirmar": "medir tempo de `Load` com disco frio",
+   "Correção candidata": "carregar fora do lock + inserir com double-check"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-32",
+  "tipo": "hipotese/risco",
+  "resumo": "busca linear de textura no banco + `FindKey(NULL)`",
+  "campos": {
+   "Suspeito": "busca linear de textura no banco + `FindKey(NULL)`",
+   "Evidência": "`Dx11TextBank.cpp:238-244,300`",
+   "Como confirmar": "contar comparações no boot",
+   "Correção candidata": "hash map nome→índice"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-33",
+  "tipo": "hipotese/risco",
+  "resumo": "cache de 32 texturas sem lock, acessível por 2D e por workers de render",
+  "campos": {
+   "Suspeito": "cache de 32 texturas sem lock, acessível por 2D e por workers de render",
+   "Evidência": "`Dx11EngineCore.cpp:133-171`",
+   "Como confirmar": "TSan / log de vítima por thread",
+   "Correção candidata": "lock por cache ou cache *thread-local* + dono por frame"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-34",
+  "tipo": "hipotese/risco",
+  "resumo": "32 texturas para o mundo inteiro → thrash e re-upload por frame; no caminho de material **um material de 15 stages consome até 15 entradas** (stage 0 reusa `gpuTexture`, então `stageCount-1` misses por material)",
+  "campos": {
+   "Suspeito": "32 texturas para o mundo inteiro → thrash e re-upload por frame; no caminho de material **um material de 15 stages consome até 15 entradas** (stage 0 reusa `gpuTexture`, então `stageCount-1` misses por material)",
+   "Evidência": "`Dx11EngineCore.hpp:114`, `Dx11EngineCore.cpp:158-168`, `:612-649`",
+   "Como confirmar": "contar misses/bytes de upload por frame",
+   "Correção candidata": "cache por orçamento de memória + residency por célula"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-35",
+  "tipo": "hipotese/risco",
+  "resumo": "eviction pode deixar `_polyTexture` apontando para textura liberada",
+  "campos": {
+   "Suspeito": "eviction pode deixar `_polyTexture` apontando para textura liberada",
+   "Evidência": "`Dx11EngineCore.cpp:164-168,182`",
+   "Como confirmar": "rodar 2D com >32 texturas e ASan/debug heap",
+   "Correção candidata": "`Ref<Dx11Texture>` ou índice+geração em vez de ponteiro cru"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-36",
+  "tipo": "hipotese/risco",
+  "resumo": "`SendMsgQueue` não checa `maxPacketSize`; a fragmentação fica por conta do transporte",
+  "campos": {
+   "Suspeito": "`SendMsgQueue` não checa `maxPacketSize`; a fragmentação fica por conta do transporte",
+   "Evidência": "`networkMsg.cpp:3349-3355`, `network.cpp:142`",
+   "Como confirmar": "montar fila garantida > `par.maxPacketSize` e inspecionar se o `DXSendMsg` fatia",
+   "Correção candidata": "validar o tamanho antes de montar ou forçar `NMFGuaranteed`"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-37",
+  "tipo": "hipotese/risco",
+  "resumo": "`msg->size=0` no loopback exclui o BOT do accounting de banda",
+  "campos": {
+   "Suspeito": "`msg->size=0` no loopback exclui o BOT do accounting de banda",
+   "Evidência": "`networkServer.cpp:14435-14438`, `networkClient.cpp:8855-8860`",
+   "Como confirmar": "medir `EstimateBandwidth` com e sem BOT",
+   "Correção candidata": "contabilizar o loopback numa estatística separada"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-38",
+  "tipo": "hipotese/risco",
+  "resumo": "`OnServerSendComplete`/`OnClientSendComplete` vazios: não há retry aplicacional",
+  "campos": {
+   "Suspeito": "`OnServerSendComplete`/`OnClientSendComplete` vazios: não há retry aplicacional",
+   "Evidência": "`networkServer.cpp:3041-3043`, `networkClient.cpp:1904-1906`",
+   "Como confirmar": "forçar perda de pacote e observar se o estado converge sem retransmissão",
+   "Correção candidata": "correlação/retry só se o transporte não garantir"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-39",
+  "tipo": "hipotese/risco",
+  "resumo": "`MissionStatsMessage` anuncia `_objects.card()` creates/updates, mas o JIP pula objetos fora do bubble e já sincronizados",
+  "campos": {
+   "Suspeito": "`MissionStatsMessage` anuncia `_objects.card()` creates/updates, mas o JIP pula objetos fora do bubble e já sincronizados",
+   "Evidência": "`networkServer.cpp:11355-11357,11375,11394-11399,11416-11417`; `networkClient.cpp:2841,5485`",
+   "Como confirmar": "entrar num servidor cheio e medir se `_remainingToCreate` chega a 0",
+   "Correção candidata": "contar apenas o que será realmente enviado ou tratar o progresso como estimativa"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-40",
+  "tipo": "hipotese/risco",
+  "resumo": "`ppaaEnabled` não exclui `_thermalVisionThis`, então PPAA roda depois do passe thermal",
+  "campos": {
+   "Suspeito": "`ppaaEnabled` não exclui `_thermalVisionThis`, então PPAA roda depois do passe thermal",
+   "Evidência": "`d3d9/engdd9.cpp:2594,2600-2618,2840-2848`",
+   "Como confirmar": "ligar SMAA/FXAA e visão térmica e comparar a nitidez/edge da imagem",
+   "Correção candidata": "pular PPAA no thermal ou aplicar antes do `PPFinalThermal`"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-41",
+  "tipo": "hipotese/risco",
+  "resumo": "Com `THREADED_SHADER_COMPILER` ligado, `D3DXMACRO::Definition` aponta para `BString rmNumber` de pilha que morre antes da thread compilar",
+  "campos": {
+   "Suspeito": "Com `THREADED_SHADER_COMPILER` ligado, `D3DXMACRO::Definition` aponta para `BString rmNumber` de pilha que morre antes da thread compilar",
+   "Evidência": "`d3d9/engdd9.cpp:11213,11221-11231,11272,17448-17591`",
+   "Como confirmar": "compilar com a macro em 1 e rodar com shader cache vazio",
+   "Correção candidata": "copiar as strings para o `Job` (ou usar `std::string`/`RString` no array)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "H-42",
+  "tipo": "hipotese/risco",
+  "resumo": "`_cbState` é dimensionado por `GetCPUCount()+1`, mas o limite de 32 canais só tem `Assert`",
+  "campos": {
+   "Suspeito": "`_cbState` é dimensionado por `GetCPUCount()+1`, mas o limite de 32 canais só tem `Assert`",
+   "Evidência": "`d3d9/engdd9.cpp:26777-26780`; `d3d9/engdd9.hpp:4257,4271-4274`",
+   "Como confirmar": "rodar em máquina com >31 CPUs lógicas e forçar uso de todos os canais",
+   "Correção candidata": "limitar `GetCPUCount()` ao máximo suportado ou falhar de forma explícita"
+  },
+  "texto": "`_cbState.Resize(GetCPUCount()+1)` só tem `Assert(Size()<=32)`; em máquinas com >31 CPUs lógicas o limite é violado em release, e qualquer estrutura indexada por canal pode estourar."
+ },
+ {
+  "id": "H-43",
+  "tipo": "hipotese/risco",
+  "resumo": "`_initialized=true` é marcado antes de `InitTexMemEstimations()`, que pode ajustar o orçamento de textura",
+  "campos": {
+   "Suspeito": "`_initialized=true` é marcado antes de `InitTexMemEstimations()`, que pode ajustar o orçamento de textura",
+   "Evidência": "`d3d9/engdd9.cpp:27355-27360`",
+   "Como confirmar": "forçar saída precoce em `InitTexMemEstimations` e verificar se o jogo segue com orçamento antigo",
+   "Correção candidata": "mover a flag para depois da estimativa e do recálculo do text bank"
+  },
+  "texto": "`_initialized=true` antes de `InitTexMemEstimations`; se a estimativa sair cedo ou falhar, o engine se declara pronto com orçamento de textura antigo."
+ },
+ {
+  "id": "H-44",
+  "tipo": "hipotese/risco",
+  "resumo": "O sentinela `Color(-1,-1,-1,-1)` só é \"impossível\" se `Color` preservar negativos; se o construtor saturar em 0..1, o sentinela vira branco e um caso branco pode pular o upload",
+  "campos": {
+   "Suspeito": "O sentinela `Color(-1,-1,-1,-1)` só é \"impossível\" se `Color` preservar negativos; se o construtor saturar em 0..1, o sentinela vira branco e um caso branco pode pular o upload",
+   "Evidência": "`d3d9/engdd9.cpp:19677-19682`; `d3d9/engdd9.cpp:12978,12987`",
+   "Como confirmar": "inicializar o estado com branco e ver se `SetTexture0Color(HWhite,...)` deixa de subir constante",
+   "Correção candidata": "usar um `Color` de referência saturável-safe ou comparar contra `_texture0MaxColor` também pelo alpha"
+  },
+  "texto": "o sentinela `Color(-1,-1,-1,-1)` só é \"impossível\" se `Color` preservar negativos; se o construtor saturar em 0..1, o sentinela vira branco e um caso branco pode pular o upload."
+ },
+ {
+  "id": "H-45",
+  "tipo": "hipotese/risco",
+  "resumo": "Em release, os `DoAssert` de `_vdNonTL/_vsNonTL` não param nada; depois de `DestroyShaderDeclarations` os dois ficam nulos e `SetVertexDeclaration(NULL)`/`SetVertexShader(NULL)` deixam qualquer 2D sem shader",
+  "campos": {
+   "Suspeito": "Em release, os `DoAssert` de `_vdNonTL/_vsNonTL` não param nada; depois de `DestroyShaderDeclarations` os dois ficam nulos e `SetVertexDeclaration(NULL)`/`SetVertexShader(NULL)` deixam qualquer 2D sem shader",
+   "Evidência": "`d3d9/engdd9.cpp:8369-8376,25512-25524`",
+   "Como confirmar": "liberar declarações e desenhar 2D antes do próximo `DoSwitchTL(TLEnabled)`",
+   "Correção candidata": "recriar as declarações sob demanda ou falhar de forma explícita"
+  },
+  "texto": "em release, os `DoAssert` de `_vdNonTL/_vsNonTL` não param nada; depois de `DestroyShaderDeclarations` (`25512-25524`) os dois ficam nulos e `SetVertexDeclaration(NULL)`/`SetVertexShader(NULL)` deixam qualquer 2D sem shader."
+ },
+ {
+  "id": "H-46",
+  "tipo": "hipotese/risco",
+  "resumo": "O cache do avg guarda `avgColor` cru, mas a constante é convertida por `_linearSpace`; o cache do max guarda o valor já convertido",
+  "campos": {
+   "Suspeito": "O cache do avg guarda `avgColor` cru, mas a constante é convertida por `_linearSpace`; o cache do max guarda o valor já convertido",
+   "Evidência": "`d3d9/engdd9.cpp:12978-12992,3426,3077,13895`",
+   "Como confirmar": "trocar `_linearSpace` (início/fim de 3D ou thermal) e redesenhar a mesma textura: o max reenvia, o avg não",
+   "Correção candidata": "guardar também o flag de espaço no cache do avg ou comparar contra o valor convertido"
+  },
+  "texto": "trocar `_linearSpace` em runtime (`3426` liga; `3077`/`13895` desligam) com a mesma textura reenvia o max (o valor convertido muda) mas **pula** o avg (o valor cru não muda), deixando `PSC_T0AvgColor` no espaço antigo."
+ },
+ {
+  "id": "H-47",
+  "tipo": "hipotese/risco",
+  "resumo": "`cratersCount>0` tem precedência sobre `RMShadowBuffer` no cálculo de `rMode`",
+  "campos": {
+   "Suspeito": "`cratersCount>0` tem precedência sobre `RMShadowBuffer` no cálculo de `rMode`",
+   "Evidência": "`d3d9/engdd9.cpp:15898-15902`",
+   "Como confirmar": "desenhar cratera no passe de sombra e inspecionar o VS escolhido",
+   "Correção candidata": "tratar cratera só em `RMCommon` ou assertar `cratersCount==0` no shadow buffer"
+  },
+  "texto": "`cratersCount>0` tem precedência sobre `RMShadowBuffer` (`15898`); se uma cratera for desenhada no passe de sombra, `rMode=RMCrater` seleciona o VS errado."
+ },
+ {
+  "id": "H-48",
+  "tipo": "hipotese/risco",
+  "resumo": "O limite de crateras é só `DoAssert(cratersCount<=14)`; em release, `cratersCount=15` seleciona o próximo enum (`PSSprite`) e valores maiores avançam pela lista",
+  "campos": {
+   "Suspeito": "O limite de crateras é só `DoAssert(cratersCount<=14)`; em release, `cratersCount=15` seleciona o próximo enum (`PSSprite`) e valores maiores avançam pela lista",
+   "Evidência": "`d3d9/engdd9.cpp:18459-18464`; `lib/engine.hpp:504-518`",
+   "Como confirmar": "chamar `DoSelectPixelShader` com `cratersCount>14` e inspecionar o PS usado",
+   "Correção candidata": "clamp ou rejeição explícita antes do cast"
+  },
+  "texto": "o limite de crateras é só `DoAssert(cratersCount<=14)`; em release, `cratersCount=15` seleciona o próximo enum (`PSSprite`) e valores maiores avançam pela lista, podendo chegar a `PSNone`/fora da matriz."
+ },
+ {
+  "id": "H-49",
+  "tipo": "hipotese/risco",
+  "resumo": "`SetBias` grava `_bias` mesmo quando `ProjectionChanged` sai cedo, mas não regenera a matriz; `DoSwitchTL` não reaplica a projeção",
+  "campos": {
+   "Suspeito": "`SetBias` grava `_bias` mesmo quando `ProjectionChanged` sai cedo, mas não regenera a matriz; `DoSwitchTL` não reaplica a projeção",
+   "Evidência": "`d3d9/engdd9.cpp:2094-2105,8438,8441,8329`",
+   "Como confirmar": "chamar `SetBias` com `TLDisabled` (ou em `RMShadowBuffer`), depois `SwitchTL(TLEnabled)` e desenhar sem novo `SetWorldView`",
+   "Correção candidata": "aplicar a projeção pendente no `DoSwitchTL` ou mover o `SetBias` para depois do `SwitchTL`"
+  },
+  "texto": "`SetBias` com TL desligado grava `_bias` mas não atualiza a matriz; `DoSwitchTL` (`8329`) não a reaplica. Hoje todo caminho 3D passa por `SetWorldView` antes do draw (que chama `ProjectionChanged`), então o bias é aplicado tardiamente; inverter a ordem deixaria o bias sem efeito."
+ },
+ {
+  "id": "H-50",
+  "tipo": "hipotese/risco",
+  "resumo": "`ProjectionChanged` filtra só `TLDisabled` (`(!_tlActive)!=TLDisabled` é verdadeiro apenas para 0), não `TLViewspace`; `TLMode` tem três valores",
+  "campos": {
+   "Suspeito": "`ProjectionChanged` filtra só `TLDisabled` (`(!_tlActive)!=TLDisabled` é verdadeiro apenas para 0), não `TLViewspace`; `TLMode` tem três valores",
+   "Evidência": "`d3d9/engdd9.cpp:8438`; `d3d9/engdd9.hpp:3088-3096`; `d3d9/postProcess.cpp:372`",
+   "Como confirmar": "chamar `SetBias`/`SetWorldView` durante `TLViewspace` e inspecionar `VSC_ProjMatrix`",
+   "Correção candidata": "restringir a `_tlActive==TLEnabled` ou tratar `TLViewspace` explicitamente"
+  },
+  "texto": "`ProjectionChanged` filtra apenas `TLDisabled` (`8438`), não `TLViewspace`: um `SetBias`/`SetWorldView` durante o post-process (`postProcess.cpp:372`, `engdd9.cpp:13709`) reescreveria a projeção de câmera no meio do viewspace."
+ },
+ {
+  "id": "H-51",
+  "tipo": "hipotese/risco",
+  "resumo": "`DrawIndexedPrimitive` pega `sMesh.GetVertexBuffer()` sem null-check e indexa `_sections` direto",
+  "campos": {
+   "Suspeito": "`DrawIndexedPrimitive` pega `sMesh.GetVertexBuffer()` sem null-check e indexa `_sections` direto",
+   "Evidência": "`d3d9/engdd9.cpp:12200-12202`",
+   "Como confirmar": "chamar `DrawSectionTL` sem `BeginMeshTL` (malha não travada) e verificar se `GetVertexBuffer()` pode ser nulo",
+   "Correção candidata": "validar `buf` e o intervalo antes do assert"
+  },
+  "texto": "`buf` vem de `GetVertexBuffer()` sem null-check (`12200`); se a malha não estiver travada, `buf->_sections` desreferencia nulo. O contrato com `BeginMeshTL` segura os chamadores atuais."
+ },
+ {
+  "id": "H-52",
+  "tipo": "hipotese/risco",
+  "resumo": "A checagem de faixa de vértices em debug ignora `instanceOffset`; com `nInstances>1` ela valida só a instância 0",
+  "campos": {
+   "Suspeito": "A checagem de faixa de vértices em debug ignora `instanceOffset`; com `nInstances>1` ela valida só a instância 0",
+   "Evidência": "`d3d9/engdd9.cpp:12312-12325`",
+   "Como confirmar": "desenhar N instâncias com o último bloco fora do VB e ver se o `Fail(\"Vertex out of range\")` dispara",
+   "Correção candidata": "somar `instanceOffset` à faixa validada"
+  },
+  "texto": "a validação de faixa de vértices (`12313`) ignora `instanceOffset`; com `nInstances>1` ela só cobre a instância 0 (o próprio comentário `12324` admite que `begVertex/endVertex` não funcionam nesse caso)."
+ },
+ {
+  "id": "H-53",
+  "tipo": "hipotese/risco",
+  "resumo": "O índice de instância no alfa de `BLENDINDICES` pode passar de 32 e ler fora de `instancingItems_33[33]`, sem erro visível",
+  "campos": {
+   "Suspeito": "O índice de instância no alfa de `BLENDINDICES` pode passar de 32 e ler fora de `instancingItems_33[33]`, sem erro visível",
+   "Evidência": "`d3d9/engdd9.cpp:8595,8611`; `lib/d3d9/ShaderSources_3_0/VS.h:16-23`; `VS.hlsl:101`",
+   "Como confirmar": "forçar `BLENDINDICES.a=33` em um vértice e inspecionar a matriz usada",
+   "Correção candidata": "clampar o índice no VS ou validar no build da malha"
+  },
+  "texto": "um índice de instância ≥33 no alfa de `BLENDINDICES` lê fora de `instancingItems_33`; em SM3 a leitura de constante fora da faixa é indefinida (0 ou lixo), sem erro visível."
+ },
+ {
+  "id": "H-54",
+  "tipo": "hipotese/risco",
+  "resumo": "`matMod.* = tlMat.* * _modColor` multiplica o alfa junto; `forcedDiffuse.A()` é o coeficiente de transmissão em `SetPixelShaderConstantDBS`",
+  "campos": {
+   "Suspeito": "`matMod.* = tlMat.* * _modColor` multiplica o alfa junto; `forcedDiffuse.A()` é o coeficiente de transmissão em `SetPixelShaderConstantDBS`",
+   "Evidência": "`d3d9/engdd9.cpp:15660-15665,11496-11499`; `El/Color/colorsFloat.hpp:86-89`; `world.cpp:8854,8935,10469`",
+   "Como confirmar": "chamar `SetModulateColor` com alfa < 1 e medir opacidade/transmissão de um polígono T&L",
+   "Correção candidata": "separar alfa da modulação ou forçar alfa 1 no `matMod`"
+  },
+  "texto": "`matMod.* = tlMat.* * _modColor` multiplica o alfa; se um chamador futuro passar `_modColor` com alfa < 1, o coeficiente de transmissão (`forcedDiffuse.A()`) e o alfa de todos os materiais T&L mudam juntos."
+ },
+ {
+  "id": "H-55",
+  "tipo": "hipotese/risco",
+  "resumo": "`SetupInstancesSprite` desreferencia `instances[i]._object` sem null-check, embora seja virtual e pública",
+  "campos": {
+   "Suspeito": "`SetupInstancesSprite` desreferencia `instances[i]._object` sem null-check, embora seja virtual e pública",
+   "Evidência": "`d3d9/engdd9.cpp:8630,8642`; `d3d9/engdd9.hpp:5818`",
+   "Como confirmar": "chamar `SetupInstancesSprite` com uma instância de `_object` nulo",
+   "Correção candidata": "validar e cair no caminho genérico"
+  },
+  "texto": "`instances[i]._object` é desreferenciado sem null-check (`8630,8642`); os chamadores atuais garantem não-nulo (`DrawMeshTLInstanced:8785`), mas a função é virtual e pública (`engdd9.hpp:5818`)."
+ },
+ {
+  "id": "H-56",
+  "tipo": "hipotese/risco",
+  "resumo": "O chunk de `DrawMeshTLInstanced` usa o `SetupInstances` da primeira instância para todas as N do chunk, sem verificar homogeneidade",
+  "campos": {
+   "Suspeito": "O chunk de `DrawMeshTLInstanced` usa o `SetupInstances` da primeira instância para todas as N do chunk, sem verificar homogeneidade",
+   "Evidência": "`d3d9/engdd9.cpp:8785-8792`",
+   "Como confirmar": "montar um lote misto de `Cloudlet` (sprite) e objeto comum e inspecionar as constantes",
+   "Correção candidata": "exigir mesma declaração/tipo por chunk ou dividir o lote"
+  },
+  "texto": "o chunk usa `SetupInstances` da **primeira** instância para todas as `newInstances`; se o lote misturar objetos/tipos, o layout de constantes fica errado. O batching atual parece agrupar por tipo, mas a função não verifica."
+ },
+ {
+  "id": "H-57",
+  "tipo": "hipotese/risco",
+  "resumo": "`DrawShadowVolumeInstanced` desreferencia `instances[i]._object` e `GScene` sem null-check no laço que calcula o tamanho da sombra",
+  "campos": {
+   "Suspeito": "`DrawShadowVolumeInstanced` desreferencia `instances[i]._object` e `GScene` sem null-check no laço que calcula o tamanho da sombra",
+   "Evidência": "`d3d9/engdd9.cpp:8857,8860`; `engine.hpp:1678`",
+   "Como confirmar": "chamar com lote de `_object` nulo ou cena nula",
+   "Correção candidata": "validar antes do laço e cair no caminho unitário"
+  },
+  "texto": "`instances[i]._object` (`8857`) e `GScene` (`8860`) são desreferenciados sem null-check num laço que roda antes de qualquer guarda; a função é virtual e pública (`engine.hpp:1678`)."
+ },
+ {
+  "id": "H-58",
+  "tipo": "hipotese/risco",
+  "resumo": "`EndMeshTL` desreferencia `vb` sem null-check, embora seja virtual e pública; o contrato depende de todo chamador estar sob `if(ok)`",
+  "campos": {
+   "Suspeito": "`EndMeshTL` desreferencia `vb` sem null-check, embora seja virtual e pública; o contrato depende de todo chamador estar sob `if(ok)`",
+   "Evidência": "`d3d9/engdd9.cpp:9280-9281`; `engdd9.hpp:5844`",
+   "Como confirmar": "chamar `EndMeshTL` após um `BeginMeshTL` que falhou",
+   "Correção candidata": "guardar o VB no `RendState` ou validar antes do `Unlock`"
+  },
+  "texto": "`EndMeshTL` desreferencia `vb` sem null-check (`9281`); hoje todos os chamadores estão sob `if(ok)`, mas a função é virtual e pública (`engdd9.hpp:5844`) e um `ReleaseVBuffer` entre Begin e End deixaria o ponteiro nulo."
+ },
+ {
+  "id": "H-59",
+  "tipo": "hipotese/risco",
+  "resumo": "`_night` não é escrito no caminho térmico (`SetupLights` retorna antes de `7998`) e herda o valor do draw anterior",
+  "campos": {
+   "Suspeito": "`_night` não é escrito no caminho térmico (`SetupLights` retorna antes de `7998`) e herda o valor do draw anterior",
+   "Evidência": "`d3d9/engdd9.cpp:7958-7973,7998`; `16123`",
+   "Como confirmar": "desenhar objeto térmico após um objeto noturno e após um diurno, comparando `nightMul`",
+   "Correção candidata": "escrever `_night` também no ramo térmico ou isolá-lo por canal"
+  },
+  "texto": "no térmico `_night` **não é escrito** (`7958-7973` retorna antes de `7998`), então herda o valor do draw anterior. Hoje o único leitor é `nightMul` em `16123`, onde a lista térmica está vazia e o laço não roda; fica latente para qualquer uso futuro."
+ },
+ {
+  "id": "H-60",
+  "tipo": "hipotese/risco",
+  "resumo": "`SetupMaterialLights` no ramo `ML_None` não escreve `VSC_LDirectionGround` (linha comentada) e deixa a constante do material anterior",
+  "campos": {
+   "Suspeito": "`SetupMaterialLights` no ramo `ML_None` não escreve `VSC_LDirectionGround` (linha comentada) e deixa a constante do material anterior",
+   "Evidência": "`d3d9/engdd9.cpp:8190-8204`",
+   "Como confirmar": "desenhar um material `ML_None` logo após um `ML_Sun` e inspecionar o registrador de ground",
+   "Correção candidata": "escrever preto no ramo `ML_None` ou garantir que nenhum VS leia ground nesse modo"
+  },
+  "texto": "`ML_None` não escreve `VSC_LDirectionGround` (`8195` comentado); um VS que leia ground nesse modo herda o valor do material anterior."
+ },
+ {
+  "id": "H-61",
+  "tipo": "hipotese/risco",
+  "resumo": "`SetWorldView` e `ProjectionChanged` desreferenciam `camera` e `_sceneProps` sem null-check, embora chequem `GScene`",
+  "campos": {
+   "Suspeito": "`SetWorldView` e `ProjectionChanged` desreferenciam `camera` e `_sceneProps` sem null-check, embora chequem `GScene`",
+   "Evidência": "`d3d9/engdd9.cpp:8316-8317,8451,8469`",
+   "Como confirmar": "chamar com `GScene` válido mas câmera ou `_sceneProps` nulos",
+   "Correção candidata": "validar `camera`/`_sceneProps` antes do uso"
+  },
+  "texto": "`camera` (`8316-8317`, `8451`) e `_sceneProps` (`8469`) são desreferenciados sem null-check, embora `GScene` seja checado."
+ },
+ {
+  "id": "H-62",
+  "tipo": "hipotese/risco",
+  "resumo": "`DoSwitchTL` só asserta `cb<0` em debug ao desligar TL; em release um canal gravado recebe os objetos globais `_vsNonTL`/`_vdNonTL`",
+  "campos": {
+   "Suspeito": "`DoSwitchTL` só asserta `cb<0` em debug ao desligar TL; em release um canal gravado recebe os objetos globais `_vsNonTL`/`_vdNonTL`",
+   "Evidência": "`d3d9/engdd9.cpp:8362,8371-8374`; `engdd9.hpp:3254-3256`",
+   "Como confirmar": "gravar `SwitchTL(TLDisabled)` num canal `cb>=0` e reproduzir depois",
+   "Correção candidata": "exigir canal imediato em release ou guardar VS/VD non-TL por canal"
+  },
+  "texto": "`Assert(cb<0)` (`8362`) só vale em debug; em release, desligar TL num canal gravado grava `_vsNonTL`/`_vdNonTL` globais e a reprodução usa o shader errado."
+ },
+ {
+  "id": "H-63",
+  "tipo": "hipotese/risco",
+  "resumo": "`SetBias` só chama `ProjectionChanged` com `_tlActive==TLEnabled`, embora `ProjectionChanged` aceite `TLViewspace`",
+  "campos": {
+   "Suspeito": "`SetBias` só chama `ProjectionChanged` com `_tlActive==TLEnabled`, embora `ProjectionChanged` aceite `TLViewspace`",
+   "Evidência": "`d3d9/engdd9.cpp:2100-2103,8438`",
+   "Como confirmar": "definir bias num canal em `TLViewspace` e conferir se `VSC_ProjMatrix` muda",
+   "Correção candidata": "tratar `TLViewspace` como `TLEnabled` no refresh ou documentar que bias só vale no caminho 3D"
+  },
+  "texto": "`SetBias` só chama `ProjectionChanged` com `_tlActive==TLEnabled` (`2100`); `ProjectionChanged` aceita `TLViewspace` (`8438`). Se um efeito de post-process definir bias em view-space, a projeção não é atualizada até outro `SetBias`/`SetWorldView`."
+ },
+ {
+  "id": "H-64",
+  "tipo": "hipotese/risco",
+  "resumo": "Pontos do DX11 marcados como não confiáveis pelos próprios devs (\"not working\", \"not sure if this is right\")",
+  "campos": {
+   "Suspeito": "Pontos do DX11 marcados como não confiáveis pelos próprios devs (\"not working\", \"not sure if this is right\")",
+   "Evidência": "`d3d11/engdd11.cpp:9925,14791`",
+   "Como confirmar": "reproduzir os efeitos pós-processo no DX11 e comparar imagem com o DX9",
+   "Correção candidata": "revisar esses pontos antes de tratar o DX11 como equivalente ao DX9"
+  },
+  "texto": "`lib/d3d11/engdd11.cpp:9925` (\"not working\") e `14791` (\"not sure if this is right\") → pontos do DX11 marcados como **não confiáveis pelos próprios devs**; [hipótese] podem produzir resultado visual incorreto sem erro visível."
+ },
+ {
+  "id": "H-65",
+  "tipo": "hipotese/risco",
+  "resumo": "O assert `DoAssert(_end3DRequested)` tem \"TODO: make this assert working\" e foi copiado para o DX11",
+  "campos": {
+   "Suspeito": "O assert `DoAssert(_end3DRequested)` tem \"TODO: make this assert working\" e foi copiado para o DX11",
+   "Evidência": "`d3d9/engdd9.cpp:10104`; `d3d11/engdd11.cpp:12950`",
+   "Como confirmar": "encerrar um frame 3D sem fechar o passe e ver se nenhum diagnóstico dispara",
+   "Correção candidata": "implementar o assert ou remover o marcador para não dar falsa sensação de verificação"
+  },
+  "texto": "`lib/d3d11/engdd11.cpp:12950` e `lib/d3d9/engdd9.cpp:10104` (\"DoAssert(_end3DRequested); // TODO: make this assert working\") → o assert nunca foi implementado em nenhum dos dois backends; [hipótese] um estado 3D não finalizado passa sem diagnóstico."
+ },
+ {
+  "id": "H-66",
+  "tipo": "hipotese/risco",
+  "resumo": "vsync e SRGB não tratados no DX11, marcados como \"DX11 TODO\"",
+  "campos": {
+   "Suspeito": "vsync e SRGB não tratados no DX11, marcados como \"DX11 TODO\"",
+   "Evidência": "`d3d11/engdd11.cpp:11644`; `d3d11/postProcessDX11.cpp:9147,9294`",
+   "Como confirmar": "rodar o DX11 em janela e checar tearing e gama de cor",
+   "Correção candidata": "implementar vsync no swap chain e converter para SRGB na saída"
+  },
+  "texto": "`lib/d3d11/engdd11.cpp:11644` (vsync) e `lib/d3d11/postProcessDX11.cpp:9147,9294` (SRGB) → vsync e SRGB não tratados no DX11; [hipótese] tearing e gama errada, coerente com G-02 (gamma só armazenado) e com `Present(1)` forçado."
+ },
+ {
+  "id": "G-01",
+  "tipo": "glossario",
+  "resumo": "Depth `D32_FLOAT` em vez de `D24S8`",
+  "campos": {
+   "Melhoria": "Depth `D32_FLOAT` em vez de `D24S8`",
+   "Onde": "`Dx11Device.cpp:92`",
+   "Custo": "baixo",
+   "Ganho visual": "elimina z-fighting em objetos distantes"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-02",
+  "tipo": "glossario",
+  "resumo": "Swap chain `_SRGB` + views SRGB",
+  "campos": {
+   "Melhoria": "Swap chain `_SRGB` + views SRGB",
+   "Onde": "`Dx11Device.cpp:40`",
+   "Custo": "baixo",
+   "Ganho visual": "gamma/cores corretos"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-03",
+  "tipo": "glossario",
+  "resumo": "FXAA/SMAA pós-processo",
+  "campos": {
+   "Melhoria": "FXAA/SMAA pós-processo",
+   "Onde": "novo passe em `Dx11RenderTarget`",
+   "Custo": "médio",
+   "Ganho visual": "serrilhado (hoje **não há AA**)"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-04",
+  "tipo": "glossario",
+  "resumo": "Shadow map em vez de volume",
+  "campos": {
+   "Melhoria": "Shadow map em vez de volume",
+   "Onde": "`Dx11StateTranslator` + shaders",
+   "Custo": "alto",
+   "Ganho visual": "sombras suaves e baratas"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-05",
+  "tipo": "glossario",
+  "resumo": "Oclusão por queries (HiZ)",
+  "campos": {
+   "Melhoria": "Oclusão por queries (HiZ)",
+   "Onde": "novo",
+   "Custo": "médio",
+   "Ganho visual": "menos overdraw em cidade"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-06",
+  "tipo": "glossario",
+  "resumo": "Instancing acima de 512",
+  "campos": {
+   "Melhoria": "Instancing acima de 512",
+   "Onde": "`scene.cpp:6116`",
+   "Custo": "baixo",
+   "Ganho visual": "menos draw calls"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-07",
+  "tipo": "glossario",
+  "resumo": "Streaming de textura com LRU",
+  "campos": {
+   "Melhoria": "Streaming de textura com LRU",
+   "Onde": "`Dx11EngineCore` (`TextureCacheSize = 32`)",
+   "Custo": "médio",
+   "Ganho visual": "menos stall de textura"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-08",
+  "tipo": "glossario",
+  "resumo": "Clutter por GPU (instanced grass)",
+  "campos": {
+   "Melhoria": "Clutter por GPU (instanced grass)",
+   "Onde": "`landClutter.cpp`",
+   "Custo": "alto",
+   "Ganho visual": "grama densa sem custo de CPU"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-09",
+  "tipo": "glossario",
+  "resumo": "LOD temporal (não recalcular LOD todo frame)",
+  "campos": {
+   "Melhoria": "LOD temporal (não recalcular LOD todo frame)",
+   "Onde": "`scene.cpp:6196`",
+   "Custo": "médio",
+   "Ganho visual": "menos CPU por objeto"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-10",
+  "tipo": "glossario",
+  "resumo": "`PIX`/`RenderDoc` no CI",
+  "campos": {
+   "Melhoria": "`PIX`/`RenderDoc` no CI",
+   "Onde": "processo",
+   "Custo": "baixo",
+   "Ganho visual": "regressão visual detectada cedo"
+  },
+  "texto": ""
+ },
+ {
+  "id": "G-11",
+  "tipo": "glossario",
+  "resumo": "Filtro anisotrópico 8×/16× em vez de `MaxAnisotropy=1`",
+  "campos": {
+   "Melhoria": "Filtro anisotrópico 8×/16× em vez de `MaxAnisotropy=1`",
+   "Onde": "`Dx11Texture.cpp:209,217`",
+   "Custo": "baixo",
+   "Ganho visual": "chão/estrada nítidos em ângulo rasante"
+  },
+  "texto": ""
+ }
+]

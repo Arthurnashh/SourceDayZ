@@ -1,0 +1,403 @@
+﻿diff --git antes/lib/Shape/shape.cpp depois/lib/Shape/shape.cpp
+index 70aaf4c..b0c6206 100644
+--- antes/lib/Shape/shape.cpp
++++ depois/lib/Shape/shape.cpp
+@@ -2490,12 +2490,13 @@ void Shape::Clear()
+   _sel.Clear();
+   _prop.Clear();
+   _phase.Clear();
+   
+   _face.Clear();
+   _texArea.Clear();
++  _texAreaDraw.Clear();
+   base::ReleaseTables();
+ }
+ 
+ void Shape::ClearSelections()
+ {
+   _sel.Clear();
+@@ -4201,12 +4202,15 @@ void Shape::FindSections(const LODShape *lodShape, bool forceMaterial0)
+   }
+ 
+   // Set the vertex declaration according to sections
+   VertexDeclarationNeedsUpdate();
+ 
+   SetCanBeInstanced();
++
++  // sections may have been regrouped or given new materials
++  _texAreaDraw.Clear();
+ }
+ 
+ void Shape::SetAsOneSection(const ShapeSectionInfo &sec)
+ {
+   ShapeSection ss;
+   ss.SetInfo(sec);
+@@ -4214,12 +4218,14 @@ void Shape::SetAsOneSection(const ShapeSectionInfo &sec)
+   ss.end = EndFaces();
+ 
+   Faces().SetSections(&ss,1);
+ 
+   // Set the vertex declaration according to sections
+   VertexDeclarationNeedsUpdate();
++
++  _texAreaDraw.Clear();
+ }
+ 
+ void Shape::CheckPushbufferCanBeUsed() const
+ {
+   // In case some selections need sections, it looks like the shape is animated and must not be pushbuffered
+   for (int i = 0; i < NNamedSel(); i++)
+@@ -4229,19 +4235,20 @@ void Shape::CheckPushbufferCanBeUsed() const
+     {
+       DisablePushBuffer();
+       return;
+     }
+   }
+ 
+-// HOTFIX: causing Multiple floating point traps in Texture::PrepareAndCheckMipmapLevel() - areaOTex == 1.#INF000
+-/*
+-  if (_canUsePushBuffer)
++  // Ordinary objects do not have _texArea built (only the landscape loader does).
++  // Build the draw-time index once so PrepareTextures can walk unique textures
++  // instead of rescanning every section and material stage on each object draw.
++  // Animated shapes (pushbuffer disabled) and landscape shapes keep the old path.
++  if (_canUsePushBuffer && !_texArea._valid && !_texAreaDraw._valid)
+   {
+-    unconst_cast(this)->BuildTexAreaIndex();
++    unconst_cast(this)->BuildTexAreaDrawIndex();
+   }
+-*/
+ }
+ 
+ void Shape::SetCanBeInstanced()
+ {
+   _canBeInstanced = true;
+   for (int i = 0; i < NSections(); i++)
+@@ -4588,23 +4595,27 @@ void Shape::SetUniformMaterial(TexMaterial *material)
+   // Go through all the sections
+   for (int i = 0; i < NSections(); i++)
+   {
+     ShapeSection &sec = GetSection(i);
+     sec.SetMaterialExt(material);
+   }
++  // the draw-time texture index keeps pointers into the old material stages
++  _texAreaDraw.Clear();
+ }
+ 
+ void Shape::SetUniformMaterial(TexMaterial *material, Texture *texture)
+ {
+   // Go through all the sections
+   for (int i = 0; i < NSections(); i++)
+   {
+     ShapeSection &sec = GetSection(i);
+     sec.SetMaterialExt(material);
+     sec.SetTexture(texture);
+   }
++  // the draw-time texture index keeps pointers into the old material stages
++  _texAreaDraw.Clear();
+ }
+ 
+ void Shape::SetUniformMaterialEmmisiveColor(const Color &color)
+ {
+   // Go through all the sections
+   for (int i = 0; i < NSections(); i++)
+@@ -5860,40 +5871,50 @@ void Shape::RecalculateAreas()
+           LogF("%s: UV mapping too varied on %s, stage %d: texel size used %g, max %g, min %g",
+             GETREPORTSTACK(),cc_cast(tex->GetName()),uvStage,texelSizeUsed,texelSizeMax,texelSizeMin);
+         }
+       }
+     }
+   }
++  // AOT values are baked into the draw-time index
++  _texAreaDraw.Clear();
+ }
+ 
+ TexAreaIndex::TexAreaIndex()
+ {
+   _valid = false;
+ }
+ 
+ /**
+ We want to track aot min value (saturateMax in Shape::RecalculateAreas does min)
+ */
+-void TexAreaIndex::AddItem(const RefR<Texture> *tex, float aot, bool someDataWanted)
++void TexAreaIndex::AddItem(const RefR<Texture> *tex, float aot, bool someDataWanted, float z2Scale, bool forceMipmap0)
+ {
+-  Assert(_finite(aot));
+-  // check if the texture is already there
++  // FLT_MAX is used as "request the best mipmap". Do not let it (or an invalid
++  // AOT produced by a broken model) overflow when multiplied by the camera AOT
++  // factor - that was the source of the historical 1.#INF000 trap.
++  static const float MAX_SAFE_AOT = 1e20f;
++  if (!_finite(aot) || aot > MAX_SAFE_AOT) aot = MAX_SAFE_AOT;
++  Assert(aot>=0);
++
++  // check if the texture is already there with the same mipmap scaling
+   for (int i=0; i<_items.Size(); i++)
+   {
+-    if (*_items[i]._tex==*tex)
+-    {
+-      saturateMax(_items[i]._aot,aot);
+-      if (someDataWanted) _items[i]._someDataWanted = someDataWanted;
+-      return;
+-    }
++    if (*_items[i]._tex!=*tex) continue;
++    if (_items[i]._z2Scale!=z2Scale) continue;
++    if (_items[i]._forceMipmap0!=forceMipmap0) continue;
++    saturateMax(_items[i]._aot,aot);
++    if (someDataWanted) _items[i]._someDataWanted = true;
++    return;
+   }
+    
+   Item &item = _items.Append();
+   item._tex = tex;
+   item._aot = aot;
++  item._z2Scale = z2Scale;
+   item._someDataWanted = someDataWanted;
++  item._forceMipmap0 = forceMipmap0;
+ }
+ 
+ void TexAreaIndex::Clear()
+ {
+   _valid = false;
+   _items.Clear();
+diff --git antes/lib/Shape/shape.hpp depois/lib/Shape/shape.hpp
+index 0174a20..07e6c82 100644
+--- antes/lib/Shape/shape.hpp
++++ depois/lib/Shape/shape.hpp
+@@ -524,27 +524,31 @@ public:
+   struct Item
+   {
+     /// where can be a Ref to the texture are we tracking found
+     const RefR<Texture> *_tex;
+     /// Area Over Texture for both principal and additional UV coordinates
+     float _aot;
++    /// z2 scale applied to this texture when preparing mipmaps (UV scale of the texgen)
++    float _z2Scale;
+     /// sometimes we want some mip to be present
+     bool _someDataWanted;
++    /// stage does not use UV mapping - only mipmap 0 can be requested
++    bool _forceMipmap0;
+     
+     ClassIsSimple(Item)
+   };
+   
+   /// list of tracked textures
+   AutoArray<Item> _items;
+   /// is the list computed?
+   bool _valid;
+   
+   TexAreaIndex();
+   
+   /// add or update a texture reference
+-  void AddItem(const RefR<Texture> *tex, float aot, bool someDataWanted);
++  void AddItem(const RefR<Texture> *tex, float aot, bool someDataWanted, float z2Scale=1.0f, bool forceMipmap0=false);
+   
+   void Clear();
+ };
+ 
+ /// describe a hierarchy of bones
+ /** 
+@@ -799,12 +803,19 @@ private:
+   /*!
+     One face consists from several indices. Indices refer to vertices from vertex table.
+   */
+   FaceArray _face;
+   /// tex.area information for all textures, used to optimize mipmap handling
+   TexAreaIndex _texArea;
++  /// tex.area index built from all sections, used by ordinary object shapes
++  /**
++    Separate from _texArea, which is built by the landscape loader and keeps its
++    historical mipmap behaviour. This index mirrors the section scan used by
++    Shape::PrepareTextures and is built lazily when the vertex buffer is created.
++  */
++  TexAreaIndex _texAreaDraw;
+   
+   /// area of all non-proxy faces in the shape
+   float _faceArea;
+   
+   //! Declaration mask computed in the constructor from all sections
+   //int _vertexDeclarationMask;
+@@ -939,12 +950,16 @@ public:
+   }
+   
+   /// build TexAreaIndex from sections
+   void BuildTexAreaIndex(TexAreaIndex &tgt) const;
+   /// special case - build _texArea from sections
+   void BuildTexAreaIndex(){BuildTexAreaIndex(_texArea);}
++  /// build _texAreaDraw, mirroring the per-section scan in Shape::PrepareTextures
++  void BuildTexAreaDrawIndex();
++  /// drop _texAreaDraw if sections/materials changed
++  void InvalidateTexAreaDrawIndex(){_texAreaDraw.Clear();}
+ 
+   /// check if _texArea is valid
+   bool CheckTexAreaIndex() const;
+   
+   int GetShapePropertiesNeeded() const {return _shapePropertiesNeeded;}
+   void UpdateShapePropertiesNeeded();
+@@ -1460,12 +1475,14 @@ public:
+   }
+ 
+   __forceinline const PolyProperties &GetSection(const Shape *shape, int i) const
+   {
+     return _loadedSections ? _sections[i] : shape->_face._sections[i];
+   }
++  /// true when SetSection was used and base sections no longer describe this context
++  __forceinline bool SectionsChanged() const {return _loadedSections;}
+   // load the context if needed
+   __forceinline PolyProperties &SetSection(const Shape *shape, int i)
+   {
+     LoadSections(shape); return _sections[i];
+   }
+ 
+diff --git antes/lib/shapeDraw.cpp depois/lib/shapeDraw.cpp
+index e7f5150..f56e498 100644
+--- antes/lib/shapeDraw.cpp
++++ depois/lib/shapeDraw.cpp
+@@ -1591,37 +1591,135 @@ static inline void RepairAreaOfTexture(float &areaOfTexture)
+   static const float MIN_AREA_OVER_TEX = 1.5f;
+   if (areaOfTexture < MIN_AREA_OVER_TEX)
+     areaOfTexture = MIN_AREA_OVER_TEX;
+ #endif
+ }
+ 
++/**
++Build the draw-time texture index for ordinary object shapes.
++
++This mirrors the section scan in Shape::PrepareTextures, including the
++minimum AreaOverTexture hotfix and the UV scale used for each material stage.
++It is kept separate from _texArea because the landscape loader uses that index
++with different (historical) mipmap semantics.
++*/
++void Shape::BuildTexAreaDrawIndex()
++{
++  // attribute the one-time cost to vertex buffer creation; this runs right
++  // after the buffer is created (see Shape::CheckPushbufferCanBeUsed)
++  TimeManagerScope scope(TCCreateVertexBuffer);
++
++  _texAreaDraw.Clear();
++
++  // Stages using the landscape environment texture are replaced at draw time
++  // by GLandscape->GetEnvTexture(). A Ref pointer would not follow that swap,
++  // so such shapes must keep using the section scan.
++  for (int s=0; s<NSections(); s++)
++  {
++    const ShapeSection &sec = GetSection(s);
++    TexMaterial *mat = sec.GetMaterialExt();
++    if (!mat) continue;
++    mat->Load();
++    #if _ARMA3_ENV_MAPS
++      for (int i=0; i<mat->_stageCount+1; i++)
++      {
++        if (mat->_stage[i]._useWorldEnvMap) return;
++      }
++    #endif
++  }
++
++  for (int s=0; s<NSections(); s++)
++  {
++    const ShapeSection &sec = GetSection(s);
++
++    if (sec.GetTexture())
++    {
++      _texAreaDraw.AddItem(sec.GetTextureBackPointer(),sec.GetAreaOverTex(0),false);
++    }
++
++    TexMaterial *mat = sec.GetMaterialExt();
++    if (!mat) continue;
++    mat->Load();
++
++    for (int i=0; i<mat->_stageCount+1; i++)
++    {
++      const TexStageInfo &stage = mat->_stage[i];
++      if (!stage._tex) continue;
++      bool someDataWanted = stage._tex->Type()==TT_Diffuse && i!=0;
++
++      float uvScale = mat->GetUVScale(i);
++      if (uvScale>=0.0f)
++      {
++        int uvStage = mat->GetUVStage(i);
++        float areaOTex = sec.GetAreaOverTex(uvStage);
++        RepairAreaOfTexture(areaOTex);
++        // z2 is scaled by uvScale at draw time, exactly like the scan path
++        _texAreaDraw.AddItem(&stage._tex,areaOTex,someDataWanted,uvScale,false);
++      }
++      else
++      {
++        // No relation to UV mapping - the scan path only forces mipmap 0
++        _texAreaDraw.AddItem(&stage._tex,1.0f,someDataWanted,1.0f,true);
++      }
++    }
++  }
++
++  _texAreaDraw._items.Compact();
++  _texAreaDraw._valid = true;
++}
++
+ void Shape::PrepareTextures(float z2, AnimationContext *animContext, int special, bool prepareBaseTextureOnly) const
+ {
+   PROFILE_SCOPE_GRF(prpTx,0);
+ 
+   if( special&::BestMipmap )
+   {
+     z2 = 0; // force special handling
+     special &= ~::BestMipmap; // we have handled it, do not pass it any more
+   }
+ 
+   float aotFactor = GScene->GetCamera()->GetAOTFactor();
+-  if (!prepareBaseTextureOnly && _texArea._valid)
++  if (!prepareBaseTextureOnly)
+   {
+-    PROFILE_SCOPE_DETAIL_EX(prpIX,prpTx);
+-    for (int i=0; i<_texArea._items.Size(); i++)
++    // the landscape index keeps its historical behaviour
++    const TexAreaIndex *areaIndex = _texArea._valid ? &_texArea : NULL;
++
++    // _texAreaDraw is built from base sections, so it cannot be used when the
++    // animation context replaced sections or when TI textures must be prepared
++    // from the material stages.
++    if (!areaIndex && _texAreaDraw._valid)
+     {
+-      const TexAreaIndex::Item &item = _texArea._items[i];
+-      Texture *txt = *item._tex;
+-      // txt is usually not NULL, but some animation might have set it to NULL
+-      if (!txt) continue;
+-      float areaOTex = item._aot;
+-      Assert(areaOTex>=0);
+-      txt->PrepareTextureScr(z2,special,areaOTex*aotFactor);
++      if ((!animContext || !animContext->SectionsChanged()) && !GEngine->GetThermalVision())
++      {
++        areaIndex = &_texAreaDraw;
++      }
++    }
++
++    if (areaIndex)
++    {
++      PROFILE_SCOPE_DETAIL_EX(prpIX,prpTx);
++      for (int i=0; i<areaIndex->_items.Size(); i++)
++      {
++        const TexAreaIndex::Item &item = areaIndex->_items[i];
++        Texture *txt = *item._tex;
++        // txt is usually not NULL, but some animation might have set it to NULL
++        if (!txt) continue;
++
++        if (item._forceMipmap0)
++        {
++          txt->LoadHeaders();
++          txt->PrepareMipmap0(true);
++          continue;
++        }
++
++        float areaOTex = item._aot;
++        Assert(areaOTex>=0);
++        txt->PrepareTextureScr(z2*item._z2Scale,special,areaOTex*aotFactor);
++      }
++      return;
+     }
+-    return;
+   }
+   PROFILE_SCOPE_DETAIL_EX(prpSc,prpTx);
+   // hint mipmap for all textures used on this shape
+   for (int s=0; s<NSections(); s++)
+   {
+     // TI AOT and scale determined by the stage the TI texture will shader same UV coordinates with (this stage is determined as a "Mate")

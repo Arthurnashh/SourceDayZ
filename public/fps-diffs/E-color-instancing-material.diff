@@ -1,0 +1,168 @@
+﻿diff --git antes/lib/d3d9/engdd9.cpp depois/lib/d3d9/engdd9.cpp
+index 78b7ba4..5f015c6 100644
+--- antes/lib/d3d9/engdd9.cpp
++++ depois/lib/d3d9/engdd9.cpp
+@@ -15690,16 +15690,38 @@ void EngineDD9::PrepareTriangleTL(
+   matMod.forcedDiffuse = matMod.forcedDiffuse*_modColor;
+   matMod.emmisive = matMod.emmisive*_modColor;
+   matMod.specular = matMod.specular*_modColor;
+ 
+   // Set the material and combine material and main light color
+   DoSetMaterial(cb, matMod);
+ }
+ 
++void EngineDD9::ApplyMaterialTL(int cb, const TLMaterial &tlMat)
++{
++  // Depth priming renders with PSAlphaOnly shaders and never writes color.
++  // Material and light constants are not consumed in this pass - keep the
++  // same early return as PrepareTriangleTL.
++  if (_renderingMode==RMDPrime || _renderingMode==RMZPrime) return;
++
++  // make color information from the texture
++  // to be a part of the material
++  TLMaterial matMod = tlMat;
++  matMod.ambient = matMod.ambient*_modColor;
++  matMod.diffuse = matMod.diffuse*_modColor;
++  matMod.forcedDiffuse = matMod.forcedDiffuse*_modColor;
++  matMod.emmisive = matMod.emmisive*_modColor;
++  matMod.specular = matMod.specular*_modColor;
++
++  // Set the material and combine material and main light color.
++  // This is the only instance-dependent part of PrepareTriangleTL: the light
++  // direction is transformed to object space using the current world matrix.
++  DoSetMaterial(cb, matMod);
++}
++
+ void EngineDD9::DrawDecal(
+   int cb, Vector3Par screen, float rhw, float sizeX, float sizeY, PackedColor color,
+   const MipInfo &mip, const TexMaterial *mat, int specFlags
+ )
+ {
+   if (_backgroundD3D!=RecHighLevel)
+   {
+     DoDrawDecal(cb,screen,rhw,sizeX,sizeY,color,mip,mat,specFlags);
+diff --git antes/lib/d3d9/engdd9.hpp depois/lib/d3d9/engdd9.hpp
+index 1219a5a..fe8a741 100644
+--- antes/lib/d3d9/engdd9.hpp
++++ depois/lib/d3d9/engdd9.hpp
+@@ -5736,16 +5736,24 @@ protected: // D3D helpers
+   
+   void PrepareTriangle( int cb, const MipInfo &absMip, const TexMaterial *mat, int specFlags );
+   virtual void PrepareTriangleTL(
+     int cb, const PolyProperties *section,
+     const MipInfo &mip, const TexMaterialLODInfo &mat, int specFlags,
+     const TLMaterial &tlMat, int spec, const EngineShapeProperties &prop
+     );
+ 
++  //! Re-apply only the material/light constants of an already prepared section.
++  /*!
++  Used by instanced drawing: the section state (textures, shaders, render states)
++  is prepared once per section run, while the material constants must be
++  recomputed for every instance (they depend on the object-space transform).
++  */
++  virtual void ApplyMaterialTL(int cb, const TLMaterial &tlMat);
++
+   void DrawPolygon(const VertexIndex *ii, int n);
+   void DrawSection(const FaceArray &face, Offset beg, Offset end);
+ 
+ 
+   // integrated transform&lighting
+   bool GetTL() const {return true;}
+   bool HasWBuffer() const {return false;}
+   //bool HasWBuffer() const {return false;}
+diff --git antes/lib/engine.hpp depois/lib/engine.hpp
+index 959f33b..31eef04 100644
+--- antes/lib/engine.hpp
++++ depois/lib/engine.hpp
+@@ -1654,16 +1654,24 @@ public:
+ #endif
+   virtual void PrepareTriangleTL(
+     int cb, const PolyProperties *section,
+     const MipInfo &mip, const TexMaterialLODInfo &mat, int specFlags,
+     const TLMaterial &tlMat,
+     int spec, const EngineShapeProperties &prop
+   ) {}
+ 
++  //! Re-apply only the material/light constants of an already prepared section.
++  /*!
++  Used by instanced drawing: the section state (textures, shaders, render states)
++  is prepared once per section run, while the material constants must be
++  recomputed for every instance (they depend on the object-space transform).
++  */
++  virtual void ApplyMaterialTL(int cb, const TLMaterial &tlMat) {}
++
+   virtual void PrepareTriangle( int cb, const MipInfo &mip, const TexMaterial *mat, int specFlags )= 0;
+   virtual void DrawPolygon( const VertexIndex *i, int n )= 0;
+   virtual void DrawSection(const FaceArray &face, Offset beg, Offset end)= 0;
+ 
+   virtual void FlushQueues() {}
+ 
+   // integrated transform&lighting
+   virtual bool GetTL() const {return false;}
+diff --git antes/lib/engineDraw.cpp depois/lib/engineDraw.cpp
+index 49d8196..f0805f7 100644
+--- antes/lib/engineDraw.cpp
++++ depois/lib/engineDraw.cpp
+@@ -1431,16 +1431,62 @@ void Engine::DrawMeshTLInstanced(
+     {
+       runSecBeg.Append() = secBeg;
+       runSecEnd.Append() = secEnd;
+       // The original final flush recalculates bias from the run's first section.
+       runBias.Append() = firstBias;
+     }
+   }
+ 
++  if (nInstances>1 && runSecBeg.Size()>0)
++  {
++    // The section state prepared by PrepareTL (texture, sampler, pixel shader,
++    // render states, material) depends only on the section run, not on the
++    // instance. Prepare it once per run and re-apply only the instance-dependent
++    // material/light constants for every instance.
++    //
++    // Establish the state of instance 0 first: BeginInstanceTL selects the pixel
++    // shader type, BeginMeshTL sets the UV scale/offset used by the texgen matrix
++    // inside PrepareTL.
++    {
++      const ObjectInstanceInfo &info0 = instances[0];
++      SetInstanceInfo(cb, info0._color, info0._shadowCoef);
++      BeginInstanceTL(cb, info0._origin, minDist2, spec, lights, dp);
++      if (!BeginMeshTL(cb, NULL, sMesh, prop, spec, lights, bias))
++      {
++        SetInstanceInfo(cb,HWhite,1);
++        return;
++      }
++    }
++
++    for (int r=0; r<runSecBeg.Size(); r++)
++    {
++      TLMaterial mat;
++      CreateMaterial(mat, HWhite);
++      sMesh.GetSection(runSecBeg[r]).PrepareTL(cb,mat, spec, prop);
++
++      for (int j=0; j<nInstances; j++)
++      {
++        const ObjectInstanceInfo &info = instances[j];
++        SetInstanceInfo(cb, info._color, info._shadowCoef);
++
++        BeginInstanceTL(cb, info._origin, minDist2, spec, lights, dp);
++        bool ok = BeginMeshTL(cb, NULL, sMesh, prop, spec, lights, bias);
++        if (ok)
++        {
++          ApplyMaterialTL(cb, mat);
++          DrawSectionTL(cb,sMesh, runSecBeg[r], runSecEnd[r], runBias[r]);
++          EndMeshTL(cb,sMesh);
++        }
++      }
++    }
++    SetInstanceInfo(cb,HWhite,1);
++    return;
++  }
++
+   // Go through the instances
+   for (int j = 0; j < nInstances; j++)
+   {
+     //SCOPE_GRF("inst",0);
+     PROFILE_SCOPE_GRF_EX(inst,drw,SCOPE_COLOR_RED);
+     // check if shape is dynamic or not
+     const ObjectInstanceInfo &info = instances[j];
+ 

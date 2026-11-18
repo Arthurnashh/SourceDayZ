@@ -1,0 +1,210 @@
+[
+ {
+  "nivel": 2,
+  "titulo": "0. Método, cobertura e reprodutibilidade"
+ },
+ {
+  "nivel": 3,
+  "titulo": "0.1 Ferramenta de indexação"
+ },
+ {
+  "nivel": 3,
+  "titulo": "0.2 Números medidos (não estimados)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "0.3 Estado de cobertura"
+ },
+ {
+  "nivel": 2,
+  "titulo": "1. As linguagens que a source usa"
+ },
+ {
+  "nivel": 3,
+  "titulo": "1.1 Enforce Script (Enfusion)"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.1.1 Palavras-chave — tabela literal do compilador"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.1.2 Modificadores de declaração"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.1.3 Operadores — tabela de despacho por tipo"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.1.4 Tipos de valor da VM"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.1.5 Execução: threads, `Wait` e `Sleep`"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.1.6 Coleções"
+ },
+ {
+  "nivel": 3,
+  "titulo": "1.2 SQF / SQS (script legado)"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.2.1 Tamanho do vocabulário"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.2.2 Formas sintáticas (o essencial)"
+ },
+ {
+  "nivel": 4,
+  "titulo": "1.2.3 Como a engine executa SQF (evidência)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "1.3 C++ da Bohemia (padrões que se repetem em 1,4 M linhas)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "1.4 Config (ParamFile)"
+ },
+ {
+  "nivel": 2,
+  "titulo": "2. Mapa da source — cada pasta"
+ },
+ {
+  "nivel": 3,
+  "titulo": "2.1 As quatro raízes de código que importam"
+ },
+ {
+  "nivel": 3,
+  "titulo": "2.2 Variantes históricas no disco"
+ },
+ {
+  "nivel": 2,
+  "titulo": "3. Estudo função por função — Onda 1"
+ },
+ {
+  "nivel": 3,
+  "titulo": "3.1 Entrada do processo"
+ },
+ {
+  "nivel": 2,
+  "titulo": "4. DirectX 9 → DirectX 10 / 11"
+ },
+ {
+  "nivel": 3,
+  "titulo": "4.1 Resposta direta à pergunta \"DX10 ou DX11?\""
+ },
+ {
+  "nivel": 3,
+  "titulo": "4.2 Tamanho real do trabalho (medido)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "4.3 Mapa de tradução D3D9 → D3D11 (o que muda de verdade)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "4.4 O que existe hoje em `lib/d3d11/` (inventário verificado)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "4.5 Achados de portabilidade (bugs concretos encontrados na leitura)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "4.6 Plano de migração em fases (com critério de aceite)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "4.7 DX11 vai melhorar o FPS? (resposta honesta)"
+ },
+ {
+  "nivel": 2,
+  "titulo": "5. O motor: arquitetura, otimização e gráfico"
+ },
+ {
+  "nivel": 3,
+  "titulo": "5.1 Ordem real do frame (evidência de linha)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "5.2 Modelo de threads"
+ },
+ {
+  "nivel": 3,
+  "titulo": "5.3 Instrumentação disponível (de graça, já no binário)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "5.4 Suspeitos técnicos, com evidência e teste"
+ },
+ {
+  "nivel": 3,
+  "titulo": "5.5 Melhorias de gráfico (ordenadas por custo/benefício)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "5.6 Modding: a consequência de não existir `modded`"
+ },
+ {
+  "nivel": 3,
+  "titulo": "5.7 Teto técnico imposto por `extern/`"
+ },
+ {
+  "nivel": 2,
+  "titulo": "6. Fila de estudo (próximas ondas)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "6.1 Regra de registro das próximas ondas"
+ },
+ {
+  "nivel": 4,
+  "titulo": "F-NNN — `Classe::Metodo` — **completa|parcial**"
+ },
+ {
+  "nivel": 2,
+  "titulo": "7. Resumo executivo em 10 linhas"
+ },
+ {
+  "nivel": 2,
+  "titulo": "8. Mineração de comentários — o que os próprios devs escreveram"
+ },
+ {
+  "nivel": 3,
+  "titulo": "8.1 Ferramenta e escala (medida, não estimada)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "8.2 A negação existe — mas em inglês (e a source não tem português)"
+ },
+ {
+  "nivel": 3,
+  "titulo": "8.3 As duas convenções da BI: `\\patch` e `news:` — changelog embutido"
+ },
+ {
+  "nivel": 3,
+  "titulo": "8.4 O mapa de dívida do DX11 está escrito no código"
+ },
+ {
+  "nivel": 3,
+  "titulo": "8.5 A descoberta mais forte desta seção: o DX11 é cópia literal do DX9"
+ },
+ {
+  "nivel": 3,
+  "titulo": "8.6 HACKs: os pontos onde o motor desvia de si mesmo"
+ },
+ {
+  "nivel": 3,
+  "titulo": "8.7 Achados novos registrados a partir dos comentários"
+ },
+ {
+  "nivel": 3,
+  "titulo": "8.8 Como consultar o corpus"
+ }
+]

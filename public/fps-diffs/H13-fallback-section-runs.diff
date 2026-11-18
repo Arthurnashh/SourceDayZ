@@ -1,0 +1,120 @@
+﻿diff --git antes/lib/engineDraw.cpp depois/lib/engineDraw.cpp
+index f51ab37..49d8196 100644
+--- antes/lib/engineDraw.cpp
++++ depois/lib/engineDraw.cpp
+@@ -1369,12 +1369,76 @@ void Engine::DrawFrame(Texture *corner, PackedColor color, const Rect2DAbs &fram
+ 
+ void Engine::DrawMeshTLInstanced(
+   int cb, const Shape &sMesh, const EngineShapeProperties &prop, int spec, const LightList &lights, int bias,
+   const ObjectInstanceInfo *instances, int nInstances, float minDist2, const DrawParameters &dp
+ )
+ {
++  AUTO_STATIC_ARRAY(int,runSecBeg,256);
++  AUTO_STATIC_ARRAY(int,runSecEnd,256);
++  AUTO_STATIC_ARRAY(int,runBias,256);
++  if (nInstances>1)
++  {
++    PROFILE_SCOPE_DETAIL_EX(d9SR,d3d);
++    // Section grouping depends only on this shape. Compute it once for all instances.
++    int secBeg = -1;
++    int secEnd = -1;
++    ShapeSectionInfo sProp;
++    int minBoneIndex = -1;
++    int bonesCount = -1;
++    int firstBias = bias;
++
++    for (int i=0; i<sMesh.NSections(); i++)
++    {
++      const ShapeSection &sec = sMesh.GetSection(i);
++      if (sec.Special()&(IsHidden|IsHiddenProxy)) continue;
++
++      int secBias = ((sec.Special()&ZBiasMask)/ZBiasStep) * 5;
++      int maxBias = intMax(bias, secBias);
++      if (secBeg<0)
++      {
++        secBeg = i;
++        secEnd = i+1;
++        sProp = sec;
++        minBoneIndex = sec._minBoneIndex;
++        bonesCount = sec._bonesCount;
++        firstBias = maxBias;
++      }
++      else if (
++        sec==sProp &&
++        sec._minBoneIndex==minBoneIndex &&
++        sec._bonesCount==bonesCount &&
++        i==secEnd
++      )
++      {
++        secEnd=i+1;
++      }
++      else
++      {
++        // Preserve the original flush bias, which is taken from the first section
++        // of the next run in the existing per-instance loop.
++        runSecBeg.Append() = secBeg;
++        runSecEnd.Append() = secEnd;
++        runBias.Append() = maxBias;
++
++        secBeg = i;
++        secEnd = i+1;
++        sProp = sec;
++        minBoneIndex = sec._minBoneIndex;
++        bonesCount = sec._bonesCount;
++        firstBias = maxBias;
++      }
++    }
++    if (secEnd>secBeg)
++    {
++      runSecBeg.Append() = secBeg;
++      runSecEnd.Append() = secEnd;
++      // The original final flush recalculates bias from the run's first section.
++      runBias.Append() = firstBias;
++    }
++  }
++
+   // Go through the instances
+   for (int j = 0; j < nInstances; j++)
+   {
+     //SCOPE_GRF("inst",0);
+     PROFILE_SCOPE_GRF_EX(inst,drw,SCOPE_COLOR_RED);
+     // check if shape is dynamic or not
+@@ -1383,12 +1447,24 @@ void Engine::DrawMeshTLInstanced(
+     SetInstanceInfo(cb, info._color, info._shadowCoef);
+ 
+     BeginInstanceTL(cb, info._origin, minDist2, spec, lights, dp);
+     bool ok = BeginMeshTL(cb, NULL, sMesh, prop, spec, lights, bias);
+     if (ok)
+     {
++      if (nInstances>1)
++      {
++        for (int r=0; r<runSecBeg.Size(); r++)
++        {
++          TLMaterial mat;
++          CreateMaterial(mat, HWhite);
++          sMesh.GetSection(runSecBeg[r]).PrepareTL(cb,mat, spec, prop);
++          DrawSectionTL(cb,sMesh, runSecBeg[r], runSecEnd[r], runBias[r]);
++        }
++      }
++      else
++      {
+       // check first face properties
+       int secBeg = -1;
+       int secEnd = -1;
+       ShapeSectionInfo sProp;
+       int minBoneIndex = -1;
+       int bonesCount = -1;
+@@ -1451,12 +1527,13 @@ void Engine::DrawMeshTLInstanced(
+         // Calculate the bias for section
+         int secBias = ((sMesh.GetSection(secBeg).Special()&ZBiasMask)/ZBiasStep) * 5;
+         int maxBias = intMax(bias, secBias);
+ 
+         DrawSectionTL(cb,sMesh, secBeg, secEnd, maxBias);
+       }
++      }
+ 
+       EndMeshTL(cb,sMesh);
+     }
+   }
+ 
+   SetInstanceInfo(cb,HWhite, 1);

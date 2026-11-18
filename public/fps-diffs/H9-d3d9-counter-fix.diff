@@ -1,0 +1,40 @@
+﻿diff --git antes/lib/d3d9/engdd9.cpp depois/lib/d3d9/engdd9.cpp
+index 5a9702d..7d09c6f 100644
+--- antes/lib/d3d9/engdd9.cpp
++++ depois/lib/d3d9/engdd9.cpp
+@@ -8767,18 +8767,15 @@ void EngineDD9::DrawMeshTLInstanced(
+   if (nInstancesInOneStep >= 1)
+ #else
+   // Instances in one step must be > 1 (we don't create VB for smaller size)
+   if (nInstancesInOneStep > 1)
+ #endif
+   {
+-    PROFILE_SCOPE_DETAIL_EX(d9HW,d3d);
+     bool ok = BeginMeshTLInstanced(cb,sMesh, prop, spec, lights, bias, minDist2, dp);
+     if (ok)
+     {
+-      ADD_COUNTER_P_EX(d9HWc,d3d,1);
+-      ADD_COUNTER_P_EX(d9HWi,d3d,nInstances);
+       // Either use a program to draw or draw it the usual way
+       int drawnInstances = 0;
+       while (drawnInstances < nInstances)
+       {
+         // Get number of instances
+         int newInstances = min(nInstancesInOneStep, nInstances - drawnInstances);
+@@ -8802,16 +8799,13 @@ void EngineDD9::DrawMeshTLInstanced(
+       // Finish mesh
+       EndMeshTL(cb,sMesh);
+     }
+   }
+   else
+   {
+-    PROFILE_SCOPE_DETAIL_EX(d9FB,d3d);
+     DoAssert(instances);
+-    ADD_COUNTER_P_EX(d9FBc,d3d,1);
+-    ADD_COUNTER_P_EX(d9FBi,d3d,nInstances);
+     Engine::DrawMeshTLInstanced(cb,sMesh, prop, spec, lights, bias, instances, nInstances, minDist2, dp);
+     return;
+   }
+ }
+ 
+ void EngineDD9::DrawShadowVolumeInstanced(

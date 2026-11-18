@@ -1,0 +1,217 @@
+﻿diff --git antes/lib/d3d9/engdd9.cpp depois/lib/d3d9/engdd9.cpp
+index 09be324..78b7ba4 100644
+--- antes/lib/d3d9/engdd9.cpp
++++ depois/lib/d3d9/engdd9.cpp
+@@ -3428,16 +3428,25 @@ void EngineDD9::InitDraw( bool clear, Color color )
+   // one particular situation where this is important is map, without this it will not start HL recording
+   StartBackgroundScope();
+   
+   D3DRECT rect;
+   rect.x1=0,rect.y1=0;
+   rect.x2=_w,rect.y2=_h;
+   int flags=0;
+ 
++  // When the z-only priming pass is skipped (FSAA with RMZPrime removed), the
++  // main depth buffer was not cleared by any priming pass. Clear it here so the
++  // scene pass tests against fresh depth instead of last frame's values.
++  if (!_mainDepthPrimed)
++  {
++    flags |= D3DCLEAR_ZBUFFER;
++    if (_caps._hasStencilBuffer) flags|=D3DCLEAR_STENCIL;
++  }
++
+   // TODO: unify for FSAA as well
+ //   if (GetFSAA()>0)
+ //   {
+ //     flags |= D3DCLEAR_ZBUFFER;
+ //     if (_caps._hasStencilBuffer) flags|=D3DCLEAR_STENCIL;
+ //   }
+   // sometimes we want to keep the old backbuffer content
+   if( clear ) flags|=D3DCLEAR_TARGET;
+@@ -27349,16 +27358,17 @@ BIND_SHADER(POOL,[VSPNormalMap][0][1][RMCommon][SIInst],[VD_Position_Normal_Tex0
+   // Skinning parameters
+   cbState._skinningType = STNone;
+   cbState._bones.Clear();
+   cbState._bonesWereSetDirectly = false;
+ 
+   // Instancing parameters
+   cbState._zPrimingDone = false;
+   cbState._lastZPrimingDone = false;
++  _mainDepthPrimed = false;
+ 
+   // Shadow buffer parameters
+   _renderingMode = RMCommon;
+   for (int i = 0; i < ShadowBufferCascadeLayers; i++)
+   {
+     _oldLRSP[i] = MIdentity;
+   }
+ 
+diff --git antes/lib/d3d9/engdd9.hpp depois/lib/d3d9/engdd9.hpp
+index dab2b5c..1219a5a 100644
+--- antes/lib/d3d9/engdd9.hpp
++++ depois/lib/d3d9/engdd9.hpp
+@@ -2936,16 +2936,18 @@ protected:
+     AToC_EnableAll = 7
+   };
+   /// which AToC mode is supported by the HW
+   AToCMode _aToCSupported;
+   
+   /// should we use AToC?
+   bool _useAToC;
+   int _AToCMask;
++  /// main scene depth buffer was primed this frame (z-only priming pass)
++  bool _mainDepthPrimed;
+   //@}
+ 
+   // enable / disable vertical synchronization, default set to enable
+   bool _vsync;
+   //@{ anisotropy filtering settings
+   int _afWanted;
+   /// max. level allowed by the HW (typicaly 1..16)
+   int _maxAFLevel;
+@@ -5086,21 +5088,23 @@ public:
+   bool GetVBuffersStatic() const {return _caps._vbuffersStatic;}
+ 
+   bool UseLocalPrediction() const {return _caps._localPrediction;}
+ 
+   virtual void SetFSAA(int quality);
+   virtual int GetFSAA() const;
+   virtual int GetMaxFSAA() const;
+   
+-  bool ZPrimed() const
++  virtual bool ZPrimed() const
+   {
+-      // on PC we currently do not prime z buffer when using MSAA
+-      return true;
++      // main depth is primed only when the separate z-only pass has run
++      return _mainDepthPrimed;
+   }
++  /// set when the z-only priming pass has filled the main depth buffer
++  virtual void SetMainDepthPrimed(bool val) {_mainDepthPrimed = val;}
+ 
+   //@{ only set values, do not apply it yet
+   bool SetFSAAWanted(int quality);
+   bool SetHDRPrecisionWanted(HDRPrec prec);
+   bool SetResolutionWanted(int w, int h, int bpp);
+   bool SetPostprocessEffectsWanted(int quality);
+   bool SetFillrateLevelWanted(int level);
+   bool SetFillrateControlWanted(ResolutionInfo info);
+diff --git antes/lib/engine.hpp depois/lib/engine.hpp
+index 5e4ac0c..959f33b 100644
+--- antes/lib/engine.hpp
++++ depois/lib/engine.hpp
+@@ -1575,16 +1575,20 @@ public:
+ 
+   //@{ user settings - FSAA
+   virtual void SetFSAA(int quality) {}
+   virtual int GetFSAA() const {return 0;}
+   /// max. FSAA mode supported (0=none)
+   virtual int GetMaxFSAA() const {return 0;}
+   //@}
+ 
++  /// true when the main depth buffer was primed this frame
++  virtual bool ZPrimed() const {return true;}
++  virtual void SetMainDepthPrimed(bool val) {}
++
+   //@{ user settings - AToC
+   virtual void SetAToC(int level) {}
+   virtual int GetAToC() const { return 0; }
+   //@}
+ 
+   //@{ user settings - PPAA
+   virtual void SetPPAA(int ppaa, int level) {}
+   virtual int GetPPAA(int &level) const {return 0;}
+diff --git antes/lib/landscape.cpp depois/lib/landscape.cpp
+index 0ec4fa8..d909861 100644
+--- antes/lib/landscape.cpp
++++ depois/lib/landscape.cpp
+@@ -5995,16 +5995,20 @@ void Landscape::PrimeDepthBuffer(GridRectangle &groundPrimed, Scene &scene, Scen
+     scene.DrawDepthPrime(drawContext, svShadows, pass, drawListId);
+ #else
+     scene.DrawDepthPrime(drawContext, svShadows, pass);
+ #endif
+ 
+     GEngine->SetZPrimingDone(-1,false);
+     // End depth rendering
+     GEngine->EndDepthMapRendering(zOnly);
++    // Main depth buffer is primed only by the z-only pass (or by the shared
++    // depth buffer when FSAA is off). The main scene pass uses ZFUNC EQUAL
++    // and skips alpha test only when this is true.
++    GEngine->SetMainDepthPrimed(zOnly || GEngine->GetFSAA()==0);
+ 
+     //GEngine->RenderStencilShadows();
+   }
+   if (LogStatesOnce) LogF(") DrawDepthPrime");
+ }
+ 
+ void Landscape::DrawRectPrepare(Scene::DrawContext &drawContext, Scene &scene, float deltaT, bool frameRepeated)
+ {
+diff --git antes/lib/world.cpp depois/lib/world.cpp
+index a115cae..d4ff517 100644
+--- antes/lib/world.cpp
++++ depois/lib/world.cpp
+@@ -10505,22 +10505,23 @@ void World::DrawSceneR2T(Entity *camInVehicle, bool frameRepeated, float deltaT)
+     _scene.GetLandscape()->DrawRectPrepare(drawContext, _scene, deltaT, frameRepeated);
+ 
+     // render the depth buffer (may perform priming as well, unless separate priming is required)
+     _scene.GetLandscape()->PrimeDepthBuffer(groundPrimed, _scene, drawContext, false, frameRepeated, 
+       drawState._drawObjId, true /*debugMe*/);
+ 
+     // Render the shadow buffer
+      _scene.GetLandscape()->DrawRectShadowBuffer(drawContext, _scene);
+-    if (GEngine->GetFSAA()>0)
+-    {
+-      // PC with FSAA required separate depth priming
+-      _scene.GetLandscape()->PrimeDepthBuffer(groundPrimed, _scene, drawContext, true, frameRepeated, 
+-        drawState._drawObjId);
+-    }
++    // FPS experiment: separate z-only priming (RMZPrime) removed, see World::Simulate
++    // if (GEngine->GetFSAA()>0)
++    // {
++    //   // PC with FSAA required separate depth priming
++    //   _scene.GetLandscape()->PrimeDepthBuffer(groundPrimed, _scene, drawContext, true, frameRepeated,
++    //     drawState._drawObjId);
++    // }
+ 
+     // need to be called several times during the frame
+     GetNetworkManager().FastUpdate();
+ 
+     Assert(_scene.GetDrawObjectIndex() == drawState._drawObjId);
+     GEngine->SetR2TRenderTargets();
+ 
+     _scene.BeginObjects();
+@@ -12881,25 +12882,25 @@ if (_playerOn)
+       _scene.GetLandscape()->PrimeDepthBuffer(groundPrimed, _scene, drawContext, false, frameRepeated 
+ #if _HELISIM_RENDER_TO_TEXTURE 
+         , 0
+ #endif
+         , true /*debugMe*/);
+ 
+       // Render the shadow buffer
+       _scene.GetLandscape()->DrawRectShadowBuffer(drawContext, _scene);
+-      if (GEngine->GetFSAA()>0)
+-      {
+-        // PC with FSAA required separate depth priming
+-        _scene.GetLandscape()->PrimeDepthBuffer(groundPrimed, _scene, drawContext, true, frameRepeated
+-#if _HELISIM_RENDER_TO_TEXTURE
+-          , 0
+-#endif
+-          );
+-      }
++      // FPS experiment: the separate z-only pass (RMZPrime) is redundant - it
++      // re-submits every near object only to prime the main depth buffer. The
++      // main pass now writes depth normally (see EngineDD9::ZPrimed). The SSSM
++      // depth map above is still produced by the RMDPrime pass.
++      // _scene.GetLandscape()->PrimeDepthBuffer(groundPrimed, _scene, drawContext, true, frameRepeated
++      // #if _HELISIM_RENDER_TO_TEXTURE
++      //   , 0
++      // #endif
++      //   );
+     }
+     else
+     {
+       // even when not rendering keep camera position ready (used for ambient life, sounds, and also reported to the server in MP)
+       SelectCameraPosition(GEngine, deltaT);
+     }
+ 
+     {

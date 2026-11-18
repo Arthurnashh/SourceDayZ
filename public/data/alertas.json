@@ -1,0 +1,980 @@
+[
+ {
+  "tipo": "HACK",
+  "file": "Drobnosti/SvnAutoUpdater/SystemTraySDK.cpp",
+  "line": 979,
+  "texto": "OK, we failed to get the rect from the quick hack. Either explorer isn't"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Drobnosti/SvnAutoUpdater/libsvn_subr/prompt.c",
+  "line": 112,
+  "texto": "Hack to allow us to not block for io on the prompt, so * we can cancel."
+ },
+ {
+  "tipo": "HACK",
+  "file": "Drobnosti/SvnAutoUpdater/libsvn_subr/svn_base64.c",
+  "line": 541,
+  "texto": "Our base64-encoding routines append a final newline if any data was created at all, so let's hack that off."
+ },
+ {
+  "tipo": "HACK",
+  "file": "Drobnosti/SvnAutoUpdater/private/svn_wc_private.h",
+  "line": 642,
+  "texto": "* * A hack to remove the last entry from libsvn_client. This simply fetches an * some values from WC-NG, and puts the needed bits into the output parameters, * allocated in @a result_pool. * * All output arguments can be NULL to indicate that the * caller is not interested in the specific result. * * @a local_abspath and @a wc_ctx are what you think they are."
+ },
+ {
+  "tipo": "HACK",
+  "file": "El/CDKey/serial.hpp",
+  "line": 4,
+  "texto": "Obsolete very easy to hack serial key check. //#define SERIAL_KEY 7856 //#define SERIAL_KEY 5896 #define SERIAL_KEY 6985 inline unsigned long CheckCode(unsigned long inval) { return (inval & 0xffff) ^ ((inval >> 12) & 0xffff) ^ ((inval >> 24) & 0xffff); }"
+ },
+ {
+  "tipo": "HACK",
+  "file": "El/FileServer/fileServer.cpp",
+  "line": 2278,
+  "texto": "dirty hack: FIX of Linux FileServer destruction"
+ },
+ {
+  "tipo": "HACK",
+  "file": "El/RegularExpressions/regexp.h",
+  "line": 1,
+  "texto": "Progammer's interface: ---------------------- 1. To raise an instance: RegExp My_grep( regexp ); where: regexp is a UNIX style regular expression contained in a NULL terminated character string. The argument is not overwritten so it is ok to pass constants. examples: RegExp My_grep( \"hello\" ); // case 1 RegExp My_grep( \"c[A-Z]\" ); // case 2 RegExp My_grep( \"[0-9]+\" ); // case 3 2. To parse for regular expressions: Match( string ); where: string is a NULL terminated string containing the object. The method returns a 1 if the expression is present, otherwise 0. The string is not disturbed or ove"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/include/Common/enf_mathlib.h",
+  "line": 525,
+  "texto": "! return an estimation of 1/sqrt(f) -> 12-14 bits of accuracy timing: 1/sqrt() 32.203 sse_rcps(sse_sqrt) 6.4218 int hack (newton it) 10.108 invsqrte 4.4817 \\param f"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/include/Common/enf_serialize.h",
+  "line": 332,
+  "texto": "! Kind of hack fo resolving issue with Meqon. He has his own serialization and we get real pointer to object at later stage (in RestoreObject method). We need to replace 'old' pointer here. This assumes that the replacement happens _before_anyone_ will reference these objects! \\param identifier old pointer \\param pointer new pointer"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/include/materials/enf_materials.h",
+  "line": 406,
+  "texto": "! hack, to get the model context data into BeginPass function, it comes out from the fact, that SetModelContext is called before BeginPass and in the case the model context is changed, BeginPass is always called"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/include/resource/enf_vobject.h",
+  "line": 193,
+  "texto": "because of hack in LoadMeshObjectResource :("
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/include/script/enf_scriptapi.h",
+  "line": 163,
+  "texto": "registruje funkci z API namespace (hack proti duplicitnim nazvum)"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/src/Physics/enf_physicsragdoll.cpp",
+  "line": 457,
+  "texto": "//HACK: solve it in CParser"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/src/resource/enf_particleeffect.cpp",
+  "line": 977,
+  "texto": "hack, to have more power in direct impact from entities than the global wind"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/src/resource/enf_particleeffect.cpp",
+  "line": 4861,
+  "texto": "HACK: Particle effect don't accept per entity parameters. It's too expensive"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/src/script/enf_scriptcompiler.cpp",
+  "line": 3231,
+  "texto": "HACK: function pointer"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/src/script/enf_scriptcompiler.cpp",
+  "line": 3300,
+  "texto": "HACK: function pointer"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/src/script/enf_scriptcompiler.cpp",
+  "line": 4182,
+  "texto": "HACK: we have to set goto pointer before condition"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/src/sound/enf_isoundsystem.cpp",
+  "line": 277,
+  "texto": "HACK: solve it in CParser"
+ },
+ {
+  "tipo": "HACK",
+  "file": "Enfusion/src/sound/enf_xaudio2sample.cpp",
+  "line": 829,
+  "texto": "hack :( We cannot start loop after loop region"
+ },
+ {
+  "tipo": "HACK",
+  "file": "RV/Tree/cutShape.cpp",
+  "line": 628,
+  "texto": "note: offsetting is quite a hack"
+ },
+ {
+  "tipo": "HACK",
+  "file": "RV/Tree/mytree.cpp",
+  "line": 2531,
+  "texto": "Delete level 0 - a simple hack to solve the problem the LODObject cannot be empty"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/AI/operMap.cpp",
+  "line": 6078,
+  "texto": "* @param respectCombatModeCost sometimes we need to increase base cost to indicate movement in the open is more dangerous/slower. This is a hack needed because otherwise the paths found are too fast when searching for a cover."
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/arcadeTemplate.cpp",
+  "line": 1102,
+  "texto": "hack to enable scripted missions to work in MP"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/arcadeTemplate.hpp",
+  "line": 105,
+  "texto": "hack to enable scripted missions to work in MP"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/arcadeTemplate.hpp",
+  "line": 110,
+  "texto": "hack to enable scripted missions to work in MP"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/helicopter.cpp",
+  "line": 1408,
+  "texto": "dirty hack - when heli is destroyed, we want it to fall down"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/helicopter.cpp",
+  "line": 7254,
+  "texto": "// dirty hack - when heli is destroyed, we want it to fall down"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/input.cpp",
+  "line": 351,
+  "texto": "hack: RI_KEY_E1 is not documented well, so convert VKey into DIK_CODE, as we do not know details"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/main.cpp",
+  "line": 13324,
+  "texto": "dirty hack: provide our own implementation of printf to allow using printf for debugging"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/object.cpp",
+  "line": 1466,
+  "texto": "dirty hack: if the level is not loaded, pretend there are some proxies"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/pactext.cpp",
+  "line": 4348,
+  "texto": "/ hack used to fix textures that have alpha flag missing"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/pactext.hpp",
+  "line": 388,
+  "texto": "/ hack used to fix textures that have alpha flag missing"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/pactext.hpp",
+  "line": 541,
+  "texto": "/ hack used to fix textures that have alpha flag missing"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/pactext.hpp",
+  "line": 598,
+  "texto": "/ hack used to fix textures that have alpha flag missing"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/scene.cpp",
+  "line": 7817,
+  "texto": "hack for small object inside of a large object"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/scene.cpp",
+  "line": 7827,
+  "texto": "quick hack: do not do this for pass 2 (alpha) objects - otherwise muzzle flashes sort bad against particles"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/scene.cpp",
+  "line": 7844,
+  "texto": "hack for a water: we want water to be rendered first"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/scene.cpp",
+  "line": 11929,
+  "texto": "HACK! Enlarge frustum corners in 2D to match epsilons introduced in original GridRectangle"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/shots.cpp",
+  "line": 178,
+  "texto": "detect if the cheaters is only testing the hack"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/shots.cpp",
+  "line": 180,
+  "texto": "memory breakpoint usually means hack development"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/soldierOld.cpp",
+  "line": 14732,
+  "texto": "currently we hack it and to transition only for Person,"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/target.cpp",
+  "line": 2473,
+  "texto": "hack - enable to change side to enemy when unit becomes a renegade"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/target.cpp",
+  "line": 3310,
+  "texto": "hack - check if I'm in the enemy target list"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/vehicle.hpp",
+  "line": 358,
+  "texto": "Ugly hack: these are used SO OFTEN that I'll better make them public."
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/vehicleTypes.cpp",
+  "line": 613,
+  "texto": "WIP: DOOR: remove hack"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/GameSpy/common/gsMemory.c",
+  "line": 1310,
+  "texto": "find which pool owns this pointer!!!!, this is kind of a hack.... but here goes."
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/GameSpy/ghttp/ghttpEncryption.c",
+  "line": 286,
+  "texto": "this may seem like a hack, but it's the best way to avoid"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkClient.cpp",
+  "line": 7498,
+  "texto": "Hack: we hope the delayed PublicVariableMessage would contain object with NetworkId present"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3445,
+  "texto": "return true when HACK detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3455,
+  "texto": "hack detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3463,
+  "texto": "hack detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3480,
+  "texto": "hack detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3497,
+  "texto": "hack detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3522,
+  "texto": "return true when HACK detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3528,
+  "texto": "HACK, unexpected message with index set during collecting phase"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3535,
+  "texto": "HACK, index and fileName does not match"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3552,
+  "texto": "hack detected (sent signature not found)"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3556,
+  "texto": "return true when HACK detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3567,
+  "texto": "HACK, unexpected answer with index set during collecting phase"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3579,
+  "texto": "HACK, prefixes differ"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3617,
+  "texto": "HACK, index should be set in clients FileSignatureAnswers"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3674,
+  "texto": "! return true when HACK detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3692,
+  "texto": "hack detected (the same answer sent second time)"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3755,
+  "texto": "CollectEndIndex was expected! => HACK?"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3762,
+  "texto": "! return true when HACK detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkImpl.hpp",
+  "line": 3824,
+  "texto": "returns true when hack was detected"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Network/networkServer.cpp",
+  "line": 4796,
+  "texto": "Check if there has been a hack attempt on player size limit"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Shape/shape.cpp",
+  "line": 1185,
+  "texto": "note: offsetting is quite a hack"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/Shape/shapeFile.cpp",
+  "line": 1513,
+  "texto": "experimental hack - prevent UV mapping which exceeds reasonable limits - news:g8mgb4$v5r$1@new-server.localdomain"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/TerSynth/tersynth_helpers.cpp",
+  "line": 569,
+  "texto": "HACK: approximate sqrtf"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/TerSynth/tersynth_helpers.cpp",
+  "line": 570,
+  "texto": "HACK: approximate atanf"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/UI/dispMissionEditor.cpp",
+  "line": 626,
+  "texto": "hack to enable scripted missions to work in MP"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/ShaderSources_4_0/PS.h",
+  "line": 62,
+  "texto": "DX11 TODO - this just a temporary solution - it is too slow! Make special shaders for alpha-tested materials"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/ShaderSources_4_0/PS.h",
+  "line": 3436,
+  "texto": "LUKE HACK"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/ShaderSources_4_0/PS.hlsl",
+  "line": 421,
+  "texto": "LUKE HACK - will this work?"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/ShaderSources_4_0/VSVolCloud.hlsl",
+  "line": 132,
+  "texto": "LUKE HACK"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/ShaderSources_4_0/common.h",
+  "line": 120,
+  "texto": "DX11 TODO OPT"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/d3d11Defs.hpp",
+  "line": 37,
+  "texto": "LUKE HACK - just to speed things up"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/d3d11Defs.hpp",
+  "line": 38,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 5724,
+  "texto": "LUKE - little hack - we need to initialize GEngine"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 6359,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 6544,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 7479,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 7491,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 9196,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 9925,
+  "texto": "DX11 TODO - not working"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 11447,
+  "texto": "Hack in the nVidia driver that makes G80 equivalent to G7x what concerns fog"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 11644,
+  "texto": "DX11 TODO - vsync"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 12164,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 13256,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 14122,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 14767,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 14791,
+  "texto": "DX11 TODO not sure if this is right"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 15307,
+  "texto": "DX11 TODO - alpha test"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 15308,
+  "texto": "LUKE HACK - temporary solution"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 16213,
+  "texto": "dirty hack: leave _currRenderTargetSurface untouched, just point the real RT to something else"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 16237,
+  "texto": "DX11 TODO - should not be needed"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 16244,
+  "texto": "DX11 TODO - should not be needed"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 17803,
+  "texto": "LUKE HACK"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 17804,
+  "texto": "DX11 TODO - TGA not supported, add texture to core/data directory!"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 18232,
+  "texto": "DX11 TODO - ?"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 19796,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 19803,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 20398,
+  "texto": "DX11 TODO DRAW"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 20401,
+  "texto": "DX11 TODO DRAW - trianglefan no longer supported"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 21230,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 21700,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 21701,
+  "texto": "horrible hack!"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 21716,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 21717,
+  "texto": "horrible hack!"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 23746,
+  "texto": "DX11 TODO DRAW"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 25590,
+  "texto": "DX11 TODO DIAG"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 25623,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 25624,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 25625,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 25626,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 25714,
+  "texto": "DX11 TODO DIAG"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 26946,
+  "texto": "DX11 TODO DIAG"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 27012,
+  "texto": "DX11 TODO PP"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 27018,
+  "texto": "DX11 TODO - not sure if this is the right constant..."
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 27603,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/engdd11.cpp",
+  "line": 27636,
+  "texto": "DX11 TODO - not sure about these..."
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.hpp",
+  "line": 1253,
+  "texto": "/ this does not need to be template, but we are using template, so this would compile (little hack..)"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d11/engdd11.hpp",
+  "line": 1349,
+  "texto": "/ this does not need to be template, but we are using template, so this would compile (little hack..)"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 428,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 521,
+  "texto": "DX11 TODO - remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 705,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 875,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 1215,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 1854,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 1954,
+  "texto": "DX11 TODO PP"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 4247,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 4281,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 4354,
+  "texto": "DX11 TODO - should be already set in SetRenderTargetAndDepthStencil"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 4781,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 4843,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 4936,
+  "texto": "DX11 TODO - repair or remove"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 4959,
+  "texto": "DX11 TODO - repair or remove"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 5071,
+  "texto": "DX11 TODO - repair or remove"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 5390,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 5609,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 6333,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 6345,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 6585,
+  "texto": "DX11 TODO - repair or remove"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 6619,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 6660,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 8794,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 9147,
+  "texto": "DX11 TODO SRGB"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 9294,
+  "texto": "DX11 TODO SRGB"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.cpp",
+  "line": 9299,
+  "texto": "DX11 TODO remove or repair"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/postProcessDX11.hpp",
+  "line": 575,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/txtD3D11.cpp",
+  "line": 2521,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/txtD3D11.cpp",
+  "line": 3238,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/txtD3D11.cpp",
+  "line": 5112,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/txtD3D11.cpp",
+  "line": 5360,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "DX11 TODO",
+  "file": "lib/d3d11/txtD3D11.cpp",
+  "line": 5399,
+  "texto": "DX11 TODO"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d9/engdd9.cpp",
+  "line": 8977,
+  "texto": "dirty hack: leave _currRenderTargetSurface untouched, just point the real RT to something else"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d9/engdd9.cpp",
+  "line": 19648,
+  "texto": "Hack in the nVidia driver that makes G80 equivalent to G7x what concerns fog"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d9/engdd9.hpp",
+  "line": 933,
+  "texto": "/ this does not need to be template, but we are using template, so this would compile (little hack..)"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d9/engdd9.hpp",
+  "line": 1031,
+  "texto": "/ this does not need to be template, but we are using template, so this would compile (little hack..)"
+ },
+ {
+  "tipo": "HACK",
+  "file": "lib/d3d9/postProcess.cpp",
+  "line": 1916,
+  "texto": "this is hack, VSPostprocess has exact UV in stream biased by these values"
+ },
+ {
+  "tipo": "HACK",
+  "file": "serial/serial.hpp",
+  "line": 4,
+  "texto": "Obsolete very easy to hack serial key check. //#define SERIAL_KEY 7856 //#define SERIAL_KEY 5896 #define SERIAL_KEY 6985 inline unsigned long CheckCode(unsigned long inval) { return (inval & 0xffff) ^ ((inval >> 12) & 0xffff) ^ ((inval >> 24) & 0xffff); }"
+ }
+]

@@ -1,0 +1,127 @@
+﻿diff --git antes/lib/landscape.cpp depois/lib/landscape.cpp
+index d909861..4857100 100644
+--- antes/lib/landscape.cpp
++++ depois/lib/landscape.cpp
+@@ -5986,29 +5986,33 @@ void Landscape::PrimeDepthBuffer(GridRectangle &groundPrimed, Scene &scene, Scen
+         if (PredicateGrass) GEngine->EndCBPredicatedScope(drawContext._lDGCl);
+       }
+     }
+ 
+     //if (debugMe) GEngine->TrapFor0x8000("Landscape.PrimeDepthBuffer B");
+ 
+     // Draw objects designed for depth rendering
+     bool svShadows = GEngine->GetFSAA()>0 ? !zOnly : true;
++    // With FSAA off the main depth buffer is shared, so the color pass can
++    // write depth normally. Submitting every object again here would only
++    // duplicate the per-object preparation (materials, sections, draw calls).
++    const bool primeObjects = zOnly || GEngine->GetFSAA()!=0;
+ #if _HELISIM_RENDER_TO_TEXTURE
+-    scene.DrawDepthPrime(drawContext, svShadows, pass, drawListId);
++    scene.DrawDepthPrime(drawContext, svShadows, pass, primeObjects, drawListId);
+ #else
+-    scene.DrawDepthPrime(drawContext, svShadows, pass);
++    scene.DrawDepthPrime(drawContext, svShadows, pass, primeObjects);
+ #endif
+ 
+     GEngine->SetZPrimingDone(-1,false);
+     // End depth rendering
+     GEngine->EndDepthMapRendering(zOnly);
+     // Main depth buffer is primed only by the z-only pass (or by the shared
+-    // depth buffer when FSAA is off). The main scene pass uses ZFUNC EQUAL
+-    // and skips alpha test only when this is true.
+-    GEngine->SetMainDepthPrimed(zOnly || GEngine->GetFSAA()==0);
++    // depth buffer when FSAA is off and the objects were primed here). The
++    // main scene pass uses ZFUNC EQUAL and skips alpha test only when this is true.
++    GEngine->SetMainDepthPrimed(primeObjects && (zOnly || GEngine->GetFSAA()==0));
+ 
+     //GEngine->RenderStencilShadows();
+   }
+   if (LogStatesOnce) LogF(") DrawDepthPrime");
+ }
+ 
+ void Landscape::DrawRectPrepare(Scene::DrawContext &drawContext, Scene &scene, float deltaT, bool frameRepeated)
+ {
+diff --git antes/lib/scene.cpp depois/lib/scene.cpp
+index 0e8cdce..aba2d98 100644
+--- antes/lib/scene.cpp
++++ depois/lib/scene.cpp
+@@ -11011,39 +11011,44 @@ void Scene::DrawPass4(DrawContext &ctx)
+ #if _HELISIM_RENDER_TO_TEXTURE
+     , _drawObjectsId
+ #endif
+     );
+ 
+   GEngine->SetZPrimingDone(-1,false);
+ }
+ 
+-void Scene::DrawDepthPrime(DrawContext &ctx, bool useSVShadows, Engine::PredicationMode pass
++void Scene::DrawDepthPrime(DrawContext &ctx, bool useSVShadows, Engine::PredicationMode pass, bool drawObjects
+ #if _HELISIM_RENDER_TO_TEXTURE
+                            , int drawListId
+ #endif
+                            )
+ {
+   if (!GEngine->IsAbleToDrawCheckOnly()) return;
+   PROFILE_SCOPE_EX(oPasD,*);
+ 
+   // Draw the usual depth objects, near first
+-  
+-  if (GEngine->StartCBPredicatedScope(ctx._oPasO,pass))
++  // When the main depth buffer is not shared this pass is required. When it
++  // is shared (FSAA off) the color pass writes depth itself, so submitting
++  // every object here would only duplicate the whole per-object preparation.
++  if (drawObjects)
+   {
+-    DrawPass1Part(ctx,ctx._drawPass1ON._original,pass);
+-    DrawPass1Part(ctx,ctx._drawPass1ON._blending,pass);
+-    GEngine->EndCBPredicatedScope(ctx._oPasO);
+-  }
++    if (GEngine->StartCBPredicatedScope(ctx._oPasO,pass))
++    {
++      DrawPass1Part(ctx,ctx._drawPass1ON._original,pass);
++      DrawPass1Part(ctx,ctx._drawPass1ON._blending,pass);
++      GEngine->EndCBPredicatedScope(ctx._oPasO);
++    }
+ 
+-  // We need to perform depth priming even for partially alpha transparent objects (in order the SSSM to work correctly)
+-  if (GEngine->StartCBPredicatedScope(ctx._oPasA,pass))
+-  {
+-    DrawPass1Part(ctx,ctx._drawPass1AN,pass);
+-    GEngine->EndCBPredicatedScope(ctx._oPasA);
++    // We need to perform depth priming even for partially alpha transparent objects (in order the SSSM to work correctly)
++    if (GEngine->StartCBPredicatedScope(ctx._oPasA,pass))
++    {
++      DrawPass1Part(ctx,ctx._drawPass1AN,pass);
++      GEngine->EndCBPredicatedScope(ctx._oPasA);
++    }
+   }
+   
+   // Draw volume shadows prior the pass3 (as the z-buffer can't be used for depth determination after that)
+   if (useSVShadows)
+   {
+ #if _HELISIM_RENDER_TO_TEXTURE
+     DrawVolShadows(ctx, drawListId);
+ #else
+diff --git antes/lib/scene.hpp depois/lib/scene.hpp
+index 2dc5103..55299aa 100644
+--- antes/lib/scene.hpp
++++ depois/lib/scene.hpp
+@@ -1102,17 +1102,17 @@ public:
+     );
+   /// render pass 2 - alpha blended objects
+   void DrawPass2(DrawContext &ctx);
+   /// render pass 3 - cockpit/1st person
+   void DrawPass3(DrawContext &ctx);
+   /// render pass 4 - UI
+   void DrawPass4(DrawContext &ctx);
+   //! Drawing of objects - depth buffer priming
+-  void DrawDepthPrime(DrawContext &ctx, bool useSVShadows, Engine::PredicationMode pass
++  void DrawDepthPrime(DrawContext &ctx, bool useSVShadows, Engine::PredicationMode pass, bool drawObjects
+ #if _HELISIM_RENDER_TO_TEXTURE
+     , int drawListId
+ #endif
+     );
+   /// finish object drawing
+   void ObjectsDrawn(DrawContext &ctx
+ #if _HELISIM_RENDER_TO_TEXTURE
+     , int drawListId

@@ -1,0 +1,45 @@
+diff --git antes/lib/world.cpp depois/lib/world.cpp
+index 3c63679..a115cae 100644
+--- antes/lib/world.cpp
++++ depois/lib/world.cpp
+@@ -8205,23 +8205,26 @@ void World::PrepareDraw(Object *camInside, bool inPreload, float preloadDist)
+ 		DoAssert((floop.GetMajorBegin()>floop.GetMajorEnd()) || (floop.GetMajorIncrement()>0));
+   
+ 
+ #ifdef TRAP_FOR_0x8000
+     //GEngine->TrapFor0x8000("World.PrepareDraw ENTERING major grid traversal loop");
+ #endif
++		{
++			PROFILE_SCOPE_DETAIL_EX(wGrd,wPrep);
+ 		for (int major = floop.GetMajorBegin(); major != floop.GetMajorEnd(); major+=floop.GetMajorIncrement(),lineI++)
+ 		{
+ 			int minorBegin = floop.GetMinorBegin(major);
+ 			int minorEnd = floop.GetMinorEnd(major);
+ 
+       // FIXME: there are situations in which the assert appears and we don't have time to fix it now.
+       // In addition, the for cycle below handles that case properly.
+ 			// DoAssert(minorBegin<minorEnd);
+ 
+ 			for (int minor = minorBegin; minor < minorEnd; minor++)
+ 			{
++				PROFILE_SCOPE_DETAIL_EX(wCel,wGrd);
+ 				int x = floop.GetX(minor, major);
+ 				int z = floop.GetZ(minor, major);
+ 
+ 				DoAssert(x >= 0 && z >= 0 && x < objRange && z < objRange);
+ 
+ 				// some lists may be rejected even before loading the list
+@@ -8614,12 +8617,13 @@ void World::PrepareDraw(Object *camInside, bool inPreload, float preloadDist)
+ 					}
+ 				}
+ 				prune.AdvanceBuffer();
+ 			}
+ #endif
+ 		} // for (major grid traversal loop)
++		}
+ #ifdef TRAP_FOR_0x8000
+     //GEngine->TrapFor0x8000("World.PrepareDraw LEAVING major grid traversal loop");
+ #endif
+ 		
+ #if _ENABLE_REPORT
+     if (!myGridVisited)
