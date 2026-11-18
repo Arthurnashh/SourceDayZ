@@ -17,17 +17,18 @@ O projeto real já foi criado e configurado nesta máquina:
 | Site | `https://sourcedayz.vercel.app` (projeto `sourcedayz`, deploy automático pela branch `main`) |
 | Schema | aplicado em 18/11/2026 (tabelas, funções, RLS, painel admin e bucket `avatars`) |
 | Chaves | `site/.env.local` já gravado com URL + publishable key |
-| Auth | **Confirm email desligado** para testes; Site URL `http://127.0.0.1:5173` |
+| Auth | **Confirm email desligado** para testes; Site URL e Redirect URLs já apontam para a Vercel (localhost mantido para dev) |
 | Steam | Edge Function `steam` publicada (OpenID + perfil público) |
 | Admin | conta `admin@sourcedayz.com` com `is_admin = true`; senha inicial entregue ao responsável |
 | `dev_mode` | `false` (só administradores veem as ferramentas de teste) |
 
-Antes de publicar em um domínio real, troque em **Authentication → URL Configuration**:
+O **Site URL** já é `https://sourcedayz.vercel.app` e as **Redirect URLs** incluem
+a produção, os previews e os endereços locais. Para um domínio próprio, troque:
 
 - **Site URL**: `https://seudominio.com`
 - **Redirect URLs**: `https://seudominio.com/**`
 
-E rode o build de novo para que o `.env.local` entre no pacote.
+E acrescente o domínio em **Admin → Ajustes → Origens**.
 
 > As contas de teste usadas na validação foram apagadas. O banco está limpo: resta
 > apenas a conta administrativa `admin@sourcedayz.com`, sem servidores, pedidos ou
@@ -275,8 +276,8 @@ Bucket `avatars`: leitura pública, escrita apenas na pasta do próprio usuário
 1. **Pagamento real**: checkout Mercado Pago/Stripe + webhook em Edge Function usando
    `service_role`, atualizando `orders` e `grants`. Hoje o painel guarda as credenciais,
    mas a liberação é manual em **Pedidos → Marcar pago**.
-2. **Publicar em domínio próprio**: trocar Site URL/Redirect URLs, acrescentar a origem
-   em **Ajustes** e gerar o build de novo.
+2. **Domínio próprio**: o site já está publicado em `sourcedayz.vercel.app`; falta
+   apenas apontar um domínio customizado e atualizar Site URL/Redirect URLs e as origens.
 3. **Migrar contas locais**: não é possível importar as senhas (elas foram criadas no navegador). As contas de teste devem ser recriadas no Supabase.
 4. **Primeiro teste real do OpenID**: o fluxo já está publicado, mas a validação final exige entrar com uma conta Steam de verdade.
 5. **Confirm email em produção**: hoje está desligado para testes.
@@ -331,9 +332,12 @@ A função confere o JWT do chamador, exige `is_admin = true` no banco e usa
 
 O gate esconde a interface de quem não é dev, mas o build é estático: os arquivos
 em `public/data` continuam sendo servidos por URL direta a quem souber o caminho.
-Para sigilo real seria necessário mover a documentação para o Supabase Storage
-privado (ou uma Edge Function que devolva o conteúdo após validar `is_dev`). Até
-lá, trate a source como material interno da equipe, não como segredo.
+**No deploy atual, `https://sourcedayz.vercel.app/data/doc.json` responde 200 para
+qualquer visitante**, mesmo sem login. O repositório no GitHub foi tornado privado justamente
+porque contém esses arquivos.
+Para sigilo real é necessário mover a documentação para o Supabase Storage privado
+ou servir os JSON por uma função que valide o JWT e `is_dev` antes de entregar o
+conteúdo. Até lá, trate a source como material interno da equipe, não como segredo.
 
 ## Publicar na Vercel
 
