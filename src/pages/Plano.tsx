@@ -100,8 +100,30 @@ export function Plano() {
                 </span>
               )}
             </div>
-            <p>{tr(p.goal)}</p>
-            <small>{tr(p.exit)}</small>
+            <p className="plano-phase-goal">{tr(p.goal)}</p>
+
+            <div className="plano-phase-grid">
+              <div className="plano-phase-block">
+                <span className="plano-phase-label">{t("plano.phase.what")}</span>
+                <ol>
+                  {p.what.map((w, i) => (
+                    <li key={i}>{tr(w)}</li>
+                  ))}
+                </ol>
+              </div>
+              <div className="plano-phase-block">
+                <span className="plano-phase-label">{t("plano.phase.image")}</span>
+                <p>{tr(p.image)}</p>
+              </div>
+              <div className="plano-phase-block">
+                <span className="plano-phase-label">{t("plano.phase.expect")}</span>
+                <p>{tr(p.expect)}</p>
+              </div>
+            </div>
+
+            <p className="plano-phase-revert">
+              <span>{t("plano.phase.revert")}:</span> {tr(p.revert)}
+            </p>
           </article>
         ))}
       </div>
