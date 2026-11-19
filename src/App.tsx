@@ -19,6 +19,7 @@ import { Dicionario } from "./pages/Dicionario";
 import { Pendencias } from "./pages/Pendencias";
 import { Atualizacoes } from "./pages/Atualizacoes";
 import { PassoAPasso } from "./pages/PassoAPasso";
+import { Plano } from "./pages/Plano";
 import { Landing } from "./pages/Landing";
 import { MinhaConta } from "./pages/MinhaConta";
 import { Admin } from "./pages/Admin";
@@ -38,6 +39,7 @@ const ROTAS: Record<string, ComponentType> = {
   pendencias: Pendencias,
   atualizacoes: Atualizacoes,
   "passo-a-passo": PassoAPasso,
+  plano: Plano,
   patches: Updates,
   dicionario: Dicionario,
   ferramentas: Tools,

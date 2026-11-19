@@ -1393,3 +1393,61 @@ select {
 @media (max-width: 720px) {
   .corpus-banner { padding: 9px 16px; }
 }
+
+/* ---------------------------------------------------------------- plano */
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid.three .panel h3 { margin: 10px 0 6px; font-size: 16px; letter-spacing: -0.01em; }
+.grid.three .panel p { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 0; }
+.muted { color: var(--muted); }
+.small { font-size: 11.5px; }
+
+.plano-method { display: grid; gap: 10px; margin: 14px 0 0; padding-left: 20px; }
+.plano-method li::marker { color: var(--lime); font-family: var(--mono); font-size: 12px; }
+.plano-method li strong { display: block; font-size: 13px; }
+.plano-method li span { color: var(--muted); font-size: 12.5px; }
+
+.plano-phases { display: grid; gap: 10px; margin-bottom: 26px; }
+.plano-phase {
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px;
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0));
+}
+.plano-phase-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.plano-phase-id {
+  font-family: var(--mono); font-size: 11px; color: var(--lime);
+  border: 1px solid rgba(185, 242, 77, 0.3); background: var(--lime-soft);
+  padding: 2px 7px; border-radius: 6px;
+}
+.plano-phase-head strong { font-size: 14px; }
+.plano-phase-cycles { display: flex; gap: 6px; margin-left: auto; }
+.plano-phase p { margin: 10px 0 6px; color: var(--text); font-size: 13px; }
+.plano-phase small { color: var(--muted); font-size: 12px; }
+
+.plano-table-wrap { overflow-x: auto; }
+.plano-table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 760px; }
+.plano-table th {
+  text-align: left; font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--dim); font-weight: 500;
+  padding: 0 12px 10px 0; border-bottom: 1px solid var(--line);
+}
+.plano-table td {
+  padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line);
+  vertical-align: top; color: var(--muted); line-height: 1.5;
+}
+.plano-table td strong { display: block; color: var(--text); font-weight: 500; }
+.plano-table td code {
+  display: block; margin-top: 4px; font-family: var(--mono); font-size: 10.5px;
+  color: var(--dim); word-break: break-word;
+}
+.plano-table td.mono { font-family: var(--mono); font-size: 11px; color: var(--text); white-space: nowrap; }
+
+.plano-pending { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 9px; }
+.plano-pending li { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; color: var(--muted); }
+.plano-pending li span { padding-top: 2px; }
+
+.plano-first p { margin: 8px 0; }
+.plano-first .mono { font-family: var(--mono); color: var(--lime); }
+
+@media (max-width: 900px) {
+  .grid.three { grid-template-columns: 1fr; }
+  .plano-phase-cycles { margin-left: 0; }
+}

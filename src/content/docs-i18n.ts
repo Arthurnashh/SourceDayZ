@@ -29,6 +29,7 @@ export const DOCS_COPY: Record<string, Tri> = {
   "nav.atualizacoes": { pt: "Atualizações", en: "Updates", ru: "Обновления" },
   "nav.pendencias": { pt: "Pendências", en: "Pending", ru: "Незавершённое" },
   "nav.dicionario": { pt: "Dicionário", en: "Dictionary", ru: "Словарь" },
+  "nav.plano": { pt: "Objetivo e plano", en: "Objective & plan", ru: "Цель и план" },
   "nav.ferramentas": { pt: "Ferramentas", en: "Tools", ru: "Инструменты" },
 
   // Layout

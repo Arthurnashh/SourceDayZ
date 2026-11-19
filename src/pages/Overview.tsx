@@ -2,9 +2,11 @@ import { getAchados, getFuncoes, getMeta, getPatches, fmt, useAsync } from "../l
 import { navigate } from "../lib/router";
 import { Bars, Badge, Loading, ErrorBox, SectionTitle, Stat } from "../components/ui";
 import { useDocsT } from "../content/docs-i18n";
+import { usePlanoT } from "../content/plano-i18n";
 
 export function Overview() {
   const { t } = useDocsT();
+  const { t: tp } = usePlanoT();
   const meta = useAsync(getMeta);
   const funcs = useAsync(getFuncoes);
   const achados = useAsync(getAchados);
@@ -30,6 +32,7 @@ export function Overview() {
           <p>{t("overview.lead")}</p>
           <div className="hero-actions">
             <button className="btn primary" onClick={() => navigate("funcoes")}>{t("overview.explore")}</button>
+            <button className="btn" onClick={() => navigate("plano")}>{tp("plano.cta")}</button>
             <button className="btn" onClick={() => navigate("fonte/mudancas")}>{t("overview.changes")}</button>
             <button className="btn ghost" onClick={() => navigate("diagrama")}>{t("overview.diagram")}</button>
             <button className="btn ghost" onClick={() => navigate("bugs")}>{t("overview.bugs")}</button>
