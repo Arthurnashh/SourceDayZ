@@ -37,7 +37,7 @@ function irPara(id: string) {
 export function Landing() {
   const { locale } = useLocale();
   const copy = LANDING_COPY[locale];
-  const workshopLabel = locale === "en" ? "WORKSHOP" : locale === "ru" ? "МАСТЕРСКАЯ" : "OFICINA";
+  const workshopLabel = locale === "ru" ? "МАСТЕРСКАЯ МОДОВ" : "WORKSHOP MODS";
   const [aba, setAba] = useState<AbaServidores>("oficiais");
   const [loginAberto, setLoginAberto] = useState(false);
   const [authMode, setAuthMode] = useState<"entrar" | "criar">("entrar");
