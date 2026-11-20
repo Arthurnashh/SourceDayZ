@@ -1,7 +1,7 @@
 {
   "version": 1,
   "seedVersion": 2,
-  "updatedAt": "2026-11-18T02:30:00.000Z",
+  "updatedAt": "2026-11-20T05:25:00-03:00",
   "removedSeedIds": [],
   "items": [
     {
@@ -13,7 +13,12 @@
       "status": "andamento",
       "prioridade": "alta",
       "responsavel": "equipe de animação",
-      "etiquetas": ["E6", "E7", "RTM", "1.30"],
+      "etiquetas": [
+        "E6",
+        "E7",
+        "RTM",
+        "1.30"
+      ],
       "criadoEm": "2026-11-16T12:00:00.000Z",
       "atualizadoEm": "2026-11-18T01:30:00.000Z",
       "origem": "base"
@@ -27,7 +32,11 @@
       "status": "andamento",
       "prioridade": "media",
       "responsavel": "equipe de UI",
-      "etiquetas": ["V38", "ui.pbo", "menu de pausa"],
+      "etiquetas": [
+        "V38",
+        "ui.pbo",
+        "menu de pausa"
+      ],
       "criadoEm": "2026-11-17T10:00:00.000Z",
       "atualizadoEm": "2026-11-18T00:40:00.000Z",
       "origem": "base"
@@ -41,7 +50,11 @@
       "status": "concluido",
       "prioridade": "alta",
       "responsavel": "equipe de mapa",
-      "etiquetas": ["WRP", "17865", "V32"],
+      "etiquetas": [
+        "WRP",
+        "17865",
+        "V32"
+      ],
       "criadoEm": "2026-11-16T12:00:00.000Z",
       "atualizadoEm": "2026-11-17T18:00:00.000Z",
       "desfecho": {
@@ -63,7 +76,11 @@
       "status": "aberto",
       "prioridade": "media",
       "responsavel": "equipe de gameplay",
-      "etiquetas": ["V127", "portas", "teste em jogo"],
+      "etiquetas": [
+        "V127",
+        "portas",
+        "teste em jogo"
+      ],
       "criadoEm": "2026-11-17T12:00:00.000Z",
       "atualizadoEm": "2026-11-17T12:00:00.000Z",
       "origem": "base"
@@ -77,7 +94,10 @@
       "status": "aberto",
       "prioridade": "media",
       "responsavel": "equipe de UI",
-      "etiquetas": ["inventário", "decisão"],
+      "etiquetas": [
+        "inventário",
+        "decisão"
+      ],
       "criadoEm": "2026-11-17T12:00:00.000Z",
       "atualizadoEm": "2026-11-17T12:00:00.000Z",
       "origem": "base"
@@ -91,7 +111,11 @@
       "status": "andamento",
       "prioridade": "alta",
       "responsavel": "equipe de render",
-      "etiquetas": ["F2", "prioridade alta", "pausada"],
+      "etiquetas": [
+        "F2",
+        "prioridade alta",
+        "pausada"
+      ],
       "criadoEm": "2026-11-17T09:00:00.000Z",
       "atualizadoEm": "2026-11-17T22:00:00.000Z",
       "origem": "base"
@@ -105,7 +129,11 @@
       "status": "aberto",
       "prioridade": "media",
       "responsavel": "equipe de builds",
-      "etiquetas": ["RPT", "automação", "SHA1"],
+      "etiquetas": [
+        "RPT",
+        "automação",
+        "SHA1"
+      ],
       "criadoEm": "2026-11-17T14:00:00.000Z",
       "atualizadoEm": "2026-11-17T14:00:00.000Z",
       "origem": "base"
@@ -119,7 +147,11 @@
       "status": "aberto",
       "prioridade": "alta",
       "responsavel": "equipe de animação",
-      "etiquetas": ["E7", "lanterna", "pilha"],
+      "etiquetas": [
+        "E7",
+        "lanterna",
+        "pilha"
+      ],
       "criadoEm": "2026-11-18T00:30:00.000Z",
       "atualizadoEm": "2026-11-18T01:30:00.000Z",
       "origem": "base"
@@ -133,7 +165,11 @@
       "status": "aberto",
       "prioridade": "media",
       "responsavel": "equipe de animação",
-      "etiquetas": ["checklist", "1.390", "em jogo"],
+      "etiquetas": [
+        "checklist",
+        "1.390",
+        "em jogo"
+      ],
       "criadoEm": "2026-11-17T16:00:00.000Z",
       "atualizadoEm": "2026-11-17T16:00:00.000Z",
       "origem": "base"
@@ -147,7 +183,10 @@
       "status": "andamento",
       "prioridade": "baixa",
       "responsavel": "equipe de documentação",
-      "etiquetas": ["docs", "builds"],
+      "etiquetas": [
+        "docs",
+        "builds"
+      ],
       "criadoEm": "2026-11-16T12:00:00.000Z",
       "atualizadoEm": "2026-11-18T01:45:00.000Z",
       "origem": "base"
@@ -161,7 +200,11 @@
       "status": "bloqueado",
       "prioridade": "media",
       "responsavel": "equipe de animação",
-      "etiquetas": ["zumbi", "rig", "273 arquivos"],
+      "etiquetas": [
+        "zumbi",
+        "rig",
+        "273 arquivos"
+      ],
       "criadoEm": "2026-11-17T16:00:00.000Z",
       "atualizadoEm": "2026-11-17T16:00:00.000Z",
       "origem": "base"
@@ -175,7 +218,10 @@
       "status": "bloqueado",
       "prioridade": "baixa",
       "responsavel": "equipe de animação",
-      "etiquetas": ["menu 1.30", "teto do PBO"],
+      "etiquetas": [
+        "menu 1.30",
+        "teto do PBO"
+      ],
       "criadoEm": "2026-11-17T16:00:00.000Z",
       "atualizadoEm": "2026-11-17T16:00:00.000Z",
       "origem": "base"
@@ -189,7 +235,11 @@
       "status": "aberto",
       "prioridade": "alta",
       "responsavel": "quem tem a source",
-      "etiquetas": ["GitHub", "board.json", "updates.json"],
+      "etiquetas": [
+        "GitHub",
+        "board.json",
+        "updates.json"
+      ],
       "criadoEm": "2026-11-18T02:30:00.000Z",
       "atualizadoEm": "2026-11-18T02:30:00.000Z",
       "origem": "base"
@@ -206,7 +256,11 @@
       "local": "Cdzp…_batteryLicking · ik\\comsumables\\9v_battery.rtm / battery_d.rtm",
       "passos": "Equipar lanterna, equipar pilha, segurar e executar Lick battery. Observar a pose e o tamanho do item.",
       "responsavel": "equipe de animação",
-      "etiquetas": ["lanterna", "pilha", "E7"],
+      "etiquetas": [
+        "lanterna",
+        "pilha",
+        "E7"
+      ],
       "criadoEm": "2026-11-17T18:00:00.000Z",
       "atualizadoEm": "2026-11-18T01:30:00.000Z",
       "origem": "base"
@@ -223,7 +277,11 @@
       "local": "lib/motion.cpp · ActionMap / DecodeUpDegree",
       "passos": "Entrar no mundo, tentar andar, correr e pular. Comparar pos, prim, info e minmax no diagnóstico.",
       "responsavel": "equipe de motor",
-      "etiquetas": ["upDegree", "movimento", "V37"],
+      "etiquetas": [
+        "upDegree",
+        "movimento",
+        "V37"
+      ],
       "criadoEm": "2026-11-16T10:00:00.000Z",
       "atualizadoEm": "2026-11-17T12:00:00.000Z",
       "desfecho": {
@@ -248,7 +306,13 @@
       "local": "worlds_chernarusplus.pbo · TextBankD3D9::UseMipmap",
       "passos": "Abrir o cliente com o worlds_chernarusplus.pbo de revisão diferente do servidor e carregar uma textura com mip inválido.",
       "responsavel": "equipe de motor",
-      "etiquetas": ["WRP", "mip", "V28", "V30", "V31"],
+      "etiquetas": [
+        "WRP",
+        "mip",
+        "V28",
+        "V30",
+        "V31"
+      ],
       "criadoEm": "2026-11-16T11:00:00.000Z",
       "atualizadoEm": "2026-11-17T18:00:00.000Z",
       "desfecho": {
@@ -273,7 +337,12 @@
       "local": "worlds_chernarusplus_data.pbo · dta\\bin.pbo",
       "passos": "Subir a V31, abrir o menu principal e entrar no mundo. Comparar as texturas layers\\*_lco.paa com o Addons atual.",
       "responsavel": "equipe de UI",
-      "etiquetas": ["V31", "V32", "terreno", "menu"],
+      "etiquetas": [
+        "V31",
+        "V32",
+        "terreno",
+        "menu"
+      ],
       "criadoEm": "2026-11-17T10:00:00.000Z",
       "atualizadoEm": "2026-11-17T18:00:00.000Z",
       "desfecho": {
@@ -298,7 +367,11 @@
       "local": "ui.pbo · dta/bin/config.bin",
       "passos": "Abrir o navegador de servidores e conferir os controles ButtonInternet, ButtonFavorite, ButtonLAN, B_Cancel, B_Join e BrowserLabelName/Ping/Password/Full/BattlEye.",
       "responsavel": "equipe de UI",
-      "etiquetas": ["V34", "sizeEx", "idc"],
+      "etiquetas": [
+        "V34",
+        "sizeEx",
+        "idc"
+      ],
       "criadoEm": "2026-11-17T09:00:00.000Z",
       "atualizadoEm": "2026-11-17T15:00:00.000Z",
       "desfecho": {
@@ -323,7 +396,11 @@
       "local": "lib/UI/uiContainers.cpp:2166-2175",
       "passos": "Abrir o inventário, selecionar um item e apertar espaço. Observar se a tela fecha e se o item gira.",
       "responsavel": "equipe de UI",
-      "etiquetas": ["espaço", "keyup", "inventário"],
+      "etiquetas": [
+        "espaço",
+        "keyup",
+        "inventário"
+      ],
       "criadoEm": "2026-11-17T08:00:00.000Z",
       "atualizadoEm": "2026-11-17T14:00:00.000Z",
       "desfecho": {
@@ -338,6 +415,136 @@
     }
   ],
   "updates": [
+    {
+      "id": "U-101",
+      "tipo": "implementacao",
+      "versao": "launcher",
+      "data": "2026-11-20T05:15:00-03:00",
+      "titulo": "Launcher: busca de servidores LAN até 8x mais rápida",
+      "resumo": "As consultas A2S agora rodam em paralelo: 350 ms no localhost, 700 ms no broadcast e 1,5 s nos servidores do dayz_servers.cfg. A aba LAN responde em menos de 2 s em vez de esperar cada porta expirar em sequência.",
+      "detalhes": "Antes eram 8 portas de broadcast consultadas uma depois da outra, com 1,5 s de timeout cada, o que sozinho passava de 12 s. Servidor que já está na lista passa a ser atualizado (players, ping, mapa) em vez de duplicado, e o Refresh tem guarda contra clique duplo.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-20T05:15:00-03:00"
+    },
+    {
+      "id": "U-102",
+      "tipo": "implementacao",
+      "versao": "launcher",
+      "data": "2026-11-20T05:15:00-03:00",
+      "titulo": "Launcher: Dashboard com novidades, atualizações e correções",
+      "resumo": "A página inicial ganhou o painel NOVIDADES, ATUALIZAÇÕES E CORREÇÕES, com etiqueta NOVO/MELHORIA/CORREÇÃO, data e hora em cada item e o horário da última atualização no topo.",
+      "detalhes": "A lista é rolável e mostra o que mudou no launcher e no Server Manager, para o jogador saber o que foi corrigido sem abrir o repositório.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-20T05:15:00-03:00"
+    },
+    {
+      "id": "U-103",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "data": "2026-11-19T17:20:00-03:00",
+      "titulo": "Server Manager: Database virou monitor do mundo",
+      "resumo": "Contadores reais de zumbis, itens no mundo e jogadores online, posição X/Z com grid DayZ (ex.: 134054), limpeza de zumbis, exportação CSV e histórico de entidades rastreadas.",
+      "detalhes": "A aba deixou de ser um grid de histórico e passou a ler o mundo por comandos estáveis (allMissionObjects, count, name, getPosATL) gravados no RPT pelo WorldProbe. O RPT é localizado automaticamente pelo processo DayZServer.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-19T17:20:00-03:00"
+    },
+    {
+      "id": "U-104",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "data": "2026-11-19T17:16:00-03:00",
+      "titulo": "Server Manager: aba Items no SQF Executor",
+      "resumo": "Spawn direto no inventário com createInInventory, quantidade de 1 a 50 e validação da classe em CfgWeapons, CfgMagazines e CfgVehicles.",
+      "detalhes": "Cada execução grava um relatório no RPT ([DSM] item ... falhas=[...]) para saber o que entrou e o que foi recusado. As abas Kits e Teleports seguem iguais.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-19T17:16:00-03:00"
+    },
+    {
+      "id": "U-105",
+      "tipo": "patch",
+      "versao": "manager",
+      "data": "2026-11-19T16:47:00-03:00",
+      "titulo": "Leitura do RPT perdia a última linha",
+      "resumo": "O monitor recuava a leitura até o fim do arquivo e descartava a linha S|... recém-escrita. Por isso zumbis e itens apareciam zerados mesmo com o mundo populado.",
+      "detalhes": "Agora a leitura recua 1 byte e relê a linha completa antes de contar. O probe foi validado com 500 zumbis, 16.675 itens e o jogador Arthurnashh em grid 134054.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-19T16:47:00-03:00"
+    },
+    {
+      "id": "U-106",
+      "tipo": "patch",
+      "versao": "manager",
+      "data": "2026-11-19T16:55:00-03:00",
+      "titulo": "Posições corretas no monitor do mundo",
+      "resumo": "O eixo norte passou a ser lido de select 1. Antes o segundo valor exibido era a altitude do jogador, não a coordenada do mapa.",
+      "detalhes": "getPos/getPosATL retornam [east, north, altitude]; o grid usa floor/100 com três dígitos em cada eixo.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-19T16:55:00-03:00"
+    },
+    {
+      "id": "U-107",
+      "tipo": "patch",
+      "versao": "manager",
+      "data": "2026-11-18T16:43:00-03:00",
+      "titulo": "RCon: comandos voltaram a responder",
+      "resumo": "A sequência do BattlEye é reiniciada em 0 depois do login. Com o contador em 1, players, bans e version eram descartados em silêncio.",
+      "detalhes": "O cliente passou a usar o protocolo real: CRC32 LE cobrindo 0xFF + payload, login 0x00, comando 0x01, ACK 0x02, multi-pacote e keepalive de 30 s. Validado com players, bans e version 1.190; senha errada passa a ser rejeitada.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T16:43:00-03:00"
+    },
+    {
+      "id": "U-108",
+      "tipo": "patch",
+      "versao": "manager",
+      "data": "2026-11-18T17:00:00-03:00",
+      "titulo": "Colunas cortadas na grade do Server Manager",
+      "resumo": "Playtime, Kicks e Bans ficavam fora da área visível e criavam rolagem horizontal.",
+      "detalhes": "As larguras das colunas foram redistribuídas para caber na área útil da tabela.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T17:00:00-03:00"
+    },
+    {
+      "id": "U-109",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "data": "2026-11-18T16:30:00-03:00",
+      "titulo": "Server Manager: layout fiel à referência",
+      "resumo": "Connect, Disconnect, Reload e SQF Executor na barra lateral; abas Players, Bans e Database; a Whitelist foi removida.",
+      "detalhes": "A barra lateral e as abas passaram a seguir o desenho de referência, sem as colunas e painéis que não existiam mais.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T16:30:00-03:00"
+    },
+    {
+      "id": "U-110",
+      "tipo": "patch",
+      "versao": "manager",
+      "data": "2026-11-18T15:58:00-03:00",
+      "titulo": "Senha errada não mostra mais jogadores",
+      "resumo": "O estado simulado antigo foi descartado: sem login válido no BattlEye a lista fica vazia e o app informa a falha.",
+      "detalhes": "Antes, uma senha incorreta ainda exibia a lista de exemplo, dando a impressão de conexão bem-sucedida.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual",
+      "criadoEm": "2026-11-18T15:58:00-03:00"
+    },
     {
       "id": "U-005",
       "tipo": "implementacao",

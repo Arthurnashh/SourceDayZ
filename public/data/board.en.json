@@ -1,7 +1,7 @@
 {
   "version": 1,
   "seedVersion": 2,
-  "updatedAt": "2026-11-18T02:30:00.000Z",
+  "updatedAt": "2026-11-20T05:25:00-03:00",
   "removedSeedIds": [],
   "items": [
     {
@@ -415,6 +415,116 @@
     }
   ],
   "updates": [
+    {
+      "id": "U-101",
+      "tipo": "implementacao",
+      "versao": "launcher",
+      "titulo": "Launcher: LAN server scan up to 8x faster",
+      "resumo": "A2S queries now run in parallel: 350 ms on localhost, 700 ms on broadcast and 1.5 s on dayz_servers.cfg entries. The LAN tab answers in under 2 s instead of waiting for each port to time out in sequence.",
+      "detalhes": "Before, eight broadcast ports were queried one after another with a 1.5 s timeout each, which alone took more than 12 s. A server already in the list is updated (players, ping, map) instead of duplicated, and Refresh is guarded against double clicks.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-102",
+      "tipo": "implementacao",
+      "versao": "launcher",
+      "titulo": "Launcher: Dashboard with news, updates and fixes",
+      "resumo": "The home page gained the NEWS, UPDATES AND FIXES panel, with NEW/IMPROVEMENT/FIX badges, date and time on every item and the last update time at the top.",
+      "detalhes": "The list scrolls and shows what changed in the launcher and the Server Manager, so players can see what was fixed without opening the repository.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-103",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "titulo": "Server Manager: Database became a world monitor",
+      "resumo": "Real counters for zombies, world items and online players, X/Z position with the DayZ grid (e.g. 134054), zombie cleanup, CSV export and a tracked-entity history.",
+      "detalhes": "The tab is no longer a history grid: it reads the world through stable commands (allMissionObjects, count, name, getPosATL) written to the RPT by WorldProbe. The RPT is found automatically through the DayZServer process.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-104",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "titulo": "Server Manager: Items tab in the SQF Executor",
+      "resumo": "Direct inventory spawning with createInInventory, quantity from 1 to 50 and class validation in CfgWeapons, CfgMagazines and CfgVehicles.",
+      "detalhes": "Every run writes a report to the RPT ([DSM] item ... falhas=[...]) so you know what went in and what was refused. The Kits and Teleports tabs are unchanged.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-105",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "RPT reader dropped the last line",
+      "resumo": "The monitor read up to the end of the file and discarded the freshly written S|... line, so zombies and items showed as zero even with a populated world.",
+      "detalhes": "It now steps back 1 byte and re-reads the whole line before counting. The probe was validated with 500 zombies, 16,675 items and the player Arthurnashh on grid 134054.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-106",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "Correct positions in the world monitor",
+      "resumo": "The north axis is now read from select 1. Before, the second value shown was the player's altitude, not the map coordinate.",
+      "detalhes": "getPos/getPosATL return [east, north, altitude]; the grid uses floor/100 with three digits per axis.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-107",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "RCon: commands answer again",
+      "resumo": "The BattlEye sequence is reset to 0 after login. With the counter at 1, players, bans and version were silently discarded.",
+      "detalhes": "The client now uses the real protocol: CRC32 LE over 0xFF + payload, login 0x00, command 0x01, ACK 0x02, multi-packet and a 30 s keepalive. Validated with players, bans and version 1.190; a wrong password is now rejected.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-108",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "Cut-off columns in the Server Manager grid",
+      "resumo": "Playtime, Kicks and Bans sat outside the visible area and created horizontal scrolling.",
+      "detalhes": "Column widths were redistributed to fit the usable table area.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-109",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "titulo": "Server Manager: layout matching the reference",
+      "resumo": "Connect, Disconnect, Reload and SQF Executor in the sidebar; Players, Bans and Database tabs; the Whitelist was removed.",
+      "detalhes": "The sidebar and tabs follow the reference design, without the columns and panels that no longer existed.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-110",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "Wrong password no longer shows players",
+      "resumo": "The old simulated state was dropped: without a valid BattlEye login the list stays empty and the app reports the failure.",
+      "detalhes": "Before, a wrong password still displayed the sample list, giving the impression of a successful connection.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
     {
       "id": "U-005",
       "tipo": "implementacao",

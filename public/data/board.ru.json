@@ -1,7 +1,7 @@
 {
   "version": 1,
   "seedVersion": 2,
-  "updatedAt": "2026-11-18T02:30:00.000Z",
+  "updatedAt": "2026-11-20T05:25:00-03:00",
   "removedSeedIds": [],
   "items": [
     {
@@ -415,6 +415,116 @@
     }
   ],
   "updates": [
+    {
+      "id": "U-101",
+      "tipo": "implementacao",
+      "versao": "launcher",
+      "titulo": "Launcher: поиск серверов в LAN до 8 раз быстрее",
+      "resumo": "Запросы A2S теперь идут параллельно: 350 мс на localhost, 700 мс на broadcast и 1,5 с на серверах из dayz_servers.cfg. Вкладка LAN отвечает менее чем за 2 с, а не ждёт истечения таймаута по каждому порту по очереди.",
+      "detalhes": "Раньше восемь портов broadcast опрашивались последовательно с таймаутом 1,5 с, что само по себе занимало больше 12 с. Сервер, уже есть в списке, обновляется, а не дублируется.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-102",
+      "tipo": "implementacao",
+      "versao": "launcher",
+      "titulo": "Launcher: Dashboard с новостями, обновлениями и исправлениями",
+      "resumo": "Главная страница получила панель НОВОСТИ, ОБНОВЛЕНИЯ И ИСПРАВЛЕНИЯ с метками НОВОЕ/УЛУЧШЕНИЕ/ИСПРАВЛЕНИЕ, датой и временем у каждого пункта.",
+      "detalhes": "Список прокручивается и показывает, что изменилось в лаунчере и Server Manager.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-103",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "titulo": "Server Manager: Database стал монитором мира",
+      "resumo": "Реальные счётчики зомби, предметов в мире и игроков онлайн, позиция X/Z с сеткой DayZ (например 134054), очистка зомби, экспорт CSV.",
+      "detalhes": "Вкладка больше не сетка истории: мир читается стабильными командами (allMissionObjects, count, name, getPosATL), которые WorldProbe пишет в RPT. RPT находится автоматически по процессу DayZServer.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-104",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "titulo": "Server Manager: вкладка Items в SQF Executor",
+      "resumo": "Спавн прямо в инвентарь через createInInventory, количество от 1 до 50 и проверка класса в CfgWeapons, CfgMagazines и CfgVehicles.",
+      "detalhes": "Каждый запуск пишет отчёт в RPT ([DSM] item ... falhas=[...]), чтобы было видно, что вошло, а что отклонено.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-105",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "Чтение RPT теряло последнюю строку",
+      "resumo": "Монитор читал до конца файла и терял только что записанную строку S|..., поэтому зомби и предметы показывались нулевыми.",
+      "detalhes": "Теперь чтение отступает на 1 байт и перечитывает строку целиком. Проверено: 500 зомби, 16 675 предметов и игрок Arthurnashh в сетке 134054.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-106",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "Правильные позиции в мониторе мира",
+      "resumo": "Ось севера теперь читается из select 1. Раньше второе значение было высотой, а не координатой карты.",
+      "detalhes": "getPos/getPosATL возвращают [east, north, altitude]; сетка использует floor/100 с тремя цифрами на каждую ось.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-107",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "RCon: команды снова отвечают",
+      "resumo": "После логина последовательность BattlEye сбрасывается в 0. Со счётчиком 1 ответы players, bans и version молча отбрасывались.",
+      "detalhes": "Клиент перешёл на реальный протокол: CRC32 LE по 0xFF + payload, login 0x00, команда 0x01, ACK 0x02, мультипакеты и keepalive 30 с. Проверено на version 1.190; неверный пароль теперь отклоняется.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-108",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "Обрезанные столбцы в таблице Server Manager",
+      "resumo": "Playtime, Kicks и Bans оказывались за видимой областью и создавали горизонтальную прокрутку.",
+      "detalhes": "Ширина столбцов перераспределена под рабочую область таблицы.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-109",
+      "tipo": "implementacao",
+      "versao": "manager",
+      "titulo": "Server Manager: компоновка по эталону",
+      "resumo": "Connect, Disconnect, Reload и SQF Executor в боковой панели; вкладки Players, Bans и Database; удалён из списка убелых.",
+      "detalhes": "Боковая панель и вкладки следуют эталону, без столбцов и панелей, которых больше нет.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
+    {
+      "id": "U-110",
+      "tipo": "patch",
+      "versao": "manager",
+      "titulo": "Неверный пароль больше не показывает игроков",
+      "resumo": "Старое имитированное состояние убрано: без валидного логина BattlEye список пуст, а приложение сообщает об ошибке.",
+      "detalhes": "Раньше неверный пароль всё равно показывал примерный список, создавая впечатление успешного подключения.",
+      "autor": "SourceDayZ",
+      "url": "",
+      "origem": "manual"
+    },
     {
       "id": "U-005",
       "tipo": "implementacao",
