@@ -1,5 +1,4 @@
-import * as tus from "tus-js-client";
-import { getSupabaseClient, getSupabaseConfig } from "./accounts";
+import { getSupabaseClient } from "./accounts";
 
 export const WORKSHOP_FILE_BUCKET = "workshop-mod-files";
 export const WORKSHOP_COVER_BUCKET = "workshop-mod-covers";
@@ -82,7 +81,7 @@ export interface WorkshopModInput {
   tags: string[];
   installation: string;
   releaseNotes: string;
-  file: File | null;
+  manifestUrl: string;
   cover: File | null;
 }
 
@@ -188,71 +187,30 @@ function mapVersion(row: RawVersion): WorkshopVersion {
   };
 }
 
-function extensionForArchive(file: File): { extension: string; contentType: string } {
-  const extension = file.name.split(".").pop()?.toLowerCase() ?? "";
-  const contentTypes: Record<string, string> = {
-    zip: "application/zip",
-    "7z": "application/x-7z-compressed",
-    rar: "application/vnd.rar",
-  };
-  if (!contentTypes[extension]) throw new Error("Envie o mod compactado em .zip, .7z ou .rar.");
-  return { extension, contentType: contentTypes[extension] };
-}
-
 function newPath(ownerId: string, suffix: string): string {
   return ownerId + "/" + crypto.randomUUID() + "." + suffix;
 }
 
-async function uploadArchive(
-  ownerId: string,
-  file: File,
-  onProgress: (progress: UploadProgress) => void,
-): Promise<string> {
-  const client = clientOrThrow();
-  const config = getSupabaseConfig();
-  if (!config) throw new Error("O Workshop precisa do Supabase configurado.");
-  const { data: sessionData, error: sessionError } = await client.auth.getSession();
-  if (sessionError || !sessionData.session) throw new Error("Entre na sua conta novamente para publicar o mod.");
-  const { extension, contentType } = extensionForArchive(file);
-  const path = newPath(ownerId, extension);
-  const projectRef = new URL(config.url).hostname.split(".")[0];
-  const endpoint = "https://" + projectRef + ".storage.supabase.co/storage/v1/upload/resumable";
+interface ValidatedWorkshopManifest {
+  url: string;
+  manifest: {
+    id: string;
+    title: string;
+    folder: string;
+    totalSizeBytes: number;
+    files: Array<{ path: string; url: string; sizeBytes: number; sha256: string }>;
+  };
+}
 
-  await new Promise<void>((resolve, reject) => {
-    const upload = new tus.Upload(file, {
-      endpoint,
-      retryDelays: [0, 3000, 6000, 12000, 20000],
-      chunkSize: 6 * 1024 * 1024,
-      uploadDataDuringCreation: true,
-      removeFingerprintOnSuccess: true,
-      headers: {
-        authorization: "Bearer " + (sessionData.session?.access_token ?? ""),
-        apikey: config.anonKey,
-      },
-      metadata: {
-        bucketName: WORKSHOP_FILE_BUCKET,
-        objectName: path,
-        contentType,
-        cacheControl: "3600",
-      },
-      onError(error) {
-        reject(error);
-      },
-      onProgress(bytesUploaded, bytesTotal) {
-        onProgress({
-          name: file.name,
-          percent: bytesTotal ? Math.min(99, Math.round((bytesUploaded / bytesTotal) * 100)) : 0,
-        });
-      },
-      onSuccess() {
-        onProgress({ name: file.name, percent: 100 });
-        resolve();
-      },
-    });
-    upload.start();
+async function validateWorkshopManifest(value: string): Promise<ValidatedWorkshopManifest> {
+  const response = await fetch("/api/workshop/manifest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url: value.trim() }),
   });
-
-  return path;
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(typeof result.error === "string" ? result.error : "Não foi possível validar o manifesto do mod.");
+  return result as ValidatedWorkshopManifest;
 }
 
 async function uploadCover(ownerId: string, file: File): Promise<string> {
@@ -400,17 +358,24 @@ export async function saveWorkshopRating(modId: string, userId: string, rating: 
 export async function downloadWorkshopMod(mod: WorkshopMod): Promise<void> {
   const popup = window.open("about:blank", "_blank");
   if (popup) popup.opener = null;
-  const client = clientOrThrow();
   try {
-    const { data, error } = await client.rpc("workshop_record_download", { p_mod_id: mod.id });
-    if (error) throw workshopError(error);
-    const result = (data as Array<{ file_path: string; file_name: string }> | null)?.[0];
-    if (!result) throw new Error("Este mod não está disponível para download.");
-    const signed = await client.storage.from(WORKSHOP_FILE_BUCKET)
-      .createSignedUrl(result.file_path, 90, { download: result.file_name });
-    if (signed.error) throw workshopError(signed.error);
-    if (popup) popup.location.href = signed.data.signedUrl;
-    else window.location.href = signed.data.signedUrl;
+    const client = clientOrThrow();
+    const { data: sessionData, error: sessionError } = await client.auth.getSession();
+    if (sessionError || !sessionData.session?.access_token) throw new Error("Entre novamente na sua conta para baixar este mod.");
+    const response = await fetch("/api/workshop/download", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionData.session.access_token,
+      },
+      body: JSON.stringify({ modId: mod.id }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(typeof result.error === "string" ? result.error : "Não foi possível preparar o download deste mod.");
+    const target = typeof result.folderUrl === "string" ? result.folderUrl : result.url;
+    if (typeof target !== "string" || !target.startsWith("https://")) throw new Error("O servidor não retornou um link de download válido.");
+    if (popup) popup.location.href = target;
+    else window.location.href = target;
   } catch (error) {
     popup?.close();
     throw error;
@@ -438,14 +403,18 @@ export async function createWorkshopMod(
   input: WorkshopModInput,
   onProgress: (progress: UploadProgress) => void,
 ): Promise<void> {
-  if (!input.file) throw new Error("Escolha o arquivo compactado do mod.");
+  if (!input.manifestUrl.trim()) throw new Error("Informe o link raw do manifest.json do mod no GitHub.");
   const client = clientOrThrow();
   const id = crypto.randomUUID();
   let filePath: string | null = null;
   let coverPath: string | null = null;
 
   try {
-    filePath = await uploadArchive(ownerId, input.file, onProgress);
+    onProgress({ name: "Validando manifest.json...", percent: 20 });
+    const result = await validateWorkshopManifest(input.manifestUrl);
+    const manifest = result.manifest;
+    filePath = "github:" + result.url;
+    onProgress({ name: "Manifesto validado · " + manifest.folder, percent: 85 });
     if (input.cover) coverPath = await uploadCover(ownerId, input.cover);
 
     const { error: modError } = await client.from("workshop_mods").insert({
@@ -461,8 +430,8 @@ export async function createWorkshopMod(
       installation: input.installation.trim(),
       cover_path: coverPath,
       file_path: filePath,
-      file_name: input.file.name,
-      file_size: input.file.size,
+      file_name: manifest.folder,
+      file_size: manifest.totalSizeBytes,
       status: "published",
     });
     if (modError) throw workshopError(modError);
@@ -471,8 +440,8 @@ export async function createWorkshopMod(
       mod_id: id,
       version: input.version.trim(),
       file_path: filePath,
-      file_name: input.file.name,
-      file_size: input.file.size,
+      file_name: manifest.folder,
+      file_size: manifest.totalSizeBytes,
       notes: input.releaseNotes.trim() || "Versão inicial",
       created_by: ownerId,
     });
@@ -481,7 +450,6 @@ export async function createWorkshopMod(
       throw workshopError(versionError);
     }
   } catch (error) {
-    if (filePath) bestEffortRemove(WORKSHOP_FILE_BUCKET, [filePath]);
     if (coverPath) bestEffortRemove(WORKSHOP_COVER_BUCKET, [coverPath]);
     throw error instanceof Error ? error : new Error("Não foi possível publicar o mod.");
   }
@@ -494,21 +462,29 @@ export async function updateWorkshopMod(
   onProgress: (progress: UploadProgress) => void,
 ): Promise<void> {
   const client = clientOrThrow();
-  let newFilePath: string | null = null;
+  let newManifest: ValidatedWorkshopManifest | null = null;
   let newCoverPath: string | null = null;
   let newVersionCreated = false;
 
   try {
-    if (input.file) newFilePath = await uploadArchive(ownerId, input.file, onProgress);
+    const currentManifestUrl = mod.filePath.startsWith("github:") ? mod.filePath.slice("github:".length) : "";
+    const requestedManifestUrl = input.manifestUrl.trim();
+    if (requestedManifestUrl && requestedManifestUrl !== currentManifestUrl) {
+      if (input.version.trim() === mod.version) throw new Error("Use um número de versão diferente ao trocar o manifesto do mod.");
+      onProgress({ name: "Validando manifest.json...", percent: 20 });
+      newManifest = await validateWorkshopManifest(requestedManifestUrl);
+      onProgress({ name: "Manifesto validado · " + newManifest.manifest.folder, percent: 85 });
+    }
     if (input.cover) newCoverPath = await uploadCover(ownerId, input.cover);
 
-    if (newFilePath && input.file) {
+    if (newManifest) {
+      const newFilePath = "github:" + newManifest.url;
       const { error: versionError } = await client.from("workshop_mod_versions").insert({
         mod_id: mod.id,
         version: input.version.trim(),
         file_path: newFilePath,
-        file_name: input.file.name,
-        file_size: input.file.size,
+        file_name: newManifest.manifest.folder,
+        file_size: newManifest.manifest.totalSizeBytes,
         notes: input.releaseNotes.trim() || "Atualização do mod",
         created_by: ownerId,
       });
@@ -525,11 +501,11 @@ export async function updateWorkshopMod(
       tags: input.tags,
       installation: input.installation.trim(),
     };
-    if (newFilePath && input.file) {
+    if (newManifest) {
       patch.version = input.version.trim();
-      patch.file_path = newFilePath;
-      patch.file_name = input.file.name;
-      patch.file_size = input.file.size;
+      patch.file_path = "github:" + newManifest.url;
+      patch.file_name = newManifest.manifest.folder;
+      patch.file_size = newManifest.manifest.totalSizeBytes;
     }
     if (newCoverPath) patch.cover_path = newCoverPath;
 
@@ -543,7 +519,6 @@ export async function updateWorkshopMod(
     if (newVersionCreated) {
       await client.from("workshop_mod_versions").delete().eq("mod_id", mod.id).eq("version", input.version.trim());
     }
-    if (newFilePath) bestEffortRemove(WORKSHOP_FILE_BUCKET, [newFilePath]);
     if (newCoverPath) bestEffortRemove(WORKSHOP_COVER_BUCKET, [newCoverPath]);
     throw error instanceof Error ? error : new Error("Não foi possível atualizar o mod.");
   }
@@ -565,8 +540,8 @@ export async function deleteWorkshopMod(mod: WorkshopMod, ownerId: string): Prom
   const versionsResult = await client.from("workshop_mod_versions").select("file_path").eq("mod_id", mod.id);
   if (versionsResult.error) throw workshopError(versionsResult.error);
 
-  const paths = new Set<string>([mod.filePath]);
-  for (const row of versionsResult.data ?? []) paths.add(String(row.file_path));
+  const paths = new Set<string>([mod.filePath, ...(versionsResult.data ?? []).map(row => String(row.file_path))]
+    .filter(path => path && !path.startsWith("github:")));
   const { error } = await client.from("workshop_mods").delete()
     .eq("id", mod.id).eq("owner_id", ownerId);
   if (error) throw workshopError(error);

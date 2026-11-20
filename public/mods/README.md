@@ -19,8 +19,9 @@ Add one entry per server using the address and game port shown in the launcher's
 
 - `id` is the mod ID from the SourceDayZ Workshop.
 - `folder` is the exact `@FolderName` used in the server's `-mod=` startup parameter. Use the same value for each client installation.
-- Keep a mod's downloadable ZIP, 7z, or RAR package in the Workshop's private Supabase Storage bucket. This repository stores only the server-to-mod manifest.
+- Store each mod as an uncompressed directory under the repository's top-level `mods/` folder, for example `mods/@Helicopteros/Addons/*.pbo`. Track PBOs with Git LFS and list their relative paths, sizes, hashes, and GitHub media URLs in that mod's `manifest.json`. Register the raw manifest URL with the full commit SHA so the launcher gets the exact published files.
+- Do not commit a ZIP, 7z, or RAR containing the mod. The launcher downloads each listed file and recreates its directory structure in the game folder.
 - On the DayZ server, install each mod's contents in a matching `@FolderName` directory beside the server executable and list the same folders in its startup arguments, for example `-mod=@ExampleMod;@AnotherMod`.
-- On the client, the launcher installs the archive into the selected DayZ game directory under those same `@FolderName` directories before joining.
+- On the client, the launcher installs each individual file into the selected DayZ game directory under those same `@FolderName` directories before joining.
 
 After changing `servers.json`, deploy the site so launchers receive the updated server requirements.

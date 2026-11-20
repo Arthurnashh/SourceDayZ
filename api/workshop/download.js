@@ -1,3 +1,5 @@
+import { fetchWorkshopManifest } from "../../server/workshop-manifest.js";
+
 const json = (res, status, value) => {
   res.statusCode = status;
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -67,6 +69,17 @@ export default async function handler(req, res) {
       return json(res, 404, { error: "Este mod não está disponível para download." });
     }
 
+    if (String(file.file_path).startsWith("github:")) {
+      const result = await fetchWorkshopManifest(String(file.file_path).slice("github:".length));
+      return json(res, 200, {
+        files: result.manifest.files,
+        fileName: file.file_name,
+        folderName: result.manifest.folder,
+        folderUrl: result.manifest.folderUrl,
+        version: file.version || "",
+      });
+    }
+
     const encodedPath = file.file_path.split("/").map(encodeURIComponent).join("/");
     const signedResponse = await fetch(`${baseUrl}/storage/v1/object/sign/workshop-mod-files/${encodedPath}`, {
       method: "POST",
@@ -87,7 +100,9 @@ export default async function handler(req, res) {
       : new URL(`/storage/v1${signedPath.startsWith("/") ? signedPath : `/${signedPath}`}`, baseUrl).toString();
     downloadUrl.searchParams.set("download", file.file_name);
     return json(res, 200, { url: downloadUrl, fileName: file.file_name, version: file.version || "" });
-  } catch {
-    return json(res, 502, { error: "Não foi possível preparar o download deste mod." });
+  } catch (error) {
+    return json(res, Number(error?.statusCode) || 502, {
+      error: error instanceof Error ? error.message : "Não foi possível preparar o download deste mod.",
+    });
   }
 }

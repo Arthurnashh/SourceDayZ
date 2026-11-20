@@ -745,7 +745,7 @@ function ModDetail({
           <section className="wm-panel">
             <div className="wm-panel-heading"><div><span className="wm-results-kicker">COMO USAR</span><h2>Instalação</h2></div><span className="wm-file-size">{formatWorkshopSize(mod.fileSize)}</span></div>
             <p className="wm-description wm-install">{mod.installation}</p>
-            <div className="wm-file-row"><Icon path="M4 4h10l6 6v10H4zM14 4v6h6M8 14h8M8 17h6" /><span><strong>{mod.fileName}</strong><small>Arquivo compactado · {formatWorkshopSize(mod.fileSize)}</small></span><button onClick={onDownload} disabled={busyId === "download-" + mod.id}>{subscribed ? "Baixar" : "Inscrever e baixar"}</button></div>
+            <div className="wm-file-row"><Icon path="M4 4h10l6 6v10H4zM14 4v6h6M8 14h8M8 17h6" /><span><strong>{mod.fileName}</strong><small>{mod.filePath.startsWith("github:") ? "Arquivos individuais no GitHub · " : "Arquivo compactado · "}{formatWorkshopSize(mod.fileSize)}</small></span><button onClick={onDownload} disabled={busyId === "download-" + mod.id}>{subscribed ? (mod.filePath.startsWith("github:") ? "Ver arquivos" : "Baixar") : "Inscrever e baixar"}</button></div>
           </section>
 
           <section className="wm-panel">
@@ -755,7 +755,7 @@ function ModDetail({
                 <article className="wm-version-row" key={version.id}>
                   <span className={"wm-version-node" + (index === 0 ? " current" : "")}><Icon path="M5 12h14M12 5v14" size={13} /></span>
                   <div><strong>Versão {version.version}{index === 0 && <i>ATUAL</i>}</strong><small>{shortDate(version.createdAt)} · {formatWorkshopSize(version.fileSize)}</small>{version.notes && <p>{version.notes}</p>}</div>
-                  {index === 0 && <button className="wm-version-download" onClick={() => onDownloadVersion(version)} aria-label={"Baixar versão " + version.version}><Icon path="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3" /></button>}
+                  {index === 0 && <button className="wm-version-download" onClick={() => version.filePath.startsWith("github:") ? onDownload() : onDownloadVersion(version)} aria-label={"Baixar versão " + version.version}><Icon path="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3" /></button>}
                 </article>
               )) : <p className="wm-muted">Nenhuma versão registrada ainda.</p>}
             </div>
@@ -819,15 +819,16 @@ function ModForm({
   const [tags, setTags] = useState(initial?.tags.join(", ") ?? "");
   const [installation, setInstallation] = useState(initial?.installation ?? "");
   const [releaseNotes, setReleaseNotes] = useState("");
-  const [file, setFile] = useState<File | null>(null);
+  const existingManifestUrl = initial?.filePath.startsWith("github:") ? initial.filePath.slice("github:".length) : "";
+  const [manifestUrl, setManifestUrl] = useState(existingManifestUrl);
   const [cover, setCover] = useState<File | null>(null);
   const [formError, setFormError] = useState("");
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormError("");
-    if (!initial && !file) return setFormError("Escolha o arquivo do mod antes de publicar.");
-    if (file && initial && version.trim() === initial.version) return setFormError("Use um número de versão diferente para substituir o arquivo atual.");
+    if (!initial && !manifestUrl.trim()) return setFormError("Informe o link raw do manifest.json no GitHub antes de publicar.");
+    if (initial && manifestUrl.trim() && manifestUrl.trim() !== existingManifestUrl && version.trim() === initial.version) return setFormError("Use um número de versão diferente ao trocar o manifesto do mod.");
     if (cover && cover.size > 10 * 1024 * 1024) return setFormError("A imagem de capa pode ter no máximo 10 MB.");
     await onSave({
       title,
@@ -839,7 +840,7 @@ function ModForm({
       tags: tags.split(",").map((tag) => tag.trim().replace(/^#/, "")).filter(Boolean).slice(0, 8),
       installation,
       releaseNotes,
-      file,
+      manifestUrl,
       cover,
     });
   }
@@ -858,14 +859,14 @@ function ModForm({
             <label className="wide"><span>Descrição completa *</span><textarea required minLength={20} maxLength={12000} rows={5} value={description} onChange={(event) => setDescription(event.target.value)} placeholder="Explique o que o mod adiciona e como funciona." /></label>
             <label><span>Tags (separadas por vírgula)</span><input value={tags} onChange={(event) => setTags(event.target.value)} placeholder="pvp, mapa, sobrevivência" /></label>
             <label className="wide"><span>Como instalar *</span><textarea required minLength={5} maxLength={3000} rows={3} value={installation} onChange={(event) => setInstallation(event.target.value)} placeholder="Passo a passo para instalar e ativar o mod." /></label>
-            <label><span>Pacote do mod {initial ? "(opcional)" : "*"}</span><input type="file" accept=".zip,.7z,.rar,application/zip,application/x-7z-compressed,application/vnd.rar" required={!initial} onChange={(event) => setFile(event.target.files?.[0] ?? null)} /><small>{file ? file.name + " · " + formatWorkshopSize(file.size) : initial ? "Selecione um pacote para publicar uma nova versão." : "Arquivos .zip, .7z ou .rar; o limite depende do plano Supabase."}</small></label>
+            <label className="wide"><span>Manifesto do mod no GitHub {initial ? "(opcional)" : "*"}</span><input type="url" value={manifestUrl} onChange={(event) => setManifestUrl(event.target.value)} placeholder="https://raw.githubusercontent.com/Arthurnashh/SourceDayZ/COMMIT_SHA/mods/@MeuMod/manifest.json" required={!initial} /><small>{manifestUrl ? "Os arquivos serão baixados individualmente e fixados neste commit do repositório público SourceDayZ." : initial ? "Cole um novo manifesto para publicar uma versão. Deixe em branco para editar só os dados." : "Envie os arquivos sem compactar para mods/@NomeDoMod/ e cole o link raw do manifest.json usando o SHA completo do commit."}</small></label>
             {initial && <label><span>Notas desta versão</span><textarea maxLength={3000} rows={2} value={releaseNotes} onChange={(event) => setReleaseNotes(event.target.value)} placeholder="O que mudou nesta atualização?" /></label>}
             {!initial && <label><span>Notas da versão inicial</span><input maxLength={3000} value={releaseNotes} onChange={(event) => setReleaseNotes(event.target.value)} placeholder="Resumo opcional da primeira versão" /></label>}
             <label className="wide"><span>Imagem de capa (opcional)</span><input type="file" accept="image/png,image/jpeg,image/webp,image/avif" onChange={(event) => setCover(event.target.files?.[0] ?? null)} /><small>{cover ? cover.name + " · " + formatWorkshopSize(cover.size) : initial ? "Escolha uma imagem para trocar a capa atual." : "PNG, JPG, WebP ou AVIF; até 10 MB."}</small></label>
           </div>
           {(formError || externalError) && <div className="wm-alert" role="alert">{formError || externalError}</div>}
           {upload && <div className="wm-upload-progress"><div><span>Enviando {upload.name}</span><strong>{upload.percent}%</strong></div><progress value={upload.percent} max={100} /></div>}
-          <footer className="wm-form-actions"><button type="button" className="wm-button" onClick={onClose} disabled={saving}>Cancelar</button><button type="submit" className="wm-button primary" disabled={saving}>{saving ? "ENVIANDO ARQUIVO..." : initial ? "SALVAR ALTERAÇÕES" : "PUBLICAR MOD"}</button></footer>
+          <footer className="wm-form-actions"><button type="button" className="wm-button" onClick={onClose} disabled={saving}>Cancelar</button><button type="submit" className="wm-button primary" disabled={saving}>{saving ? "VALIDANDO MANIFESTO..." : initial ? "SALVAR ALTERAÇÕES" : "PUBLICAR MOD"}</button></footer>
         </form>
       </section>
     </div>
