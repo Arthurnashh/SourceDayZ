@@ -1,8 +1,8 @@
 # SourceDayZ server mod manifest
 
-`servers.json` connects each DayZ server address to the SourceDayZ Workshop mods it requires. The launcher reads it when the player opens a server's join screen. A2S server discovery does not report a usable mod list, so this manifest is the source of truth for the launcher.
+The launcher reads the live server manifest from `/api/workshop/servers` when a player opens a server's join screen. DayZ's A2S server query does not report a usable mod list, so each dedicated server sends its loaded mod folders to `/api/workshop/server-heartbeat` when it starts. The site resolves those folders to published Workshop mod IDs and returns them to the launcher.
 
-Add one entry per server using the address and game port shown in the launcher's server list:
+For a manually managed server, the legacy `servers.json` file accepts entries using the address and game port shown in the launcher's server list:
 
 ```json
 {
@@ -24,4 +24,4 @@ Add one entry per server using the address and game port shown in the launcher's
 - On the DayZ server, install each mod's contents in a matching `@FolderName` directory beside the server executable and list the same folders in its startup arguments, for example `-mod=@ExampleMod;@AnotherMod`.
 - On the client, the launcher installs each individual file into the selected DayZ game directory under those same `@FolderName` directories before joining.
 
-After changing `servers.json`, deploy the site so launchers receive the updated server requirements.
+For automatic registration, apply `supabase/workshopServers.sql` after `supabase/workshopMods.sql`. Keep each raw server token in the server host's local AppData; never commit it to GitHub or include it in a public game package.
