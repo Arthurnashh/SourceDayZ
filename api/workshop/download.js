@@ -11,10 +11,19 @@ export default async function handler(req, res) {
     return json(res, 405, { error: "Método não permitido." });
   }
 
-  const modId = typeof req.body?.modId === "string" ? req.body.modId : "";
+  let body = req.body || {};
+  if (typeof req.body === "string") {
+    try { body = JSON.parse(req.body); } catch { return json(res, 400, { error: "Corpo da solicitação inválido." }); }
+  }
+  if (!body || typeof body !== "object" || Array.isArray(body)) return json(res, 400, { error: "Corpo da solicitação inválido." });
+  const modId = typeof body.modId === "string" ? body.modId : "";
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(modId)) {
     return json(res, 400, { error: "Identificador de mod inválido." });
   }
+
+  const authorization = req.headers.authorization || "";
+  const match = authorization.match(/^Bearer\s+(.+)$/i);
+  if (!match) return json(res, 401, { error: "Entre na conta e inscreva-se no mod antes de baixá-lo." });
 
   const supabaseUrl = process.env.VITE_SUPABASE_URL;
   const anonKey = process.env.VITE_SUPABASE_ANON_KEY;
@@ -25,7 +34,7 @@ export default async function handler(req, res) {
   const baseUrl = supabaseUrl.replace(/\/$/, "");
   const headers = {
     apikey: anonKey,
-    Authorization: `Bearer ${anonKey}`,
+    Authorization: `Bearer ${match[1]}`,
     "Content-Type": "application/json",
   };
 
@@ -39,10 +48,17 @@ export default async function handler(req, res) {
     if (!recordResponse.ok) {
       const detail = await recordResponse.text();
       const migrationMissing = recordResponse.status === 404 || /workshop_record_download|schema cache/i.test(detail);
-      return json(res, migrationMissing ? 503 : 404, {
+      const steamRequired = /steam_link_required/i.test(detail);
+      const subscriptionRequired = /workshop_subscription_required/i.test(detail);
+      const notAuthenticated = recordResponse.status === 401 || /not_authenticated/i.test(detail);
+      return json(res, migrationMissing ? 503 : notAuthenticated ? 401 : steamRequired ? 403 : subscriptionRequired ? 403 : 404, {
         error: migrationMissing
           ? "O banco do Workshop ainda não está configurado. Aplique supabase/workshopMods.sql no Supabase."
-          : "Este mod não está disponível para download.",
+          : steamRequired
+            ? "Vincule e verifique sua conta Steam no perfil SourceDayZ antes de baixar."
+            : subscriptionRequired
+              ? "Inscreva-se neste mod na Oficina SourceDayZ antes de baixá-lo."
+              : notAuthenticated ? "Entre novamente na conta SourceDayZ." : "Este mod não está disponível para download.",
       });
     }
 

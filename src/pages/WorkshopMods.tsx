@@ -174,6 +174,7 @@ export function WorkshopMods({ modId }: { modId: string | null }) {
   const [loading, setLoading] = useState(true);
   const [detailLoading, setDetailLoading] = useState(false);
   const [error, setError] = useState("");
+  const [needsSteamLink, setNeedsSteamLink] = useState(false);
   const [formError, setFormError] = useState("");
   const [reload, setReload] = useState(0);
   const [authOpen, setAuthOpen] = useState(false);
@@ -304,8 +305,14 @@ export function WorkshopMods({ modId }: { modId: string | null }) {
   async function toggleSubscription(mod: WorkshopMod) {
     if (!account) return promptLogin();
     const currentlySaved = subscriptionIds.includes(mod.id);
+    if (!currentlySaved && !(account.steam?.verificado && account.steam.steamId64)) {
+      setNeedsSteamLink(true);
+      setError("Para se inscrever, primeiro vincule e verifique sua conta Steam no seu perfil.");
+      return;
+    }
     setBusyId(mod.id);
     setError("");
+    setNeedsSteamLink(false);
     try {
       await setWorkshopSubscription(account.id, mod.id, !currentlySaved);
       setSubscriptionIds((current) => currentlySaved
@@ -375,15 +382,44 @@ export function WorkshopMods({ modId }: { modId: string | null }) {
   }
 
   async function download(mod: WorkshopMod) {
+    if (!account) return promptLogin();
+    if (!(account.steam?.verificado && account.steam.steamId64)) {
+      setNeedsSteamLink(true);
+      setError("Para baixar, vincule e verifique sua conta Steam no seu perfil.");
+      return;
+    }
     setBusyId("download-" + mod.id);
     setError("");
+    setNeedsSteamLink(false);
     try {
+      if (!subscriptionIds.includes(mod.id)) {
+        await setWorkshopSubscription(account.id, mod.id, true);
+        setSubscriptionIds((current) => current.includes(mod.id) ? current : [...current, mod.id]);
+      }
       await downloadWorkshopMod(mod);
       setReload((current) => current + 1);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Não foi possível preparar o download.");
     } finally {
       setBusyId("");
+    }
+  }
+
+  async function downloadVersion(version: WorkshopVersion) {
+    if (!account) return promptLogin();
+    if (!(account.steam?.verificado && account.steam.steamId64)) {
+      setNeedsSteamLink(true);
+      setError("Para baixar, vincule e verifique sua conta Steam no seu perfil.");
+      return;
+    }
+    if (!detail || !subscriptionIds.includes(detail.id)) {
+      setError("Inscreva-se no mod antes de baixar uma versão.");
+      return;
+    }
+    try {
+      await downloadWorkshopVersion(version);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Não foi possível preparar o download.");
     }
   }
 
@@ -542,7 +578,7 @@ export function WorkshopMods({ modId }: { modId: string | null }) {
                 </label>
               </div>
 
-              {error && <div className="wm-alert" role="alert"><span>{error}</span><button onClick={() => setError("")} aria-label="Fechar aviso">×</button></div>}
+              {error && <div className="wm-alert" role="alert"><span>{error}</span>{needsSteamLink && <button type="button" onClick={() => navigate("minha-conta")}>VINCULAR STEAM</button>}<button onClick={() => { setError(""); setNeedsSteamLink(false); }} aria-label="Fechar aviso">×</button></div>}
               {loading ? (
                 <div className="wm-loading"><span className="wm-spinner" /> Preparando o catálogo...</div>
               ) : visibleMods.length ? (
@@ -598,7 +634,7 @@ export function WorkshopMods({ modId }: { modId: string | null }) {
                   onEdit={() => openEdit(detail)}
                   onDelete={() => void removeMod(detail)}
                   onToggleStatus={() => void changeStatus(detail)}
-                  onDownloadVersion={(version) => void downloadWorkshopVersion(version)}
+                  onDownloadVersion={(version) => void downloadVersion(version)}
                 />
               ) : (
                 <EmptyState title="Mod não encontrado" body="Ele pode ter sido removido ou não está publicado." action={{ label: "Voltar para explorar", onClick: () => navigate("workshopMods") }} />
@@ -688,7 +724,7 @@ function ModDetail({
         <div className="wm-detail-actions">
           <button className="wm-button primary" onClick={onDownload} disabled={busyId === "download-" + mod.id}>
             <Icon path="M12 3v12m0 0 4-4m-4 4-4-4M5 17v3h14v-3" />
-            {busyId === "download-" + mod.id ? "PREPARANDO..." : "BAIXAR MOD"}
+            {busyId === "download-" + mod.id ? "PREPARANDO..." : subscribed ? "BAIXAR MOD" : "INSCREVER-SE E BAIXAR"}
           </button>
           <button className={"wm-button" + (subscribed ? " saved" : "")} onClick={onSubscribe}>
             <Icon path={subscribed ? "m5 12 4 4L19 6" : "M12 5v14m-7-7h14"} />
@@ -709,7 +745,7 @@ function ModDetail({
           <section className="wm-panel">
             <div className="wm-panel-heading"><div><span className="wm-results-kicker">COMO USAR</span><h2>Instalação</h2></div><span className="wm-file-size">{formatWorkshopSize(mod.fileSize)}</span></div>
             <p className="wm-description wm-install">{mod.installation}</p>
-            <div className="wm-file-row"><Icon path="M4 4h10l6 6v10H4zM14 4v6h6M8 14h8M8 17h6" /><span><strong>{mod.fileName}</strong><small>Arquivo compactado · {formatWorkshopSize(mod.fileSize)}</small></span><button onClick={onDownload} disabled={busyId === "download-" + mod.id}>Baixar</button></div>
+            <div className="wm-file-row"><Icon path="M4 4h10l6 6v10H4zM14 4v6h6M8 14h8M8 17h6" /><span><strong>{mod.fileName}</strong><small>Arquivo compactado · {formatWorkshopSize(mod.fileSize)}</small></span><button onClick={onDownload} disabled={busyId === "download-" + mod.id}>{subscribed ? "Baixar" : "Inscrever e baixar"}</button></div>
           </section>
 
           <section className="wm-panel">

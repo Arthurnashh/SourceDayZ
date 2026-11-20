@@ -157,6 +157,13 @@ function mapMod(row: RawMod, fallbackName = "Sobrevivente", fallbackAvatar: stri
 
 function workshopError(error: { message?: string; details?: string } | null | undefined): Error {
   const message = [error?.message, error?.details].filter(Boolean).join(" ");
+  if (/steam_link_required/i.test(message)) {
+    return new Error("Vincule e verifique sua conta Steam no perfil SourceDayZ antes de se inscrever no mod.");
+  }
+  if (/workshop_subscription_required/i.test(message)) {
+    return new Error("Inscreva-se neste mod na Oficina SourceDayZ antes de baixá-lo.");
+  }
+  if (/not_authenticated/i.test(message)) return new Error("Entre na conta SourceDayZ para continuar.");
   if (/workshop_|schema cache|could not find the function|does not exist/i.test(message)) {
     return new Error("O banco do Workshop ainda não foi configurado. Aplique o arquivo supabase/workshopMods.sql no Supabase.");
   }
@@ -305,15 +312,13 @@ export async function loadWorkshopSubscriptions(userId: string): Promise<string[
   return (data ?? []).map((row) => String(row.mod_id));
 }
 
-export async function setWorkshopSubscription(userId: string, modId: string, subscribed: boolean): Promise<void> {
+export async function setWorkshopSubscription(_userId: string, modId: string, subscribed: boolean): Promise<void> {
   const client = clientOrThrow();
-  if (subscribed) {
-    const result = await client.from("workshop_subscriptions").insert({ user_id: userId, mod_id: modId });
-    if (result.error) throw workshopError(result.error);
-  } else {
-    const result = await client.from("workshop_subscriptions").delete().eq("user_id", userId).eq("mod_id", modId);
-    if (result.error) throw workshopError(result.error);
-  }
+  const { error } = await client.rpc("workshop_set_subscription", {
+    p_mod_id: modId,
+    p_subscribed: subscribed,
+  });
+  if (error) throw workshopError(error);
 }
 
 export async function loadWorkshopRatings(modIds: string[]): Promise<WorkshopRating[]> {

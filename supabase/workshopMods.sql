@@ -181,9 +181,18 @@ create policy workshop_subscriptions_read on public.workshop_subscriptions
   for select to authenticated using (user_id = auth.uid());
 drop policy if exists workshop_subscriptions_insert on public.workshop_subscriptions;
 create policy workshop_subscriptions_insert on public.workshop_subscriptions
-  for insert to authenticated with check (user_id = auth.uid() and exists (
-    select 1 from public.workshop_mods m where m.id = mod_id and m.status = 'published'
-  ));
+  for insert to authenticated with check (
+    user_id = auth.uid()
+    and exists (
+      select 1 from public.profiles p
+      where p.id = auth.uid()
+        and p.steam ->> 'verificado' = 'true'
+        and coalesce(p.steam ->> 'steamId64', '') <> ''
+    )
+    and exists (
+      select 1 from public.workshop_mods m where m.id = mod_id and m.status = 'published'
+    )
+  );
 drop policy if exists workshop_subscriptions_delete on public.workshop_subscriptions;
 create policy workshop_subscriptions_delete on public.workshop_subscriptions
   for delete to authenticated using (user_id = auth.uid());
@@ -270,17 +279,93 @@ create or replace function public.workshop_record_download(p_mod_id uuid)
 returns table (file_path text, file_name text, version text)
 language plpgsql security definer set search_path = public, pg_temp
 as $$
+declare
+  v_user_id uuid := auth.uid();
 begin
+  if v_user_id is null then
+    raise exception 'not_authenticated';
+  end if;
+
+  if not exists (
+    select 1 from public.profiles p
+    where p.id = v_user_id
+      and p.steam ->> 'verificado' = 'true'
+      and coalesce(p.steam ->> 'steamId64', '') <> ''
+  ) then
+    raise exception 'steam_link_required';
+  end if;
+
+  if not exists (
+    select 1 from public.workshop_subscriptions s
+    where s.user_id = v_user_id and s.mod_id = p_mod_id
+  ) and not exists (
+    select 1 from public.workshop_mods m
+    where m.id = p_mod_id and m.owner_id = v_user_id
+  ) then
+    raise exception 'workshop_subscription_required';
+  end if;
+
   perform set_config('app.workshop_system_write', '1', true);
   return query
   update public.workshop_mods m
      set download_count = m.download_count + 1
-   where m.id = p_mod_id and m.status = 'published'
+   where m.id = p_mod_id and (m.status = 'published' or m.owner_id = v_user_id)
   returning m.file_path, m.file_name, m.version;
   if not found then
     raise exception 'workshop_mod_unavailable';
   end if;
 end;
+$$;
+
+create or replace function public.workshop_set_subscription(p_mod_id uuid, p_subscribed boolean)
+returns boolean
+language plpgsql security definer set search_path = public, pg_temp
+as $$
+declare
+  v_user_id uuid := auth.uid();
+begin
+  if v_user_id is null then
+    raise exception 'not_authenticated';
+  end if;
+
+  if coalesce(p_subscribed, false) then
+    if not exists (
+      select 1 from public.profiles p
+      where p.id = v_user_id
+        and p.steam ->> 'verificado' = 'true'
+        and coalesce(p.steam ->> 'steamId64', '') <> ''
+    ) then
+      raise exception 'steam_link_required';
+    end if;
+
+    if not exists (
+      select 1 from public.workshop_mods m
+      where m.id = p_mod_id and m.status = 'published'
+    ) then
+      raise exception 'workshop_mod_unavailable';
+    end if;
+
+    insert into public.workshop_subscriptions (mod_id, user_id)
+    values (p_mod_id, v_user_id)
+    on conflict (mod_id, user_id) do nothing;
+  else
+    delete from public.workshop_subscriptions s
+    where s.mod_id = p_mod_id and s.user_id = v_user_id;
+  end if;
+
+  return true;
+end;
+$$;
+
+create or replace function public.workshop_my_subscriptions()
+returns table (mod_id uuid, version text, created_at timestamptz)
+language sql stable security definer set search_path = public, pg_temp
+as $$
+  select s.mod_id, m.version, s.created_at
+  from public.workshop_subscriptions s
+  join public.workshop_mods m on m.id = s.mod_id
+  where s.user_id = auth.uid() and m.status = 'published'
+  order by s.created_at desc;
 $$;
 
 create or replace function public.workshop_can_read_file(p_path text)
@@ -293,7 +378,23 @@ as $$
     where (m.file_path = p_path or exists (
       select 1 from public.workshop_mod_versions v where v.mod_id = m.id and v.file_path = p_path
     ))
-      and (m.status = 'published' or m.owner_id = auth.uid() or public.is_admin())
+      and (
+        m.owner_id = auth.uid()
+        or public.is_admin()
+        or (
+          m.status = 'published'
+          and exists (
+            select 1 from public.workshop_subscriptions s
+            where s.mod_id = m.id and s.user_id = auth.uid()
+          )
+          and exists (
+            select 1 from public.profiles p
+            where p.id = auth.uid()
+              and p.steam ->> 'verificado' = 'true'
+              and coalesce(p.steam ->> 'steamId64', '') <> ''
+          )
+        )
+      )
   );
 $$;
 
@@ -302,12 +403,16 @@ revoke all on function public.workshop_get_mod(uuid) from public;
 revoke all on function public.workshop_public_comments(uuid) from public;
 revoke all on function public.workshop_rating_stats(uuid) from public;
 revoke all on function public.workshop_record_download(uuid) from public;
+revoke all on function public.workshop_set_subscription(uuid, boolean) from public;
+revoke all on function public.workshop_my_subscriptions() from public;
 revoke all on function public.workshop_can_read_file(text) from public;
 grant execute on function public.workshop_list_mods(integer, integer) to anon, authenticated;
 grant execute on function public.workshop_get_mod(uuid) to anon, authenticated;
 grant execute on function public.workshop_public_comments(uuid) to anon, authenticated;
 grant execute on function public.workshop_rating_stats(uuid) to anon, authenticated;
-grant execute on function public.workshop_record_download(uuid) to anon, authenticated;
+grant execute on function public.workshop_record_download(uuid) to authenticated;
+grant execute on function public.workshop_set_subscription(uuid, boolean) to authenticated;
+grant execute on function public.workshop_my_subscriptions() to authenticated;
 grant execute on function public.workshop_can_read_file(text) to anon, authenticated;
 
 insert into storage.buckets (id, name, public, allowed_mime_types)
