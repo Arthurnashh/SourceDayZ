@@ -140,6 +140,14 @@ const supabase: SupabaseClient | null = USING_SUPABASE
     })
   : null;
 
+export function getSupabaseClient(): SupabaseClient | null {
+  return supabase;
+}
+
+export function getSupabaseConfig(): { url: string; anonKey: string } | null {
+  return supabase ? { url: SUPABASE_URL, anonKey: SUPABASE_ANON_KEY } : null;
+}
+
 const DAY_MS = 86_400_000;
 
 const SERVER_STATUS_LABEL: Record<ServerStatus, string> = {

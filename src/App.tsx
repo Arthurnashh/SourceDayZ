@@ -24,6 +24,7 @@ import { Landing } from "./pages/Landing";
 import { MinhaConta } from "./pages/MinhaConta";
 import { Admin } from "./pages/Admin";
 import { DocsGate } from "./pages/DocsGate";
+import { WorkshopMods } from "./pages/WorkshopMods";
 
 const ROTAS: Record<string, ComponentType> = {
   "visao-geral": Overview,
@@ -91,6 +92,7 @@ export default function App() {
   const Page = ROTAS[page];
 
   if (page === "") return <Landing />;
+  if (page === "workshopMods") return <WorkshopMods modId={route.parts[1] ?? null} />;
   if (page === "minha-conta") {
     return <MinhaConta steamReturn={steamReturn} onSteamHandled={() => setSteamReturn(null)} />;
   }

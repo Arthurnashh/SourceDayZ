@@ -69,6 +69,24 @@ VITE_SUPABASE_ANON_KEY=COLE_A_ANON_KEY_AQUI
 > O plano free do Supabase pausa o projeto depois de um período sem uso. Para o site em
 > produção, mantenha o projeto ativo ou use um plano pago.
 
+### Oficina Workshop Mods
+
+O catálogo da comunidade fica em `/#/workshopMods`. Para ativar publicação, biblioteca,
+avaliações, comentários, versões e downloads, abra o **SQL Editor** do mesmo projeto e
+execute `supabase/workshopMods.sql` depois do esquema principal. A migração pode ser
+executada novamente sem apagar mods ou contas.
+
+Os pacotes `.zip`, `.7z` e `.rar` são enviados com upload retomável para o bucket privado
+`workshop-mod-files`. O site cria um link temporário quando alguém baixa um mod. Capas
+ficam no bucket público `workshop-mod-covers` e têm limite de 10 MB. O tamanho máximo
+dos pacotes segue o limite global do plano Supabase; no plano Free, confira o limite de
+50 MB em Storage → Settings antes de liberar arquivos maiores.
+
+Cada publicação guarda autor, categoria, compatibilidade, tags, instruções e histórico
+de versões. Os dados são protegidos por RLS: qualquer visitante pode explorar e baixar
+mods publicados; somente contas autenticadas podem publicar, avaliar, comentar ou salvar
+mods na biblioteca. O autor pode atualizar, ocultar ou remover a própria publicação.
+
 ### 4. Ajustar o Auth
 
 Em **Authentication → Providers → Email**:

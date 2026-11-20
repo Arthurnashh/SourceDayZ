@@ -30,6 +30,7 @@ const NAV: NavItem[] = [
   { grupo: "projeto", key: "plano", icon: icon("M12 3v18M5 8l7-5 7 5M4 21h16M7 21v-7h10v7") },
   { grupo: "projeto", key: "passo-a-passo", icon: icon("M4 6h5v5H4zM15 6h5v5h-5zM4 15h5v5H4zM15 15h5v5h-5zM9 8.5h6M9 17.5h6M6.5 11v4") },
   { grupo: "projeto", key: "atualizacoes", icon: icon("M12 8v5l3 2M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5") },
+  { grupo: "projeto", key: "workshopMods", icon: icon("M4 7h16M4 12h16M4 17h16M7 4v16M17 4v16") },
   { grupo: "projeto", key: "pendencias", icon: icon("M9 3h6v3H9zM6 6h12v15H6zM9 12l2 2 4-4M9 17h4") },
   { grupo: "dados", key: "dicionario", icon: icon("M4 5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2zM8 7h8M8 11h8M8 15h5") },
   { grupo: "dados", key: "ferramentas", icon: icon("M14.7 6.3a4 4 0 0 0-5.4 5.2L3 18v2h3l6.5-6.3a4 4 0 0 0 5.2-5.4l-2.4 2.4-2.3-2.3z") },
@@ -66,7 +67,7 @@ export function Layout({ children }: { children: ReactNode }) {
                   onClick={() => navigate(n.key)}
                 >
                   {n.icon}
-                  <span>{t(`nav.${n.key}`)}</span>
+                  <span>{n.key === "workshopMods" ? "Workshop Mods" : t(`nav.${n.key}`)}</span>
                 </button>
               ))}
             </div>

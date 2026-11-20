@@ -37,6 +37,7 @@ function irPara(id: string) {
 export function Landing() {
   const { locale } = useLocale();
   const copy = LANDING_COPY[locale];
+  const workshopLabel = locale === "en" ? "WORKSHOP" : locale === "ru" ? "МАСТЕРСКАЯ" : "OFICINA";
   const [aba, setAba] = useState<AbaServidores>("oficiais");
   const [loginAberto, setLoginAberto] = useState(false);
   const [authMode, setAuthMode] = useState<"entrar" | "criar">("entrar");
@@ -123,6 +124,9 @@ export function Landing() {
               {item.label}
             </button>
           ))}
+          <button className="sd-nav-workshop" onClick={() => navigate("workshopMods")}>
+            {workshopLabel}
+          </button>
         </nav>
 
         <div className="sd-top-actions">
@@ -152,6 +156,9 @@ export function Landing() {
               {item.label}
             </button>
           ))}
+          <button onClick={() => { setMenuAberto(false); navigate("workshopMods"); }}>
+            {workshopLabel}
+          </button>
           <div className="sd-mobile-lang">
             <LanguageSwitcher />
           </div>
@@ -515,6 +522,7 @@ export function Landing() {
                 {item.label}
               </button>
             ))}
+            <button onClick={() => navigate("workshopMods")}>{workshopLabel}</button>
             <button onClick={() => abrirConta("entrar")}>
               {conta ? copy.footer.account : copy.enter}
             </button>
