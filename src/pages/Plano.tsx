@@ -1,6 +1,24 @@
 import { navigate } from "../lib/router";
 import { SectionTitle, Badge, Stat } from "../components/ui";
-import { CYCLES, PENDING, PHASES, PLANO_COPY, usePlanoT } from "../content/plano-i18n";
+import {
+  CYCLES,
+  PENDING,
+  PHASES,
+  PLANO_COPY,
+  ROADMAP,
+  ROADMAP_BLOCKS,
+  ROADMAP_STATUS,
+  CURRENT_STATE,
+  usePlanoT,
+} from "../content/plano-i18n";
+
+const STATUS_TONE: Record<string, string> = {
+  exists: "lime",
+  partial: "amber",
+  new: "blue",
+  complex: "red",
+  tbd: "violet",
+};
 
 const PILLAR_TONE: Record<string, string> = {
   light: "amber",
@@ -43,8 +61,8 @@ export function Plano() {
         />
         <Stat
           label={locale === "pt" ? "fases" : locale === "en" ? "phases" : "фазы"}
-          value={String(PHASES.length)}
-          hint={locale === "pt" ? "F0 a F6" : locale === "en" ? "F0 to F6" : "F0 — F6"}
+          value={String(PHASES.length + ROADMAP.length)}
+          hint={locale === "pt" ? "F0–F6 base · F7–F25 roadmap" : locale === "en" ? "F0–F6 base · F7–F25 roadmap" : "F0–F6 база · F7–F25 план"}
           tone="blue"
         />
         <Stat
@@ -59,6 +77,17 @@ export function Plano() {
           hint={locale === "pt" ? "só com teste" : locale === "en" ? "test only" : "только с тестом"}
         />
       </section>
+
+      <SectionTitle kicker="agora" title={t("plano.state.title")} />
+      <p className="muted">{t("plano.state.lead")}</p>
+      <div className="grid three">
+        {CURRENT_STATE.map((s) => (
+          <section className="panel" key={s.id}>
+            <Badge tone={s.tone}>{tr(s.label)}</Badge>
+            <p>{tr(s.value)}</p>
+          </section>
+        ))}
+      </div>
 
       <SectionTitle kicker="dx9" title={t("plano.pillars.title")} />
       <div className="grid three">
@@ -82,6 +111,19 @@ export function Plano() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="panel">
+        <SectionTitle kicker="regras" title={t("plano.method.extra.title")} />
+        <p className="muted">{t("plano.method.extra.lead")}</p>
+        <div className="grid two">
+          {[1, 2, 3, 4].map((n) => (
+            <div key={n}>
+              <span className="plano-phase-label">{t(`plano.method.extra.r${n}.t`)}</span>
+              <p>{t(`plano.method.extra.r${n}.d`)}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <SectionTitle kicker="F0 → F6" title={t("plano.phases.title")} />
@@ -157,6 +199,59 @@ export function Plano() {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <SectionTitle kicker="F7 → F25" title={t("plano.roadmap.title")} />
+      <p className="muted">{t("plano.roadmap.lead")}</p>
+      <div className="plano-table-wrap">
+        <table className="plano-table">
+          <thead>
+            <tr>
+              <th>{t("plano.roadmap.col.phase")}</th>
+              <th>{t("plano.roadmap.col.theme")}</th>
+              <th>{t("plano.roadmap.col.status")}</th>
+              <th>{t("plano.roadmap.col.files")}</th>
+              <th>{t("plano.roadmap.col.first")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ROADMAP.map((p) => (
+              <tr key={p.id}>
+                <td className="mono">{p.id}</td>
+                <td>
+                  <strong>{tr(p.title)}</strong>
+                  <p className="muted small">{tr(p.now)}</p>
+                </td>
+                <td>
+                  <Badge tone={STATUS_TONE[p.status]}>{tr(ROADMAP_STATUS[p.status])}</Badge>
+                </td>
+                <td>
+                  <code>{p.files}</code>
+                </td>
+                <td>{tr(p.first)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <section className="panel">
+        <SectionTitle kicker="ordem" title={t("plano.blocks.title")} />
+        <p className="muted">{t("plano.blocks.lead")}</p>
+        <div className="plano-phases">
+          {ROADMAP_BLOCKS.map((b) => (
+            <article className="plano-phase" key={b.id}>
+              <div className="plano-phase-head">
+                <span className="plano-phase-id">{b.id}</span>
+                <strong>{tr(b.title)}</strong>
+                <span className="plano-phase-cycles">
+                  <Badge tone="blue">{b.phases}</Badge>
+                </span>
+              </div>
+              <p className="plano-phase-goal">{tr(b.why)}</p>
+            </article>
+          ))}
         </div>
       </section>
 

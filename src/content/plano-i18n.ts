@@ -146,6 +146,61 @@ export const PLANO_COPY: Record<string, Tri> = {
     en: "Coefficients back to 1.0 — behaviour returns exactly to today's.",
     ru: "Коэффициенты обратно на 1.0 — поведение возвращается к текущему.",
   },
+
+  // Estado atual e roadmap F7-F25
+  "plano.state.title": { pt: "Onde estamos agora", en: "Where we are now", ru: "Где мы сейчас" },
+  "plano.state.lead": {
+    pt: "Fotografia do projeto neste ponto: o que já foi aprovado, o que está em teste e o que segue aberto. Nada aqui é promessa — é o que o build e o log mostram.",
+    en: "A snapshot of the project at this point: what is approved, what is under test and what remains open. Nothing here is a promise — it is what the build and the log show.",
+    ru: "Срез проекта на этот момент: что уже принято, что тестируется и что осталось открытым. Здесь нет обещаний — только то, что видно по сборке и логу.",
+  },
+  "plano.roadmap.title": { pt: "Roadmap F7 a F25", en: "Roadmap F7 to F25", ru: "План F7–F25" },
+  "plano.roadmap.lead": {
+    pt: "Cada fase abaixo foi classificada lendo o código real desta source, não por intenção. \"Existe\" significa que há implementação identificada com arquivo e função; \"parcial\" que existe só parte; \"novo\" que precisa de código; \"complexo\" que deve esperar o DX11.",
+    en: "Every phase below was classified by reading this source's real code, not by intention. \"Exists\" means there is an implementation identified with file and function; \"partial\" means only part exists; \"new\" needs code; \"complex\" should wait for DX11.",
+    ru: "Каждая фаза классифицирована по реальному коду этой source, а не по замыслу. «Есть» — реализация найдена с файлом и функцией; «частично» — есть только часть; «новое» — нужен код; «сложно» — ждёт DX11.",
+  },
+  "plano.roadmap.col.phase": { pt: "Fase", en: "Phase", ru: "Фаза" },
+  "plano.roadmap.col.theme": { pt: "Tema e o que existe hoje", en: "Theme and what exists today", ru: "Тема и что уже есть" },
+  "plano.roadmap.col.status": { pt: "Situação", en: "Status", ru: "Статус" },
+  "plano.roadmap.col.files": { pt: "Arquivos e shaders", en: "Files and shaders", ru: "Файлы и шейдеры" },
+  "plano.roadmap.col.first": { pt: "Primeiro ciclo", en: "First cycle", ru: "Первый цикл" },
+  "plano.blocks.title": { pt: "Ordem de execução", en: "Execution order", ru: "Порядок работ" },
+  "plano.blocks.lead": {
+    pt: "A ordem não é a numérica: segue impacto visual, risco, dependência e custo. Se uma fase precisa de outra antes, ela sobe ou desce na fila com justificativa.",
+    en: "The order is not numeric: it follows visual impact, risk, dependency and cost. If a phase needs another first, it moves in the queue with a reason.",
+    ru: "Порядок не числовой: он следует визуальному эффекту, риску, зависимостям и цене. Если фазе нужна другая, она меняет место с обоснованием.",
+  },
+  "plano.method.extra.title": { pt: "O que torna um ciclo válido", en: "What makes a cycle valid", ru: "Что делает цикл действительным" },
+  "plano.method.extra.lead": {
+    pt: "Quatro regras que valem para todo ciclo, inclusive nas fases profundas do motor.",
+    en: "Four rules that hold for every cycle, including the deep engine phases.",
+    ru: "Четыре правила для каждого цикла, включая глубокие фазы движка.",
+  },
+  "plano.method.extra.r1.t": { pt: "Um ciclo, uma mudança", en: "One cycle, one change", ru: "Один цикл — одно изменение" },
+  "plano.method.extra.r1.d": {
+    pt: "Nunca misturar subsistemas no mesmo build. Se a imagem mudou, precisa haver uma causa única.",
+    en: "Never mix subsystems in the same build. If the image changed, there must be a single cause.",
+    ru: "Не смешивать подсистемы в одной сборке. Если картинка изменилась, причина должна быть одна.",
+  },
+  "plano.method.extra.r2.t": { pt: "Backup antes de tocar", en: "Backup before touching", ru: "Бэкап до правки" },
+  "plano.method.extra.r2.d": {
+    pt: "Cada ciclo começa com cópia datada em BACKUPS\\, e um valor só sobe depois de instrumentado e medido no log.",
+    en: "Every cycle starts with a dated copy in BACKUPS\\, and a value only goes up after being instrumented and measured in the log.",
+    ru: "Каждый цикл начинается с копии с датой в BACKUPS\\, а значение растёт только после замера в логе.",
+  },
+  "plano.method.extra.r3.t": { pt: "Diferença visível ou não entra", en: "Visible difference or it does not go in", ru: "Нет видимой разницы — не входит" },
+  "plano.method.extra.r3.d": {
+    pt: "Se o ciclo não muda a imagem, ele precisa justificar qual ganho visual concreto ele habilita depois. Refatoração sem alvo visual é recusada.",
+    en: "If the cycle does not change the image, it must justify which concrete visual gain it enables later. Refactoring without a visual target is refused.",
+    ru: "Если цикл не меняет картинку, он должен обосновать, какой конкретный визуальный выигрыш даёт позже. Рефакторинг без визуальной цели отклоняется.",
+  },
+  "plano.method.extra.r4.t": { pt: "Aprovar ou reverter", en: "Approve or revert", ru: "Принять или откатить" },
+  "plano.method.extra.r4.d": {
+    pt: "Todo ciclo termina com veredito do teste ao vivo, no mesmo horário, clima e local. Reverter é resultado válido, não fracasso.",
+    en: "Every cycle ends with a live-test verdict, at the same time, weather and place. Reverting is a valid outcome, not a failure.",
+    ru: "Каждый цикл заканчивается решением по живому тесту в одно время, погоду и место. Откат — допустимый итог, не провал.",
+  },
 };
 
 export interface Phase {
@@ -160,6 +215,456 @@ export interface Phase {
 }
 
 const tri = (pt: string, en: string, ru: string): Tri => ({ pt, en, ru });
+
+// ---------------------------------------------------------------------------
+// Roadmap F7-F25 - classificado pelo codigo real, nao por intencao.
+// "files" fica em ingles/codigo: e caminho de arquivo, nao texto.
+// ---------------------------------------------------------------------------
+export type RoadmapStatus = "exists" | "partial" | "new" | "complex" | "tbd";
+
+export const ROADMAP_STATUS: Record<RoadmapStatus, Tri> = {
+  exists: tri("existe e aprimorável", "exists, improvable", "есть, можно улучшить"),
+  partial: tri("parcialmente existente", "partially exists", "есть частично"),
+  new: tri("novo, viável no DX9", "new, viable on DX9", "новое, возможно на DX9"),
+  complex: tri("complexo no DX9 — reavaliar no DX11", "complex on DX9 — revisit on DX11", "сложно на DX9 — вернуться в DX11"),
+  tbd: tri("ainda não confirmado", "not confirmed yet", "ещё не подтверждено"),
+};
+
+export interface RoadmapPhase {
+  id: string;
+  title: Tri;
+  status: RoadmapStatus;
+  files: string;
+  now: Tri;
+  first: Tri;
+}
+
+export const ROADMAP: RoadmapPhase[] = [
+  {
+    id: "F7",
+    title: tri("Iluminação da vegetação", "Vegetation lighting", "Освещение растительности"),
+    status: "partial",
+    files: "VS.hlsl NormalMapThroughFunction; PS.h NormalMap*Through, SpecularNormalMapGrass, GrassAToC; VSTerrainGrass.hlsl",
+    now: tri(
+      "Folhas já usam variantes \"Through\" (luz vinda de trás) e a grama tem shader próprio com vento e alpha-to-coverage. O peso da translucidez vem do material dentro do PBO.",
+      "Leaves already use the \"Through\" variants (back-light) and grass has its own shader with wind and alpha-to-coverage. The translucency weight comes from the material inside the PBO.",
+      "Листья уже используют варианты \"Through\" (свет сзади), а трава имеет свой шейдер с ветром и alpha-to-coverage. Вес просвечивания берётся из материала внутри PBO.",
+    ),
+    first: tri(
+      "Primeiro ciclo: um coeficiente global de back-light no shader, para a folha acender contra o sol.",
+      "First cycle: one global back-light coefficient in the shader, so leaves glow against the sun.",
+      "Первый цикл: один глобальный коэффициент back-light в шейдере, чтобы листва светилась против солнца.",
+    ),
+  },
+  {
+    id: "F8",
+    title: tri("Sistema de materiais", "Material system", "Система материалов"),
+    status: "exists",
+    files: "PS.hlsl e PSBasic.hlsl NormalMap/Specular*; engdd9.cpp VSC_LDirectionD/S; engddT.cpp AutodetectAnisotropy",
+    now: tri(
+      "Difuso + especular Blinn-Phong com potência vinda do material e normal map presente. Não existe PBR nem mapas de roughness/metal no conteúdo 0.45.",
+      "Diffuse + Blinn-Phong specular with material-driven power and normal maps present. There is no PBR and no roughness/metal maps in the 0.45 content.",
+      "Диффуз + блик Блинна-Фонга с силой из материала и normal map. В контенте 0.45 нет PBR и карт roughness/metal.",
+    ),
+    first: tri(
+      "Primeiro ciclo: curva de especular por potência (normalizar o hot spot), não \"mais brilho\" — o ciclo 3 mostrou que subir o global deixa a pele molhada.",
+      "First cycle: specular curve by power (normalise the hot spot), not \"more shine\" — cycle 3 showed that raising the global makes skin look wet.",
+      "Первый цикл: кривая блика по мощности (нормализовать hot spot), а не «больше блеска» — цикл 3 показал, что глобальное усиление делает кожу мокрой.",
+    ),
+  },
+  {
+    id: "F9",
+    title: tri("Iluminação indireta e AO", "Indirect lighting and AO", "Непрямое освещение и AO"),
+    status: "exists",
+    files: "engdd9.cpp ComputeBackReflection/ComputeGroundReflection; PSSAO em postProcess.cpp; PS.hlsl PSPostProcessSSAO*",
+    now: tri(
+      "Existe luz rebatida por coeficiente (ciclo 1), luz hemisférica do chão e SSAO em tela cheia. Não existe GI real: o indireto é aproximação por cor de chão.",
+      "There is bounce light by coefficient (cycle 1), hemispheric ground light and full-screen SSAO. There is no real GI: indirect light is an approximation by ground colour.",
+      "Есть отражённый свет по коэффициенту (цикл 1), полусферический свет от земли и SSAO на весь экран. Настоящего GI нет: непрямой свет — приближение цветом земли.",
+    ),
+    first: tri(
+      "Primeiro ciclo: intensidade e raio do SSAO — escurecimento de contato em canto de casa e base de árvore, o que mais \"moderniza\" uma cena parada.",
+      "First cycle: SSAO intensity and radius — contact darkening in wall corners and tree bases, what most \"modernises\" a still scene.",
+      "Первый цикл: сила и радиус SSAO — затемнение контакта в углах и у основания деревьев, что сильнее всего «осовременивает» статичную сцену.",
+    ),
+  },
+  {
+    id: "F10",
+    title: tri("Iluminação volumétrica", "Volumetric lighting", "Объёмное освещение"),
+    status: "exists",
+    files: "PS.hlsl PSPostProcessGodRays* (1369-1480); engine.hpp PEGodRays; postProcess.cpp PFXGodRays; scene.cpp fog",
+    now: tri(
+      "God rays completos já existem: máscara do sol, redução, dilatação, blur e composição. É efeito de tela cheia — funciona com sol visível, não gera feixe entre árvores.",
+      "God rays already exist in full: sun mask, shrink, dilate, blur and composite. It is a full-screen effect — it works with a visible sun, it does not create beams between trees.",
+      "God rays уже есть целиком: маска солнца, сжатие, расширение, blur и композиция. Это эффект на весь экран — работает при видимом солнце, но не даёт лучей между деревьями.",
+    ),
+    first: tri(
+      "Primeiro ciclo: ajustar os parâmetros existentes (intensidade, comprimento, overburn) e colorir a névoa pelo céu.",
+      "First cycle: tune the existing parameters (intensity, length, overburn) and colour the fog from the sky.",
+      "Первый цикл: настроить существующие параметры (сила, длина, overburn) и окрасить туман цветом неба.",
+    ),
+  },
+  {
+    id: "F11",
+    title: tri("Renderizador de terreno", "Terrain renderer", "Рендер ландшафта"),
+    status: "exists",
+    files: "VSTerrain.hlsl; PS.h Terrain15/TerrainX/TerrainSNX/Road2Pass; landscape.cpp",
+    now: tri(
+      "Mistura de camadas por máscara (satMap) com detalhe e normais; estrada em dois passes (Road2Pass) para evitar z-fighting. Sem parallax nem triplanar.",
+      "Layer blending by mask (satMap) with detail and normals; road in two passes (Road2Pass) to avoid z-fighting. No parallax or triplanar.",
+      "Смешивание слоёв по маске (satMap) с детализацией и нормалями; дорога в два прохода (Road2Pass) против z-fighting. Нет parallax и triplanar.",
+    ),
+    first: tri(
+      "Primeiro ciclo: detalhe de perto (detail map + normais) e mistura mais suave entre camadas.",
+      "First cycle: close-up detail (detail map + normals) and smoother blending between layers.",
+      "Первый цикл: детализация вблизи (detail map + нормали) и более мягкое смешивание слоёв.",
+    ),
+  },
+  {
+    id: "F12",
+    title: tri("Renderização da água", "Water rendering", "Рендер воды"),
+    status: "exists",
+    files: "VSWater.hlsl, VSCalmWater.hlsl, VSShore.hlsl; PS.h Water, GetWaterFinalColor",
+    now: tri(
+      "Fresnel já existe nos shaders; reflexo é aproximado por cor de céu + especular do sol; margem com passe próprio (VSShore) e espuma. Sem reflexo planar ou SSR.",
+      "Fresnel already exists in the shaders; reflection is approximated by sky colour + sun specular; shoreline has its own pass (VSShore) and foam. No planar or SSR reflection.",
+      "Fresnel уже есть в шейдерах; отражение приближено цветом неба + бликом солнца; берег имеет свой проход (VSShore) и пену. Нет planar/SSR отражений.",
+    ),
+    first: tri(
+      "Primeiro ciclo: Fresnel mais forte e cor por profundidade; depois normal map em duas escalas.",
+      "First cycle: stronger Fresnel and colour by depth; then normal map in two scales.",
+      "Первый цикл: усилить Fresnel и цвет по глубине; затем normal map в двух масштабах.",
+    ),
+  },
+  {
+    id: "F13",
+    title: tri("Nuvens e céu", "Clouds and sky", "Облака и небо"),
+    status: "exists",
+    files: "SimulWeather/SimulSkyRendererBase.cpp:332-345; SimulCloudRendererBase.cpp; landWeather.cpp",
+    now: tri(
+      "O céu visível é o Simul Weather, e ele lê apenas mie, rayleigh e swBrightness do LandLighting — _sky não pinta a tela. Foi o que explicou os ciclos de céu sem efeito.",
+      "The visible sky is Simul Weather, and it reads only mie, rayleigh and swBrightness from LandLighting — _sky does not paint the screen. That explains the sky cycles with no effect.",
+      "Видимое небо — Simul Weather, он читает только mie, rayleigh и swBrightness из LandLighting; _sky не рисует экран. Это объясняет циклы неба без эффекта.",
+    ),
+    first: tri(
+      "Ciclo em andamento: fechar o poente com mie/rayleigh medidos no log, e nuvens quentes.",
+      "Cycle in progress: close the sunset with mie/rayleigh measured in the log, and warm clouds.",
+      "Текущий цикл: довести закат с mie/rayleigh по логу и тёплые облака.",
+    ),
+  },
+  {
+    id: "F14",
+    title: tri("Materiais molhados", "Wet materials", "Мокрые материалы"),
+    status: "partial",
+    files: "postProcess.cpp PEWetDistortion (11322); PS.hlsl PSPostProcessWet*",
+    now: tri(
+      "Só existe distorção de tela na chuva. Nenhum material escurece ou ganha brilho quando molha.",
+      "Only screen distortion exists in the rain. No material darkens or gains shine when wet.",
+      "Есть только искажение экрана в дождь. Ни один материал не темнеет и не блестит от влаги.",
+    ),
+    first: tri(
+      "Primeiro ciclo: uma constante global de wetness vinda do clima, escurecendo o albedo e subindo o especular.",
+      "First cycle: one global wetness constant from weather, darkening albedo and raising specular.",
+      "Первый цикл: глобальная константа wetness из погоды — темнее albedo, сильнее блик.",
+    ),
+  },
+  {
+    id: "F15",
+    title: tri("Sombras avançadas", "Advanced shadows", "Продвинутые тени"),
+    status: "exists",
+    files: "engine.hpp:1000 cascatas; engdd9.cpp:19323-19384; landscape.cpp:6037; PSBasicSSSM.hlsl; PS.hlsl:751-795",
+    now: tri(
+      "4 cascatas com razão 3.0 (250 / 83 / 28 / 9 m), shadow map 2048 (shadowQuality=4), comparação bilinear de 4 taps e SSSM com 9 taps. Bias vem só do plano de projeção.",
+      "4 cascades at ratio 3.0 (250 / 83 / 28 / 9 m), 2048 shadow map (shadowQuality=4), 4-tap bilinear compare and 9-tap SSSM. Bias comes only from the projection plane.",
+      "4 каскада с шагом 3.0 (250 / 83 / 28 / 9 м), карта 2048 (shadowQuality=4), билинейное сравнение 4 тапа и SSSM 9 тапов. Bias только из плоскости проекции.",
+    ),
+    first: tri(
+      "Feito agora: shadowQuality 5 (4096). Próximos ciclos: comparação suave por texel e bias por cascata.",
+      "Done now: shadowQuality 5 (4096). Next cycles: soft compare by texel and per-cascade bias.",
+      "Сделано сейчас: shadowQuality 5 (4096). Далее: мягкое сравнение по текселю и bias на каскад.",
+    ),
+  },
+  {
+    id: "F16",
+    title: tri("Texturas e streaming", "Textures and streaming", "Текстуры и streaming"),
+    status: "exists",
+    files: "txtD3D9.cpp; engddT.cpp SetAnisotropyQuality/AnisotropyLevel/AutodetectAnisotropy",
+    now: tri(
+      "Filtragem anisotrópica automática por tipo de material; estradas e terreno recebem menos. Não há streaming por orçamento de VRAM — carrega tudo.",
+      "Automatic anisotropic filtering per material type; roads and terrain get less. No VRAM-budget streaming — everything is loaded.",
+      "Автоматическая анизотропия по типу материала; дороги и ландшафт получают меньше. Нет streaming по бюджету VRAM — грузится всё.",
+    ),
+    first: tri(
+      "Primeiro ciclo: AF 8-16x em terreno/estrada e mip bias — barato e mensurável.",
+      "First cycle: 8-16x AF on terrain/road plus mip bias — cheap and measurable.",
+      "Первый цикл: AF 8-16x на ландшафт/дорогу и mip bias — дёшево и измеримо.",
+    ),
+  },
+  {
+    id: "F17",
+    title: tri("LOD e visibilidade", "LOD and visibility", "LOD и видимость"),
+    status: "partial",
+    files: "Shape/LOD selection; frustum culling em engdd9.cpp; sem OcclusionQuery no código",
+    now: tri(
+      "Seleção de LOD por distância e culling por frustum existem. Occlusion culling não existe: zero ocorrências de OcclusionQuery/OcclusionCull na source.",
+      "Distance LOD selection and frustum culling exist. Occlusion culling does not: zero occurrences of OcclusionQuery/OcclusionCull in the source.",
+      "Выбор LOD по дистанции и frustum culling есть. Occlusion culling отсутствует: ноль вхождений OcclusionQuery/OcclusionCull в исходниках.",
+    ),
+    first: tri(
+      "Primeiro ciclo: histerese de LOD para acabar com o \"pulo\" visual — barato e sem risco.",
+      "First cycle: LOD hysteresis to end the visual \"pop\" — cheap, no risk.",
+      "Первый цикл: гистерезис LOD, чтобы убрать визуальный «скачок» — дёшево и без риска.",
+    ),
+  },
+  {
+    id: "F18",
+    title: tri("Transparência e alpha", "Transparency and alpha", "Прозрачность и alpha"),
+    status: "exists",
+    files: "PS.h GrassAToC/AlphaTest; ordenação de transparentes em engdd9.cpp",
+    now: tri(
+      "Alpha-to-coverage existe (GrassAToC) e a ordenação é por objeto, não por pixel — folhas sobrepostas geram halo.",
+      "Alpha-to-coverage exists (GrassAToC) and sorting is per object, not per pixel — overlapping leaves create halos.",
+      "Alpha-to-coverage есть (GrassAToC), сортировка по объекту, не по пикселю — перекрытые листья дают ореол.",
+    ),
+    first: tri(
+      "Primeiro ciclo: AToC em mais materiais de folhagem, com MSAA ligado (feito agora no config).",
+      "First cycle: AToC on more foliage materials, with MSAA on (done now in config).",
+      "Первый цикл: AToC на большем числе материалов листвы при включённом MSAA (сделано в конфиге).",
+    ),
+  },
+  {
+    id: "F19",
+    title: tri("Partículas e efeitos", "Particles and effects", "Частицы и эффекты"),
+    status: "exists",
+    files: "smokes.cpp/.hpp CParticleSource; VSSprite.hlsl; PSSR_Default.hlsl/PSSR_nVidia.hlsl",
+    now: tri(
+      "Fumaça, fogo, poeira e chuva existem com soft particles por depth. A cor da partícula é praticamente fixa + ambiente.",
+      "Smoke, fire, dust and rain exist with depth-based soft particles. Particle colour is basically fixed + ambient.",
+      "Дым, огонь, пыль и дождь есть с soft particles по depth. Цвет частицы почти фиксированный + ambient.",
+    ),
+    first: tri(
+      "Primeiro ciclo: multiplicar a fumaça pela cor do sol — reage ao poente sem custo.",
+      "First cycle: multiply smoke by the sun colour — reacts to the sunset at no cost.",
+      "Первый цикл: умножить дым на цвет солнца — реагирует на закат без затрат.",
+    ),
+  },
+  {
+    id: "F20",
+    title: tri("Antialiasing", "Antialiasing", "Сглаживание"),
+    status: "exists",
+    files: "Fxaa3_11.h; PPAA/SMAA.h + AreaTex/SearchTex (postProcess.cpp:2605); engdd9.cpp SetPPAAQuality",
+    now: tri(
+      "FXAA e SMAA completos já estão no engine. A escolha é só config: quality > 3 vira SMAA (qualidade-3). AToC exige MSAA ligado.",
+      "Full FXAA and SMAA are already in the engine. The choice is config only: quality > 3 becomes SMAA (quality-3). AToC requires MSAA on.",
+      "FXAA и SMAA целиком уже в движке. Выбор только в конфиге: quality > 3 = SMAA (quality-3). AToC требует MSAA.",
+    ),
+    first: tri(
+      "Feito agora: PPAA=5 (SMAA high) + AToC=1 com FSAA=2.",
+      "Done now: PPAA=5 (SMAA high) + AToC=1 with FSAA=2.",
+      "Сделано сейчас: PPAA=5 (SMAA high) + AToC=1 при FSAA=2.",
+    ),
+  },
+  {
+    id: "F21",
+    title: tri("Precisão de profundidade", "Depth precision", "Точность глубины"),
+    status: "tbd",
+    files: "engdd9.cpp criação do device/depth; Road2Pass como sintoma",
+    now: tri(
+      "O formato de depth/stencil e o near plane ainda não foram confirmados. O z-fighting visível em estrada parece vir do decal, não da precisão.",
+      "The depth/stencil format and near plane are not confirmed yet. Visible road z-fighting seems to come from the decal, not precision.",
+      "Формат depth/stencil и near plane ещё не подтверждены. Z-fighting на дороге, похоже, от декали, а не от точности.",
+    ),
+    first: tri(
+      "Primeiro ciclo: instrumentar formato, near e bias antes de mexer em qualquer coisa.",
+      "First cycle: instrument format, near and bias before changing anything.",
+      "Первый цикл: замерить формат, near и bias до любых изменений.",
+    ),
+  },
+  {
+    id: "F22",
+    title: tri("Arquitetura dos passes", "Render pass architecture", "Архитектура проходов"),
+    status: "exists",
+    files: "postProcess.cpp/.hpp (PHandle, prioridade, Commit*)",
+    now: tri(
+      "Cadeia de pós-processamento com prioridade e dependências funciona. Não há motivo para reescrever.",
+      "The post-process chain with priority and dependencies works. There is no reason to rewrite it.",
+      "Цепочка постобработки с приоритетами и зависимостями работает. Переписывать незачем.",
+    ),
+    first: tri(
+      "Sem ciclo próprio: só documentar e ajustar ordem quando um efeito exigir.",
+      "No cycle of its own: only document and adjust order when an effect requires it.",
+      "Без отдельного цикла: только документировать и менять порядок по необходимости.",
+    ),
+  },
+  {
+    id: "F23",
+    title: tri("Otimização e GPU", "Optimisation and GPU", "Оптимизация и GPU"),
+    status: "tbd",
+    files: "PROFILE_SCOPE; sem contador de draw calls exposto",
+    now: tri(
+      "Não há contador de draw calls. Já se sabe, por medição anterior, que drawUI custa 10-16 ms e é o gargalo de FPS — não a cena 3D.",
+      "There is no draw call counter. Earlier measurement already shows drawUI costs 10-16 ms and is the FPS bottleneck — not the 3D scene.",
+      "Счётчика draw calls нет. Ранее измерено: drawUI стоит 10-16 мс и является узким местом FPS, а не 3D-сцена.",
+    ),
+    first: tri(
+      "Primeiro ciclo: instrumentar draw calls e tempo por passe antes de otimizar.",
+      "First cycle: instrument draw calls and per-pass time before optimising.",
+      "Первый цикл: замерить draw calls и время по проходам до оптимизации.",
+    ),
+  },
+  {
+    id: "F24",
+    title: tri("Arquitetura de shaders", "Shader architecture", "Архитектура шейдеров"),
+    status: "exists",
+    files: "PS.h/PS.hlsl/VS.h/VS.hlsl/common.h; macros XXD/XXC/XXS; ShaderCompileCache.cpp",
+    now: tri(
+      "Variantes geradas por macro e compiladas em runtime, com cache em bin\\*.shdc. O .hlsl é lido do disco: mudar shader não exige recompilar o exe.",
+      "Variants generated by macros and compiled at runtime, cached in bin\\*.shdc. The .hlsl is read from disk: changing a shader does not require rebuilding the exe.",
+      "Варианты генерируются макросами и компилируются в runtime, кэш в bin\\*.shdc. .hlsl читается с диска: правка шейдера не требует пересборки exe.",
+    ),
+    first: tri(
+      "Sem refatoração: só manter e documentar.",
+      "No refactor: just maintain and document.",
+      "Без рефакторинга: только поддерживать и документировать.",
+    ),
+  },
+  {
+    id: "F25",
+    title: tri("Validação global", "Global validation", "Общая проверка"),
+    status: "new",
+    files: "build-editor-v1.cmd, build-sqfexec-v128.cmd, RPT, FPS-DIAG",
+    now: tri(
+      "Cada bloco termina com build de cliente e servidor, marcador no RPT e comparação no mesmo horário/clima/local.",
+      "Each block ends with client and server builds, an RPT marker and a comparison at the same time/weather/place.",
+      "Каждый блок завершается сборкой клиента и сервера, маркером в RPT и сравнением в одно время/погоду/место.",
+    ),
+    first: tri(
+      "Rodar a matriz: amanhecer, meio-dia, entardecer, noite × limpo, nublado, chuva.",
+      "Run the matrix: dawn, noon, dusk, night × clear, overcast, rain.",
+      "Прогнать матрицу: рассвет, полдень, закат, ночь × ясно, облачно, дождь.",
+    ),
+  },
+];
+
+export interface RoadmapBlock {
+  id: string;
+  title: Tri;
+  phases: string;
+  why: Tri;
+}
+
+export const ROADMAP_BLOCKS: RoadmapBlock[] = [
+  {
+    id: "A",
+    title: tri("Céu e atmosfera", "Sky and atmosphere", "Небо и атмосфера"),
+    phases: "F13 → F10",
+    why: tri(
+      "É o que já está em teste e o único caminho comprovado para mudar o céu (Simul Weather).",
+      "It is what is already under test and the only proven path to change the sky (Simul Weather).",
+      "Это уже тестируется и единственный проверенный путь менять небо (Simul Weather).",
+    ),
+  },
+  {
+    id: "B",
+    title: tri("Superfícies", "Surfaces", "Поверхности"),
+    phases: "F8 → F7 → F11 → F12",
+    why: tri(
+      "Material antes de vegetação: a folha herda a resposta especular/difusa que F8 definir.",
+      "Material before vegetation: leaves inherit the specular/diffuse response F8 defines.",
+      "Материал раньше растительности: листва наследует отклик F8.",
+    ),
+  },
+  {
+    id: "C",
+    title: tri("Luz e sombra", "Light and shadow", "Свет и тень"),
+    phases: "F15 → F9 → F14",
+    why: tri(
+      "Sombra antes de AO: os dois usam profundidade, e ajustar sombra primeiro evita mascarar artefato de AO. Molhado depende do especular de F8.",
+      "Shadow before AO: both use depth, and fixing shadow first avoids masking AO artefacts. Wet depends on F8 specular.",
+      "Тень раньше AO: оба используют depth; сначала тень, чтобы не маскировать артефакты AO. Мокрое зависит от блика F8.",
+    ),
+  },
+  {
+    id: "D",
+    title: tri("Acabamento", "Finishing", "Отделка"),
+    phases: "F20 → F19 → F18 → F16",
+    why: tri(
+      "AToC exige MSAA, então AA vem antes. O resto é ganho barato e mensurável.",
+      "AToC requires MSAA, so AA comes first. The rest is cheap, measurable gain.",
+      "AToC требует MSAA, поэтому AA раньше. Остальное — дешёвый измеримый выигрыш.",
+    ),
+  },
+  {
+    id: "E",
+    title: tri("Estrutura", "Structure", "Структура"),
+    phases: "F17 → F21 → F23 → F22/F24",
+    why: tri(
+      "Otimizar antes de estabilizar a imagem é retrabalho. F22 e F24 não têm ciclo próprio sem objetivo visual.",
+      "Optimising before the image is stable is rework. F22 and F24 have no cycle of their own without a visual goal.",
+      "Оптимизировать до стабилизации картинки — переделка. У F22 и F24 нет своего цикла без визуальной цели.",
+    ),
+  },
+];
+
+export interface StateItem {
+  id: string;
+  label: Tri;
+  value: Tri;
+  tone: "lime" | "amber" | "blue" | "violet" | "red";
+}
+
+export const CURRENT_STATE: StateItem[] = [
+  {
+    id: "ciclos",
+    label: tri("Ciclos concluídos", "Completed cycles", "Завершённые циклы"),
+    value: tri(
+      "1 a 9 — rebote, SSSM, névoa, flare, bloom/SSAO e céu. Os ciclos 3 (especular global) e 6 (pow do céu) foram revertidos por teste.",
+      "1 to 9 — bounce, SSSM, fog, flare, bloom/SSAO and sky. Cycles 3 (global specular) and 6 (sky pow) were reverted after testing.",
+      "1–9 — отражение, SSSM, туман, flare, bloom/SSAO и небо. Циклы 3 (глобальный блик) и 6 (pow неба) откатаны после проверки.",
+    ),
+    tone: "lime",
+  },
+  {
+    id: "sync",
+    label: tri("Tempo e clima", "Time and weather", "Время и погода"),
+    value: tri(
+      "Sincronização servidor → cliente corrigida e validada ao vivo: setDate, setOvercast, setFog e setRain chegam por ApplyWeatherMessage. O horário é do servidor, nunca travado no cliente.",
+      "Server → client sync fixed and validated live: setDate, setOvercast, setFog and setRain arrive via ApplyWeatherMessage. Time belongs to the server, never frozen in the client.",
+      "Синхронизация сервер → клиент исправлена и проверена вживую: setDate, setOvercast, setFog, setRain приходят через ApplyWeatherMessage. Время задаёт сервер, не клиент.",
+    ),
+    tone: "blue",
+  },
+  {
+    id: "ceu",
+    label: tri("Diagnóstico do céu", "Sky finding", "Диагностика неба"),
+    value: tri(
+      "O céu visível é Simul Weather e lê só mie, rayleigh e swBrightness. Tingir _sky não muda a tela — foi por isso que os ciclos de céu não apareceram.",
+      "The visible sky is Simul Weather and reads only mie, rayleigh and swBrightness. Tinting _sky does not change the screen — that is why sky cycles did not show.",
+      "Видимое небо — Simul Weather, читает только mie, rayleigh, swBrightness. Окраска _sky не меняет экран — поэтому циклы неба не были видны.",
+    ),
+    tone: "violet",
+  },
+  {
+    id: "agora",
+    label: tri("Ciclo em aplicação", "Cycle being applied", "Текущий цикл"),
+    value: tri(
+      "F15/F20: sombras 4096 (shadowQuality 5), SMAA high (PPAA=5), AToC=1 com FSAA=2 e tonemap com pivô em 0.5 (contraste 1.25, saturação 1.35).",
+      "F15/F20: 4096 shadows (shadowQuality 5), SMAA high (PPAA=5), AToC=1 with FSAA=2 and pivot tonemap at 0.5 (contrast 1.25, saturation 1.35).",
+      "F15/F20: тени 4096 (shadowQuality 5), SMAA high (PPAA=5), AToC=1 при FSAA=2 и tonemap с pivot 0.5 (контраст 1.25, насыщенность 1.35).",
+    ),
+    tone: "amber",
+  },
+  {
+    id: "aberto",
+    label: tri("Ainda aberto", "Still open", "Ещё открыто"),
+    value: tri(
+      "Poente laranja ainda não aprovado visualmente; drawUI custa 10-16 ms e é o gargalo de FPS; logs F9-* e F15-* são diagnósticos e saem no fim do bloco.",
+      "Orange sunset not visually approved yet; drawUI costs 10-16 ms and is the FPS bottleneck; F9-* and F15-* logs are diagnostics and will be removed at the end of the block.",
+      "Оранжевый закат ещё не подтверждён визуально; drawUI стоит 10-16 мс и тормозит FPS; логи F9-*/F15-* диагностические и будут убраны в конце блока.",
+    ),
+    tone: "red",
+  },
+];
 
 export const PHASES: Phase[] = [
   {
