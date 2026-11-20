@@ -3,35 +3,42 @@
   "id": "helicopteros",
   "title": "Helicopteros",
   "folder": "@Helicopteros",
-  "totalSizeBytes": 452381555,
+  "totalSizeBytes": 452484366,
   "files": [
     {
       "path": "Addons/modk_air_h.pbo",
       "sourcePath": "mods/@Helicopteros/Addons/modk_air_h.pbo",
-      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/main/mods/%40Helicopteros/Addons/modk_air_h.pbo",
+      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/22e819344c40ab9d33ae0696c17be8c5779489ba/mods/%40Helicopteros/Addons/modk_air_h.pbo",
       "sizeBytes": 92949239,
       "sha256": "1036c63513819fbedaaf9897d999b23a7e96bf65653eae0f68db6d5c181a2a88"
     },
     {
       "path": "Addons/modk_air_us_h.pbo",
       "sourcePath": "mods/@Helicopteros/Addons/modk_air_us_h.pbo",
-      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/main/mods/%40Helicopteros/Addons/modk_air_us_h.pbo",
+      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/22e819344c40ab9d33ae0696c17be8c5779489ba/mods/%40Helicopteros/Addons/modk_air_us_h.pbo",
       "sizeBytes": 272151047,
       "sha256": "895861b7510b8f07a52112c63d043f98cc7fcdf251eca0eeb8c66671b5c685c9"
     },
     {
       "path": "Addons/modk_data_h.pbo",
       "sourcePath": "mods/@Helicopteros/Addons/modk_data_h.pbo",
-      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/main/mods/%40Helicopteros/Addons/modk_data_h.pbo",
+      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/22e819344c40ab9d33ae0696c17be8c5779489ba/mods/%40Helicopteros/Addons/modk_data_h.pbo",
       "sizeBytes": 86309391,
       "sha256": "3447be32096c1d8b8a127e616307ad573dfc207a449f7d919fbb82b2bffd86af"
     },
     {
       "path": "Addons/modk.pbo",
       "sourcePath": "mods/@Helicopteros/Addons/modk.pbo",
-      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/main/mods/%40Helicopteros/Addons/modk.pbo",
+      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/22e819344c40ab9d33ae0696c17be8c5779489ba/mods/%40Helicopteros/Addons/modk.pbo",
       "sizeBytes": 971878,
       "sha256": "a66c5c4c3157a91cce2e3e0f9c8043b167fefb3b47429905589e9ed4816b7053"
+    },
+    {
+      "path": "Addons/modk_ui_horizon_compat.pbo",
+      "sourcePath": "mods/@Helicopteros/Addons/modk_ui_horizon_compat.pbo",
+      "url": "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/22e819344c40ab9d33ae0696c17be8c5779489ba/mods/%40Helicopteros/Addons/modk_ui_horizon_compat.pbo",
+      "sizeBytes": 102811,
+      "sha256": "69de7d48a058cca3f015168c3b75a5d9f99ce61ea8008267ae794cf4a5a45044"
     }
   ]
 }
