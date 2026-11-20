@@ -201,6 +201,26 @@ export const PLANO_COPY: Record<string, Tri> = {
     en: "Every cycle ends with a live-test verdict, at the same time, weather and place. Reverting is a valid outcome, not a failure.",
     ru: "Каждый цикл заканчивается решением по живому тесту в одно время, погоду и место. Откат — допустимый итог, не провал.",
   },
+
+  // Concluidos e situacao dos ciclos
+  "plano.done.title": { pt: "Feito e concluído", en: "Done and completed", ru: "Сделано и завершено" },
+  "plano.done.lead": {
+    pt: "Tudo o que já entrou no jogo, com a evidência no código ou no build. \"Concluído\" = aplicado e aprovado no teste ao vivo; \"aguardando veredito\" = aplicado e buildado, falta o olho no jogo.",
+    en: "Everything already in the game, with evidence in code or build. \"Completed\" = applied and approved in the live test; \"awaiting verdict\" = applied and built, waiting for the in-game eye.",
+    ru: "Всё, что уже в игре, с подтверждением в коде или сборке. «Завершено» — применено и принято на живом тесте; «ждёт решения» — применено и собрано, нужен взгляд в игре.",
+  },
+  "plano.done.col.item": { pt: "Item", en: "Item", ru: "Пункт" },
+  "plano.done.col.phase": { pt: "Fase / ciclo", en: "Phase / cycle", ru: "Фаза / цикл" },
+  "plano.done.col.where": { pt: "Onde está", en: "Where it is", ru: "Где находится" },
+  "plano.done.col.status": { pt: "Situação", en: "Status", ru: "Статус" },
+  "plano.done.state.done": { pt: "concluído", en: "completed", ru: "завершено" },
+  "plano.done.state.review": { pt: "aguardando veredito", en: "awaiting verdict", ru: "ждёт решения" },
+  "plano.cycles.col.state": { pt: "Situação", en: "Status", ru: "Статус" },
+  "plano.cycle.done": { pt: "concluído", en: "completed", ru: "завершено" },
+  "plano.cycle.reverted": { pt: "revertido", en: "reverted", ru: "откат" },
+  "plano.cycle.test": { pt: "em teste", en: "under test", ru: "в тесте" },
+  "plano.cycle.todo": { pt: "pendente", en: "pending", ru: "ожидает" },
+  "plano.cycle.folded": { pt: "absorvido", en: "absorbed", ru: "поглощён" },
 };
 
 export interface Phase {
@@ -646,13 +666,13 @@ export const CURRENT_STATE: StateItem[] = [
   },
   {
     id: "agora",
-    label: tri("Ciclo em aplicação", "Cycle being applied", "Текущий цикл"),
+    label: tri("Aplicado no build atual", "Applied in the current build", "Применено в текущей сборке"),
     value: tri(
-      "F15/F20: sombras 4096 (shadowQuality 5), SMAA high (PPAA=5), AToC=1 com FSAA=2 e tonemap com pivô em 0.5 (contraste 1.25, saturação 1.35).",
-      "F15/F20: 4096 shadows (shadowQuality 5), SMAA high (PPAA=5), AToC=1 with FSAA=2 and pivot tonemap at 0.5 (contrast 1.25, saturation 1.35).",
-      "F15/F20: тени 4096 (shadowQuality 5), SMAA high (PPAA=5), AToC=1 при FSAA=2 и tonemap с pivot 0.5 (контраст 1.25, насыщенность 1.35).",
+      "Concluído: sombras 4096 (shadowQuality 5), SMAA high (PPAA=5), AToC=1 com FSAA=2 e tonemap com pivô em 0.5 (contraste 1.25, saturação 1.35). Falta apenas o veredito visual.",
+      "Completed: 4096 shadows (shadowQuality 5), SMAA high (PPAA=5), AToC=1 with FSAA=2 and pivot tonemap at 0.5 (contrast 1.25, saturation 1.35). Only the visual verdict is missing.",
+      "Готово: тени 4096 (shadowQuality 5), SMAA high (PPAA=5), AToC=1 при FSAA=2 и tonemap с pivot 0.5 (контраст 1.25, насыщенность 1.35). Осталось только визуальное решение.",
     ),
-    tone: "amber",
+    tone: "lime",
   },
   {
     id: "aberto",
@@ -665,6 +685,133 @@ export const CURRENT_STATE: StateItem[] = [
     tone: "red",
   },
 ];
+
+// ---------------------------------------------------------------------------
+// O que ja foi feito - cada item com a evidencia real (arquivo/linha ou build)
+// ---------------------------------------------------------------------------
+export interface DoneItem {
+  id: string;
+  phase: string;
+  title: Tri;
+  where: string;
+  status: "done" | "review";
+}
+
+export const DONE: DoneItem[] = [
+  {
+    id: "D1",
+    phase: "F1 · ciclo 1",
+    title: tri("Luz rebatida / bidirecional", "Bounce / bidirectional light", "Отражённый/двусторонний свет"),
+    where: "lib\\engdd9.cpp — s_bounceBidirectCoef = 12.0f (ComputeBackReflection / ComputeGroundReflection)",
+    status: "done",
+  },
+  {
+    id: "D2",
+    phase: "F2 · ciclo 2",
+    title: tri("SSSM com 9 taps", "SSSM with 9 taps", "SSSM с 9 тапами"),
+    where: "PS.hlsl — PSPostProcessSSSMBH/BV, kernel gaussiano sigma 3.5, ±8 texels",
+    status: "done",
+  },
+  {
+    id: "D3",
+    phase: "F3 · ciclo 5",
+    title: tri("Névoa com profundidade", "Fog with depth", "Туман с глубиной"),
+    where: "lib\\scene.cpp:488 — startFactor 0.32 / 0.80",
+    status: "done",
+  },
+  {
+    id: "D4",
+    phase: "F3 · ciclo 7",
+    title: tri("Flare do sol contido", "Contained sun flare", "Сдержанный flare солнца"),
+    where: "lib\\scene.cpp:4984 — intensity 30 → 10",
+    status: "done",
+  },
+  {
+    id: "D5",
+    phase: "F3 · ciclo 8",
+    title: tri("Bloom e SSAO calibrados", "Bloom and SSAO calibrated", "Bloom и SSAO откалиброваны"),
+    where: "bloom threshold 1.25, BloomImgScale 0.55, ssaoEnabled=1",
+    status: "done",
+  },
+  {
+    id: "D6",
+    phase: "F6 · correção de cor",
+    title: tri("Correção de cor base", "Base colour correction", "Базовая коррекция цвета"),
+    where: "postProcess.hpp PPColors::SetDefaultValues — brightness/contraste/saturação",
+    status: "done",
+  },
+  {
+    id: "D7",
+    phase: "infra · F10",
+    title: tri("Tempo e clima do servidor chegam ao cliente", "Server time and weather reach the client", "Время и погода сервера доходят до клиента"),
+    where: "landWeather.cpp ApplyWeatherMsg (SetDate) + gameStateExt.cpp UpdateRemote + networkServer.cpp no join — validado ao vivo",
+    status: "done",
+  },
+  {
+    id: "D8",
+    phase: "diagnóstico · F13",
+    title: tri("Descoberto o céu real do 0.45 (Simul Weather)", "0.45's real sky found (Simul Weather)", "Найдено реальное небо 0.45 (Simul Weather)"),
+    where: "SimulWeather\\SimulSkyRendererBase.cpp:332-345 — lê mie, rayleigh e swBrightness",
+    status: "done",
+  },
+  {
+    id: "D9",
+    phase: "F15 · ciclo atual",
+    title: tri("Sombras em 4096 por cascata", "4096 shadows per cascade", "Тени 4096 на каскад"),
+    where: "perfil: shadowQuality=5 → _sbSize = 1024 << 2 (engdd9.cpp:19389)",
+    status: "review",
+  },
+  {
+    id: "D10",
+    phase: "F20 · ciclo atual",
+    title: tri("SMAA High ligado", "SMAA High enabled", "SMAA High включён"),
+    where: "DayZ.cfg: PPAA=5 → SetPPAAQuality lê quality > 3 como SMAA preset 2",
+    status: "review",
+  },
+  {
+    id: "D11",
+    phase: "F18/F20 · ciclo atual",
+    title: tri("Alpha-to-coverage nas folhas", "Alpha-to-coverage on leaves", "Alpha-to-coverage на листве"),
+    where: "DayZ.cfg: AToC=1 com FSAA=2 (SetAToC exige MSAA)",
+    status: "review",
+  },
+  {
+    id: "D12",
+    phase: "F6 · ciclo atual",
+    title: tri("Tonemap com pivô em 0.5", "Pivot tonemap at 0.5", "Tonemap с pivot 0.5"),
+    where: "postProcess.hpp (contraste 1.25, offset 0.012, saturação 1.35) + PS.hlsl PsPpColors",
+    status: "review",
+  },
+];
+
+// Situação de cada ciclo ja executado (a tabela CYCLES nao carrega estado)
+export const CYCLE_STATE: Record<string, "done" | "reverted" | "test" | "todo" | "folded"> = {
+  "1": "done",
+  "2": "done",
+  "3": "reverted",
+  "4": "folded",
+  "5": "done",
+  "6": "reverted",
+  "7": "done",
+  "8": "done",
+  "9": "test",
+  "10": "todo",
+  "11": "todo",
+};
+
+export const CYCLE_STATE_NOTE: Record<string, Tri> = {
+  "1": tri("aprovado — coeficiente 12.0", "approved — coefficient 12.0", "принято — коэффициент 12.0"),
+  "2": tri("aprovado — 9 taps", "approved — 9 taps", "принято — 9 тапов"),
+  "3": tri("revertido — 0.8 voltou para 0.5 (pele molhada)", "reverted — 0.8 back to 0.5 (wet skin)", "откат — 0.8 вернули на 0.5 (мокрая кожа)"),
+  "4": tri("absorvido pelo ciclo 2 — a penumbra maior veio no kernel novo", "absorbed by cycle 2 — wider penumbra came with the new kernel", "поглощён циклом 2 — широкая полутень пришла с новым ядром"),
+  "5": tri("aprovado — 0.32/0.80", "approved — 0.32/0.80", "принято — 0.32/0.80"),
+  "6": tri("revertido — pow 3 voltou para 6", "reverted — pow 3 back to 6", "откат — pow 3 вернули на 6"),
+  "7": tri("aprovado — 30 → 10", "approved — 30 → 10", "принято — 30 → 10"),
+  "8": tri("aprovado — bloom 1.25 + SSAO", "approved — bloom 1.25 + SSAO", "принято — bloom 1.25 + SSAO"),
+  "9": tri("em teste — mie/rayleigh aplicados, poente ainda não aprovado", "under test — mie/rayleigh applied, sunset not approved yet", "в тесте — mie/rayleigh применены, закат ещё не принят"),
+  "10": tri("pendente", "pending", "ожидает"),
+  "11": tri("pendente — o pivô de contraste já entrou como preparação", "pending — the contrast pivot already landed as a preparation", "ожидает — pivot контраста уже внесён как подготовка"),
+};
 
 export const PHASES: Phase[] = [
   {

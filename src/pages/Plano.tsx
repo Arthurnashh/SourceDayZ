@@ -9,8 +9,19 @@ import {
   ROADMAP_BLOCKS,
   ROADMAP_STATUS,
   CURRENT_STATE,
+  DONE,
+  CYCLE_STATE,
+  CYCLE_STATE_NOTE,
   usePlanoT,
 } from "../content/plano-i18n";
+
+const CYCLE_TONE: Record<string, string> = {
+  done: "lime",
+  reverted: "red",
+  test: "amber",
+  todo: "neutral",
+  folded: "blue",
+};
 
 const STATUS_TONE: Record<string, string> = {
   exists: "lime",
@@ -87,6 +98,39 @@ export function Plano() {
             <p>{tr(s.value)}</p>
           </section>
         ))}
+      </div>
+
+      <SectionTitle kicker="feito" title={t("plano.done.title")} />
+      <p className="muted">{t("plano.done.lead")}</p>
+      <div className="plano-table-wrap">
+        <table className="plano-table">
+          <thead>
+            <tr>
+              <th>{t("plano.done.col.item")}</th>
+              <th>{t("plano.done.col.phase")}</th>
+              <th>{t("plano.done.col.where")}</th>
+              <th>{t("plano.done.col.status")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {DONE.map((d) => (
+              <tr key={d.id}>
+                <td>
+                  <strong>{tr(d.title)}</strong>
+                </td>
+                <td className="mono">{d.phase}</td>
+                <td>
+                  <code>{d.where}</code>
+                </td>
+                <td>
+                  <Badge tone={d.status === "done" ? "lime" : "amber"}>
+                    {t(`plano.done.state.${d.status}`)}
+                  </Badge>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <SectionTitle kicker="dx9" title={t("plano.pillars.title")} />
@@ -178,6 +222,7 @@ export function Plano() {
             <thead>
               <tr>
                 <th>{t("plano.cycles.col.n")}</th>
+                <th>{t("plano.cycles.col.state")}</th>
                 <th>{t("plano.cycles.col.pillar")}</th>
                 <th>{t("plano.cycles.col.change")}</th>
                 <th>{t("plano.cycles.col.expect")}</th>
@@ -185,9 +230,16 @@ export function Plano() {
               </tr>
             </thead>
             <tbody>
-              {CYCLES.map((c) => (
+              {CYCLES.map((c) => {
+                const state = CYCLE_STATE[c.n] ?? "todo";
+                const note = CYCLE_STATE_NOTE[c.n];
+                return (
                 <tr key={c.n}>
                   <td className="mono">{c.n}</td>
+                  <td>
+                    <Badge tone={CYCLE_TONE[state]}>{t(`plano.cycle.${state}`)}</Badge>
+                    {note && <p className="muted small">{tr(note)}</p>}
+                  </td>
                   <td><Badge tone={PILLAR_TONE[c.pillar]}>{PILLAR_LABEL[c.pillar][locale] ?? PILLAR_LABEL[c.pillar].pt}</Badge></td>
                   <td>
                     <strong>{tr(c.change)}</strong>
@@ -196,7 +248,8 @@ export function Plano() {
                   <td>{tr(c.expect)}</td>
                   <td className="mono">{tr(c.revert)}</td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>
