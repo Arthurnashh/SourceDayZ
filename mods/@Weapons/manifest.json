@@ -1,0 +1,237 @@
+{
+    "schemaVersion": 1,
+    "id": "weapons",
+    "title": "Weapons",
+    "folder": "@Weapons",
+    "totalSizeBytes": 757865362,
+    "files": [
+        {
+            "path": "Addons/weapons_arma2.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_arma2.pbo",
+            "sizeBytes": 441966883,
+            "sha256": "9107870d0ec16cdc73672474041a12aee0bdfd3502e300d6e4cbd3d16af6ff55"
+        },
+        {
+            "path": "Addons/weapons_arma2.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_arma2.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "414d83079bf268a2aab8e3be6e919d11ee3e366ddab1b764ff437e5186ae32c5"
+        },
+        {
+            "path": "Addons/weapons_infantry_ammunition.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_ammunition.pbo",
+            "sizeBytes": 560212,
+            "sha256": "356f3acef8de7862e8ed8c4461385a7cf91ec1875f9438c4b543d12426c67e3c"
+        },
+        {
+            "path": "Addons/weapons_infantry_ammunition.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_ammunition.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "df9ecad84b90032e58e446c7278cfe56c009c7dfc759f908a25407344abd5cb1"
+        },
+        {
+            "path": "Addons/weapons_infantry_animations.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_animations.pbo",
+            "sizeBytes": 166008,
+            "sha256": "7249b4c1c815af6b4f73659f954a3bbe47efeafc05748c9af2dbe668ff69dd05"
+        },
+        {
+            "path": "Addons/weapons_infantry_animations.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_animations.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "4f94fa12732b4fb641df38524c3295d4497e2c9bbb1e2a13c900ee39b7cc60ac"
+        },
+        {
+            "path": "Addons/weapons_infantry_assaultrifles.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_assaultrifles.pbo",
+            "sizeBytes": 153840324,
+            "sha256": "d9deec6f515a7f988bc3eec643278d466a4e1e9d1ca3d308b64c05c39d4d6a2f"
+        },
+        {
+            "path": "Addons/weapons_infantry_assaultrifles.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_assaultrifles.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "643810462875ae0af2a60f7c8e46a1151918b68d7d0d82b02fbeaf4296ebf543"
+        },
+        {
+            "path": "Addons/weapons_infantry_bows.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_bows.pbo",
+            "sizeBytes": 1358877,
+            "sha256": "e76d14ee7d6a97963f37f2337f808e78ecbc8214e6fee149675494d7a5c683e4"
+        },
+        {
+            "path": "Addons/weapons_infantry_bows.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_bows.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "b378503fb0c0ea91d9f0643f3d5f36023a1fe1afa67773c006b43717a6f1fffd"
+        },
+        {
+            "path": "Addons/weapons_infantry_config.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_config.pbo",
+            "sizeBytes": 30378,
+            "sha256": "f905bc61c54107caeebe8d66ae342f3336f22c8a1fbb643ed0cf842b5261d9de"
+        },
+        {
+            "path": "Addons/weapons_infantry_config.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_config.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "7dd44cbde1f4e693bfb1b873055889e31afb3422d8c39b87357bad25649025bc"
+        },
+        {
+            "path": "Addons/weapons_infantry_heavymachineguns.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_heavymachineguns.pbo",
+            "sizeBytes": 18310939,
+            "sha256": "4a09f7f8a4b28719225fde7a2d05d474ca4abad6ec2a9c310607910d6b4147dc"
+        },
+        {
+            "path": "Addons/weapons_infantry_heavymachineguns.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_heavymachineguns.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "18915b2057036ef43ed37f721393c11c2becda45c0f97a3091fd509991b2e1ba"
+        },
+        {
+            "path": "Addons/weapons_infantry_heavysniperguns.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_heavysniperguns.pbo",
+            "sizeBytes": 7146695,
+            "sha256": "fcd802ad9fb6c1caa0b5d1ede6f6e26366195caa9a75eb5b6600a52f8fd87090"
+        },
+        {
+            "path": "Addons/weapons_infantry_heavysniperguns.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_heavysniperguns.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "3ed86ccb48d9033bf8bc108e760f13cffa67e23e340d89707427816307f237c4"
+        },
+        {
+            "path": "Addons/weapons_infantry_item.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_item.pbo",
+            "sizeBytes": 1373964,
+            "sha256": "2f6dcc946194d767cbf20907a0563fa272e054b22fd34a8dc52dd7f0326af6ae"
+        },
+        {
+            "path": "Addons/weapons_infantry_item.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_item.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "f06e7b2c492d6ea165b280b76290523c40990c667d8167fca2814a558048b9ab"
+        },
+        {
+            "path": "Addons/weapons_infantry_lightmachineguns.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_lightmachineguns.pbo",
+            "sizeBytes": 28273848,
+            "sha256": "867b2631030410bb94b578898c00abd2a7716490eb2edbc81fcefcd4752c489e"
+        },
+        {
+            "path": "Addons/weapons_infantry_lightmachineguns.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_lightmachineguns.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "1a97c0c6cd1f87f18c7492c7853a2995a1aa2f1ba3db3ef264d1aba320c2a4ff"
+        },
+        {
+            "path": "Addons/weapons_infantry_lightsniperguns.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_lightsniperguns.pbo",
+            "sizeBytes": 13997806,
+            "sha256": "6a8332f6f88bc0f0af52eba550a9dc2ac1fb9764f93b7621a03d46ced1bccff9"
+        },
+        {
+            "path": "Addons/weapons_infantry_lightsniperguns.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_lightsniperguns.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "7b22be4202703121e418ae780e1ff8946ccef2426b26521fd07a307ea6d91544"
+        },
+        {
+            "path": "Addons/weapons_infantry_meele.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_meele.pbo",
+            "sizeBytes": 3080344,
+            "sha256": "a2e97508962f258dfb8733bcce8974cd21a165a11e8ac252ff38849494fcf497"
+        },
+        {
+            "path": "Addons/weapons_infantry_meele.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_meele.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "359666ac7f246603ec460fe2eb077189469874c9e0ef3a6131872236103ff8b3"
+        },
+        {
+            "path": "Addons/weapons_infantry_misc.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_misc.pbo",
+            "sizeBytes": 346410,
+            "sha256": "2a993ec8b10abc5d1a8efd40202b7ba1caea870fff48d1a840ce445457ec9df9"
+        },
+        {
+            "path": "Addons/weapons_infantry_misc.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_misc.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "b3a934b50b2cd2d307082306cbde39f4105a489da2fbb0b233a61f1bab558cfe"
+        },
+        {
+            "path": "Addons/weapons_infantry_optics.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_optics.pbo",
+            "sizeBytes": 239634,
+            "sha256": "4fcc5edc57e4809bb40def3a4da14e8cb5d11eb9a8d73f4206c7ecdc7b09ffd4"
+        },
+        {
+            "path": "Addons/weapons_infantry_optics.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_optics.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "bce8eef69abdb1d142f17146b2023929b327550882d7f304393f62b7197f795c"
+        },
+        {
+            "path": "Addons/weapons_infantry_pistols.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_pistols.pbo",
+            "sizeBytes": 11180823,
+            "sha256": "4802f6a28746b751b47bc03ae6aa7cc101f0748e5fab18394c7b15ae7f62e753"
+        },
+        {
+            "path": "Addons/weapons_infantry_pistols.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_pistols.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "740792080ad3694399b5987d327c0e2b21885e138f01ead12c7608e88a99eaf6"
+        },
+        {
+            "path": "Addons/weapons_infantry_shareddata.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_shareddata.pbo",
+            "sizeBytes": 17708832,
+            "sha256": "d254c1cacb430f47f32070d9d68330cb51ea84452ca07fae5cc3bc8f3f95d17b"
+        },
+        {
+            "path": "Addons/weapons_infantry_shareddata.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_shareddata.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "7ae3e5a2c3be9577e9358d48618c6864578e66d6ea62c4f8934721e61bf83b73"
+        },
+        {
+            "path": "Addons/weapons_infantry_shotguns.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_shotguns.pbo",
+            "sizeBytes": 23697675,
+            "sha256": "7ffe1097d8bb430a381eb76926861bb0a0731b97bed65c2a295697ff4cf63478"
+        },
+        {
+            "path": "Addons/weapons_infantry_shotguns.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_shotguns.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "7f1b2159a6c64d185a98f4594258bbd0ba931e6744948b21ed7e183ddd6805a0"
+        },
+        {
+            "path": "Addons/weapons_infantry_submachineguns.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_submachineguns.pbo",
+            "sizeBytes": 3504495,
+            "sha256": "ceb019e577c0b275cf491074147fd53f7e0f796d0a8ad60fb10517d8d2a4d720"
+        },
+        {
+            "path": "Addons/weapons_infantry_submachineguns.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_infantry_submachineguns.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "c1754672f351dde3708ea6a9a2217083d5efe86499435a03ba405b2ed74f867e"
+        },
+        {
+            "path": "Addons/weapons_mod.pbo",
+            "sourcePath": "mods/@Weapons/Addons/weapons_mod.pbo",
+            "sizeBytes": 31070347,
+            "sha256": "833f1a2931b64d0b847311f1df602ce34819df5ca84eb6e5b33e91c2a62d5233"
+        },
+        {
+            "path": "Addons/weapons_mod.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Weapons/Addons/weapons_mod.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "bc2cdf8535157fd16be4c29cb0b906d44ec5eaaef466362df2f0b9f19beb3d25"
+        }
+    ]
+}
