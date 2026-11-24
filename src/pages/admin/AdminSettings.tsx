@@ -87,7 +87,7 @@ export function AdminSettings({ settings, onSaved, onNotice }: Props) {
           <div>
             <h2>Modo de teste</h2>
             <p>
-              Libera simulação de pagamento e ferramentas de desenvolvimento para visitantes.
+              Libera ferramentas de desenvolvimento para visitantes.
               Em produção, deixe desligado.
             </p>
           </div>

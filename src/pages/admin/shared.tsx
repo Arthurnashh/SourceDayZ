@@ -5,8 +5,6 @@ export type AdminTab =
   | "visao"
   | "contas"
   | "servidores"
-  | "pedidos"
-  | "gateway"
   | "ajustes"
   | "historico";
 

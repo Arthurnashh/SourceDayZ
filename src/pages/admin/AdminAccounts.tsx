@@ -1,16 +1,11 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { formatBRL, formatDate, formatDateTime, refreshAccountStore } from "../../lib/accounts";
+import { formatDate, formatDateTime, refreshAccountStore } from "../../lib/accounts";
 import {
-  adminAccessLabel,
-  adminGrantSourceLabel,
   createDevAccount,
-  grantAdminAccess,
   renameAdminAccount,
-  revokeAdminGrant,
   setAdminAccountAdmin,
   setAdminAccountDev,
   type AdminAccount,
-  type AdminGrant,
 } from "../../lib/admin";
 import {
   Avatar,
@@ -20,7 +15,7 @@ import {
   type AdminNotice,
 } from "./shared";
 
-type Filter = "todos" | "acesso" | "admins" | "devs" | "steam";
+type Filter = "todos" | "admins" | "devs" | "steam";
 
 interface Props {
   accounts: AdminAccount[];
@@ -28,12 +23,6 @@ interface Props {
   onChanged: () => void;
   onNotice: (notice: AdminNotice) => void;
 }
-
-const KIND_LABEL: Record<AdminGrant["kind"], string> = {
-  mensal: "Mensal",
-  vitalicio: "Vitalício",
-  cortesia: "Cortesia",
-};
 
 function SteamBadge({ account }: { account: AdminAccount }) {
   if (!account.steam?.verificado) {
@@ -66,15 +55,12 @@ function AccountDetail({
   onNotice: (notice: AdminNotice) => void;
 }) {
   const [name, setName] = useState(account.display_name);
-  const [kind, setKind] = useState<AdminGrant["kind"]>("mensal");
-  const [days, setDays] = useState(30);
   const [busy, setBusy] = useState<string | null>(null);
 
   useEffect(() => {
     setName(account.display_name);
   }, [account.id, account.display_name]);
 
-  const access = adminAccessLabel(account.grants);
   const self = account.id === selfId;
 
   async function saveName(event: FormEvent<HTMLFormElement>) {
@@ -139,56 +125,6 @@ function AccountDetail({
     onChanged();
   }
 
-  async function grant(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const label = KIND_LABEL[kind];
-    if (
-      !window.confirm(
-        `Conceder acesso ${label.toLowerCase()} para ${account.display_name}?`,
-      )
-    ) {
-      return;
-    }
-
-    setBusy("grant");
-    const result = await grantAdminAccess(
-      account.id,
-      kind,
-      kind === "vitalicio" ? null : days,
-    );
-    setBusy(null);
-    if (!result.ok) {
-      onNotice({ tone: "bad", text: result.error });
-      return;
-    }
-    onNotice({
-      tone: "ok",
-      text:
-        kind === "vitalicio"
-          ? "Acesso vitalício concedido."
-          : `Acesso ${label.toLowerCase()} de ${days} dia(s) concedido.`,
-    });
-    if (self) await refreshAccountStore();
-    onChanged();
-  }
-
-  async function revoke(item: AdminGrant) {
-    if (!window.confirm(`Revogar este acesso ${KIND_LABEL[item.kind].toLowerCase()}?`)) {
-      return;
-    }
-
-    setBusy(`revoke:${item.id}`);
-    const result = await revokeAdminGrant(item.id);
-    setBusy(null);
-    if (!result.ok) {
-      onNotice({ tone: "bad", text: result.error });
-      return;
-    }
-    onNotice({ tone: "ok", text: "Acesso revogado." });
-    if (self) await refreshAccountStore();
-    onChanged();
-  }
-
   return (
     <article className="adm-detail">
       <header className="adm-detail-head">
@@ -204,7 +140,7 @@ function AccountDetail({
             {account.last_login_at ? ` · último login ${formatDateTime(account.last_login_at)}` : ""}
           </p>
           <div className="adm-detail-tags">
-            <span className={`adm-pill ${access === "Sem acesso" ? "dim" : "ok"}`}>{access}</span>
+            <span className="adm-pill ok">Acesso gratuito</span>
             {account.is_admin && <span className="adm-pill lime">administrador</span>}
             {account.is_dev && <span className="adm-pill dev">desenvolvedor</span>}
             <SteamBadge account={account} />
@@ -289,11 +225,6 @@ function AccountDetail({
               </small>
             </div>
             <div>
-              <span>Pedidos</span>
-              <strong>{account.orders_count}</strong>
-              <small>{formatBRL(account.spent_cents)} pagos</small>
-            </div>
-            <div>
               <span>Servidor</span>
               <strong>{account.server?.name ?? "nenhum"}</strong>
               <small>
@@ -306,72 +237,13 @@ function AccountDetail({
         </section>
 
         <section>
-          <h3>Conceder acesso</h3>
-          <form className="adm-form" onSubmit={grant}>
-            <label className="sd-field">
-              <span>Tipo de acesso</span>
-              <select
-                className="adm-input"
-                value={kind}
-                onChange={(event) => setKind(event.target.value as AdminGrant["kind"])}
-              >
-                <option value="mensal">Mensal (30 dias por padrão)</option>
-                <option value="cortesia">Cortesia</option>
-                <option value="vitalicio">Vitalício (sem expiração)</option>
-              </select>
-            </label>
-            {kind !== "vitalicio" && (
-              <label className="sd-field">
-                <span>Dias</span>
-                <input
-                  className="adm-input"
-                  type="number"
-                  min={1}
-                  max={3650}
-                  value={days}
-                  onChange={(event) => setDays(Number(event.target.value))}
-                  required
-                />
-              </label>
-            )}
-            <button className="sd-btn primary adm-btn-sm" type="submit" disabled={busy === "grant"}>
-              {busy === "grant" ? "Concedendo…" : "Conceder"}
-            </button>
-          </form>
-
-          <h3 className="adm-detail-sub">Acessos da conta</h3>
-          {account.grants.length === 0 ? (
-            <Empty>Nenhum acesso concedido.</Empty>
-          ) : (
-            <div className="adm-grant-list">
-              {account.grants.map((item) => (
-                <div className={`adm-grant ${item.status}`} key={item.id}>
-                  <div>
-                    <strong>{KIND_LABEL[item.kind]}</strong>
-                    <span>
-                      {item.ends_at
-                        ? `até ${formatDate(item.ends_at)}`
-                        : "sem expiração"}
-                      {" · "}
-                      {adminGrantSourceLabel(item.source)}
-                    </span>
-                  </div>
-                  {item.status === "ativo" ? (
-                    <button
-                      className="adm-link danger"
-                      type="button"
-                      disabled={busy === `revoke:${item.id}`}
-                      onClick={() => revoke(item)}
-                    >
-                      {busy === `revoke:${item.id}` ? "…" : "Revogar"}
-                    </button>
-                  ) : (
-                    <StatusPill status={item.status} />
-                  )}
-                </div>
-              ))}
+          <h3>Acesso</h3>
+          <div className="adm-admin-toggle">
+            <div>
+              <strong>Acesso gratuito</strong>
+              <p>Todos podem participar do projeto sem assinatura ou cobrança.</p>
             </div>
-          )}
+          </div>
         </section>
       </div>
     </article>
@@ -496,7 +368,6 @@ export function AdminAccounts({ accounts, selfId, onChanged, onNotice }: Props) 
         const haystack = `${account.display_name} ${account.email}`.toLowerCase();
         if (!haystack.includes(query)) return false;
       }
-      if (filter === "acesso") return adminAccessLabel(account.grants) !== "Sem acesso";
       if (filter === "admins") return account.is_admin;
       if (filter === "devs") return account.is_dev;
       if (filter === "steam") return Boolean(account.steam?.verificado);
@@ -505,16 +376,13 @@ export function AdminAccounts({ accounts, selfId, onChanged, onNotice }: Props) 
   }, [accounts, filter, search]);
 
   const selected = accounts.find((account) => account.id === selectedId) ?? null;
-  const withAccess = accounts.filter(
-    (account) => adminAccessLabel(account.grants) !== "Sem acesso",
-  ).length;
   const devs = accounts.filter((account) => account.is_dev).length;
 
   return (
     <div className="adm-page">
       <SectionHead
         title="Contas"
-        subtitle={`${accounts.length} conta(s) · ${withAccess} com acesso ativo · ${devs} desenvolvedor(es).`}
+        subtitle={`${accounts.length} conta(s) · acesso gratuito para todos · ${devs} desenvolvedor(es).`}
       />
 
       <DevCreator onChanged={onChanged} onNotice={onNotice} />
@@ -531,7 +399,6 @@ export function AdminAccounts({ accounts, selfId, onChanged, onNotice }: Props) 
           {(
             [
               ["todos", "Todas"],
-              ["acesso", "Com acesso"],
               ["admins", "Admins"],
               ["devs", "Devs"],
               ["steam", "Steam"],
@@ -560,7 +427,6 @@ export function AdminAccounts({ accounts, selfId, onChanged, onNotice }: Props) 
                 <th>Steam</th>
                 <th>Acesso</th>
                 <th>Servidor</th>
-                <th>Pedidos</th>
                 <th>Criada em</th>
                 <th />
               </tr>
@@ -591,15 +457,7 @@ export function AdminAccounts({ accounts, selfId, onChanged, onNotice }: Props) 
                   <td>
                     <SteamBadge account={account} />
                   </td>
-                  <td>
-                    <span
-                      className={`adm-pill ${
-                        adminAccessLabel(account.grants) === "Sem acesso" ? "dim" : "ok"
-                      }`}
-                    >
-                      {adminAccessLabel(account.grants)}
-                    </span>
-                  </td>
+                  <td><span className="adm-pill ok">Gratuito</span></td>
                   <td>
                     {account.server ? (
                       <div className="adm-cell-stack">
@@ -609,12 +467,6 @@ export function AdminAccounts({ accounts, selfId, onChanged, onNotice }: Props) 
                     ) : (
                       <span className="adm-muted">—</span>
                     )}
-                  </td>
-                  <td>
-                    <div className="adm-cell-stack">
-                      <strong>{account.orders_count}</strong>
-                      <span>{formatBRL(account.spent_cents)}</span>
-                    </div>
                   </td>
                   <td>
                     <span className="adm-muted">{formatDate(account.created_at)}</span>

@@ -1,8 +1,7 @@
-import { formatBRL, formatDate, formatDateTime } from "../../lib/accounts";
+import { formatDate } from "../../lib/accounts";
 import type {
   AdminDashboard,
   AdminLogEntry,
-  AdminOrder,
   AdminServer,
 } from "../../lib/admin";
 import { Empty, Metric, SectionHead, StatusPill, type AdminTab } from "./shared";
@@ -10,7 +9,6 @@ import { Empty, Metric, SectionHead, StatusPill, type AdminTab } from "./shared"
 interface Props {
   dashboard: AdminDashboard | null;
   servers: AdminServer[];
-  orders: AdminOrder[];
   log: AdminLogEntry[];
   busy: string | null;
   onTab: (tab: AdminTab) => void;
@@ -18,7 +16,6 @@ interface Props {
     server: AdminServer,
     status: "ativo" | "pausado" | "encerrado",
   ) => void;
-  onOrderAction: (order: AdminOrder, status: "pago" | "cancelado") => void;
 }
 
 function ActionLabel({ action }: { action: string }) {
@@ -30,8 +27,8 @@ function ActionLabel({ action }: { action: string }) {
     "access.grant": "Acesso concedido",
     "access.revoke": "Acesso revogado",
     "server.status": "Status de servidor alterado",
-    "order.status": "Pedido atualizado",
-    "gateway.update": "Gateway atualizado",
+    "order.status": "Ação administrativa registrada",
+    "gateway.update": "Configuração administrativa atualizada",
     "site.origins": "Origens atualizadas",
     "site.dev_mode": "Modo de teste alterado",
   };
@@ -41,21 +38,18 @@ function ActionLabel({ action }: { action: string }) {
 export function AdminOverview({
   dashboard,
   servers,
-  orders,
   log,
   busy,
   onTab,
   onServerAction,
-  onOrderAction,
 }: Props) {
   const pendingServers = servers.filter((server) => server.status === "em_analise").slice(0, 5);
-  const pendingOrders = orders.filter((order) => order.status === "aguardando").slice(0, 5);
 
   return (
     <div className="adm-page">
       <SectionHead
         title="Visão geral"
-        subtitle="Contas, acessos, servidores e receita em um só lugar."
+        subtitle="Contas gratuitas e servidores da comunidade em um só lugar."
       />
 
       <div className="adm-metrics">
@@ -72,40 +66,38 @@ export function AdminOverview({
           tone="blue"
         />
         <Metric
-          label="acessos ativos"
-          value={dashboard?.grants_active ?? "—"}
-          detail="mensal, vitalício e cortesia"
+          label="servidores ativos"
+          value={dashboard?.servers_active ?? "—"}
+          detail={`${dashboard?.servers_total ?? 0} no total`}
         />
         <Metric
-          label="receita 30 dias"
-          value={dashboard ? formatBRL(dashboard.revenue_30d_cents) : "—"}
-          detail={dashboard ? `${formatBRL(dashboard.revenue_cents)} no total` : undefined}
-          tone="lime"
+          label="servidores em análise"
+          value={dashboard?.servers_pending ?? "—"}
+          detail="aguardando revisão da equipe"
         />
       </div>
 
       <div className="adm-metrics">
         <Metric
-          label="servidores"
-          value={dashboard?.servers_total ?? "—"}
-          detail={`${dashboard?.servers_active ?? 0} ativos · ${dashboard?.servers_pending ?? 0} em análise`}
+          label="servidores pausados"
+          value={dashboard?.servers_paused ?? "—"}
+          detail="podem ser reativados"
         />
         <Metric
-          label="convidados"
+          label="servidores encerrados"
+          value={dashboard?.servers_closed ?? "—"}
+          detail="registros encerrados"
+        />
+        <Metric
+          label="acesso ao projeto"
+          value="Grátis"
+          detail="sem mensalidade ou cobrança"
+          tone="lime"
+        />
+        <Metric
+          label="jogadores convidados"
           value={dashboard?.guests ?? "—"}
-          detail="vagas de 1 mês resgatadas"
-        />
-        <Metric
-          label="pedidos pendentes"
-          value={dashboard?.orders_pending ?? "—"}
-          detail={`${dashboard?.orders_paid ?? 0} pagos`}
-          tone={dashboard && dashboard.orders_pending > 0 ? "amber" : undefined}
-        />
-        <Metric
-          label="gateway"
-          value={dashboard?.gateway_ready ? "configurado" : "manual"}
-          detail="configuração em Gateway"
-          tone={dashboard?.gateway_ready ? "lime" : "amber"}
+          detail="convites registrados nos servidores"
         />
       </div>
 
@@ -141,43 +133,6 @@ export function AdminOverview({
                     onClick={() => onServerAction(server, "ativo")}
                   >
                     {busy === `server:${server.id}` ? "…" : "Aprovar"}
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-
-        <section className="adm-card">
-          <div className="adm-card-head">
-            <div>
-              <h2>Pedidos de acesso</h2>
-              <p>Pagamentos aguardando conferência.</p>
-            </div>
-            <button className="adm-link" type="button" onClick={() => onTab("pedidos")}>
-              Ver todos
-            </button>
-          </div>
-
-          {pendingOrders.length === 0 ? (
-            <Empty>Nenhum pedido pendente.</Empty>
-          ) : (
-            <div className="adm-rows">
-              {pendingOrders.map((order) => (
-                <div className="adm-row" key={order.id}>
-                  <div className="adm-row-main">
-                    <strong>{order.user_name}</strong>
-                    <span>
-                      {formatBRL(order.amount_cents)} · {formatDate(order.created_at)}
-                    </span>
-                  </div>
-                  <button
-                    className="sd-btn primary adm-btn-sm"
-                    type="button"
-                    disabled={busy === `order:${order.id}`}
-                    onClick={() => onOrderAction(order, "pago")}
-                  >
-                    {busy === `order:${order.id}` ? "…" : "Marcar pago"}
                   </button>
                 </div>
               ))}

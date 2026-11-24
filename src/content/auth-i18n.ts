@@ -54,9 +54,9 @@ const PT: AuthCopy = {
   wait: "Aguarde…",
   createLocal: "Criar conta e entrar",
   footerOnline:
-    "Sua conta fica no banco do SourceDayZ e funciona em qualquer dispositivo. O acesso mensal de R$ 25 será ligado ao gateway de pagamento na próxima etapa.",
+    "Sua conta fica no banco do SourceDayZ e funciona em qualquer dispositivo. O acesso é gratuito para todos, sem mensalidade ou cobrança.",
   footerLocal:
-    "Sem cobrança nesta etapa. O acesso mensal de R$ 25 e o vínculo oficial com a Steam serão ligados ao backend e ao gateway de pagamento.",
+    "Nesta versão, a conta fica neste navegador. O acesso é gratuito; a sincronização e o vínculo oficial com a Steam chegarão com o backend.",
 };
 
 const EN: AuthCopy = {
@@ -86,9 +86,9 @@ const EN: AuthCopy = {
   wait: "Please wait…",
   createLocal: "Create account and sign in",
   footerOnline:
-    "Your account lives in the SourceDayZ database and works on any device. The R$ 25 monthly access will be connected to the payment gateway in the next stage.",
+    "Your account lives in the SourceDayZ database and works on any device. Access is free for everyone, with no monthly fee or payment.",
   footerLocal:
-    "No charges at this stage. The R$ 25 monthly access and official Steam linking will be connected to the backend and payment gateway.",
+    "In this version, your account stays in this browser. Access is free; sync and official Steam linking will arrive with the backend.",
 };
 
 const RU: AuthCopy = {
@@ -118,9 +118,9 @@ const RU: AuthCopy = {
   wait: "Подождите…",
   createLocal: "Создать аккаунт и войти",
   footerOnline:
-    "Аккаунт хранится в базе SourceDayZ и работает на любом устройстве. Месячный доступ за R$ 25 будет подключён к платёжному шлюзу на следующем этапе.",
+    "Аккаунт хранится в базе SourceDayZ и работает на любом устройстве. Доступ бесплатен для всех, ежемесячной платы нет.",
   footerLocal:
-    "На этом этапе оплаты нет. Месячный доступ за R$ 25 и официальная привязка Steam появятся вместе с backend и платёжным шлюзом.",
+    "В этой версии аккаунт хранится в браузере. Доступ бесплатен; синхронизация и официальная привязка Steam появятся с backend.",
 };
 
 export const AUTH_COPY: Record<Locale, AuthCopy> = { pt: PT, en: EN, ru: RU };

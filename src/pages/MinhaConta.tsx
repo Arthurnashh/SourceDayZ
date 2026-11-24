@@ -10,29 +10,19 @@ import { LanguageSwitcher } from "../components/LanguageSwitcher";
 import { useLocale } from "../lib/i18n";
 import { ACCOUNT_SHELL_COPY } from "../content/account-i18n";
 import {
-  FREE_GUEST_LIMIT,
-  MONTHLY_DAYS,
-  MONTHLY_PRICE_CENTS,
   USING_SUPABASE,
   clearSteamProfile,
   changeAccountPassword,
-  createMonthlyOrder,
   createServer,
-  dayCount,
-  formatBRL,
   formatDate,
-  formatDateTime,
   getAccess,
   getOwnedServer,
-  guestSlotsRemaining,
   initials,
   logoutAccount,
-  redeemServerCode,
   resetAccountData,
   saveSteamProfile,
   serverStatusLabel,
   setServerStatus,
-  simulateOrderPayment,
   startSteamOpenId,
   updateAccountProfile,
   updateSteamName,
@@ -41,7 +31,6 @@ import {
   type Account,
   type AccessInfo,
   type HostedServer,
-  type PaymentOrder,
 } from "../lib/accounts";
 import {
   createSteamProfile,
@@ -828,169 +817,24 @@ function SteamCard({ account, onNotice }: { account: Account; onNotice: Notify }
   );
 }
 
-function AccessCard({
-  account,
-  access,
-  orders,
-  onNotice,
-}: {
-  account: Account;
-  access: AccessInfo;
-  orders: PaymentOrder[];
-  onNotice: Notify;
-}) {
-  const [codigo, setCodigo] = useState("");
-  const [ocupado, setOcupado] = useState(false);
-  const pendente = orders.find((order) => order.status === "aguardando") ?? null;
-
-  async function assinar() {
-    setOcupado(true);
-    try {
-      const result = await createMonthlyOrder(account.id);
-      if (!result.ok) {
-        onNotice({ tone: "bad", text: result.error });
-        return;
-      }
-      onNotice({
-        tone: result.jaExistia ? "warn" : "ok",
-        text: result.jaExistia
-          ? "Você já tem um pedido aguardando pagamento."
-          : "Pedido criado. O checkout será conectado ao gateway na próxima etapa — nenhuma cobrança foi feita.",
-      });
-    } finally {
-      setOcupado(false);
-    }
-  }
-
-  async function resgatar(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setOcupado(true);
-    try {
-      const result = await redeemServerCode(account.id, codigo);
-      if (!result.ok) {
-        onNotice({ tone: "bad", text: result.error });
-        return;
-      }
-      setCodigo("");
-      onNotice({
-        tone: "ok",
-        text: `Acesso liberado por 1 mês via ${result.server.nome} até ${formatDate(result.expiraEm)}. Restam ${result.restantes} vaga(s) de ${FREE_GUEST_LIMIT}.`,
-      });
-    } finally {
-      setOcupado(false);
-    }
-  }
-
+function AccessCard({ access }: { access: AccessInfo }) {
   return (
     <section className="acc-card acc-access" id="acesso">
       <div className="acc-card-head">
         <div>
-          <p className="acc-kicker">adquirir o jogo</p>
+          <p className="acc-kicker">acesso gratuito</p>
           <h2>Seu acesso</h2>
         </div>
-        <span className={`acc-status ${access.ativo ? "on" : "off"}`}>
-          {access.ativo ? "ativo" : "inativo"}
-        </span>
+        <span className="acc-status on">ativo</span>
       </div>
 
-      {access.ativo ? (
-        <div className="acc-access-on">
-          <div>
-            <strong>{access.rotulo}</strong>
-            <p>{access.detalhe}</p>
-          </div>
-          {access.expiraEm && (
-            <div className="acc-access-days">
-              <strong>{dayCount(access.expiraEm)}</strong>
-              <span>dia(s) restantes</span>
-            </div>
-          )}
+      <div className="acc-access-on">
+        <div>
+          <strong>{access.rotulo}</strong>
+          <p>{access.detalhe}</p>
         </div>
-      ) : (
-        <p className="acc-card-sub">
-          O jogo é vendido por assinatura para manter o projeto e os servidores. Sem vantagens
-          pagas dentro do mundo.
-        </p>
-      )}
-
-      <div className="acc-plan">
-        <div className="acc-plan-head">
-          <div>
-            <span className="acc-plan-tag">acesso mensal</span>
-            <h3>
-              {formatBRL(MONTHLY_PRICE_CENTS)}
-              <small>/mês</small>
-            </h3>
-          </div>
-          <span className="acc-plan-days">{MONTHLY_DAYS} dias</span>
-        </div>
-        <ul>
-          <li>Cliente do projeto e servidores oficiais quando abrirem.</li>
-          <li>Sem pay-to-win: nada de item ou vantagem na loja.</li>
-          <li>Uma conta, um perfil e a Steam vinculada.</li>
-        </ul>
-        {pendente ? (
-          <div className="acc-plan-pending">
-            <strong>Pedido {pendente.id}</strong>
-            <span>
-              criado em {formatDateTime(pendente.criadoEm)} · aguardando pagamento
-            </span>
-            <small>
-              O checkout (Pix/cartão) será conectado ao gateway. Nenhuma cobrança foi feita.
-            </small>
-          </div>
-        ) : (
-          <button
-            className="sd-btn primary sd-btn-block"
-            type="button"
-            onClick={assinar}
-            disabled={ocupado || (access.ativo && access.tipo === "vitalicio")}
-          >
-            {access.ativo && access.tipo === "vitalicio"
-              ? "Já incluído no seu acesso"
-              : ocupado
-                ? "Criando pedido…"
-                : "Assinar acesso mensal"}
-          </button>
-        )}
-        {access.ativo && (
-          <p className="acc-small">
-            Você já tem acesso ativo. Uma nova assinatura só é necessária quando o período
-            terminar.
-          </p>
-        )}
       </div>
-
-      {!access.ativo && (
-        <div className="acc-redeem">
-          <div>
-            <strong>Jogou em um servidor da comunidade?</strong>
-            <p>
-              Os {FREE_GUEST_LIMIT} primeiros jogadores de cada servidor ativo ganham 1 mês
-              grátis. Peça o código ao dono.
-            </p>
-          </div>
-          <form className="acc-redeem-form" onSubmit={resgatar}>
-            <input
-              type="text"
-              placeholder="SDZ-XXXXXX"
-              value={codigo}
-              onChange={(event) => setCodigo(event.target.value)}
-              aria-label="Código do servidor"
-            />
-            <button className="sd-btn" type="submit" disabled={ocupado || !codigo.trim()}>
-              {ocupado ? "Resgatando…" : "Resgatar"}
-            </button>
-          </form>
-        </div>
-      )}
-
-      {access.ativo && access.tipo === "cortesia" && (
-        <p className="acc-footnote">
-          O mês grátis é uma cortesia do servidor {access.servidorNome ?? "da comunidade"} e não
-          renova sozinho.
-        </p>
-      )}
+      <p className="acc-small">Sem mensalidade, assinatura ou cobrança para jogar.</p>
     </section>
   );
 }
@@ -1025,7 +869,7 @@ function ServerCard({
       setDescricao("");
       onNotice({
         tone: "ok",
-        text: "Servidor criado e enviado para análise. O acesso vitalício é liberado quando a hospedagem for aprovada.",
+        text: "Servidor criado e enviado para análise.",
       });
     } finally {
       setOcupado(false);
@@ -1036,7 +880,7 @@ function ServerCard({
     if (!server) return;
     if (
       status === "encerrado" &&
-      !window.confirm("Encerrar este servidor? O acesso vitalício será revogado e não dá para reabrir.")
+      !window.confirm("Encerrar este servidor? Esta ação não pode ser desfeita.")
     ) {
       return;
     }
@@ -1048,26 +892,18 @@ function ServerCard({
         return;
       }
       if (status === "ativo") {
-        onNotice({ tone: "ok", text: "Servidor reativado. Seu acesso vitalício voltou." });
+        onNotice({ tone: "ok", text: "Servidor reativado." });
       } else if (status === "pausado") {
         onNotice({
           tone: "warn",
-          text: "Servidor pausado. O acesso vitalício fica suspenso até a reativação.",
+          text: "Servidor pausado.",
         });
       } else {
-        onNotice({ tone: "warn", text: "Servidor encerrado. O acesso vitalício foi revogado." });
+        onNotice({ tone: "warn", text: "Servidor encerrado." });
       }
     } finally {
       setOcupado(false);
     }
-  }
-
-  function copiarCodigo() {
-    if (!server) return;
-    navigator.clipboard
-      .writeText(server.codigo)
-      .then(() => onNotice({ tone: "ok", text: "Código copiado." }))
-      .catch(() => onNotice({ tone: "warn", text: `Copie manualmente: ${server.codigo}` }));
   }
 
   if (!server) {
@@ -1082,17 +918,9 @@ function ServerCard({
         </div>
 
         <div className="acc-benefit">
-          <strong>Acesso vitalício para quem abre</strong>
+          <strong>Acesso gratuito para todos</strong>
           <p>
-            Enquanto o servidor estiver ativo, o dono não paga mensalidade. Se pausar, o acesso
-            fica suspenso; se encerrar, é revogado.
-          </p>
-        </div>
-        <div className="acc-benefit alt">
-          <strong>{FREE_GUEST_LIMIT} primeiros jogadores</strong>
-          <p>
-            Cada um resgata 1 mês grátis usando o código do servidor. Depois disso, o acesso
-            segue o plano mensal normal.
+            Todos podem jogar sem assinatura ou cobrança. O servidor é uma opção para sua comunidade.
           </p>
         </div>
 
@@ -1155,15 +983,12 @@ function ServerCard({
             {ocupado ? "Enviando…" : "Solicitar abertura"}
           </button>
           <p className="acc-small">
-            A abertura passa por análise para confirmar que o servidor é do projeto. Nenhuma
-            cobrança é feita para abrir.
+            A abertura passa por análise para confirmar que o servidor é do projeto.
           </p>
         </form>
       </section>
     );
   }
-
-  const restantes = guestSlotsRemaining(server);
 
   return (
     <section className="acc-card acc-server" id="servidor">
@@ -1188,83 +1013,21 @@ function ServerCard({
       {server.status === "em_analise" && (
         <div className="acc-callout warn">
           <strong>Em análise</strong>
-          <p>
-            O acesso vitalício e o código dos 20 primeiros são liberados quando a hospedagem
-            for aprovada.
-          </p>
+          <p>A equipe está revisando a solicitação do servidor.</p>
         </div>
       )}
 
       {server.status === "ativo" && (
-        <>
-          <div className="acc-callout ok">
-            <strong>Acesso vitalício ativo</strong>
-            <p>Enquanto este servidor estiver ativo, você não paga a mensalidade.</p>
-          </div>
-
-          <div className="acc-code-box">
-            <div>
-              <span>Código dos 20 primeiros</span>
-              <strong>{server.codigo}</strong>
-            </div>
-            <button className="sd-btn" type="button" onClick={copiarCodigo}>
-              Copiar
-            </button>
-          </div>
-
-          <div className="acc-progress-head">
-            <span>Jogadores com 1 mês grátis</span>
-            <strong>
-              {server.convidados.length} / {FREE_GUEST_LIMIT}
-            </strong>
-          </div>
-          <div className="acc-progress" aria-hidden="true">
-            <span
-              style={{
-                width: `${(server.convidados.length / FREE_GUEST_LIMIT) * 100}%`,
-              }}
-            />
-          </div>
-          <p className="acc-small">
-            {restantes > 0
-              ? `Ainda restam ${restantes} vaga(s). Compartilhe o código com quem vai jogar.`
-              : "As 20 vagas foram preenchidas."}
-          </p>
-
-          <div className="acc-guests">
-            <h3>Jogadores do servidor</h3>
-            {server.convidados.length === 0 ? (
-              <p className="acc-empty">
-                Nenhum jogador resgatou o mês grátis ainda. Divulgue o código no Discord.
-              </p>
-            ) : (
-              <ul>
-                {server.convidados.map((guest) => (
-                  <li key={`${guest.accountId}-${guest.entrouEm}`}>
-                    <div>
-                      <strong>{guest.steamNome ?? guest.nome}</strong>
-                      <span>
-                        entrou em {formatDate(guest.entrouEm)} · até {formatDate(guest.expiraEm)}
-                      </span>
-                    </div>
-                    <span className="acc-guest-days">
-                      {dayCount(guest.expiraEm)}d
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </>
+        <div className="acc-callout ok">
+          <strong>Servidor ativo</strong>
+          <p>O acesso ao SourceDayZ é gratuito para você e para todos os jogadores.</p>
+        </div>
       )}
 
       {server.status === "pausado" && (
         <div className="acc-callout warn">
           <strong>Servidor pausado</strong>
-          <p>
-            O acesso vitalício está suspenso. Reative para voltar a valer — os meses grátis já
-            concedidos aos jogadores continuam valendo até a data de cada um.
-          </p>
+          <p>O servidor está pausado. Reative-o quando quiser voltar a listá-lo.</p>
         </div>
       )}
 
@@ -1310,77 +1073,16 @@ function ServerCard({
   );
 }
 
-const ORDER_STATUS_LABEL: Record<PaymentOrder["status"], string> = {
-  aguardando: "aguardando pagamento",
-  pago: "pago",
-  cancelado: "cancelado",
-};
-
-function OrdersCard({ orders }: { orders: PaymentOrder[] }) {
-  return (
-    <section className="acc-card">
-      <div className="acc-card-head">
-        <div>
-          <p className="acc-kicker">financeiro</p>
-          <h2>Pedidos</h2>
-        </div>
-        <span className="acc-card-tag">{orders.length}</span>
-      </div>
-
-      {orders.length === 0 ? (
-        <p className="acc-empty">Nenhum pedido ainda. A assinatura mensal aparece aqui.</p>
-      ) : (
-        <ul className="acc-orders">
-          {orders.slice(0, 5).map((order) => (
-            <li key={order.id}>
-              <div>
-                <strong>acesso mensal · {formatBRL(order.valorCentavos)}</strong>
-                <span>
-                  {order.id} · {formatDateTime(order.criadoEm)}
-                </span>
-              </div>
-              <span className={`acc-order-status ${order.status}`}>
-                {ORDER_STATUS_LABEL[order.status]}
-              </span>
-            </li>
-          ))}
-        </ul>
-      )}
-      <p className="acc-footnote">
-        O checkout real ainda não está conectado. Nenhum valor é cobrado nesta versão.
-      </p>
-    </section>
-  );
-}
-
 function DevCard({
   account,
   server,
-  orders,
   onNotice,
 }: {
   account: Account;
   server: HostedServer | null;
-  orders: PaymentOrder[];
   onNotice: Notify;
 }) {
-  const pendente = orders.find((order) => order.status === "aguardando") ?? null;
   const [ocupado, setOcupado] = useState(false);
-
-  async function simularPagamento() {
-    if (!pendente) return;
-    setOcupado(true);
-    try {
-      const result = await simulateOrderPayment(account.id, pendente.id);
-      onNotice(
-        result.ok
-          ? { tone: "ok", text: "Pagamento simulado. O acesso mensal de 30 dias está ativo." }
-          : { tone: "bad", text: result.error },
-      );
-    } finally {
-      setOcupado(false);
-    }
-  }
 
   async function aprovarServidor() {
     if (!server) return;
@@ -1389,7 +1091,7 @@ function DevCard({
       const result = await setServerStatus(account.id, server.id, "ativo");
       onNotice(
         result.ok
-          ? { tone: "ok", text: "Servidor aprovado. O acesso vitalício foi ativado." }
+          ? { tone: "ok", text: "Servidor aprovado." }
           : { tone: "bad", text: result.error },
       );
     } finally {
@@ -1413,15 +1115,10 @@ function DevCard({
       </summary>
       <p>
         {USING_SUPABASE
-          ? "Estas ações usam as funções de desenvolvimento do banco. Desligue o modo de teste no Supabase antes de abrir ao público."
-          : "Como ainda não há backend nem gateway, estas ações simulam o pagamento e a aprovação do servidor apenas neste navegador."}
+          ? "Estas ações usam funções de desenvolvimento do banco. Desligue o modo de teste no Supabase antes de abrir ao público."
+          : "As ações simulam a aprovação do servidor apenas neste navegador."}
       </p>
       <div className="acc-dev-actions">
-        {pendente && (
-          <button className="sd-btn" type="button" onClick={simularPagamento} disabled={ocupado}>
-            Simular pagamento do pedido
-          </button>
-        )}
         {server?.status === "em_analise" && (
           <button className="sd-btn" type="button" onClick={aprovarServidor} disabled={ocupado}>
             Aprovar servidor
@@ -1486,7 +1183,6 @@ export function MinhaConta({
 
   const server = getOwnedServer(store, account.id);
   const access = getAccess(account, store.servers);
-  const orders = store.orders.filter((order) => order.accountId === account.id);
 
   return (
     <div className="sd acc">
@@ -1512,13 +1208,9 @@ export function MinhaConta({
 
           <div className={`acc-hero-status ${access.ativo ? "on" : "off"}`}>
             <span className="acc-pill">{access.ativo ? access.rotulo : "Sem acesso ativo"}</span>
-            <strong>{access.ativo ? access.detalhe : "Ative o acesso para jogar"}</strong>
+            <strong>{access.ativo ? access.detalhe : "Acesso gratuito para todos"}</strong>
             {access.ativo ? (
-              <small>
-                {access.expiraEm
-                  ? `até ${formatDate(access.expiraEm)} · ${dayCount(access.expiraEm)} dia(s)`
-                  : "sem expiração · enquanto o servidor estiver ativo"}
-              </small>
+              <small>Acesso gratuito para todos</small>
             ) : (
               <button
                 className="sd-btn primary"
@@ -1544,12 +1236,7 @@ export function MinhaConta({
 
         <div className="acc-grid">
           <div className="acc-col">
-            <AccessCard
-              account={account}
-              access={access}
-              orders={orders}
-              onNotice={setNotice}
-            />
+            <AccessCard access={access} />
             <ProfileCard account={account} onNotice={setNotice} />
             <SecurityCard onNotice={setNotice} />
             <SteamCard account={account} onNotice={setNotice} />
@@ -1557,9 +1244,8 @@ export function MinhaConta({
 
           <div className="acc-col">
             <ServerCard account={account} server={server} onNotice={setNotice} />
-            <OrdersCard orders={orders} />
             {store.devMode && (
-              <DevCard account={account} server={server} orders={orders} onNotice={setNotice} />
+              <DevCard account={account} server={server} onNotice={setNotice} />
             )}
           </div>
         </div>

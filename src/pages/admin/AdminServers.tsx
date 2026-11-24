@@ -31,18 +31,6 @@ function ServerCard({
   busy: string | null;
   onAction: Props["onAction"];
 }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copyCode() {
-    try {
-      await navigator.clipboard.writeText(server.code);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1600);
-    } catch {
-      window.prompt("Código do servidor (copie manualmente):", server.code);
-    }
-  }
-
   const serverBusy = busy === `server:${server.id}`;
 
   return (
@@ -52,7 +40,6 @@ function ServerCard({
           <div className="adm-server-title">
             <h2>{server.name}</h2>
             <StatusPill status={server.status} />
-            {server.lifetime_active && <span className="adm-pill lime">vitalício</span>}
           </div>
           <p>
             {server.region} · {server.slots} slots · criado em {formatDate(server.created_at)}
@@ -114,18 +101,6 @@ function ServerCard({
         </div>
 
         <div className="adm-meta-grid">
-          <div>
-            <span>Código</span>
-            <strong className="adm-code">{server.code}</strong>
-            <button className="adm-link" type="button" onClick={copyCode}>
-              {copied ? "copiado" : "copiar"}
-            </button>
-          </div>
-          <div>
-            <span>Convidados</span>
-            <strong>{server.guest_count} / 20</strong>
-            <small>vagas de 1 mês grátis</small>
-          </div>
           <div>
             <span>Linha do tempo</span>
             <strong>

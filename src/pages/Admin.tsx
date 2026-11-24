@@ -12,22 +12,17 @@ import {
   getAdminSettings,
   listAdminAccounts,
   listAdminLog,
-  listAdminOrders,
   listAdminServers,
-  setAdminOrderStatus,
   setAdminServerStatus,
   type AdminAccount,
   type AdminDashboard,
   type AdminLogEntry,
-  type AdminOrder,
   type AdminServer,
   type AdminSettings,
 } from "../lib/admin";
 import { AdminOverview } from "./admin/AdminOverview";
 import { AdminAccounts } from "./admin/AdminAccounts";
 import { AdminServers } from "./admin/AdminServers";
-import { AdminOrders } from "./admin/AdminOrders";
-import { AdminGateway } from "./admin/AdminGateway";
 import { AdminSettings as AdminSiteSettings } from "./admin/AdminSettings";
 import { AdminLog } from "./admin/AdminLog";
 import {
@@ -66,16 +61,6 @@ const NAV: Array<{ key: AdminTab; label: string; icon: ReactNode }> = [
     key: "servidores",
     label: "Servidores",
     icon: icon("M4 5h16v5H4zM4 14h16v5H4zM8 8h.01M8 17h.01"),
-  },
-  {
-    key: "pedidos",
-    label: "Pedidos",
-    icon: icon("M6 6h15l-1.5 8.5H7.5L6 3H3M9 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM18 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"),
-  },
-  {
-    key: "gateway",
-    label: "Gateway",
-    icon: icon("M3 7h18v10H3zM3 10h18M7 14h3"),
   },
   {
     key: "ajustes",
@@ -130,13 +115,12 @@ function AdminLogin({ error }: { error: string | null }) {
           <p className="sd-eyebrow">acesso restrito</p>
           <h1>Painel administrativo</h1>
           <p>
-            Contas, solicitações de servidor, pedidos e gateway do SourceDayZ. Entre com uma
+            Contas, solicitações de servidor e configurações do SourceDayZ. Entre com uma
             conta que tenha permissão de administrador.
           </p>
           <ul>
             <li>Contas e acessos</li>
             <li>Aprovação de servidores</li>
-            <li>Pedidos e gateway</li>
             <li>Histórico de ações</li>
           </ul>
         </section>
@@ -259,7 +243,6 @@ export function Admin() {
   const [dashboard, setDashboard] = useState<AdminDashboard | null>(null);
   const [accountList, setAccountList] = useState<AdminAccount[]>([]);
   const [servers, setServers] = useState<AdminServer[]>([]);
-  const [orders, setOrders] = useState<AdminOrder[]>([]);
   const [settings, setSettings] = useState<AdminSettings | null>(null);
   const [log, setLog] = useState<AdminLogEntry[]>([]);
   const [loading, setLoading] = useState(false);
@@ -279,12 +262,11 @@ export function Admin() {
       setLoading(true);
       setError(null);
 
-      const [dashRes, accountsRes, serversRes, ordersRes, settingsRes, logRes] =
+      const [dashRes, accountsRes, serversRes, settingsRes, logRes] =
         await Promise.all([
           getAdminDashboard(),
           listAdminAccounts("", 500),
           listAdminServers(),
-          listAdminOrders(),
           getAdminSettings(),
           listAdminLog(150),
         ]);
@@ -298,8 +280,6 @@ export function Admin() {
       else errors.push(accountsRes.error);
       if (serversRes.ok) setServers(serversRes.data);
       else errors.push(serversRes.error);
-      if (ordersRes.ok) setOrders(ordersRes.data);
-      else errors.push(ordersRes.error);
       if (settingsRes.ok) setSettings(settingsRes.data);
       else errors.push(settingsRes.error);
       if (logRes.ok) setLog(logRes.data);
@@ -360,10 +340,8 @@ export function Admin() {
     if (status !== "ativo" || server.status !== "em_analise") {
       const detail =
         status === "encerrado"
-          ? " O acesso vitalício do dono será revogado."
-          : status === "pausado"
-            ? " O acesso vitalício do dono será suspenso."
-            : "";
+          ? " Esta ação não pode ser desfeita."
+          : "";
       if (!window.confirm(`${action} o servidor “${server.name}”?${detail}`)) return;
     }
 
@@ -378,29 +356,7 @@ export function Admin() {
     reload();
   }
 
-  async function changeOrder(order: AdminOrder, status: "pago" | "cancelado") {
-    const message =
-      status === "pago"
-        ? `Confirmar o pagamento de ${order.user_name}? O acesso de 30 dias será liberado.`
-        : `Cancelar o pedido de ${order.user_name}?`;
-    if (!window.confirm(message)) return;
-
-    setBusy(`order:${order.id}`);
-    const result = await setAdminOrderStatus(order.id, status);
-    setBusy(null);
-    if (!result.ok) {
-      setNotice({ tone: "bad", text: result.error });
-      return;
-    }
-    setNotice({
-      tone: "ok",
-      text: status === "pago" ? "Pagamento confirmado e acesso liberado." : "Pedido cancelado.",
-    });
-    reload();
-  }
-
   const pendingServers = dashboard?.servers_pending ?? 0;
-  const pendingOrders = dashboard?.orders_pending ?? 0;
 
   function renderPage() {
     switch (tab) {
@@ -421,14 +377,6 @@ export function Admin() {
             onAction={changeServer}
           />
         );
-      case "pedidos":
-        return (
-          <AdminOrders orders={orders} busy={busy} onAction={changeOrder} />
-        );
-      case "gateway":
-        return (
-          <AdminGateway settings={settings} onSaved={setSettings} onNotice={setNotice} />
-        );
       case "ajustes":
         return (
           <AdminSiteSettings
@@ -444,12 +392,10 @@ export function Admin() {
           <AdminOverview
             dashboard={dashboard}
             servers={servers}
-            orders={orders}
             log={log}
             busy={busy}
             onTab={setTab}
             onServerAction={changeServer}
-            onOrderAction={changeOrder}
           />
         );
     }
@@ -506,7 +452,6 @@ export function Admin() {
                 {item.key === "servidores" && pendingServers > 0 && (
                   <em>{pendingServers}</em>
                 )}
-                {item.key === "pedidos" && pendingOrders > 0 && <em>{pendingOrders}</em>}
               </button>
             ))}
           </nav>
@@ -540,7 +485,7 @@ export function Admin() {
             <div className="adm-page">
               <p className="sd-eyebrow">administração</p>
               <h1>Carregando painel…</h1>
-              <p className="adm-muted">Buscando contas, servidores e pedidos.</p>
+              <p className="adm-muted">Buscando contas e servidores.</p>
             </div>
           ) : (
             renderPage()

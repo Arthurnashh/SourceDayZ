@@ -157,18 +157,6 @@ const SERVER_STATUS_LABEL: Record<ServerStatus, string> = {
   encerrado: "encerrado",
 };
 
-const ACCESS_LABEL: Record<AccessTipo, string> = {
-  vitalicio: "Acesso vitalício",
-  mensal: "Acesso mensal",
-  cortesia: "Acesso liberado",
-};
-
-const ACCESS_PRIORITY: Record<AccessTipo, number> = {
-  vitalicio: 0,
-  mensal: 1,
-  cortesia: 2,
-};
-
 function nowIso(): string {
   return new Date().toISOString();
 }
@@ -1059,93 +1047,20 @@ function guestOrigin(serverId: string): string {
   return `servidor:${serverId}:jogador`;
 }
 
-function activeGrant(grant: AccessGrant, now: Date): boolean {
-  if (grant.status !== "ativo") return false;
-  if (new Date(grant.inicio).getTime() > now.getTime()) return false;
-  return grant.fim === null || new Date(grant.fim).getTime() > now.getTime();
-}
-
-function grantServerId(origin: string): string | null {
-  const parts = origin.split(":");
-  return parts[0] === "servidor" && parts[1] ? parts[1] : null;
-}
-
 export function getAccess(
-  account: Account,
-  servers: HostedServer[],
-  now = new Date(),
+  _account: Account,
+  _servers: HostedServer[],
+  _now = new Date(),
 ): AccessInfo {
-  const active = account.grants.filter((grant) => activeGrant(grant, now));
-
-  // Garante o vitalício mesmo se o grant tiver sido perdido em uma migração.
-  for (const server of servers) {
-    if (server.ownerId === account.id && server.status === "ativo") {
-      const origin = serverOrigin(server.id);
-      if (!active.some((grant) => grant.tipo === "vitalicio" && grant.origem === origin)) {
-        active.push({
-          id: `synthetic_${server.id}`,
-          tipo: "vitalicio",
-          inicio: server.ativadoEm ?? server.criadoEm,
-          fim: null,
-          origem: origin,
-          status: "ativo",
-        });
-      }
-    }
-  }
-
-  if (active.length === 0) {
-    const expired = account.grants
-      .filter((grant) => grant.fim !== null)
-      .sort((a, b) => new Date(b.fim ?? 0).getTime() - new Date(a.fim ?? 0).getTime())[0];
-    return {
-      ativo: false,
-      tipo: null,
-      rotulo: "Sem acesso ativo",
-      detalhe: expired
-        ? `Seu último acesso terminou em ${formatDate(expired.fim)}.`
-        : "Assine o acesso mensal ou resgate o código de um servidor da comunidade.",
-      expiraEm: null,
-      origem: null,
-      servidorNome: null,
-      diasRestantes: null,
-    };
-  }
-
-  active.sort((a, b) => {
-    const priority = ACCESS_PRIORITY[a.tipo] - ACCESS_PRIORITY[b.tipo];
-    if (priority !== 0) return priority;
-    if (a.fim === null) return -1;
-    if (b.fim === null) return 1;
-    return new Date(b.fim).getTime() - new Date(a.fim).getTime();
-  });
-
-  const best = active[0];
-  const serverId = grantServerId(best.origem);
-  const server = serverId ? servers.find((item) => item.id === serverId) ?? null : null;
-  const expires = best.fim;
-  const daysLeft = expires
-    ? Math.max(0, Math.ceil((new Date(expires).getTime() - now.getTime()) / DAY_MS))
-    : null;
-
-  let detalhe = "Acesso liberado enquanto a hospedagem estiver ativa.";
-  if (best.tipo === "mensal") detalhe = `Válido até ${formatDate(expires)}.`;
-  if (best.tipo === "cortesia") {
-    detalhe = server
-      ? `1 mês grátis no ${server.nome} · até ${formatDate(expires)}.`
-      : `1 mês grátis · até ${formatDate(expires)}.`;
-  }
-  if (best.tipo === "vitalicio" && server) detalhe = `Servidor ativo: ${server.nome}.`;
-
   return {
     ativo: true,
-    tipo: best.tipo,
-    rotulo: ACCESS_LABEL[best.tipo],
-    detalhe,
-    expiraEm: expires,
-    origem: best.origem,
-    servidorNome: server?.nome ?? null,
-    diasRestantes: daysLeft,
+    tipo: null,
+    rotulo: "Acesso gratuito",
+    detalhe: "Liberado para todos os jogadores, sem mensalidade ou cobrança.",
+    expiraEm: null,
+    origem: null,
+    servidorNome: null,
+    diasRestantes: null,
   };
 }
 
