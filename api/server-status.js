@@ -1,7 +1,7 @@
 import dgram from "node:dgram";
 
 const SERVER_IP = "3.143.228.170";
-const QUERY_PORTS = [2302, 2305];
+const QUERY_PORTS = [2305, 27016, 2303, 2302];
 const QUERY_TIMEOUT_MS = 1400;
 const CACHE_MS = 15000;
 
