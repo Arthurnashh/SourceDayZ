@@ -36,6 +36,7 @@ export interface LandingCopy {
     tabOfficial: string;
     tabCommunity: string;
     tabCommunitySmall: string;
+    launcherDownload: string;
     official: {
       type: string;
       title: string;
@@ -172,6 +173,7 @@ const PT: LandingCopy = {
     tabOfficial: "Servidores oficiais",
     tabCommunity: "Servidores da comunidade",
     tabCommunitySmall: "Modded · em desenvolvimento",
+    launcherDownload: "Baixar launcher (.zip)",
     official: {
       type: "oficial · no mods · regular",
       title: "SourceDayZ Oficial",
@@ -324,6 +326,7 @@ const EN: LandingCopy = {
     tabOfficial: "Official servers",
     tabCommunity: "Community servers",
     tabCommunitySmall: "Modded · in development",
+    launcherDownload: "Download launcher (.zip)",
     official: {
       type: "official · no mods · regular",
       title: "SourceDayZ Official",
@@ -476,6 +479,7 @@ const RU: LandingCopy = {
     tabOfficial: "Официальные серверы",
     tabCommunity: "Серверы сообщества",
     tabCommunitySmall: "Modded · в разработке",
+    launcherDownload: "Скачать лаунчер (.zip)",
     official: {
       type: "официальный · без модов · regular",
       title: "SourceDayZ Official",

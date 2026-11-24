@@ -371,6 +371,13 @@ export function Landing() {
                       <button className="sd-btn sd-btn-block" onClick={() => void copiarIpOficial()}>
                         {ipCopiado ? copy.servers.official.copied : copy.servers.official.button}
                       </button>
+                      <a
+                        className="sd-btn primary sd-btn-block"
+                        href="/downloads/SourceDayZ-Launcher.zip"
+                        download="SourceDayZ-Launcher.zip"
+                      >
+                        {copy.servers.launcherDownload}
+                      </a>
                     </div>
                   </article>
 
