@@ -1,8 +1,8 @@
 import dgram from "node:dgram";
 
 const SERVER_IP = "3.143.228.170";
-const QUERY_PORT = 2305;
-const QUERY_TIMEOUT_MS = 2500;
+const QUERY_PORTS = [2302, 2305];
+const QUERY_TIMEOUT_MS = 1400;
 const CACHE_MS = 15000;
 
 const INFO_REQUEST = Buffer.from([
@@ -42,7 +42,7 @@ function parseInfoPacket(packet) {
   };
 }
 
-function queryServer() {
+function queryServer(queryPort) {
   return new Promise((resolve, reject) => {
     const socket = dgram.createSocket("udp4");
     let settled = false;
@@ -63,7 +63,7 @@ function queryServer() {
     };
 
     const sendRequest = (payload) => {
-      socket.send(payload, QUERY_PORT, SERVER_IP, (error) => {
+      socket.send(payload, queryPort, SERVER_IP, (error) => {
         if (error) finish(error);
       });
     };
@@ -81,7 +81,7 @@ function queryServer() {
           return;
         }
 
-        finish(null, parseInfoPacket(packet));
+        finish(null, { ...parseInfoPacket(packet), queryPort });
       } catch (error) {
         finish(error);
       }
@@ -97,15 +97,26 @@ async function readServerStatus() {
   if (cachedResult && now - cachedAt < CACHE_MS) return cachedResult;
   if (pendingQuery) return pendingQuery;
 
-  pendingQuery = queryServer()
-    .catch(() => ({
-      online: false,
+  pendingQuery = (async () => {
+    for (const queryPort of QUERY_PORTS) {
+      try {
+        const result = await queryServer(queryPort);
+        return { ...result, online: true, checkedAt: new Date().toISOString() };
+      } catch {
+        // Try the other known server port before reporting an unavailable query.
+      }
+    }
+    return {
+      online: null,
       players: null,
       maxPlayers: null,
       slotsAvailable: null,
-    }))
+      queryPort: null,
+      checkedAt: new Date().toISOString(),
+    };
+  })()
     .then((result) => {
-      cachedResult = { ...result, checkedAt: new Date().toISOString() };
+      cachedResult = result;
       cachedAt = Date.now();
       return cachedResult;
     })
@@ -131,6 +142,6 @@ export default async function handler(req, res) {
   res.end(JSON.stringify({
     ...status,
     ip: SERVER_IP,
-    queryPort: QUERY_PORT,
+    queryPort: status.queryPort,
   }));
 }

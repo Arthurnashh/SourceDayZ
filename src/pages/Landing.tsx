@@ -14,7 +14,7 @@ type DiscordStats = {
 };
 
 type OfficialServerStatus = {
-  online: boolean;
+  online: boolean | null;
   players: number | null;
   maxPlayers: number | null;
   slotsAvailable: number | null;
@@ -67,7 +67,7 @@ export function Landing() {
         });
         if (!response.ok) throw new Error("Status do servidor indisponível.");
         const data = (await response.json()) as OfficialServerStatus;
-        if (typeof data.online !== "boolean") throw new Error("Resposta de status inválida.");
+        if (data.online !== true && data.online !== false && data.online !== null) throw new Error("Resposta de status inválida.");
         setServerStatus(data);
         setServerStatusUnavailable(false);
       } catch {
@@ -125,14 +125,14 @@ export function Landing() {
     };
   }, [loginAberto]);
 
-  const officialStatusLabel = serverStatusUnavailable
+  const officialStatusLabel = serverStatusUnavailable || serverStatus?.online === null
     ? copy.servers.official.statusUnavailable
     : serverStatus
       ? serverStatus.online
         ? copy.servers.official.statusOnline
         : copy.servers.official.statusOffline
       : copy.servers.official.statusChecking;
-  const officialStatusClass = serverStatusUnavailable
+  const officialStatusClass = serverStatusUnavailable || serverStatus?.online === null
     ? "unavailable"
     : serverStatus
       ? serverStatus.online ? "online" : "offline"
@@ -329,56 +329,56 @@ export function Landing() {
               aria-labelledby={aba === "oficiais" ? "sd-tab-oficiais" : "sd-tab-comunidade"}
             >
               {aba === "oficiais" ? (
-                <div className="sd-server-grid">
-                  <article className="sd-server">
+                <div className="sd-server-grid sd-server-grid-official">
+                  <article className="sd-server sd-server-official">
                     <div className="sd-server-media">
                       <img
                         src="/media/dayz045/sniper.jpg"
                         alt={copy.servers.official.title}
                       />
-                      <span className={`sd-status sd-status-${officialStatusClass}`} aria-live="polite">{officialStatusLabel}</span>
                     </div>
                     <div className="sd-server-body">
-                      <p className="sd-server-type">{copy.servers.official.type}</p>
-                      <h3>{copy.servers.official.title}</h3>
-                      <p>{copy.servers.official.text}</p>
-                      <div className="sd-server-live" aria-live="polite">
+                      <div className="sd-server-heading">
                         <div>
-                          <span>{copy.servers.official.playersLabel}</span>
-                          <strong>
-                            {serverStatus && !serverStatusUnavailable && serverStatus.online
-                              ? `${serverStatus.players}/${serverStatus.maxPlayers}`
-                              : "—"}
-                          </strong>
+                          <p className="sd-server-type">{copy.servers.official.type}</p>
+                          <h3>{copy.servers.official.title}</h3>
                         </div>
-                        <div>
-                          <span>{copy.servers.official.slotsLabel}</span>
-                          <strong>
-                            {serverStatus && !serverStatusUnavailable && serverStatus.online
-                              ? serverStatus.slotsAvailable
-                              : "—"}
-                          </strong>
-                        </div>
+                        <span
+                          className={"sd-status sd-status-" + officialStatusClass}
+                          aria-live="polite"
+                        >
+                          {officialStatusLabel}
+                        </span>
                       </div>
+                      <p>{copy.servers.official.text}</p>
                       <ul className="sd-server-meta">
                         <li key="official-server-ip">IP: <code>{copy.servers.official.ip}</code></li>
                         {copy.servers.official.meta.map((item) => (
                           <li key={item}>{item}</li>
                         ))}
                       </ul>
+                      <div className="sd-server-live" aria-live="polite">
+                        <div>
+                          <span>{copy.servers.official.playersLabel}</span>
+                          <strong>
+                            {serverStatus && !serverStatusUnavailable && serverStatus.online === true
+                              ? String(serverStatus.players) + "/" + String(serverStatus.maxPlayers)
+                              : "—"}
+                          </strong>
+                        </div>
+                        <div>
+                          <span>{copy.servers.official.slotsLabel}</span>
+                          <strong>
+                            {serverStatus && !serverStatusUnavailable && serverStatus.online === true
+                              ? serverStatus.slotsAvailable
+                              : "—"}
+                          </strong>
+                        </div>
+                      </div>
                       <button className="sd-btn sd-btn-block" onClick={() => void copiarIpOficial()}>
                         {ipCopiado ? copy.servers.official.copied : copy.servers.official.button}
                       </button>
                     </div>
-                  </article>
-
-                  <article className="sd-server sd-ghost">
-                    <span className="sd-ghost-num">02</span>
-                    <span className="sd-status">{copy.servers.officialGhost.status}</span>
-                    <h3>{copy.servers.officialGhost.title}</h3>
-                    <p>{copy.servers.officialGhost.text}</p>
-                    <span className="sd-ghost-line" />
-                    <p className="sd-ghost-foot">{copy.servers.officialGhost.foot}</p>
                   </article>
                 </div>
               ) : (
