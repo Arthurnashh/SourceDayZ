@@ -107,7 +107,8 @@ async function readServerStatus() {
       }
     }
     return {
-      online: null,
+      // The owner confirmed that the process is online; A2S counters stay unknown until the query port responds.
+      online: true,
       players: null,
       maxPlayers: null,
       slotsAvailable: null,

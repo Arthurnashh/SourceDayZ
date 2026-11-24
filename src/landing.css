@@ -480,19 +480,6 @@
 .sd-tab.on small { color: var(--lime); }
 
 .sd-server-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr); gap: 14px; }
-.sd-server-grid-official { grid-template-columns: minmax(0, 1fr); }
-.sd-server.sd-server-official {
-  display: grid;
-  grid-template-columns: minmax(260px, 0.86fr) minmax(0, 1.14fr);
-}
-.sd-server-official .sd-server-media { min-height: 360px; aspect-ratio: auto; }
-.sd-server-official .sd-server-media::after {
-  background: linear-gradient(90deg, transparent 65%, rgba(9, 13, 10, 0.35) 85%, var(--panel) 100%);
-}
-.sd-server-official .sd-server-body { min-width: 0; padding: 26px; }
-.sd-server-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
-.sd-server-heading h3 { margin-top: 8px; }
-.sd-server-heading .sd-status { flex: none; margin-top: 1px; }
 .sd-server {
   display: flex;
   flex-direction: column;
@@ -1022,8 +1009,6 @@
 /* ------------------------------------------------------------ responsive */
 @media (max-width: 1060px) {
   .sd-server-grid { grid-template-columns: 1fr; }
-  .sd-server.sd-server-official { grid-template-columns: minmax(240px, 0.82fr) minmax(0, 1.18fr); }
-  .sd-server-official .sd-server-media { min-height: 340px; }
   .sd-invite-cover { aspect-ratio: auto; height: 300px; }
   .sd-ghost { min-height: 220px; }
   .sd-road { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1083,12 +1068,6 @@
   .sd-invite-identity h3 { font-size: 24px; }
   .sd-invite-handle { font-size: 8.5px; }
   .sd-invite-stats strong { font-size: 21px; }
-  .sd-server.sd-server-official { grid-template-columns: 1fr; }
-  .sd-server-official .sd-server-media { min-height: 0; aspect-ratio: 16 / 9; }
-  .sd-server-official .sd-server-media::after { background: linear-gradient(0deg, var(--panel), transparent 45%); }
-  .sd-server-official .sd-server-body { padding: 20px 18px; }
-  .sd-server-heading { align-items: flex-start; gap: 10px; }
-  .sd-server-heading .sd-status { font-size: 8px; }
   .sd-server-body { padding: 20px 18px; }
   .sd-server h3 { font-size: 19px; }
   .sd-ghost { padding: 24px 18px; }
