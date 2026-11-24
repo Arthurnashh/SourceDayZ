@@ -13,8 +13,16 @@ type DiscordStats = {
   online: number;
 };
 
+type OfficialServerStatus = {
+  online: boolean;
+  players: number | null;
+  maxPlayers: number | null;
+  slotsAvailable: number | null;
+};
+
 const DISCORD_URL = "https://discord.gg/4yvv6KrxwD";
 const DISCORD_API = "https://discord.com/api/v9/invites/4yvv6KrxwD?with_counts=true";
+const OFFICIAL_SERVER_IP = "3.143.228.170";
 
 function DiscordGlyph() {
   return (
@@ -43,8 +51,37 @@ export function Landing() {
   const [authMode, setAuthMode] = useState<"entrar" | "criar">("entrar");
   const [menuAberto, setMenuAberto] = useState(false);
   const [discord, setDiscord] = useState<DiscordStats>({ membros: 175, online: 17 });
+  const [serverStatus, setServerStatus] = useState<OfficialServerStatus | null>(null);
+  const [serverStatusUnavailable, setServerStatusUnavailable] = useState(false);
+  const [ipCopiado, setIpCopiado] = useState(false);
   const fecharRef = useRef<HTMLButtonElement>(null);
   const conta = useCurrentAccount();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const atualizarStatusServidor = async () => {
+      try {
+        const response = await fetch("/api/server-status", {
+          signal: controller.signal,
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Status do servidor indisponível.");
+        const data = (await response.json()) as OfficialServerStatus;
+        if (typeof data.online !== "boolean") throw new Error("Resposta de status inválida.");
+        setServerStatus(data);
+        setServerStatusUnavailable(false);
+      } catch {
+        if (!controller.signal.aborted) setServerStatusUnavailable(true);
+      }
+    };
+
+    void atualizarStatusServidor();
+    const interval = window.setInterval(() => void atualizarStatusServidor(), 30000);
+    return () => {
+      controller.abort();
+      window.clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     if (aba !== "comunidade") return;
@@ -87,6 +124,29 @@ export function Landing() {
       document.body.style.overflow = anterior;
     };
   }, [loginAberto]);
+
+  const officialStatusLabel = serverStatusUnavailable
+    ? copy.servers.official.statusUnavailable
+    : serverStatus
+      ? serverStatus.online
+        ? copy.servers.official.statusOnline
+        : copy.servers.official.statusOffline
+      : copy.servers.official.statusChecking;
+  const officialStatusClass = serverStatusUnavailable
+    ? "unavailable"
+    : serverStatus
+      ? serverStatus.online ? "online" : "offline"
+      : "checking";
+
+  const copiarIpOficial = async () => {
+    try {
+      await navigator.clipboard.writeText(OFFICIAL_SERVER_IP);
+      setIpCopiado(true);
+      window.setTimeout(() => setIpCopiado(false), 1800);
+    } catch {
+      // O IP continua visível para cópia manual se a área de transferência estiver bloqueada.
+    }
+  };
 
   const navegar = (id: string) => {
     setMenuAberto(false);
@@ -248,7 +308,7 @@ export function Landing() {
                 onClick={() => setAba("oficiais")}
               >
                 {copy.servers.tabOfficial}
-                <small>{copy.servers.tabOfficialSmall}</small>
+                <small>{officialStatusLabel}</small>
               </button>
               <button
                 id="sd-tab-comunidade"
@@ -276,26 +336,45 @@ export function Landing() {
                         src="/media/dayz045/sniper.jpg"
                         alt={copy.servers.official.title}
                       />
-                      <span className="sd-status">{copy.servers.tabOfficialSmall}</span>
+                      <span className={`sd-status sd-status-${officialStatusClass}`} aria-live="polite">{officialStatusLabel}</span>
                     </div>
                     <div className="sd-server-body">
                       <p className="sd-server-type">{copy.servers.official.type}</p>
                       <h3>{copy.servers.official.title}</h3>
                       <p>{copy.servers.official.text}</p>
+                      <div className="sd-server-live" aria-live="polite">
+                        <div>
+                          <span>{copy.servers.official.playersLabel}</span>
+                          <strong>
+                            {serverStatus && !serverStatusUnavailable && serverStatus.online
+                              ? `${serverStatus.players}/${serverStatus.maxPlayers}`
+                              : "—"}
+                          </strong>
+                        </div>
+                        <div>
+                          <span>{copy.servers.official.slotsLabel}</span>
+                          <strong>
+                            {serverStatus && !serverStatusUnavailable && serverStatus.online
+                              ? serverStatus.slotsAvailable
+                              : "—"}
+                          </strong>
+                        </div>
+                      </div>
                       <ul className="sd-server-meta">
+                        <li key="official-server-ip">IP: <code>{copy.servers.official.ip}</code></li>
                         {copy.servers.official.meta.map((item) => (
                           <li key={item}>{item}</li>
                         ))}
                       </ul>
-                      <button className="sd-btn sd-btn-block" disabled>
-                        {copy.servers.official.button}
+                      <button className="sd-btn sd-btn-block" onClick={() => void copiarIpOficial()}>
+                        {ipCopiado ? copy.servers.official.copied : copy.servers.official.button}
                       </button>
                     </div>
                   </article>
 
                   <article className="sd-server sd-ghost">
                     <span className="sd-ghost-num">02</span>
-                    <span className="sd-status">{copy.servers.tabOfficialSmall}</span>
+                    <span className="sd-status">{copy.servers.officialGhost.status}</span>
                     <h3>{copy.servers.officialGhost.title}</h3>
                     <p>{copy.servers.officialGhost.text}</p>
                     <span className="sd-ghost-line" />
@@ -370,7 +449,7 @@ export function Landing() {
 
                   <article className="sd-server sd-ghost">
                     <span className="sd-ghost-num">02</span>
-                    <span className="sd-status">{copy.servers.tabOfficialSmall}</span>
+                    <span className="sd-status">{copy.servers.communityGhost.status}</span>
                     <h3>{copy.servers.communityGhost.title}</h3>
                     <p>{copy.servers.communityGhost.text}</p>
                     <span className="sd-ghost-line" />

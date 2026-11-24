@@ -34,17 +34,25 @@ export interface LandingCopy {
     title: string;
     lead: string;
     tabOfficial: string;
-    tabOfficialSmall: string;
     tabCommunity: string;
     tabCommunitySmall: string;
     official: {
       type: string;
       title: string;
       text: string;
+      ip: string;
+      statusOnline: string;
+      statusOffline: string;
+      statusChecking: string;
+      statusUnavailable: string;
+      playersLabel: string;
+      slotsLabel: string;
       meta: string[];
       button: string;
+      copied: string;
     };
     officialGhost: {
+      status: string;
       title: string;
       text: string;
       foot: string;
@@ -62,6 +70,7 @@ export interface LandingCopy {
       note: string;
     };
     communityGhost: {
+      status: string;
       title: string;
       text: string;
       foot: string;
@@ -145,13 +154,13 @@ const PT: LandingCopy = {
     titleBefore: "Sua história em ",
     titleEm: "Chernarus",
     titleAfter: " começa aqui.",
-    sub: "SourceDayZ é um projeto de sobrevivência feito pela comunidade, para a comunidade. Sem vínculo com a Bohemia Interactive. Servidores oficiais chegam em breve — e a comunidade já tem seu primeiro mundo em desenvolvimento.",
+    sub: "SourceDayZ é um projeto de sobrevivência feito pela comunidade. O servidor oficial já está online; o servidor Modded da comunidade continua em desenvolvimento. Sem vínculo com a Bohemia Interactive.",
     ctaServers: "Conhecer os servidores",
     ctaAccount: "Entrar",
     tags: ["mundo persistente", "sem pay-to-win", "PC · standalone"],
     rail: [
-      { label: "servidores oficiais", value: "Em breve" },
-      { label: "servidores da comunidade", value: "1 em desenvolvimento" },
+      { label: "servidor oficial", value: "Online" },
+      { label: "servidor da comunidade", value: "1 Modded em desenvolvimento" },
       { label: "contas de jogador", value: "Abertas" },
       { label: "primeiro wipe", value: "A definir" },
     ],
@@ -159,28 +168,36 @@ const PT: LandingCopy = {
   servers: {
     eyebrow: "onde jogar",
     title: "Escolha o seu mundo.",
-    lead: "Os servidores oficiais são mantidos pela equipe do projeto e ainda não abriram. A lista da comunidade já tem seu primeiro projeto em desenvolvimento ativo.",
+    lead: "O servidor oficial já está online. O REMANESCENTZ PREVALECE é o servidor Modded da comunidade e continua em desenvolvimento.",
     tabOfficial: "Servidores oficiais",
-    tabOfficialSmall: "em breve",
     tabCommunity: "Servidores da comunidade",
-    tabCommunitySmall: "1 em desenvolvimento",
+    tabCommunitySmall: "Modded · em desenvolvimento",
     official: {
-      type: "oficial · chernarus",
-      title: "Servidor principal",
-      text: "O primeiro mundo do SourceDayZ. Regras, wipe e janela de acesso serão anunciados antes da abertura.",
-      meta: ["PvP + PvE", "Progressão persistente", "Hospedagem do projeto"],
-      button: "Entrar · em breve",
+      type: "oficial · no mods · regular",
+      title: "SourceDayZ Oficial",
+      text: "Servidor online de DayZ Oldschool 0.45 (2014), sem mods e com dificuldade Regular.",
+      ip: "3.143.228.170",
+      statusOnline: "online",
+      statusOffline: "offline",
+      statusChecking: "consultando",
+      statusUnavailable: "indisponível",
+      playersLabel: "jogadores online",
+      slotsLabel: "vagas disponíveis",
+      meta: ["DayZ Oldschool 0.45 · 2014", "No Mods", "Regular"],
+      button: "Copiar IP",
+      copied: "IP copiado",
     },
     officialGhost: {
+      status: "em breve",
       title: "Próximo mundo oficial",
       text: "A equipe vai abrir novos servidores conforme a comunidade crescer. Esta lista será atualizada aqui, sem datas inventadas.",
       foot: "aguardando definição de regras e wipe",
     },
     community: {
-      type: "comunidade · dayz · independente",
-      title: "REMANESCENT Z",
+      type: "comunidade · modded · independente",
+      title: "REMANESCENTZ PREVALECE",
       status: "em desenvolvimento ativo",
-      text: "Servidor de DayZ da comunidade em desenvolvimento ativo. Testes, avisos e a abertura acontecem no Discord do servidor.",
+      text: "Servidor Modded da comunidade em desenvolvimento. Acompanhe testes e avisos pelo Discord.",
       members: "membros",
       online: "online agora",
       since: "Existe desde",
@@ -189,11 +206,12 @@ const PT: LandingCopy = {
       note: "Convite permanente do servidor",
     },
     communityGhost: {
+      status: "em breve",
       title: "Próximo da lista",
       text: "Novos mundos independentes poderão entrar na lista com regras e mods definidos por quem administra.",
       foot: "cadastro ainda não disponível",
     },
-    footnoteBefore: "Servidores oficiais ainda não estão online. O REMANESCENT Z está em desenvolvimento ativo — acompanhe pelo ",
+    footnoteBefore: "O servidor oficial está online. O REMANESCENTZ PREVALECE é o servidor Modded da comunidade e segue em desenvolvimento — acompanhe pelo ",
     footnoteLink: "Discord",
     footnoteAfter: ".",
   },
@@ -217,7 +235,7 @@ const PT: LandingCopy = {
     lead: "Sem datas prometidas. Cada etapa só avança quando estiver realmente pronta — e o aviso aparece primeiro nesta página.",
     steps: [
       { n: "01", title: "Fundação", text: "Cliente, mundo e a base do projeto funcionando.", status: "concluído" },
-      { n: "02", title: "Servidores", text: "Mundos oficiais e a lista da comunidade.", status: "em andamento" },
+      { n: "02", title: "Servidores", text: "Servidor oficial online e servidor Modded da comunidade em desenvolvimento.", status: "em andamento" },
       { n: "03", title: "Acesso", text: "Contas, vínculo com a Steam e acesso mensal de R$ 25.", status: "beta" },
       { n: "04", title: "Primeiro wipe", text: "Abertura pública e o começo da primeira temporada.", status: "a definir" },
     ],
@@ -225,16 +243,16 @@ const PT: LandingCopy = {
   faq: {
     eyebrow: "visitantes",
     title: "Perguntas de quem acabou de chegar.",
-    lead: "O essencial para entender o projeto antes de entrar no mundo. O login e os servidores ainda estão em preparação.",
+    lead: "O essencial para entender o projeto. O servidor oficial já está online; o servidor Modded da comunidade segue em desenvolvimento.",
     noteLabel: "acesso",
     noteTitle: "Conta de jogador · aberta",
     noteText: "Crie sua conta, vincule a Steam e veja o plano de R$ 25/mês.",
     loginAnswerOnline: "Crie a conta pelo botão Entrar: você define a foto, vincula a Steam e acompanha o acesso em Minha conta. O acesso mensal custa R$ 25; quem abre um servidor ativo ganha acesso vitalício enquanto ele estiver ativo, e os 20 primeiros jogadores do servidor ganham 1 mês grátis. Sua conta fica no banco do projeto e funciona em qualquer dispositivo. A verificação oficial com a Steam e o pagamento real entram nas próximas etapas.",
     loginAnswerLocal: "Crie a conta pelo botão Entrar: você define a foto, vincula a Steam e acompanha o acesso em Minha conta. O acesso mensal custa R$ 25; quem abre um servidor ativo ganha acesso vitalício enquanto ele estiver ativo, e os 20 primeiros jogadores do servidor ganham 1 mês grátis. Nesta versão a conta fica no navegador — a sincronização, o vínculo oficial com a Steam e o pagamento entram com o backend.",
     items: [
-      { q: "O que é o SourceDayZ?", a: "Um projeto de sobrevivência independente ambientado em Chernarus, feito pela comunidade. Os servidores oficiais estão em preparação e a lista da comunidade já começou com o REMANESCENT Z, com progressão persistente e regras claras." },
+      { q: "O que é o SourceDayZ?", a: "Um projeto de sobrevivência independente ambientado em Chernarus, feito pela comunidade. O servidor oficial já está online, e o REMANESCENTZ PREVALECE é o servidor Modded da comunidade em desenvolvimento." },
       { q: "Preciso comprar DayZ para jogar?", a: "Não. O cliente é próprio do projeto e será distribuído por aqui quando o acesso abrir. Você não vai precisar comprar outro jogo para participar." },
-      { q: "Quando os servidores abrem?", a: "Ainda não há data para os servidores oficiais. O REMANESCENT Z, primeiro projeto da comunidade, está em desenvolvimento ativo e divulga testes e avisos no Discord. Preferimos não prometer uma data antes de o acesso estar realmente pronto." },
+      { q: "Quando os servidores abrem?", a: "O servidor oficial já está online. O servidor Modded REMANESCENTZ PREVALECE está em desenvolvimento; acompanhe os testes e avisos pelo Discord." },
       { q: "Como funciona o login?", a: "", useLoginAnswer: true },
       { q: "O projeto tem relação com a Bohemia Interactive?", a: "Nenhuma. O SourceDayZ é um projeto de fãs, sem afiliação, endosso ou suporte da Bohemia Interactive. DayZ é uma marca da Bohemia Interactive; este projeto tem identidade e operação próprias." },
       { q: "Posso divulgar meu servidor?", a: "Sim. Crie sua conta, abra o servidor em Minha conta e compartilhe o código com os primeiros jogadores: cada um ganha 1 mês grátis, até o limite de 20. O dono tem acesso vitalício enquanto o servidor estiver ativo. A abertura passa por análise." },
@@ -244,7 +262,7 @@ const PT: LandingCopy = {
     eyebrow: "o próximo wipe",
     titleA: "A próxima história em Chernarus",
     titleB: "pode ser a sua.",
-    text: "Os servidores oficiais chegam em breve. O primeiro mundo da comunidade já está em desenvolvimento — e o acesso será liberado por aqui, sem depender da Bohemia Interactive.",
+    text: "O servidor oficial já está online. O servidor Modded da comunidade está em desenvolvimento — acompanhe as novidades pelo Discord.",
     create: "Criar conta",
     myAccount: "Minha conta",
     servers: "Ver servidores",
@@ -293,8 +311,8 @@ const EN: LandingCopy = {
     ctaAccount: "Sign in",
     tags: ["persistent world", "no pay-to-win", "PC · standalone"],
     rail: [
-      { label: "official servers", value: "Coming soon" },
-      { label: "community servers", value: "1 in development" },
+      { label: "official server", value: "Online" },
+      { label: "community server", value: "1 Modded in development" },
       { label: "player accounts", value: "Open" },
       { label: "first wipe", value: "To be announced" },
     ],
@@ -302,28 +320,36 @@ const EN: LandingCopy = {
   servers: {
     eyebrow: "where to play",
     title: "Choose your world.",
-    lead: "Official servers are run by the project team and have not opened yet. The community list already has its first project in active development.",
+    lead: "The official server is online. REMANESCENTZ PREVALECE is the community's Modded server and remains in development.",
     tabOfficial: "Official servers",
-    tabOfficialSmall: "coming soon",
     tabCommunity: "Community servers",
-    tabCommunitySmall: "1 in development",
+    tabCommunitySmall: "Modded · in development",
     official: {
-      type: "official · chernarus",
-      title: "Main server",
-      text: "The first SourceDayZ world. Rules, wipe and the access window will be announced before opening.",
-      meta: ["PvP + PvE", "Persistent progression", "Project-hosted"],
-      button: "Join · coming soon",
+      type: "official · no mods · regular",
+      title: "SourceDayZ Official",
+      text: "Online DayZ Oldschool 0.45 (2014) server, no mods, Regular difficulty.",
+      ip: "3.143.228.170",
+      statusOnline: "online",
+      statusOffline: "offline",
+      statusChecking: "checking",
+      statusUnavailable: "unavailable",
+      playersLabel: "players online",
+      slotsLabel: "open slots",
+      meta: ["DayZ Oldschool 0.45 · 2014", "No Mods", "Regular"],
+      button: "Copy IP",
+      copied: "IP copied",
     },
     officialGhost: {
+      status: "coming soon",
       title: "Next official world",
       text: "The team will open new servers as the community grows. This list will be updated here, with no made-up dates.",
       foot: "awaiting rules and wipe definition",
     },
     community: {
-      type: "community · dayz · independent",
-      title: "REMANESCENT Z",
+      type: "community · modded · independent",
+      title: "REMANESCENTZ PREVALECE",
       status: "active development",
-      text: "A community DayZ server in active development. Tests, announcements and the opening happen on the server's Discord.",
+      text: "The community's Modded server is in development. Follow tests and announcements on Discord.",
       members: "members",
       online: "online now",
       since: "Around since",
@@ -332,11 +358,12 @@ const EN: LandingCopy = {
       note: "Permanent server invite",
     },
     communityGhost: {
+      status: "coming soon",
       title: "Next on the list",
       text: "New independent worlds will be able to join the list with rules and mods defined by their owners.",
       foot: "registration not available yet",
     },
-    footnoteBefore: "Official servers are not online yet. REMANESCENT Z is in active development — follow it on ",
+    footnoteBefore: "The official server is online. REMANESCENTZ PREVALECE is the community's Modded server in development — follow it on ",
     footnoteLink: "Discord",
     footnoteAfter: ".",
   },
@@ -360,7 +387,7 @@ const EN: LandingCopy = {
     lead: "No promised dates. Each stage only moves forward when it is truly ready — and the news appears here first.",
     steps: [
       { n: "01", title: "Foundation", text: "Client, world and the project's base working.", status: "completed" },
-      { n: "02", title: "Servers", text: "Official worlds and the community list.", status: "in progress" },
+      { n: "02", title: "Servers", text: "Official server online; community Modded server in development.", status: "in progress" },
       { n: "03", title: "Access", text: "Accounts, Steam linking and R$ 25 monthly access.", status: "beta" },
       { n: "04", title: "First wipe", text: "Public opening and the start of the first season.", status: "to be announced" },
     ],
@@ -368,16 +395,16 @@ const EN: LandingCopy = {
   faq: {
     eyebrow: "visitors",
     title: "Questions from newcomers.",
-    lead: "The essentials to understand the project before entering the world. Login and servers are still being prepared.",
+    lead: "The essentials to understand the project. The official server is online; the community Modded server is in development.",
     noteLabel: "access",
     noteTitle: "Player account · open",
     noteText: "Create your account, link Steam and see the R$ 25/month plan.",
     loginAnswerOnline: "Create an account with the Sign in button: set your photo, link Steam and follow your access in My account. Monthly access costs R$ 25; anyone who opens an active server gets lifetime access while it is active, and the first 20 players of the server get 1 month free. Your account lives in the project database and works on any device. Official Steam verification and real payment come in the next stages.",
     loginAnswerLocal: "Create an account with the Sign in button: set your photo, link Steam and follow your access in My account. Monthly access costs R$ 25; anyone who opens an active server gets lifetime access while it is active, and the first 20 players of the server get 1 month free. In this version the account lives in your browser — sync, official Steam linking and payment arrive with the backend.",
     items: [
-      { q: "What is SourceDayZ?", a: "A community-built independent survival project set in Chernarus. Official servers are being prepared and the community list has already started with REMANESCENT Z, with persistent progression and clear rules." },
+      { q: "What is SourceDayZ?", a: "A community-built independent survival project set in Chernarus. The official server is online, and REMANESCENTZ PREVALECE is the community's Modded server in development." },
       { q: "Do I need to buy DayZ to play?", a: "No. The client belongs to the project and will be distributed here when access opens. You will not need to buy another game to take part." },
-      { q: "When do the servers open?", a: "There is no date for the official servers yet. REMANESCENT Z, the first community project, is in active development and posts tests and announcements on Discord. We prefer not to promise a date before access is truly ready." },
+      { q: "When do the servers open?", a: "The official server is already online. The REMANESCENTZ PREVALECE community Modded server is in development; follow testing and announcements on Discord." },
       { q: "How does login work?", a: "", useLoginAnswer: true },
       { q: "Is the project related to Bohemia Interactive?", a: "No. SourceDayZ is a fan project, not affiliated with, endorsed or supported by Bohemia Interactive. DayZ is a trademark of Bohemia Interactive; this project has its own identity and operation." },
       { q: "Can I promote my server?", a: "Yes. Create your account, open the server in My account and share the code with the first players: each gets 1 month free, up to 20. The owner has lifetime access while the server is active. Opening goes through review." },
@@ -387,7 +414,7 @@ const EN: LandingCopy = {
     eyebrow: "the next wipe",
     titleA: "The next story in Chernarus",
     titleB: "could be yours.",
-    text: "Official servers are coming soon. The first community world is already in development — and access will be released here, without depending on Bohemia Interactive.",
+    text: "The official server is online. The community's Modded server is in development — follow updates on Discord.",
     create: "Create account",
     myAccount: "My account",
     servers: "View servers",
@@ -431,13 +458,13 @@ const RU: LandingCopy = {
     titleBefore: "Ваша история в ",
     titleEm: "Чернаруси",
     titleAfter: " начинается здесь.",
-    sub: "SourceDayZ — survival-проект, созданный сообществом для сообщества. Мы не связаны с Bohemia Interactive. Официальные серверы скоро появятся, а у сообщества уже есть первый мир в разработке.",
+    sub: "SourceDayZ — survival-проект, созданный сообществом. Официальный сервер уже онлайн; Modded-сервер сообщества продолжает разрабатываться. Мы не связаны с Bohemia Interactive.",
     ctaServers: "Посмотреть серверы",
     ctaAccount: "Войти",
     tags: ["постоянный мир", "без pay-to-win", "ПК · standalone"],
     rail: [
-      { label: "официальные серверы", value: "Скоро" },
-      { label: "серверы сообщества", value: "1 в разработке" },
+      { label: "официальный сервер", value: "Онлайн" },
+      { label: "сервер сообщества", value: "1 Modded в разработке" },
       { label: "аккаунты игроков", value: "Открыты" },
       { label: "первый вайп", value: "Будет объявлен" },
     ],
@@ -445,28 +472,36 @@ const RU: LandingCopy = {
   servers: {
     eyebrow: "где играть",
     title: "Выберите свой мир.",
-    lead: "Официальные серверы поддерживаются командой проекта и ещё не открыты. В списке сообщества уже есть первый проект в активной разработке.",
+    lead: "Официальный сервер уже онлайн. REMANESCENTZ PREVALECE — это Modded-сервер сообщества, который продолжает разрабатываться.",
     tabOfficial: "Официальные серверы",
-    tabOfficialSmall: "скоро",
     tabCommunity: "Серверы сообщества",
-    tabCommunitySmall: "1 в разработке",
+    tabCommunitySmall: "Modded · в разработке",
     official: {
-      type: "официальный · чернарусь",
-      title: "Основной сервер",
-      text: "Первый мир SourceDayZ. Правила, вайп и окно доступа будут объявлены до открытия.",
-      meta: ["PvP + PvE", "Постоянная прогрессия", "Хостинг проекта"],
-      button: "Войти · скоро",
+      type: "официальный · без модов · regular",
+      title: "SourceDayZ Official",
+      text: "Онлайн-сервер DayZ Oldschool 0.45 (2014), без модов, сложность Regular.",
+      ip: "3.143.228.170",
+      statusOnline: "онлайн",
+      statusOffline: "офлайн",
+      statusChecking: "проверка",
+      statusUnavailable: "недоступен",
+      playersLabel: "игроки онлайн",
+      slotsLabel: "свободные места",
+      meta: ["DayZ Oldschool 0.45 · 2014", "Без модов", "Regular"],
+      button: "Скопировать IP",
+      copied: "IP скопирован",
     },
     officialGhost: {
+      status: "скоро",
       title: "Следующий официальный мир",
       text: "Команда будет открывать новые серверы по мере роста сообщества. Список будет обновляться здесь, без выдуманных дат.",
       foot: "ожидаем определения правил и вайпа",
     },
     community: {
-      type: "сообщество · dayz · независимый",
-      title: "REMANESCENT Z",
+      type: "сообщество · modded · независимый",
+      title: "REMANESCENTZ PREVALECE",
       status: "активная разработка",
-      text: "DayZ-сервер сообщества в активной разработке. Тесты, объявления и открытие проходят в Discord сервера.",
+      text: "Modded-сервер сообщества находится в разработке. Следите за тестами и объявлениями в Discord.",
       members: "участников",
       online: "онлайн сейчас",
       since: "Существует с",
@@ -475,11 +510,12 @@ const RU: LandingCopy = {
       note: "Постоянное приглашение сервера",
     },
     communityGhost: {
+      status: "скоро",
       title: "Следующий в списке",
       text: "Новые независимые миры смогут попасть в список с правилами и модами, определёнными их владельцами.",
       foot: "регистрация пока недоступна",
     },
-    footnoteBefore: "Официальные серверы ещё не онлайн. REMANESCENT Z в активной разработке — следите в ",
+    footnoteBefore: "Официальный сервер онлайн. REMANESCENTZ PREVALECE — Modded-сервер сообщества в разработке; следите в ",
     footnoteLink: "Discord",
     footnoteAfter: ".",
   },
@@ -503,7 +539,7 @@ const RU: LandingCopy = {
     lead: "Без обещанных дат. Каждый этап движется дальше только когда действительно готов — и новости появляются здесь первыми.",
     steps: [
       { n: "01", title: "Основа", text: "Клиент, мир и база проекта работают.", status: "завершено" },
-      { n: "02", title: "Серверы", text: "Официальные миры и список сообщества.", status: "в процессе" },
+      { n: "02", title: "Серверы", text: "Официальный сервер онлайн; Modded-сервер сообщества в разработке.", status: "в процессе" },
       { n: "03", title: "Доступ", text: "Аккаунты, привязка Steam и месячный доступ за R$ 25.", status: "бета" },
       { n: "04", title: "Первый вайп", text: "Публичное открытие и начало первого сезона.", status: "будет объявлено" },
     ],
@@ -511,16 +547,16 @@ const RU: LandingCopy = {
   faq: {
     eyebrow: "посетителям",
     title: "Вопросы тех, кто только пришёл.",
-    lead: "Самое важное, чтобы понять проект до входа в мир. Вход и серверы ещё готовятся.",
+    lead: "Самое важное о проекте. Официальный сервер уже онлайн; Modded-сервер сообщества находится в разработке.",
     noteLabel: "доступ",
     noteTitle: "Аккаунт игрока · открыт",
     noteText: "Создайте аккаунт, привяжите Steam и посмотрите план за R$ 25/мес.",
     loginAnswerOnline: "Создайте аккаунт кнопкой «Войти»: задайте фото, привяжите Steam и следите за доступом в «Моей учётной записи». Месячный доступ стоит R$ 25; владелец активного сервера получает пожизненный доступ, пока сервер активен, а первые 20 игроков сервера — 1 месяц бесплатно. Аккаунт хранится в базе проекта и работает на любом устройстве. Официальная проверка Steam и реальная оплата появятся на следующих этапах.",
     loginAnswerLocal: "Создайте аккаунт кнопкой «Войти»: задайте фото, привяжите Steam и следите за доступом в «Моей учётной записи». Месячный доступ стоит R$ 25; владелец активного сервера получает пожизненный доступ, пока сервер активен, а первые 20 игроков сервера — 1 месяц бесплатно. В этой версии аккаунт хранится в браузере — синхронизация, официальная привязка Steam и оплата появятся с backend.",
     items: [
-      { q: "Что такое SourceDayZ?", a: "Независимый survival-проект, созданный сообществом в Чернаруси. Официальные серверы готовятся, а список сообщества уже начался с REMANESCENT Z — с постоянной прогрессией и понятными правилами." },
+      { q: "Что такое SourceDayZ?", a: "Независимый survival-проект, созданный сообществом в Чернаруси. Официальный сервер уже онлайн, а REMANESCENTZ PREVALECE — Modded-сервер сообщества в разработке." },
       { q: "Нужно ли покупать DayZ, чтобы играть?", a: "Нет. Клиент принадлежит проекту и будет распространяться здесь, когда откроется доступ. Вам не нужно покупать другую игру." },
-      { q: "Когда откроются серверы?", a: "Даты официальных серверов пока нет. REMANESCENT Z, первый проект сообщества, активно разрабатывается; тесты и объявления — в Discord. Мы не хотим обещать дату, пока доступ действительно не будет готов." },
+      { q: "Когда откроются серверы?", a: "Официальный сервер уже онлайн. REMANESCENTZ PREVALECE, Modded-сервер сообщества, находится в разработке; следите за тестами и объявлениями в Discord." },
       { q: "Как работает вход?", a: "", useLoginAnswer: true },
       { q: "Проект связан с Bohemia Interactive?", a: "Нет. SourceDayZ — фанатский проект, не связанный с Bohemia Interactive, не поддерживаемый и не одобренный ею. DayZ — торговая марка Bohemia Interactive; у проекта своя идентичность и управление." },
       { q: "Могу ли я продвигать свой сервер?", a: "Да. Создайте аккаунт, откройте сервер в «Моей учётной записи» и поделитесь кодом с первыми игроками: каждый получит 1 месяц бесплатно, до 20 человек. Владелец имеет пожизненный доступ, пока сервер активен. Открытие проходит проверку." },
@@ -530,7 +566,7 @@ const RU: LandingCopy = {
     eyebrow: "следующий вайп",
     titleA: "Следующая история в Чернаруси",
     titleB: "может быть вашей.",
-    text: "Официальные серверы скоро появятся. Первый мир сообщества уже в разработке — доступ будет открыт здесь, без зависимости от Bohemia Interactive.",
+    text: "Официальный сервер онлайн. Modded-сервер сообщества находится в разработке — следите за новостями в Discord.",
     create: "Создать аккаунт",
     myAccount: "Моя учётная запись",
     servers: "Посмотреть серверы",
