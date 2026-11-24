@@ -374,13 +374,47 @@ export function Landing() {
                     </div>
                   </article>
 
-                  <article className="sd-server sd-ghost">
-                    <span className="sd-ghost-num">02</span>
-                    <span className="sd-status">{copy.servers.officialGhost.status}</span>
-                    <h3>{copy.servers.officialGhost.title}</h3>
-                    <p>{copy.servers.officialGhost.text}</p>
-                    <span className="sd-ghost-line" />
-                    <p className="sd-ghost-foot">{copy.servers.officialGhost.foot}</p>
+                  <article className="sd-server sd-ghost sd-official-entry">
+                    <span className="sd-ghost-num" aria-hidden="true">01</span>
+                    <span
+                      className={"sd-status sd-status-" + officialStatusClass}
+                      aria-live="polite"
+                    >
+                      {officialStatusLabel}
+                    </span>
+                    <p className="sd-server-type">{copy.servers.official.type}</p>
+                    <h3>{copy.servers.official.title}</h3>
+                    <p>{copy.servers.official.text}</p>
+                    <ul className="sd-official-list" aria-live="polite">
+                      <li>
+                        <span>IP</span>
+                        <code>{copy.servers.official.ip}</code>
+                      </li>
+                      {copy.servers.official.meta.map((item) => (
+                        <li className="sd-official-list-detail" key={item}>{item}</li>
+                      ))}
+                      <li>
+                        <span>{copy.servers.official.playersLabel}</span>
+                        <strong>
+                          {serverStatus && !serverStatusUnavailable && serverStatus.online &&
+                          serverStatus.players !== null && serverStatus.maxPlayers !== null
+                            ? `${serverStatus.players}/${serverStatus.maxPlayers}`
+                            : "—"}
+                        </strong>
+                      </li>
+                      <li>
+                        <span>{copy.servers.official.slotsLabel}</span>
+                        <strong>
+                          {serverStatus && !serverStatusUnavailable && serverStatus.online &&
+                          serverStatus.slotsAvailable !== null
+                            ? serverStatus.slotsAvailable
+                            : "—"}
+                        </strong>
+                      </li>
+                    </ul>
+                    <button className="sd-btn sd-btn-block" onClick={() => void copiarIpOficial()}>
+                      {ipCopiado ? copy.servers.official.copied : copy.servers.official.button}
+                    </button>
                   </article>
                 </div>
               ) : (

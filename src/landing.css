@@ -738,6 +738,44 @@
   text-transform: uppercase;
 }
 
+.sd-ghost.sd-official-entry { border-style: solid; }
+.sd-official-list {
+  display: grid;
+  gap: 0;
+  margin: 18px 0 20px;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+.sd-official-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  color: #78867a;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.sd-official-list li strong,
+.sd-official-list li code {
+  color: #dce6de;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  text-align: right;
+}
+.sd-official-list li code { color: var(--lime); }
+.sd-official-list .sd-official-list-detail {
+  justify-content: flex-start;
+  padding-left: 8px;
+  color: #aab7ac;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
 .sd-footnote {
   margin: 16px 0 0;
   color: #66746a;
