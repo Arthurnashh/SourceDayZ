@@ -25,6 +25,7 @@ export const DOCS_COPY: Record<string, Tri> = {
   "nav.patches": { pt: "Patches", en: "Patches", ru: "Патчи" },
   "nav.achados": { pt: "Achados", en: "Findings", ru: "Находки" },
   "nav.bugs": { pt: "Bugs", en: "Bugs", ru: "Баги" },
+  "nav.dx11": { pt: "Port DX11", en: "DX11 port", ru: "Порт DX11" },
   "nav.passo-a-passo": { pt: "Passo a passo", en: "Step by step", ru: "Пошагово" },
   "nav.atualizacoes": { pt: "Atualizações", en: "Updates", ru: "Обновления" },
   "nav.pendencias": { pt: "Pendências", en: "Pending", ru: "Незавершённое" },
@@ -428,9 +429,9 @@ export const DOCS_COPY: Record<string, Tri> = {
   "dict.termsHint": { pt: "palavra única", en: "single word", ru: "одно слово" },
   "dict.empty": { pt: "Nenhuma entrada para os filtros atuais.", en: "No entries for the current filters.", ru: "Нет записей для текущих фильтров." },
   "dict.note": {
-    pt: "O glossário traduz EN → PT-BR. A coluna em português permanece assim em EN/RU nesta etapa.",
-    en: "The glossary translates EN → PT-BR. The Portuguese column remains as-is in EN/RU at this stage.",
-    ru: "Глоссарий переводит EN → PT-BR. Португальская колонка пока остаётся без изменений в EN/RU."
+    pt: "Cada termo em inglês é mapeado para PT-BR e para russo.",
+    en: "Every English term is mapped to PT-BR and Russian.",
+    ru: "Каждый английский термин сопоставлен с PT-BR и русским."
   },
 
   // Pendências
