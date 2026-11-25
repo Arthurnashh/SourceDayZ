@@ -1,0 +1,58 @@
+{
+    "schemaVersion":  1,
+    "id":  "modsvheicle",
+    "title":  "MOD VEICULOS",
+    "folder":  "@ModsVheicle",
+    "totalSizeBytes":  817954640,
+    "files":  [
+                  {
+                      "path":  "Addons/modk_wheeled_h.pbo",
+                      "sourcePath":  "mods/@ModsVheicle/Addons/modk_wheeled_h.pbo",
+                      "url":  "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/b3556e3775cab10018c012bbc4681fdffeb07e1b/mods/%40ModsVheicle/Addons/modk_wheeled_h.pbo",
+                      "sizeBytes":  130358561,
+                      "sha256":  "22e7208a52964d15495b2f5f3b4e443aa5f913407dd2d039b06195262c65f114"
+                  },
+                  {
+                      "path":  "Addons/modk_wheeled_us_h.pbo",
+                      "sourcePath":  "mods/@ModsVheicle/Addons/modk_wheeled_us_h.pbo",
+                      "url":  "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/b3556e3775cab10018c012bbc4681fdffeb07e1b/mods/%40ModsVheicle/Addons/modk_wheeled_us_h.pbo",
+                      "sizeBytes":  131510503,
+                      "sha256":  "1f96ba9dbdc82afa6a937014a6a6feaa81e9814c1d12c9553d0c1b33749b3015"
+                  },
+                  {
+                      "path":  "Addons/vehicles_wheeled.pbo",
+                      "sourcePath":  "mods/@ModsVheicle/Addons/vehicles_wheeled.pbo",
+                      "url":  "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/b3556e3775cab10018c012bbc4681fdffeb07e1b/mods/%40ModsVheicle/Addons/vehicles_wheeled.pbo",
+                      "sizeBytes":  192502426,
+                      "sha256":  "281cd97c093878231b37dca830803fa71e90028d69639a0594ceced747949eda"
+                  },
+                  {
+                      "path":  "Addons/vehicles_wrecks_fixed.pbo",
+                      "sourcePath":  "mods/@ModsVheicle/Addons/vehicles_wrecks_fixed.pbo",
+                      "url":  "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/b3556e3775cab10018c012bbc4681fdffeb07e1b/mods/%40ModsVheicle/Addons/vehicles_wrecks_fixed.pbo",
+                      "sizeBytes":  16443,
+                      "sha256":  "848a3d52be9f06530495c6119af1ad70dc0e71c3b4e330f7dcc1aad3c3124e23"
+                  },
+                  {
+                      "path":  "Addons/wheeled.pbo",
+                      "sourcePath":  "mods/@ModsVheicle/Addons/wheeled.pbo",
+                      "url":  "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/b3556e3775cab10018c012bbc4681fdffeb07e1b/mods/%40ModsVheicle/Addons/wheeled.pbo",
+                      "sizeBytes":  139925333,
+                      "sha256":  "7e084a36e3f26689206da881ab5867522731061587c540a123460a533d2d6ec2"
+                  },
+                  {
+                      "path":  "Addons/wheeled2.pbo",
+                      "sourcePath":  "mods/@ModsVheicle/Addons/wheeled2.pbo",
+                      "url":  "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/b3556e3775cab10018c012bbc4681fdffeb07e1b/mods/%40ModsVheicle/Addons/wheeled2.pbo",
+                      "sizeBytes":  19653843,
+                      "sha256":  "a83817829a172630f5bd282aa3d7450a0aabe01ed0bce9392b130b70a1b536a7"
+                  },
+                  {
+                      "path":  "Addons/wheeled_e.pbo",
+                      "sourcePath":  "mods/@ModsVheicle/Addons/wheeled_e.pbo",
+                      "url":  "https://media.githubusercontent.com/media/Arthurnashh/SourceDayZ/b3556e3775cab10018c012bbc4681fdffeb07e1b/mods/%40ModsVheicle/Addons/wheeled_e.pbo",
+                      "sizeBytes":  203987531,
+                      "sha256":  "d5dca833191f581e8cbcc166d2e8246e8e0841ea792efb3ed2918a2483d098c8"
+                  }
+              ]
+}
