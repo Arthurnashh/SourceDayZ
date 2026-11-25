@@ -25,6 +25,7 @@ export const DOCS_COPY: Record<string, Tri> = {
   "nav.patches": { pt: "Patches", en: "Patches", ru: "Патчи" },
   "nav.achados": { pt: "Achados", en: "Findings", ru: "Находки" },
   "nav.bugs": { pt: "Bugs", en: "Bugs", ru: "Баги" },
+  "nav.dx11": { pt: "Port DX11", en: "DX11 port", ru: "Порт DX11" },
   "nav.passo-a-passo": { pt: "Passo a passo", en: "Step by step", ru: "Пошагово" },
   "nav.atualizacoes": { pt: "Atualizações", en: "Updates", ru: "Обновления" },
   "nav.pendencias": { pt: "Pendências", en: "Pending", ru: "Незавершённое" },
