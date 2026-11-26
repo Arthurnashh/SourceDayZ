@@ -3,7 +3,7 @@
     "id": "construcoes",
     "title": "Construcoes",
     "folder": "@Construcoes",
-    "totalSizeBytes": 177553176,
+    "totalSizeBytes": 177560612,
     "files": [
         {
             "path": "Addons/assets_buildings2_fixed.pbo",
@@ -12,10 +12,22 @@
             "sha256": "e604a8c14dbc406c1d872dcd16dd23624b80d3f0ea330cbbe6834aa5aa2e872b"
         },
         {
+            "path": "Addons/assets_buildings2_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/assets_buildings2_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "a5cfff74a0a68ab1da264bd6a665f467918e0039faf0986d4b533fa3d982beae"
+        },
+        {
             "path": "Addons/assets_buildings_fixed.pbo",
             "sourcePath": "mods/@Construcoes/Addons/assets_buildings_fixed.pbo",
             "sizeBytes": 68114,
             "sha256": "c372dcf4c78373f46e742e53621e23133ddf2cb43f8561be481ddd6044a38c85"
+        },
+        {
+            "path": "Addons/assets_buildings_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/assets_buildings_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "c681273745c6e93d0e386289b272f4d9817615d9a0eef1086fd3a5ae0155e6dd"
         },
         {
             "path": "Addons/sounds_e.pbo",
@@ -24,10 +36,22 @@
             "sha256": "64818cae09e26a3ae40f8b1504201063411fd83d319bb481c54eb73069fa73aa"
         },
         {
+            "path": "Addons/sounds_e.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/sounds_e.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "96e004d19f61b99c51f6f4d86958a8818d67f10e0a4e32769744573b66f2fbad"
+        },
+        {
             "path": "Addons/structures_houses_fixed.pbo",
             "sourcePath": "mods/@Construcoes/Addons/structures_houses_fixed.pbo",
             "sizeBytes": 629420,
             "sha256": "6c53a8c48bc337fcd20e5b77d37210ebb4f8bb8eb7abeaafbcb75048652bd4c1"
+        },
+        {
+            "path": "Addons/structures_houses_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/structures_houses_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "0c70904296ce8eaf273baeac1f9f087bd18bad7cf432fdde3a50ca05fcdb11b4"
         },
         {
             "path": "Addons/structures_industrial_fixed.pbo",
@@ -36,10 +60,22 @@
             "sha256": "e5a8d567535b79186718fabffb97dda92d4f284208e53d0cd73a4a1e43f3f7c0"
         },
         {
+            "path": "Addons/structures_industrial_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/structures_industrial_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "35c6f9494a280e3d0b1e22680c059e6e75ffca5b9c12746baa87d89634e9b842"
+        },
+        {
             "path": "Addons/structures_military_fixed.pbo",
             "sourcePath": "mods/@Construcoes/Addons/structures_military_fixed.pbo",
             "sizeBytes": 51564,
             "sha256": "9f855c7eec0c126adabdd31222dc69de1722dab8b180674a8a7d0af57a00501f"
+        },
+        {
+            "path": "Addons/structures_military_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/structures_military_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "98e86f00d08726f00eaf680ca1be1a53159a61469072379da9dafae25ca7c71f"
         },
         {
             "path": "Addons/structures_misc_fixed.pbo",
@@ -48,10 +84,22 @@
             "sha256": "2595ed6421c7fafe8757298a22930eb806455e6819d753f569e970011037c357"
         },
         {
+            "path": "Addons/structures_misc_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/structures_misc_fixed.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "10edc085df0174f2b9b17d963fe66f1950f7b650fd3ae1ec0d3e142eaa6d076f"
+        },
+        {
             "path": "Addons/structures_prison_fxd.pbo",
             "sourcePath": "mods/@Construcoes/Addons/structures_prison_fxd.pbo",
             "sizeBytes": 266672,
             "sha256": "611c107a2d5915ecc503e9f4180fd511d64865aba3cde382b6fcf969c4560693"
+        },
+        {
+            "path": "Addons/structures_prison_fxd.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/structures_prison_fxd.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "5fc1423487afda1c81df2892fb49b2f1d1ad160c2307700bb5230ea35f895dec"
         },
         {
             "path": "Addons/structures_school_fxd.pbo",
@@ -60,10 +108,22 @@
             "sha256": "e95d844e1732b4add9fef9fbcab444aafb87fdd64474f53857a45f76ef1b2cf5"
         },
         {
+            "path": "Addons/structures_school_fxd.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/structures_school_fxd.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "715301bd4cb1a81a602a025b3dc165251d9694fe2adaeee08bfc414c668b2ff8"
+        },
+        {
             "path": "Addons/texture.pbo",
             "sourcePath": "mods/@Construcoes/Addons/texture.pbo",
             "sizeBytes": 42994665,
             "sha256": "65b9b8d3baebc37804c68dafe0a5afc25261aa335128eb909bdc26ed5e43c8f2"
+        },
+        {
+            "path": "Addons/texture.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/texture.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "892d949bafe16e5a1e59d880a5f727c0efbfc1e1f0a8b55a3d704ccd492fc536"
         },
         {
             "path": "Addons/tracked.pbo",
@@ -72,16 +132,34 @@
             "sha256": "a2deb2ae5624d327eb274464af07d9fe5f7dcc9572cbaa2d12fec2b7b733fe4e"
         },
         {
+            "path": "Addons/tracked.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/tracked.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "0c434ebce6f4bff89357df051697a977172c225a41ea81f05d0a21b2fc64880f"
+        },
+        {
             "path": "Addons/tracked2.pbo",
             "sourcePath": "mods/@Construcoes/Addons/tracked2.pbo",
             "sizeBytes": 32903551,
             "sha256": "214590d25129aba64601c6b93a279e43ec67cbcc5ba14e5d66414702ac9b4344"
         },
         {
+            "path": "Addons/tracked2.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/tracked2.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "c5a9d6a571589e329c8aafc10f273f744e31183068834efa868df0472a4b947c"
+        },
+        {
             "path": "Addons/tracked_e.pbo",
             "sourcePath": "mods/@Construcoes/Addons/tracked_e.pbo",
             "sizeBytes": 14692,
             "sha256": "167d85d6db86f88053fe2497ae99ded772822883736b170a238466d37507da82"
+        },
+        {
+            "path": "Addons/tracked_e.pbo.SourceDayZShoulder2.bisign",
+            "sourcePath": "mods/@Construcoes/Addons/tracked_e.pbo.SourceDayZShoulder2.bisign",
+            "sizeBytes": 572,
+            "sha256": "f280408fa1db687ad302e14e9c5cf4218704eea0ea8d86b107a7e6530318221b"
         }
     ]
 }
