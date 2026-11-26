@@ -1,0 +1,87 @@
+{
+    "schemaVersion": 1,
+    "id": "construcoes",
+    "title": "Construcoes",
+    "folder": "@Construcoes",
+    "totalSizeBytes": 177553176,
+    "files": [
+        {
+            "path": "Addons/assets_buildings2_fixed.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/assets_buildings2_fixed.pbo",
+            "sizeBytes": 302085,
+            "sha256": "e604a8c14dbc406c1d872dcd16dd23624b80d3f0ea330cbbe6834aa5aa2e872b"
+        },
+        {
+            "path": "Addons/assets_buildings_fixed.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/assets_buildings_fixed.pbo",
+            "sizeBytes": 68114,
+            "sha256": "c372dcf4c78373f46e742e53621e23133ddf2cb43f8561be481ddd6044a38c85"
+        },
+        {
+            "path": "Addons/sounds_e.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/sounds_e.pbo",
+            "sizeBytes": 1066642,
+            "sha256": "64818cae09e26a3ae40f8b1504201063411fd83d319bb481c54eb73069fa73aa"
+        },
+        {
+            "path": "Addons/structures_houses_fixed.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/structures_houses_fixed.pbo",
+            "sizeBytes": 629420,
+            "sha256": "6c53a8c48bc337fcd20e5b77d37210ebb4f8bb8eb7abeaafbcb75048652bd4c1"
+        },
+        {
+            "path": "Addons/structures_industrial_fixed.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/structures_industrial_fixed.pbo",
+            "sizeBytes": 68810,
+            "sha256": "e5a8d567535b79186718fabffb97dda92d4f284208e53d0cd73a4a1e43f3f7c0"
+        },
+        {
+            "path": "Addons/structures_military_fixed.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/structures_military_fixed.pbo",
+            "sizeBytes": 51564,
+            "sha256": "9f855c7eec0c126adabdd31222dc69de1722dab8b180674a8a7d0af57a00501f"
+        },
+        {
+            "path": "Addons/structures_misc_fixed.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/structures_misc_fixed.pbo",
+            "sizeBytes": 51202,
+            "sha256": "2595ed6421c7fafe8757298a22930eb806455e6819d753f569e970011037c357"
+        },
+        {
+            "path": "Addons/structures_prison_fxd.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/structures_prison_fxd.pbo",
+            "sizeBytes": 266672,
+            "sha256": "611c107a2d5915ecc503e9f4180fd511d64865aba3cde382b6fcf969c4560693"
+        },
+        {
+            "path": "Addons/structures_school_fxd.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/structures_school_fxd.pbo",
+            "sizeBytes": 84718,
+            "sha256": "e95d844e1732b4add9fef9fbcab444aafb87fdd64474f53857a45f76ef1b2cf5"
+        },
+        {
+            "path": "Addons/texture.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/texture.pbo",
+            "sizeBytes": 42994665,
+            "sha256": "65b9b8d3baebc37804c68dafe0a5afc25261aa335128eb909bdc26ed5e43c8f2"
+        },
+        {
+            "path": "Addons/tracked.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/tracked.pbo",
+            "sizeBytes": 99051041,
+            "sha256": "a2deb2ae5624d327eb274464af07d9fe5f7dcc9572cbaa2d12fec2b7b733fe4e"
+        },
+        {
+            "path": "Addons/tracked2.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/tracked2.pbo",
+            "sizeBytes": 32903551,
+            "sha256": "214590d25129aba64601c6b93a279e43ec67cbcc5ba14e5d66414702ac9b4344"
+        },
+        {
+            "path": "Addons/tracked_e.pbo",
+            "sourcePath": "mods/@Construcoes/Addons/tracked_e.pbo",
+            "sizeBytes": 14692,
+            "sha256": "167d85d6db86f88053fe2497ae99ded772822883736b170a238466d37507da82"
+        }
+    ]
+}

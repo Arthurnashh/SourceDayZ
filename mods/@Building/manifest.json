@@ -1,0 +1,21 @@
+{
+    "schemaVersion": 1,
+    "id": "building",
+    "title": "Building (Epoch)",
+    "folder": "@Building",
+    "totalSizeBytes": 332689452,
+    "files": [
+        {
+            "path": "Addons/dayz_epoch.pbo",
+            "sourcePath": "mods/@Building/Addons/dayz_epoch.pbo",
+            "sizeBytes": 332547809,
+            "sha256": "b7889c5aa2e490059aa77e54263ef0f4099b6ad506e04d704d8833c5c3e6c7a1"
+        },
+        {
+            "path": "Addons/map_core.pbo",
+            "sourcePath": "mods/@Building/Addons/map_core.pbo",
+            "sizeBytes": 141643,
+            "sha256": "b39054b1fe40e0851ad506cbab1833311bb1eeddaac818c7d1f5dce35a0ab6f9"
+        }
+    ]
+}
